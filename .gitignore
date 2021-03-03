@@ -3,5 +3,6 @@
 /.idea/
 /.sass-cache/
 /booking/scan/*
+!/booking/scan/
 /img/users/*
-!/img/users/
+!/img/users/readme.txt
