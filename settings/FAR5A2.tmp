@@ -1,0 +1,17 @@
+RewriteEngine On
+Options +FollowSymLinks
+RewriteBase /
+RewriteRule ^.htaccess$ - [F]
+DirectoryIndex index.php
+
+#https
+#RewriteCond %{ENV:HTTPS} !on
+#RewriteRule ^.*$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+#c www на без www
+#RewriteCond %{HTTP_HOST} ^www.tender.eico.group$ [NC]
+#RewriteRule ^(.*)$ https://tender.eico.group/$1 [R=301,L]
+
+
+php_flag session.use_trans_sid off
+php_flag session.use_only_cookies on
