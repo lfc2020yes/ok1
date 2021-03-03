@@ -31,3 +31,5 @@ gulpfile.js
 config.rb
 composer.json
 composer.lock
+
+/src/
