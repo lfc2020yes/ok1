@@ -4,3 +4,4 @@
 /.sass-cache/
 /booking/scan/*
 /img/users/*
+!/img/users/
