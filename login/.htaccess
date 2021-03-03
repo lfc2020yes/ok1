@@ -1,0 +1,19 @@
+RewriteEngine On
+Options +FollowSymLinks
+RewriteBase /
+RewriteRule ^.htaccess$ - [F]
+
+ #c http на https
+RewriteEngine On
+RewriteCond %{SERVER_PORT} !^443$
+RewriteRule .* https://%{SERVER_NAME}%{REQUEST_URI} [R=301,L]
+
+#c без www на www только для главной
+RewriteCond %{HTTP_HOST} ^ok.umatravel\.club$ [NC]
+RewriteRule ^(.*)$ https://www.ok.umatravel.club/$1 [R=301,L]
+
+
+DirectoryIndex index.php
+
+php_flag session.use_trans_sid off
+php_flag session.use_only_cookies on
