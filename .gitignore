@@ -1,13 +1,14 @@
 # Created by .ignore support plugin (hsz.mobi)
 /.my/
 /.idea/
+/.git/
 /node_modules/
 /.sass-cache/
 /booking/scan/*
 !/booking/scan/readme.txt
 
-/upload/file/*
-!/upload/file/readme.txt
+#/upload/file/*
+#!/upload/file/readme.txt
 
 /upload/images/*
 !/upload/images/readme.txt
