@@ -4,11 +4,13 @@
 /.git/
 /node_modules/
 /.sass-cache/
+#/.src/
+
 /booking/scan/*
 !/booking/scan/readme.txt
 
-#/upload/file/*
-#!/upload/file/readme.txt
+/upload/file/*
+!/upload/file/readme.txt
 
 /upload/images/*
 !/upload/images/readme.txt
@@ -25,6 +27,7 @@
 
 /img/users/*
 !/img/users/readme.txt
+
 package-lock.json
 package.json
 potencial.xml
@@ -32,5 +35,3 @@ gulpfile.js
 config.rb
 composer.json
 composer.lock
-
-/src/

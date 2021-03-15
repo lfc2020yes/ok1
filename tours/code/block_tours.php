@@ -1023,7 +1023,7 @@ $task_cloud_block.='<div class="mm_w-trips form004U">
    }
 
 
-$task_cloud_block .= '<li class="tabs_004U annul-li-tr"><a href="" class="edit-trips-all1" data-tooltip="Аннулировать" ></a></li>';
+$task_cloud_block .= '<li class="tabs_004U annul-li-tr" id="0"><a  class="edit-trips-all1" data-tooltip="Аннулировать" ></a></li>';
 
 	  $task_cloud_block.='</ul>
    </div>';
