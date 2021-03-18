@@ -9,7 +9,9 @@ $('body').on("change keyup input click",'.js-edit-2020-user',no_rds_user);
 $('body').on("change",'.js-status-preorder-yes',edit_status_2021);
 
 	$('body').on("change keyup input click",'.js-add-status-preorder-x',edit_status_pre);
+    $('body').on("change keyup input click",'.js-cancel-trips-x',cancel_trips_x);
 
+	$('body').on("change keyup input click",'.js-dell-cancel-trips-x',cancel_dell_trips_x);
 
 	$('body').on("change keyup input click",'.js-edit-org-2020',no_rds_org);
 	$('body').on("change keyup input click",'.js-add-search-preorders-kclient',add_preorders_plus);
@@ -91,6 +93,9 @@ $('body').on("change",'.js-status-preorder-yes',edit_status_2021);
 	//аннулировать тур
 	$('.trips_block_global').on("change keyup input click",'.edit-trips-all1',edit_trips_all1);
 
+	//отменить аннулирование тура
+	$('.trips_block_global').on("change keyup input click",'.edit-trips-all2',edit_trips_all2);
+
 	//создать новую версию договора в турах
 	$('.trips_block_global').on("change keyup input click",'.js-new-doc-trips',js_new_doc);
 
@@ -128,6 +133,10 @@ $('body').on("change keyup input click",'.js-users-block',UsersBlock);
 
 //изменить статус тура по проверки оплате
 $('.trips_block_global').on("change keyup input click",'.js-status-trips',StatusTrips);
+
+//изменить аннуляцию
+$('.trips_block_global').on("change keyup input click",'.js-update-cancel-trips',StatusTripsCancel);
+
 
 //выделить тур галкой для каких то действий
 $('.trips_block_global').on("change keyup input click",'.js-status-trips-more',st_div);
@@ -195,7 +204,108 @@ function after_add_preorders(data,update)
 
 	}
 }
+//изменить аннуляцию или просто посмотреть
+function StatusTripsCancel()
+{
+	var id_task= $(this).parents('.trips_block_global').attr('id_trips');
 
+	$.arcticmodal({
+		type: 'ajax',
+		url: 'forms/form_edit_cancel.php?id='+id_task,
+		beforeOpen: function(data, el) {
+			$('.loader_ada_forms').show();
+			$('.loader_ada1_forms').addClass('select_ada');
+
+		},
+		afterOpen: function(data, el) {
+			$('.loader_ada_forms').hide();
+			$('.loader_ada1_forms').removeClass('select_ada');
+			ToolTip();
+		},
+		afterClose: function(data, el) { // после закрытия окна ArcticModal
+			clearInterval(timerId);
+		}
+
+	});
+}
+
+function cancel_dell_trips_x()
+{
+
+	var err = 0;
+	//проверка ссылки
+	$('.js-form-cancel-trips .gloab').each(function (i, elem) {
+
+		if (($(this).val() == '') || ($(this).val() == 0)) {
+			$(this).parents('.input_2018').addClass('error_2018');
+			$(this).parents('.list_2018').addClass('required_in_2018');
+			$(this).parents('.js-prs').addClass('error_textarea_2018');
+			err++;
+		} else {
+			$(this).parents('.input_2018').removeClass('error_2018');
+			$(this).parents('.list_2018').removeClass('required_in_2018');
+			$(this).parents('.js-prs').removeClass('error_textarea_2018');
+
+		}
+	});
+
+	if(err==0)
+	{
+
+		//изменить кнопку на загрузчик
+		$('.js-dell-cancel-trips-x').hide();
+
+		$('.js-dell-cancel-trips-x').hide().after('<div class="b_loading_small" style="position:relative; width: 40px;padding-top: 7px;top: auto;right: auto;left: auto; margin: 0 auto;"><div class="b_loading_circle_wrapper_small"><div class="b_loading_circle_one_small"></div><div class="b_loading_circle_one_small b_loading_circle_delayed_small"></div></div></div>');
+
+		AjaxClient('tours','update_cancel','POST',0,'after_cancel_trips_x1',0,'vino_xd_preorders');
+
+
+	}else
+	{
+
+		alert_message('error','Ошибка. Не все поля заполнены!');
+
+	}
+}
+
+function cancel_trips_x()
+{
+
+    var err = 0;
+    //проверка ссылки
+    $('.js-form-cancel-trips .gloab').each(function (i, elem) {
+
+        if (($(this).val() == '') || ($(this).val() == 0)) {
+            $(this).parents('.input_2018').addClass('error_2018');
+            $(this).parents('.list_2018').addClass('required_in_2018');
+            $(this).parents('.js-prs').addClass('error_textarea_2018');
+            err++;
+        } else {
+            $(this).parents('.input_2018').removeClass('error_2018');
+            $(this).parents('.list_2018').removeClass('required_in_2018');
+            $(this).parents('.js-prs').removeClass('error_textarea_2018');
+
+        }
+    });
+
+    if(err==0)
+    {
+
+        //изменить кнопку на загрузчик
+        $('.js-cancel-trips-x').hide();
+
+        $('.js-cancel-trips-x').hide().after('<div class="b_loading_small" style="position:relative; width: 40px;padding-top: 7px;top: auto;right: auto;left: auto; margin: 0 auto;"><div class="b_loading_circle_wrapper_small"><div class="b_loading_circle_one_small"></div><div class="b_loading_circle_one_small b_loading_circle_delayed_small"></div></div></div>');
+
+        AjaxClient('tours','cancel','POST',0,'after_cancel_trips_x',0,'vino_xd_preorders');
+
+
+    }else
+    {
+
+        alert_message('error','Ошибка. Не все поля заполнены!');
+
+    }
+}
 
 function edit_status_pre()
 {
@@ -492,6 +602,53 @@ function StatusTrips()
 	AjaxClient('tours','status','GET',data,'AfterStatusTrips',id_task,0,1);
 }
 
+
+function after_cancel_trips_x1(data,update)
+{
+	if (data.status=='ok')
+	{
+		alert_message('ok','Аннуляция изменена');
+		UpdateTripsA(data.for_id,'buy',1);
+		clearInterval(timerId); // îñòàíàâëèâàåì âûçîâ ôóíêöèè ÷åðåç êàæäóþ ñåêóíä
+		$.arcticmodal('close');
+
+
+	} else
+	{
+		$('.js-form-cancel-trips').find('.js-dell-cancel-trips-x').show();
+		$('.js-form-cancel-trips').find('.b_loading_small').remove();
+
+
+		alert_message('error','Ошибка сохранения');
+	}
+
+
+
+}
+
+
+function after_cancel_trips_x(data,update)
+{
+	if (data.status=='ok')
+	{
+		alert_message('ok','Тур аннулирован');
+		UpdateTripsA(data.for_id,'buy',1);
+		clearInterval(timerId); // îñòàíàâëèâàåì âûçîâ ôóíêöèè ÷åðåç êàæäóþ ñåêóíä
+		$.arcticmodal('close');
+		$('.trips_block_global[id_trips='+data.for_id+']').addClass('cancel_trips');
+
+	} else
+	{
+		$('.js-form-cancel-trips').find('.js-cancel-trips-x').show();
+		$('.js-form-cancel-trips').find('.b_loading_small').remove();
+
+
+		alert_message('error','Ошибка аннуляции');
+	}
+
+
+
+}
 
 function after_add_preorders_status_new(data,update)
 {
@@ -1540,6 +1697,33 @@ function edit_trips_all1()
 	});
 }
 
+
+/*
+отменить аннулирование тура
+ */
+function edit_trips_all2()
+{
+	var id_task= $(this).parents('.trips_block_global').attr('id_trips');
+
+	$.arcticmodal({
+		type: 'ajax',
+		url: 'forms/form_cancel_no_trips.php?id='+id_task,
+		beforeOpen: function(data, el) {
+			$('.loader_ada_forms').show();
+			$('.loader_ada1_forms').addClass('select_ada');
+
+		},
+		afterOpen: function(data, el) {
+			$('.loader_ada_forms').hide();
+			$('.loader_ada1_forms').removeClass('select_ada');
+			ToolTip();
+		},
+		afterClose: function(data, el) { // после закрытия окна ArcticModal
+			clearInterval(timerId);
+		}
+
+	});
+}
 
 /**
 внести оплату нажать кнопку открытия формы

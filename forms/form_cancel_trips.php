@@ -110,7 +110,7 @@ $status=1;
 </div>
 <div class="center_modal">
 <?
-echo'<form class="js-form-status-preorders" id="vino_xd_preorders" style=" padding:0; margin:0;" method="post" enctype="multipart/form-data">';
+echo'<form class="js-form-cancel-trips" id="vino_xd_preorders" style=" padding:0; margin:0;" method="post" enctype="multipart/form-data">';
 echo'<input type="hidden" value="'.htmlspecialchars(trim($_GET['id'])).'" name="id">';
 echo'<input type="hidden" value="'.$token.'" name="tk">';
 echo'<input name="tk1" value="dsQ23RStsd2re" type="hidden">';
@@ -226,6 +226,60 @@ $query_string.='<!--input start	-->
 
 
 
+
+$query_string.='    <!--input start	-->';
+
+
+$su_say=0;
+$os_say = array('—');
+$os_id_say = array('0');
+
+$result_work_zz=mysql_time_query($link,'Select A.* from trips_cancel_refund
+ as A where A.visible=1 and A.id_a_company="'.$id_company.'" order by A.displayOrder');
+$num_results_work_zz = $result_work_zz->num_rows;
+if($num_results_work_zz!=0)
+{
+    for ($i=0; $i<$num_results_work_zz; $i++)
+    {
+        $row_work_zz = mysqli_fetch_assoc($result_work_zz);
+        array_push($os_say, $row_work_zz["name"]);
+        array_push($os_id_say, $row_work_zz["id"]);
+    }
+}
+
+
+
+$query_string.='<div style="margin-top: 30px;
+    position: relative;" class="js-zindex js-vid-oper">	';
+
+$query_string.='<div class="left_drop list_2018 menu1_prime"><label class="active_label">Возврат</label><div class="select eddd zin_2019"><a class="slct" list_number="t3"  data_src="'.$os_id_say[array_search($su_say, $os_id_say)].'">'.$os_say[array_search($su_say, $os_id_say)].'</a><ul class="drop">';
+
+//если оплачивает клиент
+//если начальный аванс был наличкой - то остальные платежи только наличкой
+//если начальный аванс был не наличкой - то все методы оплаты
+
+for ($i=0; $i<count($os_say); $i++)
+{
+    if($su_say==$os_id_say[$i])
+    {
+        $query_string.='<li class="sel_active"><a href="javascript:void(0);"  rel="'.$os_id_say[$i].'">'.$os_say[$i].'</a></li>';
+    } else
+    {
+        $query_string.='<li><a href="javascript:void(0);"  rel="'.$os_id_say[$i].'">'.$os_say[$i].'</a></li>';
+    }
+
+}
+$query_string.='</ul><input type="hidden" class="js-status-refund" name="id_refund"  value="'.$su_say.'"><div class="div_new_2018"><hr class="one"></div></div></div></div>';
+
+
+
+
+
+$query_string.='<!--input end	-->';
+
+
+
+
 $query_string.='<div style="margin-top: 30px;">
 <div class="input_2018"><label>Дата заявления на возврат/перенос</label>
 
@@ -237,7 +291,7 @@ $query_string.='<div style="margin-top: 30px;">
     date("m", mktime(date("G"), date("i"), date("s"), date("n"),(date("j")-2), date("Y"))).'-'.
     date("d", mktime(date("G"), date("i"), date("s"), date("n"),(date("j")-2), date("Y"))).'">Позавчера</span></div>
 
-<input readonly="true" name="task[task_date]" value="" id="date_table_gr22" class="input_new_2018 required gloab" autocomplete="off" type="text"><div class="div_new_2018"><hr class="one"><hr class="two"></div></div>
+<input readonly="true" name="task[task_date]" value="" id="date_table_gr22" class="input_new_2018 required" autocomplete="off" type="text"><div class="div_new_2018"><hr class="one"><hr class="two"></div></div>
 </div> 
 
 <input id="date_hidden_table_gr3300"  name="buy_date" value="" type="hidden">';

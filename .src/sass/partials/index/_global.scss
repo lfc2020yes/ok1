@@ -17678,7 +17678,7 @@ display: block;
 
 
 .edit-li-tr {padding: 20px 0px !important;}
-.edit-trips-all, .edit-trips-all1, .edit-preorders-all1{
+.edit-trips-all,.edit-trips-all2, .edit-trips-all1, .edit-preorders-all1{
 
 	padding: 20px;
 	position: relative;
@@ -17708,9 +17708,26 @@ display: block;
 	color: rgba(0,0,0,0.7);}}
 }
 
-.edit-trips-all1,.edit-preorders-all1{ &::before {content: "_";
+.edit-trips-all2,.edit-trips-all1,.edit-preorders-all1{ &::before {content: "_";
 	display: inline-block;
 	font-family: "icon1"; font-size: 12px; }  }
+
+
+.edit-trips-all2{ &::before {
+
+	content: "_";
+	display: inline-block;
+	font-family: "icon1";
+	font-size: 10px;
+	background-color: #fd8080 !important;
+	color: #fff !important;
+	border-radius: 50%;
+	height: 16px !important;
+	width: 20px !important;
+	padding-top: 2px;
+	padding-bottom: 2px;
+
+} }
 
 
 .click-search-name
@@ -20211,3 +20228,4 @@ strong {font-weight:normal; }
 }  }
 
 .opopop {color:#FFF;}
+.cancel_trips {border-top: 4px solid rgba(255,0,0,0.5) !important;}

@@ -3647,7 +3647,29 @@ $('#button_dell_answer').on( "click", function() {
 		$('.js-dell-buy-trips-b').hide().after('<div class="b_loading_small" style="position:relative; width: 40px;padding-top: 7px;top: auto;right: auto;left: auto; display: inline-block;"><div class="b_loading_circle_wrapper_small"><div class="b_loading_circle_one_small"></div><div class="b_loading_circle_one_small b_loading_circle_delayed_small"></div></div></div>');
 	});
 
-	
+
+//отменить аннуляцию
+	$('.js-del-cancel-trips-x').on( "click", function() {
+
+		var for_id=$('.h111').attr('for');
+
+
+		//clearInterval(timerId); // îñòàíàâëèâàåì âûçîâ ôóíêöèè ÷åðåç êàæäóþ ñåêóíä
+		//$.arcticmodal('close');
+
+		var data ='url='+window.location.href+'&id='+for_id+'&tk='+$('.h111').attr('mor');
+		AjaxClient('tours','dell_cancel','GET',data,'Afterdell_cancel',for_id,0);
+
+
+
+		$('.js-del-cancel-trips-x').hide();
+
+		$('.js-del-cancel-trips-x').hide().after('<div class="b_loading_small" style="position:relative; width: 40px;padding-top: 7px;top: auto;right: auto;left: auto; margin: 0 auto;"><div class="b_loading_circle_wrapper_small"><div class="b_loading_circle_one_small"></div><div class="b_loading_circle_one_small b_loading_circle_delayed_small"></div></div></div>');
+
+
+	});
+
+
 	
 //удалить предложение
 $('#button_dell_offers').on( "click", function() {	
@@ -8035,6 +8057,33 @@ var for_id=$('.buy_block_global[id_buy='+update+']').parents('.trips_block_globa
 
 	}
 }
+
+
+//постфункция отмена аннуляции
+function Afterdell_cancel(data,update)
+{
+	if ( data.status=='reg' )
+	{
+		WindowLogin();
+	}
+
+	if ( data.status=='ok' )
+	{
+
+		var for_id=$('.trips_block_global[id_trips='+update+']').attr('id_trips');
+
+//полностью обновить панель тура потому что суммы изменились и все комиссии и тогдалее.
+		alert_message('ok','Аннуляцию отменена');
+		//$('.js-next-step').submit();
+		clearInterval(timerId);
+		$.arcticmodal('close');
+		UpdateTripsA(for_id,'buy');
+		$('.trips_block_global[id_trips='+for_id+']').removeClass('cancel_trips');
+
+
+	}
+}
+
 
 //постфункция удаления операции по оплате
 function Afterdell_offers(data,update)

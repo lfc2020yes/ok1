@@ -24895,7 +24895,7 @@ position: absolute;}  }
   padding: 20px 0px !important;
 }
 
-.edit-trips-all, .edit-trips-all1, .edit-preorders-all1 {
+.edit-trips-all, .edit-trips-all2, .edit-trips-all1, .edit-preorders-all1 {
   padding: 20px;
   position: relative;
   cursor: pointer;
@@ -24908,7 +24908,7 @@ position: absolute;}  }
   text-align: right;
   border-radius: 50%;
 }
-.edit-trips-all::before, .edit-trips-all1::before, .edit-preorders-all1::before {
+.edit-trips-all::before, .edit-trips-all2::before, .edit-trips-all1::before, .edit-preorders-all1::before {
   color: rgba(0, 0, 0, 0.2);
   position: absolute;
   top: 20px;
@@ -24920,15 +24920,29 @@ position: absolute;}  }
   font-size: 14px;
   text-align: center;
 }
-.edit-trips-all:hover::before, .edit-trips-all1:hover::before, .edit-preorders-all1:hover::before {
+.edit-trips-all:hover::before, .edit-trips-all2:hover::before, .edit-trips-all1:hover::before, .edit-preorders-all1:hover::before {
   color: rgba(0, 0, 0, 0.7);
 }
 
-.edit-trips-all1::before, .edit-preorders-all1::before {
+.edit-trips-all2::before, .edit-trips-all1::before, .edit-preorders-all1::before {
   content: "_";
   display: inline-block;
   font-family: "icon1";
   font-size: 12px;
+}
+
+.edit-trips-all2::before {
+  content: "_";
+  display: inline-block;
+  font-family: "icon1";
+  font-size: 10px;
+  background-color: #fd8080 !important;
+  color: #fff !important;
+  border-radius: 50%;
+  height: 16px !important;
+  width: 20px !important;
+  padding-top: 2px;
+  padding-bottom: 2px;
 }
 
 .click-search-name {
@@ -28036,6 +28050,10 @@ position: absolute;}  }
 
 .opopop {
   color: #FFF;
+}
+
+.cancel_trips {
+  border-top: 4px solid rgba(255, 0, 0, 0.5) !important;
 }
 
 .input-block-2020 .list-image {

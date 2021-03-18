@@ -119,6 +119,20 @@ $time_z='—';
 
 
 
+$result_uuwe = mysql_time_query($link, 'select status from trips where id="' . ht($row_8["id"]) . '"');
+$num_results_uuwe = $result_uuwe->num_rows;
+
+if ($num_results_uuwe != 0) {
+    $row_uuwe = mysqli_fetch_assoc($result_uuwe);
+
+
+}
+
+
+$cancel_class='';
+if($row_uuwe["status"]==2) {
+    $cancel_class='cancel_trips';
+}
 
 
 
@@ -253,6 +267,10 @@ if(($role->permission('Туры','S'))or($sign_admin==1)) {
     $js_mod='js-status-trips';
 }
 
+
+if($row_uuwe["status"]==2) {
+    $task_cloud_block.='<div class="status_admin s_a_1 js-update-cancel-trips" style="background-color: #fd8080 !important; margin-right:5px;">аннулирован</div>';
+}
 
 if(($row_8["buy_clients"]==1)and($row_8["buy_operator"]==1))
 {
@@ -1063,8 +1081,61 @@ if($row_8["comment"]!='') {
 if($row_8["status_admin"]==0) {
     $task_cloud_block1 .= '<li class="tabs_004U edit-li-tr"><a href="tours/' . $row_8["id"] . '/" class="edit-trips-all" data-tooltip="Изменить" ></a></li>';
 }
-$task_cloud_block1 .= '<li class="tabs_004U annul-li-tr"><a href="" class="edit-trips-all1" data-tooltip="Аннулировать" ></a></li>';
 
+
+
+//может только сам создатель или его управляющий или админ
+$mas_responsible=array();
+array_push($mas_responsible,$row_8["id_user"]);
+
+$tabs_menu_x_visible[4]=0;
+if($row_8["id_user"]!=0)
+{
+    if(($sign_admin!=1))
+    {
+
+        if($row_8["id_user"]==$id_user)
+        {
+            $tabs_menu_x_visible[4]="1";
+        }
+
+        if (in_array($id_user, $mas_responsible))
+        {
+            $tabs_menu_x_visible[4]="1";
+        } else
+        {
+            //может он управляющий кого то кто должен выполнить эту задачу тогда ему тоже можно ее выполнить
+            $subo_x = array();
+            foreach ($mas_responsible as $key => $value)
+            {
+                $subo_x = array_merge($subo_x, all_chief($value,$link));
+
+            }
+            $subo_x= array_unique($subo_x);
+
+
+            if ((in_array($id_user, $subo_x)))
+            {
+                $tabs_menu_x_visible[4]="1";
+            }
+
+        }
+    }  else
+    {
+        $tabs_menu_x_visible[4]="1";
+    }
+
+}
+
+if($tabs_menu_x_visible[4]=="1") {
+
+    if ($row_uuwe["status"] == 1) {
+        $task_cloud_block1 .= '<li class="tabs_004U annul-li-tr" id="0"><a  class="edit-trips-all1" data-tooltip="Аннулировать" ></a></li>';
+    } else {
+        $task_cloud_block1 .= '<li class="tabs_004U annul-li-tr" id="0"><a  class="edit-trips-all2" data-tooltip="Отменить Аннуляцию" ></a></li>';
+    }
+
+}
 
 
 if(($_GET["menu_id"]!=0)and($_GET["mm"]==1)) {
