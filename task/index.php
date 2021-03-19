@@ -1047,7 +1047,7 @@ if ((( isset($_COOKIE["su_7ta".$id_user]))and($_COOKIE["su_7ta".$id_user]=='1'))
   
   where A.visible=1 '.$sql_su2.' '.$sql_su1.' '.$sql_su3.' '.$sql_su4.' '.$sql_su7.' '.$sql_order.' '.limitPage('n_st',$count_write);
 	
-echo($sql_k);
+//echo($sql_k);
 	
   $result_t2=mysql_time_query($link,$sql_k);
 	  
