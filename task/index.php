@@ -1051,9 +1051,7 @@ if ((( isset($_COOKIE["su_7ta".$id_user]))and($_COOKIE["su_7ta".$id_user]=='1'))
 	
   $result_t2=mysql_time_query($link,$sql_k);
 	  
-		
-				
-	  
+
   $sql_count='Select 
   
   count(DISTINCT A.id) as kol
