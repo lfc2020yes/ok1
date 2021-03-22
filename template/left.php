@@ -59,10 +59,10 @@ echo'<i>'.$row_uu["name_role"].'</i>
 </div></div> 
 <?
 
-$nav_text=array("Задачи","Финансы","Заявки","Обращения","Туры","Клиенты","Туроператоры","Сотрудники","Отчеты","Договора","Статистика","Настройки");
-$nav_url=array("task","finance","booking","preorders","tours","clients","touroperator","users","reports","contracts","statistic_new","settings");
-$nav_plus=array("1","0","0","1","2","1","0","0","0","0","0","0");
-$nav_url_a=array("","","","","tours/add/","","","","","","","");
+$nav_text=array("Задачи","Финансы","Заявки","Обращения","Туры","Клиенты","Туроператоры","Сотрудники","Отчеты","Бухгалтерия","Договора","Статистика","Настройки");
+$nav_url=array("task","finance","booking","preorders","tours","clients","touroperator","users","reports","accounting","contracts","statistic_new","settings");
+$nav_plus=array("1","0","0","1","2","1","0","0","0","0","0","0","0");
+$nav_url_a=array("","","","","tours/add/","","","","","","","","");
 
 /*
 $nav_text=array("Задачи","Заявки","Клиенты","Туроператоры","Работники","Отчеты","Статистика");

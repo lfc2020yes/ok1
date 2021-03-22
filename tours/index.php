@@ -494,7 +494,7 @@ $("#date_table").datepicker({
 range: 'period', // режим - выбор периода
 numberOfMonths: 2,	
 autoclose: true,					
-minDate: "-1Y", maxDate: "+0D",				
+minDate: "-2Y", maxDate: "+0D",
 onSelect: function(dateText, inst, extensionRange) {
 
 	$('#date_table').val(jQuery.datepicker.formatDate('d MM yy'+' г.',extensionRange.startDate) + ' - ' + jQuery.datepicker.formatDate('d MM yy'+' г.',extensionRange.endDate));
