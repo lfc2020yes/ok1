@@ -26766,7 +26766,7 @@ position: absolute;}  }
   display: none;
 }
 
-.preorders_block_global, .preorders_block_history, .doc_block_contracts {
+.preorders_block_global, .preorders_block_history, .doc_block_contracts, .doc_block_contracts1 {
   /*border-bottom: 1px solid #cecece;*/
   -webkit-flex-wrap: wrap;
   -moz-flex-wrap: wrap;
@@ -26788,25 +26788,25 @@ position: absolute;}  }
   margin-bottom: 10px !important;
   width: 100%;
 }
-.preorders_block_global .issue-block, .preorders_block_history .issue-block, .doc_block_contracts .issue-block {
+.preorders_block_global .issue-block, .preorders_block_history .issue-block, .doc_block_contracts .issue-block, .doc_block_contracts1 .issue-block {
   position: relative;
   font-size: 12px;
 }
-.preorders_block_global .issue-block .form-rate-ok-doc, .preorders_block_history .issue-block .form-rate-ok-doc, .doc_block_contracts .issue-block .form-rate-ok-doc {
+.preorders_block_global .issue-block .form-rate-ok-doc, .preorders_block_history .issue-block .form-rate-ok-doc, .doc_block_contracts .issue-block .form-rate-ok-doc, .doc_block_contracts1 .issue-block .form-rate-ok-doc {
   top: -20px !important;
   left: 0px !important;
   width: 170px;
   z-index: 19;
 }
-.preorders_block_global .c_start, .preorders_block_global .c_end, .preorders_block_history .c_start, .preorders_block_history .c_end, .doc_block_contracts .c_start, .doc_block_contracts .c_end {
+.preorders_block_global .c_start, .preorders_block_global .c_end, .preorders_block_history .c_start, .preorders_block_history .c_end, .doc_block_contracts .c_start, .doc_block_contracts .c_end, .doc_block_contracts1 .c_start, .doc_block_contracts1 .c_end {
   white-space: nowrap;
   position: relative;
   padding-left: 0px;
 }
-.preorders_block_global .c_start .oo_date, .preorders_block_global .c_end .oo_date, .preorders_block_history .c_start .oo_date, .preorders_block_history .c_end .oo_date, .doc_block_contracts .c_start .oo_date, .doc_block_contracts .c_end .oo_date {
+.preorders_block_global .c_start .oo_date, .preorders_block_global .c_end .oo_date, .preorders_block_history .c_start .oo_date, .preorders_block_history .c_end .oo_date, .doc_block_contracts .c_start .oo_date, .doc_block_contracts .c_end .oo_date, .doc_block_contracts1 .c_start .oo_date, .doc_block_contracts1 .c_end .oo_date {
   font-size: 12px;
 }
-.preorders_block_global .c_start i::before, .preorders_block_global .c_end i::before, .preorders_block_history .c_start i::before, .preorders_block_history .c_end i::before, .doc_block_contracts .c_start i::before, .doc_block_contracts .c_end i::before {
+.preorders_block_global .c_start i::before, .preorders_block_global .c_end i::before, .preorders_block_history .c_start i::before, .preorders_block_history .c_end i::before, .doc_block_contracts .c_start i::before, .doc_block_contracts .c_end i::before, .doc_block_contracts1 .c_start i::before, .doc_block_contracts1 .c_end i::before {
   content: "y";
   font-family: "icon1";
   font-size: 20px;
@@ -26818,40 +26818,40 @@ position: absolute;}  }
   transform: rotate(-90deg);
   position: absolute;
 }
-.preorders_block_global .c_end i::before, .preorders_block_history .c_end i::before, .doc_block_contracts .c_end i::before {
+.preorders_block_global .c_end i::before, .preorders_block_history .c_end i::before, .doc_block_contracts .c_end i::before, .doc_block_contracts1 .c_end i::before {
   transform: rotate(90deg);
   left: -19px;
 }
-.preorders_block_global .new-say-doc, .preorders_block_history .new-say-doc, .doc_block_contracts .new-say-doc {
+.preorders_block_global .new-say-doc, .preorders_block_history .new-say-doc, .doc_block_contracts .new-say-doc, .doc_block_contracts1 .new-say-doc {
   border: 3px solid #24c32d !important;
 }
-.preorders_block_global .sroki-2020-xto, .preorders_block_history .sroki-2020-xto, .doc_block_contracts .sroki-2020-xto {
+.preorders_block_global .sroki-2020-xto, .preorders_block_history .sroki-2020-xto, .doc_block_contracts .sroki-2020-xto, .doc_block_contracts1 .sroki-2020-xto {
   font-family: GEInspiraBold;
   padding-top: 10px;
 }
-.preorders_block_global .red_proc_sroki, .preorders_block_history .red_proc_sroki, .doc_block_contracts .red_proc_sroki {
+.preorders_block_global .red_proc_sroki, .preorders_block_history .red_proc_sroki, .doc_block_contracts .red_proc_sroki, .doc_block_contracts1 .red_proc_sroki {
   background-color: #fd8080;
   color: #fff;
   padding: 2px;
 }
-.preorders_block_global .yellow_proc_sroki, .preorders_block_history .yellow_proc_sroki, .doc_block_contracts .yellow_proc_sroki {
+.preorders_block_global .yellow_proc_sroki, .preorders_block_history .yellow_proc_sroki, .doc_block_contracts .yellow_proc_sroki, .doc_block_contracts1 .yellow_proc_sroki {
   padding: 2px;
   background-color: #ffec57;
   color: rgba(0, 0, 0, 0.7);
 }
-.preorders_block_global .oo_date, .preorders_block_history .oo_date, .doc_block_contracts .oo_date {
+.preorders_block_global .oo_date, .preorders_block_history .oo_date, .doc_block_contracts .oo_date, .doc_block_contracts1 .oo_date {
   color: rgba(0, 0, 0, 0.4);
   font-family: GEInspiraRegular;
   white-space: nowrap;
   display: inline-block;
 }
-.preorders_block_global .red-jj, .preorders_block_history .red-jj, .doc_block_contracts .red-jj {
+.preorders_block_global .red-jj, .preorders_block_history .red-jj, .doc_block_contracts .red-jj, .doc_block_contracts1 .red-jj {
   border-bottom: 2px solid #fd8080;
 }
-.preorders_block_global .orange-jj, .preorders_block_history .orange-jj, .doc_block_contracts .orange-jj {
+.preorders_block_global .orange-jj, .preorders_block_history .orange-jj, .doc_block_contracts .orange-jj, .doc_block_contracts1 .orange-jj {
   border-bottom: 2px solid #ffec57;
 }
-.preorders_block_global .form-rate-ok, .preorders_block_history .form-rate-ok, .doc_block_contracts .form-rate-ok {
+.preorders_block_global .form-rate-ok, .preorders_block_history .form-rate-ok, .doc_block_contracts .form-rate-ok, .doc_block_contracts1 .form-rate-ok {
   -moz-transform: scaleY(0);
   -o-transform: scaleY(0);
   -ms-transform: scaleY(0);
@@ -26878,12 +26878,12 @@ position: absolute;}  }
   -o-transition: transform 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms, opacity 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
   transition: transform 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms, opacity 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
 }
-.preorders_block_global .form-rate-ok .rate-input, .preorders_block_history .form-rate-ok .rate-input, .doc_block_contracts .form-rate-ok .rate-input {
+.preorders_block_global .form-rate-ok .rate-input, .preorders_block_history .form-rate-ok .rate-input, .doc_block_contracts .form-rate-ok .rate-input, .doc_block_contracts1 .form-rate-ok .rate-input {
   width: calc( 100% - 50px );
   padding-right: 10px;
   padding-top: 8px;
 }
-.preorders_block_global .form-rate-ok .rate-button, .preorders_block_history .form-rate-ok .rate-button, .doc_block_contracts .form-rate-ok .rate-button {
+.preorders_block_global .form-rate-ok .rate-button, .preorders_block_history .form-rate-ok .rate-button, .doc_block_contracts .form-rate-ok .rate-button, .doc_block_contracts1 .form-rate-ok .rate-button {
   border-radius: 2px;
   width: 50px;
   text-align: center;
@@ -26895,17 +26895,17 @@ position: absolute;}  }
   cursor: pointer;
   text-transform: uppercase;
 }
-.preorders_block_global .form-rate-ok .rates_visible, .preorders_block_history .form-rate-ok .rates_visible, .doc_block_contracts .form-rate-ok .rates_visible {
+.preorders_block_global .form-rate-ok .rates_visible, .preorders_block_history .form-rate-ok .rates_visible, .doc_block_contracts .form-rate-ok .rates_visible, .doc_block_contracts1 .form-rate-ok .rates_visible {
   text-align: left;
 }
-.preorders_block_global .show-form-rate, .preorders_block_history .show-form-rate, .doc_block_contracts .show-form-rate {
+.preorders_block_global .show-form-rate, .preorders_block_history .show-form-rate, .doc_block_contracts .show-form-rate, .doc_block_contracts1 .show-form-rate {
   -moz-transform: scaleY(1);
   -o-transform: scaleY(1);
   -ms-transform: scaleY(1);
   -webkit-transform: scaleY(1);
   transform: scaleY(1);
 }
-.preorders_block_global .form-rate-ok1, .preorders_block_history .form-rate-ok1, .doc_block_contracts .form-rate-ok1 {
+.preorders_block_global .form-rate-ok1, .preorders_block_history .form-rate-ok1, .doc_block_contracts .form-rate-ok1, .doc_block_contracts1 .form-rate-ok1 {
   -moz-transform: scaleY(0);
   -o-transform: scaleY(0);
   -ms-transform: scaleY(0);
@@ -26932,12 +26932,12 @@ position: absolute;}  }
   -o-transition: transform 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms, opacity 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
   transition: transform 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms, opacity 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
 }
-.preorders_block_global .form-rate-ok1 .rate-input, .preorders_block_history .form-rate-ok1 .rate-input, .doc_block_contracts .form-rate-ok1 .rate-input {
+.preorders_block_global .form-rate-ok1 .rate-input, .preorders_block_history .form-rate-ok1 .rate-input, .doc_block_contracts .form-rate-ok1 .rate-input, .doc_block_contracts1 .form-rate-ok1 .rate-input {
   width: calc( 100% - 50px );
   padding-right: 10px;
   padding-top: 8px;
 }
-.preorders_block_global .form-rate-ok1 .rate-button, .preorders_block_history .form-rate-ok1 .rate-button, .doc_block_contracts .form-rate-ok1 .rate-button {
+.preorders_block_global .form-rate-ok1 .rate-button, .preorders_block_history .form-rate-ok1 .rate-button, .doc_block_contracts .form-rate-ok1 .rate-button, .doc_block_contracts1 .form-rate-ok1 .rate-button {
   border-radius: 2px;
   width: 50px;
   text-align: center;
@@ -26949,29 +26949,29 @@ position: absolute;}  }
   cursor: pointer;
   text-transform: uppercase;
 }
-.preorders_block_global .form-rate-ok1 .rates_visible, .preorders_block_history .form-rate-ok1 .rates_visible, .doc_block_contracts .form-rate-ok1 .rates_visible {
+.preorders_block_global .form-rate-ok1 .rates_visible, .preorders_block_history .form-rate-ok1 .rates_visible, .doc_block_contracts .form-rate-ok1 .rates_visible, .doc_block_contracts1 .form-rate-ok1 .rates_visible {
   text-align: left;
 }
-.preorders_block_global .show-form-rate1, .preorders_block_history .show-form-rate1, .doc_block_contracts .show-form-rate1 {
+.preorders_block_global .show-form-rate1, .preorders_block_history .show-form-rate1, .doc_block_contracts .show-form-rate1, .doc_block_contracts1 .show-form-rate1 {
   -moz-transform: scaleY(1);
   -o-transform: scaleY(1);
   -ms-transform: scaleY(1);
   -webkit-transform: scaleY(1);
   transform: scaleY(1);
 }
-.preorders_block_global .hide-cost, .preorders_block_history .hide-cost, .doc_block_contracts .hide-cost {
+.preorders_block_global .hide-cost, .preorders_block_history .hide-cost, .doc_block_contracts .hide-cost, .doc_block_contracts1 .hide-cost {
   display: none;
 }
-.preorders_block_global .visible_rate, .preorders_block_history .visible_rate, .doc_block_contracts .visible_rate {
+.preorders_block_global .visible_rate, .preorders_block_history .visible_rate, .doc_block_contracts .visible_rate, .doc_block_contracts1 .visible_rate {
   position: relative;
 }
-.preorders_block_global .visible_rate .eye-wall-trips, .preorders_block_history .visible_rate .eye-wall-trips, .doc_block_contracts .visible_rate .eye-wall-trips {
+.preorders_block_global .visible_rate .eye-wall-trips, .preorders_block_history .visible_rate .eye-wall-trips, .doc_block_contracts .visible_rate .eye-wall-trips, .doc_block_contracts1 .visible_rate .eye-wall-trips {
   display: none;
 }
-.preorders_block_global .visible_rate .eye-my, .preorders_block_history .visible_rate .eye-my, .doc_block_contracts .visible_rate .eye-my {
+.preorders_block_global .visible_rate .eye-my, .preorders_block_history .visible_rate .eye-my, .doc_block_contracts .visible_rate .eye-my, .doc_block_contracts1 .visible_rate .eye-my {
   display: inline-block !important;
 }
-.preorders_block_global .mm_w-trips, .preorders_block_global .mm_w-preorders, .preorders_block_history .mm_w-trips, .preorders_block_history .mm_w-preorders, .doc_block_contracts .mm_w-trips, .doc_block_contracts .mm_w-preorders {
+.preorders_block_global .mm_w-trips, .preorders_block_global .mm_w-preorders, .preorders_block_history .mm_w-trips, .preorders_block_history .mm_w-preorders, .doc_block_contracts .mm_w-trips, .doc_block_contracts .mm_w-preorders, .doc_block_contracts1 .mm_w-trips, .doc_block_contracts1 .mm_w-preorders {
   height: 0px;
   overflow: hidden;
   -webkit-transition: all 0.4s cubic-bezier(0.42, 0.01, 0.23, 1);
@@ -26981,7 +26981,7 @@ position: absolute;}  }
   transition: all 0.4s cubic-bezier(0.42, 0.01, 0.23, 1);
   width: 100%;
 }
-.preorders_block_global .mm_w-trips .tabs_hedi, .preorders_block_global .mm_w-preorders .tabs_hedi, .preorders_block_history .mm_w-trips .tabs_hedi, .preorders_block_history .mm_w-preorders .tabs_hedi, .doc_block_contracts .mm_w-trips .tabs_hedi, .doc_block_contracts .mm_w-preorders .tabs_hedi {
+.preorders_block_global .mm_w-trips .tabs_hedi, .preorders_block_global .mm_w-preorders .tabs_hedi, .preorders_block_history .mm_w-trips .tabs_hedi, .preorders_block_history .mm_w-preorders .tabs_hedi, .doc_block_contracts .mm_w-trips .tabs_hedi, .doc_block_contracts .mm_w-preorders .tabs_hedi, .doc_block_contracts1 .mm_w-trips .tabs_hedi, .doc_block_contracts1 .mm_w-preorders .tabs_hedi {
   background-color: #fff;
   display: -webkit-box;
   display: -moz-box;
@@ -26994,12 +26994,12 @@ position: absolute;}  }
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 @media only screen and (max-width: 639px) {
-  .preorders_block_global .mm_w-trips .tabs_hedi, .preorders_block_global .mm_w-preorders .tabs_hedi, .preorders_block_history .mm_w-trips .tabs_hedi, .preorders_block_history .mm_w-preorders .tabs_hedi, .doc_block_contracts .mm_w-trips .tabs_hedi, .doc_block_contracts .mm_w-preorders .tabs_hedi {
+  .preorders_block_global .mm_w-trips .tabs_hedi, .preorders_block_global .mm_w-preorders .tabs_hedi, .preorders_block_history .mm_w-trips .tabs_hedi, .preorders_block_history .mm_w-preorders .tabs_hedi, .doc_block_contracts .mm_w-trips .tabs_hedi, .doc_block_contracts .mm_w-preorders .tabs_hedi, .doc_block_contracts1 .mm_w-trips .tabs_hedi, .doc_block_contracts1 .mm_w-preorders .tabs_hedi {
     overflow-x: scroll;
     padding-left: 0px;
   }
 }
-.preorders_block_global .mm_w-trips .tabs_hedi li, .preorders_block_global .mm_w-preorders .tabs_hedi li, .preorders_block_history .mm_w-trips .tabs_hedi li, .preorders_block_history .mm_w-preorders .tabs_hedi li, .doc_block_contracts .mm_w-trips .tabs_hedi li, .doc_block_contracts .mm_w-preorders .tabs_hedi li {
+.preorders_block_global .mm_w-trips .tabs_hedi li, .preorders_block_global .mm_w-preorders .tabs_hedi li, .preorders_block_history .mm_w-trips .tabs_hedi li, .preorders_block_history .mm_w-preorders .tabs_hedi li, .doc_block_contracts .mm_w-trips .tabs_hedi li, .doc_block_contracts .mm_w-preorders .tabs_hedi li, .doc_block_contracts1 .mm_w-trips .tabs_hedi li, .doc_block_contracts1 .mm_w-preorders .tabs_hedi li {
   background-color: #fff;
   color: rgba(0, 0, 0, 0.4);
   font-family: "GEInspiraBold";
@@ -27018,43 +27018,43 @@ position: absolute;}  }
   cursor: pointer;
 }
 @media only screen and (max-width: 639px) {
-  .preorders_block_global .mm_w-trips .tabs_hedi li, .preorders_block_global .mm_w-preorders .tabs_hedi li, .preorders_block_history .mm_w-trips .tabs_hedi li, .preorders_block_history .mm_w-preorders .tabs_hedi li, .doc_block_contracts .mm_w-trips .tabs_hedi li, .doc_block_contracts .mm_w-preorders .tabs_hedi li {
+  .preorders_block_global .mm_w-trips .tabs_hedi li, .preorders_block_global .mm_w-preorders .tabs_hedi li, .preorders_block_history .mm_w-trips .tabs_hedi li, .preorders_block_history .mm_w-preorders .tabs_hedi li, .doc_block_contracts .mm_w-trips .tabs_hedi li, .doc_block_contracts .mm_w-preorders .tabs_hedi li, .doc_block_contracts1 .mm_w-trips .tabs_hedi li, .doc_block_contracts1 .mm_w-preorders .tabs_hedi li {
     padding: 20px 10px;
     white-space: nowrap;
   }
 }
-.preorders_block_global .mm_w-trips .tabs_hedi li.active, .preorders_block_global .mm_w-preorders .tabs_hedi li.active, .preorders_block_history .mm_w-trips .tabs_hedi li.active, .preorders_block_history .mm_w-preorders .tabs_hedi li.active, .doc_block_contracts .mm_w-trips .tabs_hedi li.active, .doc_block_contracts .mm_w-preorders .tabs_hedi li.active {
+.preorders_block_global .mm_w-trips .tabs_hedi li.active, .preorders_block_global .mm_w-preorders .tabs_hedi li.active, .preorders_block_history .mm_w-trips .tabs_hedi li.active, .preorders_block_history .mm_w-preorders .tabs_hedi li.active, .doc_block_contracts .mm_w-trips .tabs_hedi li.active, .doc_block_contracts .mm_w-preorders .tabs_hedi li.active, .doc_block_contracts1 .mm_w-trips .tabs_hedi li.active, .doc_block_contracts1 .mm_w-preorders .tabs_hedi li.active {
   border-bottom: 2px solid #00aeef;
   color: rgba(0, 0, 0, 0.7);
 }
-.preorders_block_global .mm_w-trips .tabs_hedi li.active:hover, .preorders_block_global .mm_w-preorders .tabs_hedi li.active:hover, .preorders_block_history .mm_w-trips .tabs_hedi li.active:hover, .preorders_block_history .mm_w-preorders .tabs_hedi li.active:hover, .doc_block_contracts .mm_w-trips .tabs_hedi li.active:hover, .doc_block_contracts .mm_w-preorders .tabs_hedi li.active:hover {
+.preorders_block_global .mm_w-trips .tabs_hedi li.active:hover, .preorders_block_global .mm_w-preorders .tabs_hedi li.active:hover, .preorders_block_history .mm_w-trips .tabs_hedi li.active:hover, .preorders_block_history .mm_w-preorders .tabs_hedi li.active:hover, .doc_block_contracts .mm_w-trips .tabs_hedi li.active:hover, .doc_block_contracts .mm_w-preorders .tabs_hedi li.active:hover, .doc_block_contracts1 .mm_w-trips .tabs_hedi li.active:hover, .doc_block_contracts1 .mm_w-preorders .tabs_hedi li.active:hover {
   border-bottom: 2px solid #00aeef;
 }
-.preorders_block_global .mm_w-trips .tabs_hedi li:hover, .preorders_block_global .mm_w-preorders .tabs_hedi li:hover, .preorders_block_history .mm_w-trips .tabs_hedi li:hover, .preorders_block_history .mm_w-preorders .tabs_hedi li:hover, .doc_block_contracts .mm_w-trips .tabs_hedi li:hover, .doc_block_contracts .mm_w-preorders .tabs_hedi li:hover {
+.preorders_block_global .mm_w-trips .tabs_hedi li:hover, .preorders_block_global .mm_w-preorders .tabs_hedi li:hover, .preorders_block_history .mm_w-trips .tabs_hedi li:hover, .preorders_block_history .mm_w-preorders .tabs_hedi li:hover, .doc_block_contracts .mm_w-trips .tabs_hedi li:hover, .doc_block_contracts .mm_w-preorders .tabs_hedi li:hover, .doc_block_contracts1 .mm_w-trips .tabs_hedi li:hover, .doc_block_contracts1 .mm_w-preorders .tabs_hedi li:hover {
   border-bottom: 2px solid rgba(0, 0, 0, 0.1);
   color: rgba(0, 0, 0, 0.7);
 }
 @media only screen and (max-width: 639px) {
-  .preorders_block_global .mm_w-trips .tabs_hedi_add, .preorders_block_global .mm_w-preorders .tabs_hedi_add, .preorders_block_history .mm_w-trips .tabs_hedi_add, .preorders_block_history .mm_w-preorders .tabs_hedi_add, .doc_block_contracts .mm_w-trips .tabs_hedi_add, .doc_block_contracts .mm_w-preorders .tabs_hedi_add {
+  .preorders_block_global .mm_w-trips .tabs_hedi_add, .preorders_block_global .mm_w-preorders .tabs_hedi_add, .preorders_block_history .mm_w-trips .tabs_hedi_add, .preorders_block_history .mm_w-preorders .tabs_hedi_add, .doc_block_contracts .mm_w-trips .tabs_hedi_add, .doc_block_contracts .mm_w-preorders .tabs_hedi_add, .doc_block_contracts1 .mm_w-trips .tabs_hedi_add, .doc_block_contracts1 .mm_w-preorders .tabs_hedi_add {
     overflow: hidden;
     width: 100%;
   }
 }
 @media only screen and (max-width: 639px) {
-  .preorders_block_global .mm_w-trips, .preorders_block_global .mm_w-preorders, .preorders_block_history .mm_w-trips, .preorders_block_history .mm_w-preorders, .doc_block_contracts .mm_w-trips, .doc_block_contracts .mm_w-preorders {
+  .preorders_block_global .mm_w-trips, .preorders_block_global .mm_w-preorders, .preorders_block_history .mm_w-trips, .preorders_block_history .mm_w-preorders, .doc_block_contracts .mm_w-trips, .doc_block_contracts .mm_w-preorders, .doc_block_contracts1 .mm_w-trips, .doc_block_contracts1 .mm_w-preorders {
     height: 58px !important;
   }
 }
-.preorders_block_global .active-trips-menu, .preorders_block_history .active-trips-menu, .doc_block_contracts .active-trips-menu {
+.preorders_block_global .active-trips-menu, .preorders_block_history .active-trips-menu, .doc_block_contracts .active-trips-menu, .doc_block_contracts1 .active-trips-menu {
   height: 58px !important;
   height: 68px !important;
   border-top: 10px solid rgba(0, 0, 0, 0.05);
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
-.preorders_block_global:hover .mm_w-trips, .preorders_block_global:hover .mm_w-preorders, .preorders_block_history:hover .mm_w-trips, .preorders_block_history:hover .mm_w-preorders, .doc_block_contracts:hover .mm_w-trips, .doc_block_contracts:hover .mm_w-preorders {
+.preorders_block_global:hover .mm_w-trips, .preorders_block_global:hover .mm_w-preorders, .preorders_block_history:hover .mm_w-trips, .preorders_block_history:hover .mm_w-preorders, .doc_block_contracts:hover .mm_w-trips, .doc_block_contracts:hover .mm_w-preorders, .doc_block_contracts1:hover .mm_w-trips, .doc_block_contracts1:hover .mm_w-preorders {
   height: 58px;
 }
-.preorders_block_global .pass_wh_trips, .preorders_block_history .pass_wh_trips, .doc_block_contracts .pass_wh_trips {
+.preorders_block_global .pass_wh_trips, .preorders_block_history .pass_wh_trips, .doc_block_contracts .pass_wh_trips, .doc_block_contracts1 .pass_wh_trips {
   color: rgba(0, 0, 0, 0.2);
   font-family: GEInspiraBold;
   text-transform: uppercase;
@@ -27064,7 +27064,7 @@ position: absolute;}  }
   padding-top: 13px;
   font-weight: 400;
 }
-.preorders_block_global .pass_wh_trips label, .preorders_block_history .pass_wh_trips label, .doc_block_contracts .pass_wh_trips label {
+.preorders_block_global .pass_wh_trips label, .preorders_block_history .pass_wh_trips label, .doc_block_contracts .pass_wh_trips label, .doc_block_contracts1 .pass_wh_trips label {
   font-family: GEInspiraRegular;
   position: absolute;
   top: 0;
@@ -27074,7 +27074,7 @@ position: absolute;}  }
   font-weight: 400;
   color: rgba(0, 0, 0, 0.3);
 }
-.preorders_block_global .pass_wh_trips .kuda-trips, .preorders_block_global .pass_wh_trips .date-trips, .preorders_block_history .pass_wh_trips .kuda-trips, .preorders_block_history .pass_wh_trips .date-trips, .doc_block_contracts .pass_wh_trips .kuda-trips, .doc_block_contracts .pass_wh_trips .date-trips {
+.preorders_block_global .pass_wh_trips .kuda-trips, .preorders_block_global .pass_wh_trips .date-trips, .preorders_block_history .pass_wh_trips .kuda-trips, .preorders_block_history .pass_wh_trips .date-trips, .doc_block_contracts .pass_wh_trips .kuda-trips, .doc_block_contracts .pass_wh_trips .date-trips, .doc_block_contracts1 .pass_wh_trips .kuda-trips, .doc_block_contracts1 .pass_wh_trips .date-trips {
   font-family: "GEInspiraRegular";
   color: rgba(0, 0, 0, 0.7);
   font-size: 11px;
@@ -27083,18 +27083,18 @@ position: absolute;}  }
   text-transform: uppercase;
   display: block;
 }
-.preorders_block_global .pass_wh_trips .date-trips, .preorders_block_history .pass_wh_trips .date-trips, .doc_block_contracts .pass_wh_trips .date-trips {
+.preorders_block_global .pass_wh_trips .date-trips, .preorders_block_history .pass_wh_trips .date-trips, .doc_block_contracts .pass_wh_trips .date-trips, .doc_block_contracts1 .pass_wh_trips .date-trips {
   font-family: "GEInspiraBold";
   color: rgba(0, 0, 0, 0.7);
   font-size: 14px;
 }
-.preorders_block_global .pass_wh_trips span.obi, .preorders_block_history .pass_wh_trips span.obi, .doc_block_contracts .pass_wh_trips span.obi {
+.preorders_block_global .pass_wh_trips span.obi, .preorders_block_history .pass_wh_trips span.obi, .doc_block_contracts .pass_wh_trips span.obi, .doc_block_contracts1 .pass_wh_trips span.obi {
   font-family: "GEInspiraBold";
   color: rgba(0, 0, 0, 0.7);
   font-size: 14px;
   line-height: 14px;
 }
-.preorders_block_global .pass_wh_trips a, .preorders_block_history .pass_wh_trips a, .doc_block_contracts .pass_wh_trips a {
+.preorders_block_global .pass_wh_trips a, .preorders_block_history .pass_wh_trips a, .doc_block_contracts .pass_wh_trips a, .doc_block_contracts1 .pass_wh_trips a {
   color: rgba(0, 0, 0, 0.7);
   text-decoration: none;
   cursor: pointer;
@@ -27104,10 +27104,10 @@ position: absolute;}  }
   line-height: 20px;
   color: rgba(0, 0, 0, 0.7);
 }
-.preorders_block_global .pass_wh_trips a:hover, .preorders_block_history .pass_wh_trips a:hover, .doc_block_contracts .pass_wh_trips a:hover {
+.preorders_block_global .pass_wh_trips a:hover, .preorders_block_history .pass_wh_trips a:hover, .doc_block_contracts .pass_wh_trips a:hover, .doc_block_contracts1 .pass_wh_trips a:hover {
   border-bottom: 1px solid #ccc;
 }
-.preorders_block_global .pass_wh_trips2, .preorders_block_global .pass_wh_trips3, .preorders_block_history .pass_wh_trips2, .preorders_block_history .pass_wh_trips3, .doc_block_contracts .pass_wh_trips2, .doc_block_contracts .pass_wh_trips3 {
+.preorders_block_global .pass_wh_trips2, .preorders_block_global .pass_wh_trips3, .preorders_block_history .pass_wh_trips2, .preorders_block_history .pass_wh_trips3, .doc_block_contracts .pass_wh_trips2, .doc_block_contracts .pass_wh_trips3, .doc_block_contracts1 .pass_wh_trips2, .doc_block_contracts1 .pass_wh_trips3 {
   color: rgba(0, 0, 0, 0.2);
   font-family: "GEInspiraBold";
   text-transform: uppercase;
@@ -27116,7 +27116,7 @@ position: absolute;}  }
   position: relative;
   font-weight: normal;
 }
-.preorders_block_global .pass_wh_trips2 label, .preorders_block_global .pass_wh_trips3 label, .preorders_block_history .pass_wh_trips2 label, .preorders_block_history .pass_wh_trips3 label, .doc_block_contracts .pass_wh_trips2 label, .doc_block_contracts .pass_wh_trips3 label {
+.preorders_block_global .pass_wh_trips2 label, .preorders_block_global .pass_wh_trips3 label, .preorders_block_history .pass_wh_trips2 label, .preorders_block_history .pass_wh_trips3 label, .doc_block_contracts .pass_wh_trips2 label, .doc_block_contracts .pass_wh_trips3 label, .doc_block_contracts1 .pass_wh_trips2 label, .doc_block_contracts1 .pass_wh_trips3 label {
   font-family: GEInspiraRegular;
   position: absolute;
   top: 0;
@@ -27126,7 +27126,7 @@ position: absolute;}  }
   font-weight: 400;
   color: rgba(0, 0, 0, 0.3);
 }
-.preorders_block_global .pass_wh_trips2 .kuda-trips, .preorders_block_global .pass_wh_trips2 .date-trips, .preorders_block_global .pass_wh_trips3 .kuda-trips, .preorders_block_global .pass_wh_trips3 .date-trips, .preorders_block_history .pass_wh_trips2 .kuda-trips, .preorders_block_history .pass_wh_trips2 .date-trips, .preorders_block_history .pass_wh_trips3 .kuda-trips, .preorders_block_history .pass_wh_trips3 .date-trips, .doc_block_contracts .pass_wh_trips2 .kuda-trips, .doc_block_contracts .pass_wh_trips2 .date-trips, .doc_block_contracts .pass_wh_trips3 .kuda-trips, .doc_block_contracts .pass_wh_trips3 .date-trips {
+.preorders_block_global .pass_wh_trips2 .kuda-trips, .preorders_block_global .pass_wh_trips2 .date-trips, .preorders_block_global .pass_wh_trips3 .kuda-trips, .preorders_block_global .pass_wh_trips3 .date-trips, .preorders_block_history .pass_wh_trips2 .kuda-trips, .preorders_block_history .pass_wh_trips2 .date-trips, .preorders_block_history .pass_wh_trips3 .kuda-trips, .preorders_block_history .pass_wh_trips3 .date-trips, .doc_block_contracts .pass_wh_trips2 .kuda-trips, .doc_block_contracts .pass_wh_trips2 .date-trips, .doc_block_contracts .pass_wh_trips3 .kuda-trips, .doc_block_contracts .pass_wh_trips3 .date-trips, .doc_block_contracts1 .pass_wh_trips2 .kuda-trips, .doc_block_contracts1 .pass_wh_trips2 .date-trips, .doc_block_contracts1 .pass_wh_trips3 .kuda-trips, .doc_block_contracts1 .pass_wh_trips3 .date-trips {
   font-family: "GEInspiraRegular";
   color: rgba(0, 0, 0, 0.7);
   font-size: 11px;
@@ -27135,18 +27135,18 @@ position: absolute;}  }
   text-transform: uppercase;
   display: block;
 }
-.preorders_block_global .pass_wh_trips2 .date-trips, .preorders_block_global .pass_wh_trips3 .date-trips, .preorders_block_history .pass_wh_trips2 .date-trips, .preorders_block_history .pass_wh_trips3 .date-trips, .doc_block_contracts .pass_wh_trips2 .date-trips, .doc_block_contracts .pass_wh_trips3 .date-trips {
+.preorders_block_global .pass_wh_trips2 .date-trips, .preorders_block_global .pass_wh_trips3 .date-trips, .preorders_block_history .pass_wh_trips2 .date-trips, .preorders_block_history .pass_wh_trips3 .date-trips, .doc_block_contracts .pass_wh_trips2 .date-trips, .doc_block_contracts .pass_wh_trips3 .date-trips, .doc_block_contracts1 .pass_wh_trips2 .date-trips, .doc_block_contracts1 .pass_wh_trips3 .date-trips {
   font-family: "GEInspiraBold";
   color: rgba(0, 0, 0, 0.7);
   font-size: 14px;
 }
-.preorders_block_global .pass_wh_trips2 span.obi, .preorders_block_global .pass_wh_trips3 span.obi, .preorders_block_history .pass_wh_trips2 span.obi, .preorders_block_history .pass_wh_trips3 span.obi, .doc_block_contracts .pass_wh_trips2 span.obi, .doc_block_contracts .pass_wh_trips3 span.obi {
+.preorders_block_global .pass_wh_trips2 span.obi, .preorders_block_global .pass_wh_trips3 span.obi, .preorders_block_history .pass_wh_trips2 span.obi, .preorders_block_history .pass_wh_trips3 span.obi, .doc_block_contracts .pass_wh_trips2 span.obi, .doc_block_contracts .pass_wh_trips3 span.obi, .doc_block_contracts1 .pass_wh_trips2 span.obi, .doc_block_contracts1 .pass_wh_trips3 span.obi {
   font-family: "GEInspiraBold";
   color: rgba(0, 0, 0, 0.7);
   font-size: 14px;
   line-height: 14px;
 }
-.preorders_block_global .pass_wh_trips2 a, .preorders_block_global .pass_wh_trips3 a, .preorders_block_history .pass_wh_trips2 a, .preorders_block_history .pass_wh_trips3 a, .doc_block_contracts .pass_wh_trips2 a, .doc_block_contracts .pass_wh_trips3 a {
+.preorders_block_global .pass_wh_trips2 a, .preorders_block_global .pass_wh_trips3 a, .preorders_block_history .pass_wh_trips2 a, .preorders_block_history .pass_wh_trips3 a, .doc_block_contracts .pass_wh_trips2 a, .doc_block_contracts .pass_wh_trips3 a, .doc_block_contracts1 .pass_wh_trips2 a, .doc_block_contracts1 .pass_wh_trips3 a {
   color: rgba(0, 0, 0, 0.7);
   text-decoration: none;
   cursor: pointer;
@@ -27156,24 +27156,24 @@ position: absolute;}  }
   line-height: 20px;
   color: rgba(0, 0, 0, 0.7);
 }
-.preorders_block_global .pass_wh_trips2 a:hover, .preorders_block_global .pass_wh_trips3 a:hover, .preorders_block_history .pass_wh_trips2 a:hover, .preorders_block_history .pass_wh_trips3 a:hover, .doc_block_contracts .pass_wh_trips2 a:hover, .doc_block_contracts .pass_wh_trips3 a:hover {
+.preorders_block_global .pass_wh_trips2 a:hover, .preorders_block_global .pass_wh_trips3 a:hover, .preorders_block_history .pass_wh_trips2 a:hover, .preorders_block_history .pass_wh_trips3 a:hover, .doc_block_contracts .pass_wh_trips2 a:hover, .doc_block_contracts .pass_wh_trips3 a:hover, .doc_block_contracts1 .pass_wh_trips2 a:hover, .doc_block_contracts1 .pass_wh_trips3 a:hover {
   border-bottom: 1px solid #ccc;
 }
-.preorders_block_global .pass_wh_trips3, .preorders_block_history .pass_wh_trips3, .doc_block_contracts .pass_wh_trips3 {
+.preorders_block_global .pass_wh_trips3, .preorders_block_history .pass_wh_trips3, .doc_block_contracts .pass_wh_trips3, .doc_block_contracts1 .pass_wh_trips3 {
   display: inline-block;
   margin-bottom: 0px;
 }
-.preorders_block_global .commi-tips, .preorders_block_history .commi-tips, .doc_block_contracts .commi-tips {
+.preorders_block_global .commi-tips, .preorders_block_history .commi-tips, .doc_block_contracts .commi-tips, .doc_block_contracts1 .commi-tips {
   padding-bottom: 20px;
   border-bottom: 1px solid #ccc;
 }
 @media only screen and (max-width: 639px) {
-  .preorders_block_global .commi-tips, .preorders_block_history .commi-tips, .doc_block_contracts .commi-tips {
+  .preorders_block_global .commi-tips, .preorders_block_history .commi-tips, .doc_block_contracts .commi-tips, .doc_block_contracts1 .commi-tips {
     width: 50%;
     border-bottom: 0;
   }
 }
-.preorders_block_global .commi-tips .name-trips-opi, .preorders_block_history .commi-tips .name-trips-opi, .doc_block_contracts .commi-tips .name-trips-opi {
+.preorders_block_global .commi-tips .name-trips-opi, .preorders_block_history .commi-tips .name-trips-opi, .doc_block_contracts .commi-tips .name-trips-opi, .doc_block_contracts1 .commi-tips .name-trips-opi {
   color: rgba(0, 0, 0, 0.4);
   font-family: GEInspiraRegular;
   margin-top: 5px;
@@ -27182,44 +27182,44 @@ position: absolute;}  }
   font-size: 11px;
   cursor: pointer;
 }
-.preorders_block_global .commi-tips .name-trips-opi:hover, .preorders_block_history .commi-tips .name-trips-opi:hover, .doc_block_contracts .commi-tips .name-trips-opi:hover {
+.preorders_block_global .commi-tips .name-trips-opi:hover, .preorders_block_history .commi-tips .name-trips-opi:hover, .doc_block_contracts .commi-tips .name-trips-opi:hover, .doc_block_contracts1 .commi-tips .name-trips-opi:hover {
   border-bottom: 1px solid #ccc;
 }
-.preorders_block_global .commi-tips .cost_circle, .preorders_block_history .commi-tips .cost_circle, .doc_block_contracts .commi-tips .cost_circle {
+.preorders_block_global .commi-tips .cost_circle, .preorders_block_history .commi-tips .cost_circle, .doc_block_contracts .commi-tips .cost_circle, .doc_block_contracts1 .commi-tips .cost_circle {
   cursor: default;
   margin-top: 5px;
   line-height: 23px;
 }
-.preorders_block_global .commi-tips .cost_circle:hover, .preorders_block_history .commi-tips .cost_circle:hover, .doc_block_contracts .commi-tips .cost_circle:hover {
+.preorders_block_global .commi-tips .cost_circle:hover, .preorders_block_history .commi-tips .cost_circle:hover, .doc_block_contracts .commi-tips .cost_circle:hover, .doc_block_contracts1 .commi-tips .cost_circle:hover {
   border-bottom: 0px;
 }
-.preorders_block_global .commi-tips .red-trips, .preorders_block_history .commi-tips .red-trips, .doc_block_contracts .commi-tips .red-trips {
+.preorders_block_global .commi-tips .red-trips, .preorders_block_history .commi-tips .red-trips, .doc_block_contracts .commi-tips .red-trips, .doc_block_contracts1 .commi-tips .red-trips {
   border-bottom: 2px solid #fd8080;
 }
-.preorders_block_global .commi-tips .yellow-trips, .preorders_block_history .commi-tips .yellow-trips, .doc_block_contracts .commi-tips .yellow-trips {
+.preorders_block_global .commi-tips .yellow-trips, .preorders_block_history .commi-tips .yellow-trips, .doc_block_contracts .commi-tips .yellow-trips, .doc_block_contracts1 .commi-tips .yellow-trips {
   border-bottom: 2px solid #ffec57;
 }
-.preorders_block_global .commi-tips .green-trips, .preorders_block_history .commi-tips .green-trips, .doc_block_contracts .commi-tips .green-trips {
+.preorders_block_global .commi-tips .green-trips, .preorders_block_history .commi-tips .green-trips, .doc_block_contracts .commi-tips .green-trips, .doc_block_contracts1 .commi-tips .green-trips {
   border-bottom: 2px solid #24c32d;
 }
-.preorders_block_global .commi-tips .cost_all_trips, .preorders_block_history .commi-tips .cost_all_trips, .doc_block_contracts .commi-tips .cost_all_trips {
+.preorders_block_global .commi-tips .cost_all_trips, .preorders_block_history .commi-tips .cost_all_trips, .doc_block_contracts .commi-tips .cost_all_trips, .doc_block_contracts1 .commi-tips .cost_all_trips {
   margin-top: 0px;
   line-height: 14px;
 }
-.preorders_block_global .skidka-tips, .preorders_block_history .skidka-tips, .doc_block_contracts .skidka-tips {
+.preorders_block_global .skidka-tips, .preorders_block_history .skidka-tips, .doc_block_contracts .skidka-tips, .doc_block_contracts1 .skidka-tips {
   margin-top: 10px;
   border-bottom: none;
 }
 @media only screen and (max-width: 639px) {
-  .preorders_block_global .skidka-tips, .preorders_block_history .skidka-tips, .doc_block_contracts .skidka-tips {
+  .preorders_block_global .skidka-tips, .preorders_block_history .skidka-tips, .doc_block_contracts .skidka-tips, .doc_block_contracts1 .skidka-tips {
     width: 50%;
     margin-top: 0px;
   }
 }
-.preorders_block_global .label-task-gg, .preorders_block_history .label-task-gg, .doc_block_contracts .label-task-gg {
+.preorders_block_global .label-task-gg, .preorders_block_history .label-task-gg, .doc_block_contracts .label-task-gg, .doc_block_contracts1 .label-task-gg {
   top: 15px;
 }
-.preorders_block_global .eye-wall-trips, .preorders_block_global .eye-srok-trips, .preorders_block_history .eye-wall-trips, .preorders_block_history .eye-srok-trips, .doc_block_contracts .eye-wall-trips, .doc_block_contracts .eye-srok-trips {
+.preorders_block_global .eye-wall-trips, .preorders_block_global .eye-srok-trips, .preorders_block_history .eye-wall-trips, .preorders_block_history .eye-srok-trips, .doc_block_contracts .eye-wall-trips, .doc_block_contracts .eye-srok-trips, .doc_block_contracts1 .eye-wall-trips, .doc_block_contracts1 .eye-srok-trips {
   color: rgba(0, 0, 0, 0.4);
   font-family: GEInspiraRegular;
   margin-top: 5px;
@@ -27228,13 +27228,13 @@ position: absolute;}  }
   font-size: 11px;
   cursor: pointer;
 }
-.preorders_block_global .eye-wall-trips:hover, .preorders_block_global .eye-srok-trips:hover, .preorders_block_history .eye-wall-trips:hover, .preorders_block_history .eye-srok-trips:hover, .doc_block_contracts .eye-wall-trips:hover, .doc_block_contracts .eye-srok-trips:hover {
+.preorders_block_global .eye-wall-trips:hover, .preorders_block_global .eye-srok-trips:hover, .preorders_block_history .eye-wall-trips:hover, .preorders_block_history .eye-srok-trips:hover, .doc_block_contracts .eye-wall-trips:hover, .doc_block_contracts .eye-srok-trips:hover, .doc_block_contracts1 .eye-wall-trips:hover, .doc_block_contracts1 .eye-srok-trips:hover {
   border-bottom: 1px solid #ccc;
 }
-.preorders_block_global .eye-srok-trips, .preorders_block_history .eye-srok-trips, .doc_block_contracts .eye-srok-trips {
+.preorders_block_global .eye-srok-trips, .preorders_block_history .eye-srok-trips, .doc_block_contracts .eye-srok-trips, .doc_block_contracts1 .eye-srok-trips {
   margin-top: 10px;
 }
-.preorders_block_global .yes-cost-trips::before, .preorders_block_history .yes-cost-trips::before, .doc_block_contracts .yes-cost-trips::before {
+.preorders_block_global .yes-cost-trips::before, .preorders_block_history .yes-cost-trips::before, .doc_block_contracts .yes-cost-trips::before, .doc_block_contracts1 .yes-cost-trips::before {
   color: #00b05a;
   content: "1";
   font-family: icon1;
@@ -27245,15 +27245,15 @@ position: absolute;}  }
   top: 22px;
 }
 @media only screen and (max-width: 1023px) {
-  .preorders_block_global, .preorders_block_history, .doc_block_contracts {
+  .preorders_block_global, .preorders_block_history, .doc_block_contracts, .doc_block_contracts1 {
     margin-bottom: 20px !important;
     padding-top: 10px;
   }
 }
-.preorders_block_global:hover, .preorders_block_history:hover, .doc_block_contracts:hover {
+.preorders_block_global:hover, .preorders_block_history:hover, .doc_block_contracts:hover, .doc_block_contracts1:hover {
   background-color: #f6f7f8 !important;
 }
-.preorders_block_global .js-update-block-trips, .preorders_block_global .js-update-block-preorders, .preorders_block_global .js-update-block-preorders-h, .preorders_block_global .js-update-block-doc-h, .preorders_block_history .js-update-block-trips, .preorders_block_history .js-update-block-preorders, .preorders_block_history .js-update-block-preorders-h, .preorders_block_history .js-update-block-doc-h, .doc_block_contracts .js-update-block-trips, .doc_block_contracts .js-update-block-preorders, .doc_block_contracts .js-update-block-preorders-h, .doc_block_contracts .js-update-block-doc-h {
+.preorders_block_global .js-update-block-trips, .preorders_block_global .js-update-block-preorders, .preorders_block_global .js-update-block-preorders-h, .preorders_block_global .js-update-block-doc-h, .preorders_block_history .js-update-block-trips, .preorders_block_history .js-update-block-preorders, .preorders_block_history .js-update-block-preorders-h, .preorders_block_history .js-update-block-doc-h, .doc_block_contracts .js-update-block-trips, .doc_block_contracts .js-update-block-preorders, .doc_block_contracts .js-update-block-preorders-h, .doc_block_contracts .js-update-block-doc-h, .doc_block_contracts1 .js-update-block-trips, .doc_block_contracts1 .js-update-block-preorders, .doc_block_contracts1 .js-update-block-preorders-h, .doc_block_contracts1 .js-update-block-doc-h {
   -webkit-flex-wrap: wrap;
   -moz-flex-wrap: wrap;
   -ms-flex-wrap: wrap;
@@ -27275,15 +27275,15 @@ position: absolute;}  }
   width: 100%;
 }
 @media only screen and (max-width: 1023px) {
-  .preorders_block_global .js-update-block-trips, .preorders_block_global .js-update-block-preorders, .preorders_block_global .js-update-block-preorders-h, .preorders_block_global .js-update-block-doc-h, .preorders_block_history .js-update-block-trips, .preorders_block_history .js-update-block-preorders, .preorders_block_history .js-update-block-preorders-h, .preorders_block_history .js-update-block-doc-h, .doc_block_contracts .js-update-block-trips, .doc_block_contracts .js-update-block-preorders, .doc_block_contracts .js-update-block-preorders-h, .doc_block_contracts .js-update-block-doc-h {
+  .preorders_block_global .js-update-block-trips, .preorders_block_global .js-update-block-preorders, .preorders_block_global .js-update-block-preorders-h, .preorders_block_global .js-update-block-doc-h, .preorders_block_history .js-update-block-trips, .preorders_block_history .js-update-block-preorders, .preorders_block_history .js-update-block-preorders-h, .preorders_block_history .js-update-block-doc-h, .doc_block_contracts .js-update-block-trips, .doc_block_contracts .js-update-block-preorders, .doc_block_contracts .js-update-block-preorders-h, .doc_block_contracts .js-update-block-doc-h, .doc_block_contracts1 .js-update-block-trips, .doc_block_contracts1 .js-update-block-preorders, .doc_block_contracts1 .js-update-block-preorders-h, .doc_block_contracts1 .js-update-block-doc-h {
     margin-bottom: 20px !important;
     padding-top: 10px;
   }
 }
-.preorders_block_global .js-update-block-trips:hover, .preorders_block_global .js-update-block-preorders:hover, .preorders_block_global .js-update-block-preorders-h:hover, .preorders_block_global .js-update-block-doc-h:hover, .preorders_block_history .js-update-block-trips:hover, .preorders_block_history .js-update-block-preorders:hover, .preorders_block_history .js-update-block-preorders-h:hover, .preorders_block_history .js-update-block-doc-h:hover, .doc_block_contracts .js-update-block-trips:hover, .doc_block_contracts .js-update-block-preorders:hover, .doc_block_contracts .js-update-block-preorders-h:hover, .doc_block_contracts .js-update-block-doc-h:hover {
+.preorders_block_global .js-update-block-trips:hover, .preorders_block_global .js-update-block-preorders:hover, .preorders_block_global .js-update-block-preorders-h:hover, .preorders_block_global .js-update-block-doc-h:hover, .preorders_block_history .js-update-block-trips:hover, .preorders_block_history .js-update-block-preorders:hover, .preorders_block_history .js-update-block-preorders-h:hover, .preorders_block_history .js-update-block-doc-h:hover, .doc_block_contracts .js-update-block-trips:hover, .doc_block_contracts .js-update-block-preorders:hover, .doc_block_contracts .js-update-block-preorders-h:hover, .doc_block_contracts .js-update-block-doc-h:hover, .doc_block_contracts1 .js-update-block-trips:hover, .doc_block_contracts1 .js-update-block-preorders:hover, .doc_block_contracts1 .js-update-block-preorders-h:hover, .doc_block_contracts1 .js-update-block-doc-h:hover {
   background-color: #f6f7f8 !important;
 }
-.preorders_block_global .trips-b-number, .preorders_block_history .trips-b-number, .doc_block_contracts .trips-b-number {
+.preorders_block_global .trips-b-number, .preorders_block_history .trips-b-number, .doc_block_contracts .trips-b-number, .doc_block_contracts1 .trips-b-number {
   color: rgba(0, 0, 0, 0.4);
   cursor: pointer;
   font-family: "GEInspiraRegular";
@@ -27297,13 +27297,13 @@ position: absolute;}  }
   text-align: center;
 }
 @media only screen and (max-width: 1023px) {
-  .preorders_block_global .trips-b-number, .preorders_block_history .trips-b-number, .doc_block_contracts .trips-b-number {
+  .preorders_block_global .trips-b-number, .preorders_block_history .trips-b-number, .doc_block_contracts .trips-b-number, .doc_block_contracts1 .trips-b-number {
     width: 15%;
     display: none;
     padding-top: 8px;
   }
 }
-.preorders_block_global .trips-b-info, .preorders_block_history .trips-b-info, .doc_block_contracts .trips-b-info {
+.preorders_block_global .trips-b-info, .preorders_block_global .trips-b-touro, .preorders_block_history .trips-b-info, .preorders_block_history .trips-b-touro, .doc_block_contracts .trips-b-info, .doc_block_contracts .trips-b-touro, .doc_block_contracts1 .trips-b-info, .doc_block_contracts1 .trips-b-touro {
   z-index: 10;
   width: calc(100% - 50px - 200px - 200px - 200px);
   font-family: "GEInspiraBold";
@@ -27315,32 +27315,32 @@ position: absolute;}  }
   padding: 40px 10px;
 }
 @media only screen and (max-width: 639px) {
-  .preorders_block_global .trips-b-info, .preorders_block_history .trips-b-info, .doc_block_contracts .trips-b-info {
+  .preorders_block_global .trips-b-info, .preorders_block_global .trips-b-touro, .preorders_block_history .trips-b-info, .preorders_block_history .trips-b-touro, .doc_block_contracts .trips-b-info, .doc_block_contracts .trips-b-touro, .doc_block_contracts1 .trips-b-info, .doc_block_contracts1 .trips-b-touro {
     width: 100%;
     padding-left: 20px;
     padding-right: 20px;
   }
 }
-.preorders_block_global .trips-b-info .red-jjx, .preorders_block_history .trips-b-info .red-jjx, .doc_block_contracts .trips-b-info .red-jjx {
+.preorders_block_global .trips-b-info .red-jjx, .preorders_block_global .trips-b-touro .red-jjx, .preorders_block_history .trips-b-info .red-jjx, .preorders_block_history .trips-b-touro .red-jjx, .doc_block_contracts .trips-b-info .red-jjx, .doc_block_contracts .trips-b-touro .red-jjx, .doc_block_contracts1 .trips-b-info .red-jjx, .doc_block_contracts1 .trips-b-touro .red-jjx {
   color: #d00;
 }
-.preorders_block_global .trips-b-info .pr-x, .preorders_block_global .trips-b-info .vip-x, .preorders_block_global .trips-b-info .ot-x, .preorders_block_global .trips-b-info .za-x, .preorders_block_global .trips-b-info .kog-za, .preorders_block_history .trips-b-info .pr-x, .preorders_block_history .trips-b-info .vip-x, .preorders_block_history .trips-b-info .ot-x, .preorders_block_history .trips-b-info .za-x, .preorders_block_history .trips-b-info .kog-za, .doc_block_contracts .trips-b-info .pr-x, .doc_block_contracts .trips-b-info .vip-x, .doc_block_contracts .trips-b-info .ot-x, .doc_block_contracts .trips-b-info .za-x, .doc_block_contracts .trips-b-info .kog-za {
+.preorders_block_global .trips-b-info .pr-x, .preorders_block_global .trips-b-info .vip-x, .preorders_block_global .trips-b-info .ot-x, .preorders_block_global .trips-b-info .za-x, .preorders_block_global .trips-b-info .kog-za, .preorders_block_global .trips-b-touro .pr-x, .preorders_block_global .trips-b-touro .vip-x, .preorders_block_global .trips-b-touro .ot-x, .preorders_block_global .trips-b-touro .za-x, .preorders_block_global .trips-b-touro .kog-za, .preorders_block_history .trips-b-info .pr-x, .preorders_block_history .trips-b-info .vip-x, .preorders_block_history .trips-b-info .ot-x, .preorders_block_history .trips-b-info .za-x, .preorders_block_history .trips-b-info .kog-za, .preorders_block_history .trips-b-touro .pr-x, .preorders_block_history .trips-b-touro .vip-x, .preorders_block_history .trips-b-touro .ot-x, .preorders_block_history .trips-b-touro .za-x, .preorders_block_history .trips-b-touro .kog-za, .doc_block_contracts .trips-b-info .pr-x, .doc_block_contracts .trips-b-info .vip-x, .doc_block_contracts .trips-b-info .ot-x, .doc_block_contracts .trips-b-info .za-x, .doc_block_contracts .trips-b-info .kog-za, .doc_block_contracts .trips-b-touro .pr-x, .doc_block_contracts .trips-b-touro .vip-x, .doc_block_contracts .trips-b-touro .ot-x, .doc_block_contracts .trips-b-touro .za-x, .doc_block_contracts .trips-b-touro .kog-za, .doc_block_contracts1 .trips-b-info .pr-x, .doc_block_contracts1 .trips-b-info .vip-x, .doc_block_contracts1 .trips-b-info .ot-x, .doc_block_contracts1 .trips-b-info .za-x, .doc_block_contracts1 .trips-b-info .kog-za, .doc_block_contracts1 .trips-b-touro .pr-x, .doc_block_contracts1 .trips-b-touro .vip-x, .doc_block_contracts1 .trips-b-touro .ot-x, .doc_block_contracts1 .trips-b-touro .za-x, .doc_block_contracts1 .trips-b-touro .kog-za {
   color: rgba(0, 0, 0, 0.4);
   font-family: "GEInspiraRegular";
   margin-top: 5px;
   font-size: 12px;
 }
-.preorders_block_global .trips-b-info .pr-x, .preorders_block_history .trips-b-info .pr-x, .doc_block_contracts .trips-b-info .pr-x {
+.preorders_block_global .trips-b-info .pr-x, .preorders_block_global .trips-b-touro .pr-x, .preorders_block_history .trips-b-info .pr-x, .preorders_block_history .trips-b-touro .pr-x, .doc_block_contracts .trips-b-info .pr-x, .doc_block_contracts .trips-b-touro .pr-x, .doc_block_contracts1 .trips-b-info .pr-x, .doc_block_contracts1 .trips-b-touro .pr-x {
   color: #d00;
 }
-.preorders_block_global .trips-b-info .ot-x, .preorders_block_history .trips-b-info .ot-x, .doc_block_contracts .trips-b-info .ot-x {
+.preorders_block_global .trips-b-info .ot-x, .preorders_block_global .trips-b-touro .ot-x, .preorders_block_history .trips-b-info .ot-x, .preorders_block_history .trips-b-touro .ot-x, .doc_block_contracts .trips-b-info .ot-x, .doc_block_contracts .trips-b-touro .ot-x, .doc_block_contracts1 .trips-b-info .ot-x, .doc_block_contracts1 .trips-b-touro .ot-x {
   color: #00b05a;
   font-family: "GEInspiraBold";
 }
-.preorders_block_global .trips-b-info:hover .label-task-gg, .preorders_block_history .trips-b-info:hover .label-task-gg, .doc_block_contracts .trips-b-info:hover .label-task-gg {
+.preorders_block_global .trips-b-info:hover .label-task-gg, .preorders_block_global .trips-b-touro:hover .label-task-gg, .preorders_block_history .trips-b-info:hover .label-task-gg, .preorders_block_history .trips-b-touro:hover .label-task-gg, .doc_block_contracts .trips-b-info:hover .label-task-gg, .doc_block_contracts .trips-b-touro:hover .label-task-gg, .doc_block_contracts1 .trips-b-info:hover .label-task-gg, .doc_block_contracts1 .trips-b-touro:hover .label-task-gg {
   display: inline-block;
 }
-.preorders_block_global .trips-b-responsible, .preorders_block_history .trips-b-responsible, .doc_block_contracts .trips-b-responsible {
+.preorders_block_global .trips-b-responsible, .preorders_block_history .trips-b-responsible, .doc_block_contracts .trips-b-responsible, .doc_block_contracts1 .trips-b-responsible {
   z-index: 10;
   font-family: "GEInspiraRegular";
   color: rgba(0, 0, 0, 0.7);
@@ -27352,14 +27352,14 @@ position: absolute;}  }
   padding: 40px 10px;
 }
 @media only screen and (max-width: 1023px) {
-  .preorders_block_global .trips-b-responsible, .preorders_block_history .trips-b-responsible, .doc_block_contracts .trips-b-responsible {
+  .preorders_block_global .trips-b-responsible, .preorders_block_history .trips-b-responsible, .doc_block_contracts .trips-b-responsible, .doc_block_contracts1 .trips-b-responsible {
     width: 55%;
   }
 }
-.preorders_block_global .trips-b-responsible:hover .label-task-gg, .preorders_block_history .trips-b-responsible:hover .label-task-gg, .doc_block_contracts .trips-b-responsible:hover .label-task-gg {
+.preorders_block_global .trips-b-responsible:hover .label-task-gg, .preorders_block_history .trips-b-responsible:hover .label-task-gg, .doc_block_contracts .trips-b-responsible:hover .label-task-gg, .doc_block_contracts1 .trips-b-responsible:hover .label-task-gg {
   display: inline-block;
 }
-.preorders_block_global .trips-b-user, .preorders_block_history .trips-b-user, .doc_block_contracts .trips-b-user {
+.preorders_block_global .trips-b-user, .preorders_block_history .trips-b-user, .doc_block_contracts .trips-b-user, .doc_block_contracts1 .trips-b-user {
   z-index: 10;
   font-family: "GEInspiraBold";
   text-align: center;
@@ -27372,15 +27372,15 @@ position: absolute;}  }
   text-transform: uppercase;
 }
 @media only screen and (max-width: 1023px) {
-  .preorders_block_global .trips-b-user, .preorders_block_history .trips-b-user, .doc_block_contracts .trips-b-user {
+  .preorders_block_global .trips-b-user, .preorders_block_history .trips-b-user, .doc_block_contracts .trips-b-user, .doc_block_contracts1 .trips-b-user {
     width: 50%;
   }
 }
-.preorders_block_global .trips-b-user .label-task-gg, .preorders_block_history .trips-b-user .label-task-gg, .doc_block_contracts .trips-b-user .label-task-gg {
+.preorders_block_global .trips-b-user .label-task-gg, .preorders_block_history .trips-b-user .label-task-gg, .doc_block_contracts .trips-b-user .label-task-gg, .doc_block_contracts1 .trips-b-user .label-task-gg {
   left: 0;
   right: 0px;
 }
-.preorders_block_global .trips-b-user .spans, .preorders_block_history .trips-b-user .spans, .doc_block_contracts .trips-b-user .spans {
+.preorders_block_global .trips-b-user .spans, .preorders_block_history .trips-b-user .spans, .doc_block_contracts .trips-b-user .spans, .doc_block_contracts1 .trips-b-user .spans {
   -webkit-transition: all 0.4s cubic-bezier(0.42, 0.01, 0.23, 1);
   -moz-transition: all 0.4s cubic-bezier(0.42, 0.01, 0.23, 1);
   -ms-transition: all 0.4s cubic-bezier(0.42, 0.01, 0.23, 1);
@@ -27389,20 +27389,20 @@ position: absolute;}  }
   cursor: pointer;
   border-bottom: 1px solid rgba(255, 255, 255, 0);
 }
-.preorders_block_global .trips-b-user .oto-z, .preorders_block_history .trips-b-user .oto-z, .doc_block_contracts .trips-b-user .oto-z {
+.preorders_block_global .trips-b-user .oto-z, .preorders_block_history .trips-b-user .oto-z, .doc_block_contracts .trips-b-user .oto-z, .doc_block_contracts1 .trips-b-user .oto-z {
   color: rgba(0, 0, 0, 0.4);
   font-family: "GEInspiraRegular";
   margin-top: 5px;
   border-top: 1px solid #efeff0;
   padding-top: 5px;
 }
-.preorders_block_global .trips-b-user:hover .spans, .preorders_block_history .trips-b-user:hover .spans, .doc_block_contracts .trips-b-user:hover .spans {
+.preorders_block_global .trips-b-user:hover .spans, .preorders_block_history .trips-b-user:hover .spans, .doc_block_contracts .trips-b-user:hover .spans, .doc_block_contracts1 .trips-b-user:hover .spans {
   border-bottom: 1px solid #ccc;
 }
-.preorders_block_global .trips-b-user:hover .label-task-gg, .preorders_block_history .trips-b-user:hover .label-task-gg, .doc_block_contracts .trips-b-user:hover .label-task-gg {
+.preorders_block_global .trips-b-user:hover .label-task-gg, .preorders_block_history .trips-b-user:hover .label-task-gg, .doc_block_contracts .trips-b-user:hover .label-task-gg, .doc_block_contracts1 .trips-b-user:hover .label-task-gg {
   display: inline-block;
 }
-.preorders_block_global .trips-b-operator, .preorders_block_history .trips-b-operator, .doc_block_contracts .trips-b-operator {
+.preorders_block_global .trips-b-operator, .preorders_block_history .trips-b-operator, .doc_block_contracts .trips-b-operator, .doc_block_contracts1 .trips-b-operator {
   z-index: 10;
   width: 200px;
   z-index: 10;
@@ -27416,21 +27416,21 @@ position: absolute;}  }
   padding: 40px 10px;
 }
 @media only screen and (max-width: 1023px) {
-  .preorders_block_global .trips-b-operator, .preorders_block_history .trips-b-operator, .doc_block_contracts .trips-b-operator {
+  .preorders_block_global .trips-b-operator, .preorders_block_history .trips-b-operator, .doc_block_contracts .trips-b-operator, .doc_block_contracts1 .trips-b-operator {
     width: 50%;
   }
 }
-.preorders_block_global .trips-b-operator .label-task-gg, .preorders_block_history .trips-b-operator .label-task-gg, .doc_block_contracts .trips-b-operator .label-task-gg {
+.preorders_block_global .trips-b-operator .label-task-gg, .preorders_block_history .trips-b-operator .label-task-gg, .doc_block_contracts .trips-b-operator .label-task-gg, .doc_block_contracts1 .trips-b-operator .label-task-gg {
   left: 0;
   right: 0px;
 }
-.preorders_block_global .trips-b-operator .ring-user, .preorders_block_history .trips-b-operator .ring-user, .doc_block_contracts .trips-b-operator .ring-user {
+.preorders_block_global .trips-b-operator .ring-user, .preorders_block_history .trips-b-operator .ring-user, .doc_block_contracts .trips-b-operator .ring-user, .doc_block_contracts1 .trips-b-operator .ring-user {
   color: rgba(0, 0, 0, 0.7);
 }
-.preorders_block_global .trips-b-operator .ring-user:hover, .preorders_block_history .trips-b-operator .ring-user:hover, .doc_block_contracts .trips-b-operator .ring-user:hover {
+.preorders_block_global .trips-b-operator .ring-user:hover, .preorders_block_history .trips-b-operator .ring-user:hover, .doc_block_contracts .trips-b-operator .ring-user:hover, .doc_block_contracts1 .trips-b-operator .ring-user:hover {
   border-bottom: 1px solid #72b7f8;
 }
-.preorders_block_global .trips-b-operator .ari, .preorders_block_history .trips-b-operator .ari, .doc_block_contracts .trips-b-operator .ari {
+.preorders_block_global .trips-b-operator .ari, .preorders_block_history .trips-b-operator .ari, .doc_block_contracts .trips-b-operator .ari, .doc_block_contracts1 .trips-b-operator .ari {
   font-family: "GEInspiraRegular";
   color: rgba(0, 0, 0, 0.7);
   font-size: 12px;
@@ -27439,13 +27439,13 @@ position: absolute;}  }
   position: relative;
   text-transform: uppercase;
 }
-.preorders_block_global .trips-b-operator .ari:hover, .preorders_block_history .trips-b-operator .ari:hover, .doc_block_contracts .trips-b-operator .ari:hover {
+.preorders_block_global .trips-b-operator .ari:hover, .preorders_block_history .trips-b-operator .ari:hover, .doc_block_contracts .trips-b-operator .ari:hover, .doc_block_contracts1 .trips-b-operator .ari:hover {
   border-bottom: 1px solid #72b7f8;
 }
-.preorders_block_global .trips-b-operator:hover .label-task-gg, .preorders_block_history .trips-b-operator:hover .label-task-gg, .doc_block_contracts .trips-b-operator:hover .label-task-gg {
+.preorders_block_global .trips-b-operator:hover .label-task-gg, .preorders_block_history .trips-b-operator:hover .label-task-gg, .doc_block_contracts .trips-b-operator:hover .label-task-gg, .doc_block_contracts1 .trips-b-operator:hover .label-task-gg {
   display: inline-block;
 }
-.preorders_block_global .trips-b-comission, .preorders_block_history .trips-b-comission, .doc_block_contracts .trips-b-comission {
+.preorders_block_global .trips-b-comission, .preorders_block_history .trips-b-comission, .doc_block_contracts .trips-b-comission, .doc_block_contracts1 .trips-b-comission {
   z-index: 10;
   font-family: "GEInspiraBold";
   text-align: center;
@@ -27459,7 +27459,7 @@ position: absolute;}  }
   padding-right: 20px;
 }
 @media only screen and (max-width: 639px) {
-  .preorders_block_global .trips-b-comission, .preorders_block_history .trips-b-comission, .doc_block_contracts .trips-b-comission {
+  .preorders_block_global .trips-b-comission, .preorders_block_history .trips-b-comission, .doc_block_contracts .trips-b-comission, .doc_block_contracts1 .trips-b-comission {
     width: 100%;
     display: -webkit-box;
     display: -moz-box;
@@ -27469,7 +27469,7 @@ position: absolute;}  }
     padding: 20px;
   }
 }
-.preorders_block_global .trips-b-comission .vip-ds, .preorders_block_history .trips-b-comission .vip-ds, .doc_block_contracts .trips-b-comission .vip-ds {
+.preorders_block_global .trips-b-comission .vip-ds, .preorders_block_history .trips-b-comission .vip-ds, .doc_block_contracts .trips-b-comission .vip-ds, .doc_block_contracts1 .trips-b-comission .vip-ds {
   display: block;
   height: 100%;
   background-color: #fff;
@@ -27498,20 +27498,20 @@ position: absolute;}  }
   top: 0px;
 }
 @media only screen and (max-width: 1023px) {
-  .preorders_block_global .trips-b-comission .vip-ds, .preorders_block_history .trips-b-comission .vip-ds, .doc_block_contracts .trips-b-comission .vip-ds {
+  .preorders_block_global .trips-b-comission .vip-ds, .preorders_block_history .trips-b-comission .vip-ds, .doc_block_contracts .trips-b-comission .vip-ds, .doc_block_contracts1 .trips-b-comission .vip-ds {
     width: 70px;
     background-color: transparent;
   }
-  .preorders_block_global .trips-b-comission .vip-ds .task__click1, .preorders_block_history .trips-b-comission .vip-ds .task__click1, .doc_block_contracts .trips-b-comission .vip-ds .task__click1 {
+  .preorders_block_global .trips-b-comission .vip-ds .task__click1, .preorders_block_history .trips-b-comission .vip-ds .task__click1, .doc_block_contracts .trips-b-comission .vip-ds .task__click1, .doc_block_contracts1 .trips-b-comission .vip-ds .task__click1 {
     display: inline-block !important;
   }
 }
-.preorders_block_global .trips-b-comission .titi, .preorders_block_history .trips-b-comission .titi, .doc_block_contracts .trips-b-comission .titi {
+.preorders_block_global .trips-b-comission .titi, .preorders_block_history .trips-b-comission .titi, .doc_block_contracts .trips-b-comission .titi, .doc_block_contracts1 .trips-b-comission .titi {
   color: rgba(0, 0, 0, 0.4);
   font-family: "GEInspiraRegular";
   margin-top: 5px;
 }
-.preorders_block_global .trips-b-comission .task__click1, .preorders_block_history .trips-b-comission .task__click1, .doc_block_contracts .trips-b-comission .task__click1 {
+.preorders_block_global .trips-b-comission .task__click1, .preorders_block_history .trips-b-comission .task__click1, .doc_block_contracts .trips-b-comission .task__click1, .doc_block_contracts1 .trips-b-comission .task__click1 {
   text-align: right;
   background-color: #f5f5f6;
   cursor: pointer;
@@ -27532,7 +27532,7 @@ position: absolute;}  }
   width: 35px;
   z-index: 20;
 }
-.preorders_block_global .trips-b-comission .task__click1::before, .preorders_block_history .trips-b-comission .task__click1::before, .doc_block_contracts .trips-b-comission .task__click1::before {
+.preorders_block_global .trips-b-comission .task__click1::before, .preorders_block_history .trips-b-comission .task__click1::before, .doc_block_contracts .trips-b-comission .task__click1::before, .doc_block_contracts1 .trips-b-comission .task__click1::before {
   color: #72b7f8;
   content: "1";
   font-family: "icon1";
@@ -27542,42 +27542,42 @@ position: absolute;}  }
   position: absolute;
   top: 0;
 }
-.preorders_block_global .trips-b-comission .task__click1:hover, .preorders_block_history .trips-b-comission .task__click1:hover, .doc_block_contracts .trips-b-comission .task__click1:hover {
+.preorders_block_global .trips-b-comission .task__click1:hover, .preorders_block_history .trips-b-comission .task__click1:hover, .doc_block_contracts .trips-b-comission .task__click1:hover, .doc_block_contracts1 .trips-b-comission .task__click1:hover {
   transform: scale3d(1.1, 1.1, 1);
   background-color: #00b05a;
 }
-.preorders_block_global .trips-b-comission .task__click1:hover::before, .preorders_block_history .trips-b-comission .task__click1:hover::before, .doc_block_contracts .trips-b-comission .task__click1:hover::before {
+.preorders_block_global .trips-b-comission .task__click1:hover::before, .preorders_block_history .trips-b-comission .task__click1:hover::before, .doc_block_contracts .trips-b-comission .task__click1:hover::before, .doc_block_contracts1 .trips-b-comission .task__click1:hover::before {
   color: #fff;
 }
-.preorders_block_global .trips-b-comission .task__click1.act_, .preorders_block_history .trips-b-comission .task__click1.act_, .doc_block_contracts .trips-b-comission .task__click1.act_ {
+.preorders_block_global .trips-b-comission .task__click1.act_, .preorders_block_history .trips-b-comission .task__click1.act_, .doc_block_contracts .trips-b-comission .task__click1.act_, .doc_block_contracts1 .trips-b-comission .task__click1.act_ {
   transform: scale3d(10.1, 10.1, 1);
   background-color: #00b05a;
 }
-.preorders_block_global .trips-b-comission .task__click1.act_::before, .preorders_block_history .trips-b-comission .task__click1.act_::before, .doc_block_contracts .trips-b-comission .task__click1.act_::before {
+.preorders_block_global .trips-b-comission .task__click1.act_::before, .preorders_block_history .trips-b-comission .task__click1.act_::before, .doc_block_contracts .trips-b-comission .task__click1.act_::before, .doc_block_contracts1 .trips-b-comission .task__click1.act_::before {
   color: #00b05a;
 }
-.preorders_block_global .trips-b-comission:hover, .preorders_block_history .trips-b-comission:hover, .doc_block_contracts .trips-b-comission:hover {
+.preorders_block_global .trips-b-comission:hover, .preorders_block_history .trips-b-comission:hover, .doc_block_contracts .trips-b-comission:hover, .doc_block_contracts1 .trips-b-comission:hover {
   padding-right: 25px;
   /*.titi-kem,.titi{display: none !important;}*/
 }
-.preorders_block_global .trips-b-comission:hover .task__click1, .preorders_block_history .trips-b-comission:hover .task__click1, .doc_block_contracts .trips-b-comission:hover .task__click1 {
+.preorders_block_global .trips-b-comission:hover .task__click1, .preorders_block_history .trips-b-comission:hover .task__click1, .doc_block_contracts .trips-b-comission:hover .task__click1, .doc_block_contracts1 .trips-b-comission:hover .task__click1 {
   display: inline-block !important;
 }
-.preorders_block_global .trips-b-comission:hover .vip-ds, .preorders_block_history .trips-b-comission:hover .vip-ds, .doc_block_contracts .trips-b-comission:hover .vip-ds {
+.preorders_block_global .trips-b-comission:hover .vip-ds, .preorders_block_history .trips-b-comission:hover .vip-ds, .doc_block_contracts .trips-b-comission:hover .vip-ds, .doc_block_contracts1 .trips-b-comission:hover .vip-ds {
   width: 150px;
 }
-.preorders_block_global .trips-b-comission:hover .label-task-gg, .preorders_block_history .trips-b-comission:hover .label-task-gg, .doc_block_contracts .trips-b-comission:hover .label-task-gg {
+.preorders_block_global .trips-b-comission:hover .label-task-gg, .preorders_block_history .trips-b-comission:hover .label-task-gg, .doc_block_contracts .trips-b-comission:hover .label-task-gg, .doc_block_contracts1 .trips-b-comission:hover .label-task-gg {
   display: inline-block;
 }
 
 @media only screen and (max-width: 639px) {
-  .preorders_block_global .form-rate-ok-chat, .preorders_block_history .form-rate-ok-chat, .doc_block_contracts .form-rate-ok-chat {
+  .preorders_block_global .form-rate-ok-chat, .preorders_block_history .form-rate-ok-chat, .doc_block_contracts .form-rate-ok-chat, .doc_block_contracts1 .form-rate-ok-chat {
     right: 10px !important;
     width: 250px !important;
     left: auto !important;
   }
 }
-.preorders_block_global .mm_w-preorders, .preorders_block_history .mm_w-preorders, .doc_block_contracts .mm_w-preorders {
+.preorders_block_global .mm_w-preorders, .preorders_block_history .mm_w-preorders, .doc_block_contracts .mm_w-preorders, .doc_block_contracts1 .mm_w-preorders {
   height: 0px;
   overflow: hidden;
   -webkit-transition: all 0.4s cubic-bezier(0.42, 0.01, 0.23, 1);
@@ -27587,7 +27587,7 @@ position: absolute;}  }
   transition: all 0.4s cubic-bezier(0.42, 0.01, 0.23, 1);
   width: 100%;
 }
-.preorders_block_global .mm_w-preorders .tabs_hedi, .preorders_block_history .mm_w-preorders .tabs_hedi, .doc_block_contracts .mm_w-preorders .tabs_hedi {
+.preorders_block_global .mm_w-preorders .tabs_hedi, .preorders_block_history .mm_w-preorders .tabs_hedi, .doc_block_contracts .mm_w-preorders .tabs_hedi, .doc_block_contracts1 .mm_w-preorders .tabs_hedi {
   background-color: #fff;
   display: -webkit-box;
   display: -moz-box;
@@ -27600,12 +27600,12 @@ position: absolute;}  }
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 @media only screen and (max-width: 639px) {
-  .preorders_block_global .mm_w-preorders .tabs_hedi, .preorders_block_history .mm_w-preorders .tabs_hedi, .doc_block_contracts .mm_w-preorders .tabs_hedi {
+  .preorders_block_global .mm_w-preorders .tabs_hedi, .preorders_block_history .mm_w-preorders .tabs_hedi, .doc_block_contracts .mm_w-preorders .tabs_hedi, .doc_block_contracts1 .mm_w-preorders .tabs_hedi {
     overflow-x: scroll;
     padding-left: 0px;
   }
 }
-.preorders_block_global .mm_w-preorders .tabs_hedi li, .preorders_block_history .mm_w-preorders .tabs_hedi li, .doc_block_contracts .mm_w-preorders .tabs_hedi li {
+.preorders_block_global .mm_w-preorders .tabs_hedi li, .preorders_block_history .mm_w-preorders .tabs_hedi li, .doc_block_contracts .mm_w-preorders .tabs_hedi li, .doc_block_contracts1 .mm_w-preorders .tabs_hedi li {
   background-color: #fff;
   color: rgba(0, 0, 0, 0.4);
   font-family: "GEInspiraBold";
@@ -27624,47 +27624,47 @@ position: absolute;}  }
   cursor: pointer;
 }
 @media only screen and (max-width: 639px) {
-  .preorders_block_global .mm_w-preorders .tabs_hedi li, .preorders_block_history .mm_w-preorders .tabs_hedi li, .doc_block_contracts .mm_w-preorders .tabs_hedi li {
+  .preorders_block_global .mm_w-preorders .tabs_hedi li, .preorders_block_history .mm_w-preorders .tabs_hedi li, .doc_block_contracts .mm_w-preorders .tabs_hedi li, .doc_block_contracts1 .mm_w-preorders .tabs_hedi li {
     padding: 20px 10px;
     white-space: nowrap;
   }
 }
-.preorders_block_global .mm_w-preorders .tabs_hedi li.active, .preorders_block_history .mm_w-preorders .tabs_hedi li.active, .doc_block_contracts .mm_w-preorders .tabs_hedi li.active {
+.preorders_block_global .mm_w-preorders .tabs_hedi li.active, .preorders_block_history .mm_w-preorders .tabs_hedi li.active, .doc_block_contracts .mm_w-preorders .tabs_hedi li.active, .doc_block_contracts1 .mm_w-preorders .tabs_hedi li.active {
   border-bottom: 2px solid #00aeef;
   color: rgba(0, 0, 0, 0.7);
 }
-.preorders_block_global .mm_w-preorders .tabs_hedi li.active:hover, .preorders_block_history .mm_w-preorders .tabs_hedi li.active:hover, .doc_block_contracts .mm_w-preorders .tabs_hedi li.active:hover {
+.preorders_block_global .mm_w-preorders .tabs_hedi li.active:hover, .preorders_block_history .mm_w-preorders .tabs_hedi li.active:hover, .doc_block_contracts .mm_w-preorders .tabs_hedi li.active:hover, .doc_block_contracts1 .mm_w-preorders .tabs_hedi li.active:hover {
   border-bottom: 2px solid #00aeef;
 }
-.preorders_block_global .mm_w-preorders .tabs_hedi li:hover, .preorders_block_history .mm_w-preorders .tabs_hedi li:hover, .doc_block_contracts .mm_w-preorders .tabs_hedi li:hover {
+.preorders_block_global .mm_w-preorders .tabs_hedi li:hover, .preorders_block_history .mm_w-preorders .tabs_hedi li:hover, .doc_block_contracts .mm_w-preorders .tabs_hedi li:hover, .doc_block_contracts1 .mm_w-preorders .tabs_hedi li:hover {
   border-bottom: 2px solid rgba(0, 0, 0, 0.1);
   color: rgba(0, 0, 0, 0.7);
 }
 @media only screen and (max-width: 639px) {
-  .preorders_block_global .mm_w-preorders .tabs_hedi_add, .preorders_block_history .mm_w-preorders .tabs_hedi_add, .doc_block_contracts .mm_w-preorders .tabs_hedi_add {
+  .preorders_block_global .mm_w-preorders .tabs_hedi_add, .preorders_block_history .mm_w-preorders .tabs_hedi_add, .doc_block_contracts .mm_w-preorders .tabs_hedi_add, .doc_block_contracts1 .mm_w-preorders .tabs_hedi_add {
     overflow: hidden;
     width: 100%;
   }
 }
 @media only screen and (max-width: 639px) {
-  .preorders_block_global .mm_w-preorders, .preorders_block_history .mm_w-preorders, .doc_block_contracts .mm_w-preorders {
+  .preorders_block_global .mm_w-preorders, .preorders_block_history .mm_w-preorders, .doc_block_contracts .mm_w-preorders, .doc_block_contracts1 .mm_w-preorders {
     height: 58px !important;
   }
 }
-.preorders_block_global .active-trips-menu, .preorders_block_history .active-trips-menu, .doc_block_contracts .active-trips-menu {
+.preorders_block_global .active-trips-menu, .preorders_block_history .active-trips-menu, .doc_block_contracts .active-trips-menu, .doc_block_contracts1 .active-trips-menu {
   height: 58px !important;
   height: 68px !important;
   border-top: 10px solid rgba(0, 0, 0, 0.05);
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
-.preorders_block_global:hover .mm_w-trips, .preorders_block_global:hover .mm_w-preorders, .preorders_block_history:hover .mm_w-trips, .preorders_block_history:hover .mm_w-preorders, .doc_block_contracts:hover .mm_w-trips, .doc_block_contracts:hover .mm_w-preorders {
+.preorders_block_global:hover .mm_w-trips, .preorders_block_global:hover .mm_w-preorders, .preorders_block_history:hover .mm_w-trips, .preorders_block_history:hover .mm_w-preorders, .doc_block_contracts:hover .mm_w-trips, .doc_block_contracts:hover .mm_w-preorders, .doc_block_contracts1:hover .mm_w-trips, .doc_block_contracts1:hover .mm_w-preorders {
   height: 58px;
 }
-.preorders_block_global .pass_wh_trips, .preorders_block_history .pass_wh_trips, .doc_block_contracts .pass_wh_trips {
+.preorders_block_global .pass_wh_trips, .preorders_block_history .pass_wh_trips, .doc_block_contracts .pass_wh_trips, .doc_block_contracts1 .pass_wh_trips {
   padding-top: 0px;
   margin-bottom: 0px;
 }
-.preorders_block_global .trips-b-number, .preorders_block_history .trips-b-number, .doc_block_contracts .trips-b-number {
+.preorders_block_global .trips-b-number, .preorders_block_history .trips-b-number, .doc_block_contracts .trips-b-number, .doc_block_contracts1 .trips-b-number {
   padding: 40px 10px;
   display: -webkit-box;
   display: -moz-box;
@@ -27686,7 +27686,7 @@ position: absolute;}  }
   align-self: flex-start;
 }
 @media only screen and (max-width: 639px) {
-  .preorders_block_global .trips-b-number, .preorders_block_history .trips-b-number, .doc_block_contracts .trips-b-number {
+  .preorders_block_global .trips-b-number, .preorders_block_history .trips-b-number, .doc_block_contracts .trips-b-number, .doc_block_contracts1 .trips-b-number {
     -webkit-box-ordinal-group: 2;
     -moz-box-ordinal-group: 2;
     -ms-flex-order: 2;
@@ -27694,12 +27694,12 @@ position: absolute;}  }
     order: 2;
   }
 }
-.preorders_block_global .trips-b-info, .preorders_block_history .trips-b-info, .doc_block_contracts .trips-b-info {
+.preorders_block_global .trips-b-info, .preorders_block_history .trips-b-info, .doc_block_contracts .trips-b-info, .doc_block_contracts1 .trips-b-info {
   width: 200px;
   padding: 40px 10px;
 }
 @media only screen and (max-width: 639px) {
-  .preorders_block_global .trips-b-info, .preorders_block_history .trips-b-info, .doc_block_contracts .trips-b-info {
+  .preorders_block_global .trips-b-info, .preorders_block_history .trips-b-info, .doc_block_contracts .trips-b-info, .doc_block_contracts1 .trips-b-info {
     -webkit-box-ordinal-group: 0;
     -moz-box-ordinal-group: 0;
     -ms-flex-order: 0;
@@ -27708,16 +27708,16 @@ position: absolute;}  }
     width: calc(100% - 50%);
   }
 }
-.preorders_block_global .trips-b-user, .preorders_block_history .trips-b-user, .doc_block_contracts .trips-b-user {
+.preorders_block_global .trips-b-user, .preorders_block_history .trips-b-user, .doc_block_contracts .trips-b-user, .doc_block_contracts1 .trips-b-user {
   width: 150px;
   text-align: left;
   padding: 40px 10px;
 }
-.preorders_block_global .trips-b-user .label-task-gg, .preorders_block_history .trips-b-user .label-task-gg, .doc_block_contracts .trips-b-user .label-task-gg {
+.preorders_block_global .trips-b-user .label-task-gg, .preorders_block_history .trips-b-user .label-task-gg, .doc_block_contracts .trips-b-user .label-task-gg, .doc_block_contracts1 .trips-b-user .label-task-gg {
   left: 10px;
 }
 @media only screen and (max-width: 639px) {
-  .preorders_block_global .trips-b-user, .preorders_block_history .trips-b-user, .doc_block_contracts .trips-b-user {
+  .preorders_block_global .trips-b-user, .preorders_block_history .trips-b-user, .doc_block_contracts .trips-b-user, .doc_block_contracts1 .trips-b-user {
     -webkit-box-ordinal-group: 1;
     -moz-box-ordinal-group: 1;
     -ms-flex-order: 1;
@@ -27726,11 +27726,11 @@ position: absolute;}  }
     width: calc(100% - 50% - 50px);
   }
 }
-.preorders_block_global .trips-b-comment, .preorders_block_history .trips-b-comment, .doc_block_contracts .trips-b-comment {
+.preorders_block_global .trips-b-comment, .preorders_block_history .trips-b-comment, .doc_block_contracts .trips-b-comment, .doc_block_contracts1 .trips-b-comment {
   width: calc( 100% - 50px - 150px - 200px );
 }
 @media only screen and (max-width: 639px) {
-  .preorders_block_global .trips-b-comment, .preorders_block_history .trips-b-comment, .doc_block_contracts .trips-b-comment {
+  .preorders_block_global .trips-b-comment, .preorders_block_history .trips-b-comment, .doc_block_contracts .trips-b-comment, .doc_block_contracts1 .trips-b-comment {
     -webkit-box-ordinal-group: 3;
     -moz-box-ordinal-group: 3;
     -ms-flex-order: 3;
@@ -27739,11 +27739,11 @@ position: absolute;}  }
     width: 100%;
     padding: 0px 10px;
   }
-  .preorders_block_global .trips-b-comment .label-task-gg, .preorders_block_history .trips-b-comment .label-task-gg, .doc_block_contracts .trips-b-comment .label-task-gg {
+  .preorders_block_global .trips-b-comment .label-task-gg, .preorders_block_history .trips-b-comment .label-task-gg, .doc_block_contracts .trips-b-comment .label-task-gg, .doc_block_contracts1 .trips-b-comment .label-task-gg {
     top: -15px;
   }
 }
-.preorders_block_global .trips-b-comment, .preorders_block_history .trips-b-comment, .doc_block_contracts .trips-b-comment {
+.preorders_block_global .trips-b-comment, .preorders_block_history .trips-b-comment, .doc_block_contracts .trips-b-comment, .doc_block_contracts1 .trips-b-comment {
   z-index: 10;
   font-family: "GEInspiraBold";
   color: rgba(0, 0, 0, 0.7);
@@ -27754,11 +27754,11 @@ position: absolute;}  }
   text-transform: uppercase;
 }
 @media only screen and (max-width: 1023px) {
-  .preorders_block_global .trips-b-comment, .preorders_block_history .trips-b-comment, .doc_block_contracts .trips-b-comment {
+  .preorders_block_global .trips-b-comment, .preorders_block_history .trips-b-comment, .doc_block_contracts .trips-b-comment, .doc_block_contracts1 .trips-b-comment {
     width: 100%;
   }
 }
-.preorders_block_global .trips-b-comment .spans, .preorders_block_history .trips-b-comment .spans, .doc_block_contracts .trips-b-comment .spans {
+.preorders_block_global .trips-b-comment .spans, .preorders_block_history .trips-b-comment .spans, .doc_block_contracts .trips-b-comment .spans, .doc_block_contracts1 .trips-b-comment .spans {
   -webkit-transition: all 0.4s cubic-bezier(0.42, 0.01, 0.23, 1);
   -moz-transition: all 0.4s cubic-bezier(0.42, 0.01, 0.23, 1);
   -ms-transition: all 0.4s cubic-bezier(0.42, 0.01, 0.23, 1);
@@ -27767,36 +27767,36 @@ position: absolute;}  }
   cursor: pointer;
   border-bottom: 1px solid rgba(255, 255, 255, 0);
 }
-.preorders_block_global .trips-b-comment .oto-z, .preorders_block_history .trips-b-comment .oto-z, .doc_block_contracts .trips-b-comment .oto-z {
+.preorders_block_global .trips-b-comment .oto-z, .preorders_block_history .trips-b-comment .oto-z, .doc_block_contracts .trips-b-comment .oto-z, .doc_block_contracts1 .trips-b-comment .oto-z {
   color: rgba(0, 0, 0, 0.4);
   font-family: "GEInspiraRegular";
   margin-top: 5px;
   border-top: 1px solid #efeff0;
   padding-top: 5px;
 }
-.preorders_block_global .trips-b-comment:hover .label-task-gg, .preorders_block_history .trips-b-comment:hover .label-task-gg, .doc_block_contracts .trips-b-comment:hover .label-task-gg {
+.preorders_block_global .trips-b-comment:hover .label-task-gg, .preorders_block_history .trips-b-comment:hover .label-task-gg, .doc_block_contracts .trips-b-comment:hover .label-task-gg, .doc_block_contracts1 .trips-b-comment:hover .label-task-gg {
   display: inline-block;
 }
-.preorders_block_global .status_admin, .preorders_block_history .status_admin, .doc_block_contracts .status_admin {
+.preorders_block_global .status_admin, .preorders_block_history .status_admin, .doc_block_contracts .status_admin, .doc_block_contracts1 .status_admin {
   display: inline;
   padding: 2px 0px;
   line-height: 14px;
 }
-.preorders_block_global div.obi, .preorders_block_history div.obi, .doc_block_contracts div.obi {
+.preorders_block_global div.obi, .preorders_block_history div.obi, .doc_block_contracts div.obi, .doc_block_contracts1 div.obi {
   font-family: "GEInspiraBold";
   color: rgba(0, 0, 0, 0.7);
   font-size: 14px;
   line-height: 14px;
   padding-top: 15px;
 }
-.preorders_block_global .titi, .preorders_block_history .titi, .doc_block_contracts .titi {
+.preorders_block_global .titi, .preorders_block_history .titi, .doc_block_contracts .titi, .doc_block_contracts1 .titi {
   color: rgba(0, 0, 0, 0.4);
   font-family: "GEInspiraRegular";
   margin-top: 0px;
   font-size: 12px;
   line-height: 14px;
 }
-.preorders_block_global .oto-z-pr, .preorders_block_history .oto-z-pr, .doc_block_contracts .oto-z-pr {
+.preorders_block_global .oto-z-pr, .preorders_block_history .oto-z-pr, .doc_block_contracts .oto-z-pr, .doc_block_contracts1 .oto-z-pr {
   color: rgba(0, 0, 0, 0.3);
   font-family: "GEInspiraRegular";
   margin-top: 15px;
@@ -27804,25 +27804,25 @@ position: absolute;}  }
   padding-top: 5px;
   font-size: 11px;
 }
-.preorders_block_global .oto-z-pr1, .preorders_block_history .oto-z-pr1, .doc_block_contracts .oto-z-pr1 {
+.preorders_block_global .oto-z-pr1, .preorders_block_history .oto-z-pr1, .doc_block_contracts .oto-z-pr1, .doc_block_contracts1 .oto-z-pr1 {
   color: rgba(0, 0, 0, 0.7);
   font-family: "GEInspiraRegular";
   font-size: 11px;
   line-height: 18px;
 }
-.preorders_block_global .st-202020, .preorders_block_history .st-202020, .doc_block_contracts .st-202020 {
+.preorders_block_global .st-202020, .preorders_block_history .st-202020, .doc_block_contracts .st-202020, .doc_block_contracts1 .st-202020 {
   margin-bottom: 0px;
   margin-top: 10px;
   padding: 5px 10px;
 }
-.preorders_block_global .reason, .preorders_block_history .reason, .doc_block_contracts .reason {
+.preorders_block_global .reason, .preorders_block_history .reason, .doc_block_contracts .reason, .doc_block_contracts1 .reason {
   color: rgba(0, 0, 0, 0.4);
   font-family: GEInspiraRegular;
   font-size: 12px;
   display: inline-block;
   margin-top: 5px;
 }
-.preorders_block_global .yes-task-p, .preorders_block_global .yes-task-no, .preorders_block_history .yes-task-p, .preorders_block_history .yes-task-no, .doc_block_contracts .yes-task-p, .doc_block_contracts .yes-task-no {
+.preorders_block_global .yes-task-p, .preorders_block_global .yes-task-no, .preorders_block_history .yes-task-p, .preorders_block_history .yes-task-no, .doc_block_contracts .yes-task-p, .doc_block_contracts .yes-task-no, .doc_block_contracts1 .yes-task-p, .doc_block_contracts1 .yes-task-no {
   position: relative;
   cursor: pointer;
   background-color: #fd8080;
@@ -27831,13 +27831,13 @@ position: absolute;}  }
   border-radius: 50%;
   margin-top: 5px;
 }
-.preorders_block_global .yes-task-p:hover, .preorders_block_global .yes-task-no:hover, .preorders_block_history .yes-task-p:hover, .preorders_block_history .yes-task-no:hover, .doc_block_contracts .yes-task-p:hover, .doc_block_contracts .yes-task-no:hover {
+.preorders_block_global .yes-task-p:hover, .preorders_block_global .yes-task-no:hover, .preorders_block_history .yes-task-p:hover, .preorders_block_history .yes-task-no:hover, .doc_block_contracts .yes-task-p:hover, .doc_block_contracts .yes-task-no:hover, .doc_block_contracts1 .yes-task-p:hover, .doc_block_contracts1 .yes-task-no:hover {
   background: rgba(0, 0, 0, 0.08);
 }
-.preorders_block_global .yes-task-p:hover::before, .preorders_block_global .yes-task-no:hover::before, .preorders_block_history .yes-task-p:hover::before, .preorders_block_history .yes-task-no:hover::before, .doc_block_contracts .yes-task-p:hover::before, .doc_block_contracts .yes-task-no:hover::before {
+.preorders_block_global .yes-task-p:hover::before, .preorders_block_global .yes-task-no:hover::before, .preorders_block_history .yes-task-p:hover::before, .preorders_block_history .yes-task-no:hover::before, .doc_block_contracts .yes-task-p:hover::before, .doc_block_contracts .yes-task-no:hover::before, .doc_block_contracts1 .yes-task-p:hover::before, .doc_block_contracts1 .yes-task-no:hover::before {
   color: #fd8080;
 }
-.preorders_block_global .yes-task-p::before, .preorders_block_global .yes-task-no::before, .preorders_block_history .yes-task-p::before, .preorders_block_history .yes-task-no::before, .doc_block_contracts .yes-task-p::before, .doc_block_contracts .yes-task-no::before {
+.preorders_block_global .yes-task-p::before, .preorders_block_global .yes-task-no::before, .preorders_block_history .yes-task-p::before, .preorders_block_history .yes-task-no::before, .doc_block_contracts .yes-task-p::before, .doc_block_contracts .yes-task-no::before, .doc_block_contracts1 .yes-task-p::before, .doc_block_contracts1 .yes-task-no::before {
   content: "[";
   top: 4px;
   left: 4px;
@@ -27849,7 +27849,7 @@ position: absolute;}  }
   position: absolute;
 }
 
-.preorders_block_history .pass_wh_trips, .doc_block_contracts .pass_wh_trips {
+.preorders_block_history .pass_wh_trips, .doc_block_contracts .pass_wh_trips, .doc_block_contracts1 .pass_wh_trips {
   font-family: "GEInspiraRegular";
   color: rgba(0, 0, 0, 0.7);
   font-size: 11px;
@@ -27858,16 +27858,16 @@ position: absolute;}  }
   text-transform: uppercase;
   display: block;
 }
-.preorders_block_history .my-history-pre, .doc_block_contracts .my-history-pre {
+.preorders_block_history .my-history-pre, .doc_block_contracts .my-history-pre, .doc_block_contracts1 .my-history-pre {
   color: rgba(0, 0, 0, 0.3) !important;
   font-family: "GEInspiraBold";
   text-transform: uppercase !important;
   font-size: 11px !important;
 }
-.preorders_block_history .pass_wh_trips a, .doc_block_contracts .pass_wh_trips a {
+.preorders_block_history .pass_wh_trips a, .doc_block_contracts .pass_wh_trips a, .doc_block_contracts1 .pass_wh_trips a {
   margin-top: 4px;
 }
-.preorders_block_history .pass_wcommen, .doc_block_contracts .pass_wcommen {
+.preorders_block_history .pass_wcommen, .doc_block_contracts .pass_wcommen, .doc_block_contracts1 .pass_wcommen {
   color: rgba(0, 0, 0, 0.7);
   font-family: "GEInspiraBold";
   font-size: 13px;
@@ -27879,49 +27879,49 @@ position: absolute;}  }
   text-decoration: none;
   margin-bottom: 0px;
 }
-.preorders_block_history .time_notifi_h, .doc_block_contracts .time_notifi_h {
+.preorders_block_history .time_notifi_h, .doc_block_contracts .time_notifi_h, .doc_block_contracts1 .time_notifi_h {
   color: rgba(0, 0, 0, 0.3);
   font-family: "GEInspiraBold";
   text-transform: uppercase;
   font-size: 11px;
 }
 @media only screen and (max-width: 639px) {
-  .preorders_block_history .trips-b-number, .doc_block_contracts .trips-b-number {
+  .preorders_block_history .trips-b-number, .doc_block_contracts .trips-b-number, .doc_block_contracts1 .trips-b-number {
     display: none;
   }
 }
-.preorders_block_history .trips-b-info, .doc_block_contracts .trips-b-info {
+.preorders_block_history .trips-b-info, .doc_block_contracts .trips-b-info, .doc_block_contracts1 .trips-b-info {
   width: 200px;
 }
 @media only screen and (max-width: 639px) {
-  .preorders_block_history .trips-b-info, .doc_block_contracts .trips-b-info {
+  .preorders_block_history .trips-b-info, .doc_block_contracts .trips-b-info, .doc_block_contracts1 .trips-b-info {
     width: 100%;
     padding: 15px 10px;
   }
 }
-.preorders_block_history .trips-b-user, .doc_block_contracts .trips-b-user {
+.preorders_block_history .trips-b-user, .doc_block_contracts .trips-b-user, .doc_block_contracts1 .trips-b-user {
   width: calc(100% - 50px - 350px);
 }
 @media only screen and (max-width: 639px) {
-  .preorders_block_history .trips-b-user, .doc_block_contracts .trips-b-user {
+  .preorders_block_history .trips-b-user, .doc_block_contracts .trips-b-user, .doc_block_contracts1 .trips-b-user {
     width: 100%;
     padding: 15px 10px;
   }
 }
-.preorders_block_history .trips-b-comment, .doc_block_contracts .trips-b-comment {
+.preorders_block_history .trips-b-comment, .doc_block_contracts .trips-b-comment, .doc_block_contracts1 .trips-b-comment {
   width: 150px;
 }
 @media only screen and (max-width: 639px) {
-  .preorders_block_history .trips-b-comment, .doc_block_contracts .trips-b-comment {
+  .preorders_block_history .trips-b-comment, .doc_block_contracts .trips-b-comment, .doc_block_contracts1 .trips-b-comment {
     width: 100%;
     padding: 15px 10px;
   }
-  .preorders_block_history .trips-b-comment .label-task-gg, .doc_block_contracts .trips-b-comment .label-task-gg {
+  .preorders_block_history .trips-b-comment .label-task-gg, .doc_block_contracts .trips-b-comment .label-task-gg, .doc_block_contracts1 .trips-b-comment .label-task-gg {
     top: 0px;
   }
 }
 @media only screen and (max-width: 639px) {
-  .preorders_block_history .label-task-gg, .doc_block_contracts .label-task-gg {
+  .preorders_block_history .label-task-gg, .doc_block_contracts .label-task-gg, .doc_block_contracts1 .label-task-gg {
     top: 0px;
   }
 }
@@ -27968,6 +27968,65 @@ position: absolute;}  }
     padding: 15px 10px;
   }
   .doc_block_contracts .trips-b-comment .label-task-gg {
+    top: 0px;
+  }
+}
+
+.doc_block_contracts1 .pass_x {
+  margin-bottom: 10px !important;
+  position: relative;
+  padding-top: 13px !important;
+}
+.doc_block_contracts1 .cost_bux {
+  font-family: GEInspiraBold;
+  color: rgba(0, 0, 0, 0.7);
+  text-transform: uppercase;
+  font-size: 14px;
+  margin-left: 4px;
+  cursor: pointer;
+}
+.doc_block_contracts1 .trips-b-number {
+  padding: 30px 10px;
+  padding-bottom: 10px;
+}
+@media only screen and (max-width: 639px) {
+  .doc_block_contracts1 .trips-b-number {
+    display: none;
+  }
+}
+.doc_block_contracts1 .trips-b-info, .doc_block_contracts1 .trips-b-touro {
+  width: calc((100% / 3) - 120px);
+  padding: 30px 10px;
+  padding-bottom: 10px;
+}
+@media only screen and (max-width: 639px) {
+  .doc_block_contracts1 .trips-b-info, .doc_block_contracts1 .trips-b-touro {
+    width: 100%;
+    padding: 15px 10px;
+  }
+}
+.doc_block_contracts1 .buy-b-summ {
+  width: 120px;
+  padding: 30px 10px;
+  padding-bottom: 10px;
+}
+@media only screen and (max-width: 639px) {
+  .doc_block_contracts1 .buy-b-summ {
+    width: 50%;
+    padding: 15px 10px;
+  }
+}
+.doc_block_contracts1 .trips-b-comment {
+  width: calc((100% / 3) - 50px);
+  padding: 30px 10px;
+  padding-bottom: 10px;
+}
+@media only screen and (max-width: 639px) {
+  .doc_block_contracts1 .trips-b-comment {
+    width: 100%;
+    padding: 15px 10px;
+  }
+  .doc_block_contracts1 .trips-b-comment .label-task-gg {
     top: 0px;
   }
 }

@@ -3,7 +3,7 @@
 <!--<div class="menu-09 no-fixed-mobile input-line" style="z-index:150;">-->
  <div class="menu-09-left client-menu-left">
      <a href="/" class="menu-09-global"></a><a onclick="history.back();" class="menu-09-prev"><i></i></a>
-     <span class="menu-09-pc-h"><span>Бухгалтерия (Платежи)</span></span>
+     <span class="menu-09-pc-h"><span>Бухгалтерия (Сводная таблица туров)</span></span>
 
  </div>
  <div class="menu-09-right client-menu-right">

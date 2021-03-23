@@ -33,7 +33,7 @@ $role->GetPermission();
 $active_menu='accounting';  // в каком меню
 
 
-$count_write=50;			
+$count_write=150;
 		
 $edit_price=0;
 if ($role->is_column_edit('n_material','price'))
@@ -61,7 +61,7 @@ if((!$role->permission('Бухгалтерия','R'))and($sign_admin!=1))
 
 if(isset($_GET["id"])) {
 //если есть id то смотрим может ли он смотеть этот тур
-    $result_t = mysql_time_query($link, 'select A.id from trips_payment as A where A.id="' . ht($_GET['id']) . '" and A.visible=1');
+    $result_t = mysql_time_query($link, 'select A.id from trips as A where A.id="' . ht($_GET['id']) . '" and A.visible=1');
     $num_results_t = $result_t->num_rows;
     if ($num_results_t == 0) {
         header404(322, $echo_r);
@@ -149,7 +149,7 @@ echo'<div class="content" iu="'.$id_user.'">';
 
 
 
-        <div class="line_mobile_blue">Бухгалтерия (Платежи)</div>
+        <div class="line_mobile_blue">Бухгалтерия (Сводная таблица туров)</div>
 
 
 
@@ -187,30 +187,30 @@ $os2 = array( "За все время","Сегодня","За 7 дней","В э
 */
 		$su_2=0;
 		$date_su='';
-		if (( isset($_COOKIE["su_2cc".$id_user]))and(is_numeric($_COOKIE["su_2cc".$id_user]))and(array_search($_COOKIE["su_2cc".$id_user],$os_id2)!==false))
+		if (( isset($_COOKIE["su_2bc".$id_user]))and(is_numeric($_COOKIE["su_2bc".$id_user]))and(array_search($_COOKIE["su_2bc".$id_user],$os_id2)!==false))
 		{
-			$su_2=$_COOKIE["su_2cc".$id_user];
+			$su_2=$_COOKIE["su_2bc".$id_user];
 		}
 		$val_su2=$os2[array_search($su_2, $os_id2)];
 		
 		
-		if ( isset($_COOKIE["suddcc".$id_user]))
+		if ( isset($_COOKIE["suddbc".$id_user]))
 		{
 			//$date_base__=explode(".",$_COOKIE["sudds"]);
-		if (( isset($_COOKIE["su_2cc".$id_user]))and(is_numeric($_COOKIE["su_2cc".$id_user]))and($_COOKIE["su_2cc".$id_user]==2))
+		if (( isset($_COOKIE["su_2bc".$id_user]))and(is_numeric($_COOKIE["su_2bc".$id_user]))and($_COOKIE["su_2bc".$id_user]==2))
 		{
-			$date_su=$_COOKIE["suddcc_mor".$id_user];
-			$val_su2=$_COOKIE["suddcc_mor".$id_user];
+			$date_su=$_COOKIE["suddbc_mor".$id_user];
+			$val_su2=$_COOKIE["suddbc_mor".$id_user];
 		}
 		}
 		$class_js_readonly ??= '';
 		$class_js_search ??= '';
 		
-	    $_COOKIE["su_2cc".$id_user] ??= '';
+	    $_COOKIE["su_2bc".$id_user] ??= '';
 	$_COOKIE["su_1cc".$id_user] ??= '';
 	//$_COOKIE["su_3pr".$id_user] ??= '';
 	$_COOKIE["su_4cc".$id_user] ??= '';
-	$_COOKIE["su_5cc".$id_user] ??= '';
+	$_COOKIE["su_5bc".$id_user] ??= '';
 
 
 $class_js_search='';
@@ -225,7 +225,7 @@ $class_js_readonly='';
 
 
 
-		   echo'<div class="left_drop menu1_prime book_menu_sel gop_io js--sort js-call-no-v '.$class_js_search.'" style="z-index:'.$zindex.'"><label>'.$name_bat.'</label><div class="select eddd"><a class="slct " list_number="t2" data_src="'.$os_id2[array_search($_COOKIE["su_2cc".$id_user], $os_id2)].'">'.$val_su2.'</a><ul class="drop">';
+		   echo'<div class="left_drop menu1_prime book_menu_sel gop_io js--sort js-call-no-v '.$class_js_search.'" style="z-index:'.$zindex.'"><label>'.$name_bat.'</label><div class="select eddd"><a class="slct " list_number="t2" data_src="'.$os_id2[array_search($_COOKIE["su_2bc".$id_user], $os_id2)].'">'.$val_su2.'</a><ul class="drop">';
 	
 			$zindex--;
 
@@ -240,11 +240,7 @@ $class_js_readonly='';
 			   }
 			 
 			 }
-		   echo'</ul><input type="hidden" '.$class_js_readonly.' name="sort2cc" id="sort2cc" value="'.$os2[$su_2].'"></div></div>';
-
-
-
-
+		   echo'</ul><input type="hidden" '.$class_js_readonly.' name="sort2bc" id="sort2bc" value="'.$os2[$su_2].'"></div></div>';
 
 		
      $os5 = array( "Мной");
@@ -282,13 +278,13 @@ $class_js_readonly='';
 		}
 	 
 		$su_5=0;
-		if (( isset($_COOKIE["su_5cc".$id_user]))and(array_search($_COOKIE["su_5cc".$id_user],$os_id5)!==false))
+		if (( isset($_COOKIE["su_5bc".$id_user]))and(array_search($_COOKIE["su_5bc".$id_user],$os_id5)!==false))
 		{
-			$su_5=$_COOKIE["su_5cc".$id_user];
+			$su_5=$_COOKIE["su_5bc".$id_user];
 		}
 		
 		
-		   echo'<div class="left_drop menu1_prime book_menu_sel js--sort gop_io '.$class_js_search.'" style="z-index:'.$zindex.'"><label>Получен/Оплачен</label><div class="select eddd"><a class="slct" list_number="t6" data_src="'.$os_id5[array_search($_COOKIE["su_5cc".$id_user], $os_id5)].'">'.$os5[array_search($_COOKIE["su_5cc".$id_user], $os_id5)].'</a><ul class="drop">';
+		   echo'<div class="left_drop menu1_prime book_menu_sel js--sort gop_io '.$class_js_search.'" style="z-index:'.$zindex.'"><label>Получен/Оплачен</label><div class="select eddd"><a class="slct" list_number="t6" data_src="'.$os_id5[array_search($_COOKIE["su_5bc".$id_user], $os_id5)].'">'.$os5[array_search($_COOKIE["su_5bc".$id_user], $os_id5)].'</a><ul class="drop">';
 	//$os_id2[array_search($su_2, $os_id2)]
 			$zindex--;
 
@@ -303,7 +299,7 @@ $class_js_readonly='';
 			   }
 			 
 			 }
-		   echo'</ul><input type="hidden" '.$class_js_readonly.' name="sort5cc" id="sort5cc" value="'.$os5[$su_5].'"></div></div>';
+		   echo'</ul><input type="hidden" '.$class_js_readonly.' name="sort5bc" id="sort5bc" value="'.$os5[$su_5].'"></div></div>';
 
 
 
@@ -311,7 +307,7 @@ $class_js_readonly='';
 
 
 
-    echo '<div class="inline_reload js-reload-top"><a href="contracts/" class="show_reload">Применить</a></div>';
+    echo '<div class="inline_reload js-reload-top"><a href="accounting/" class="show_reload">Применить</a></div>';
 
 		//echo'<a href="clients/" class="show_sort_supply">Применить</a>';
 		?>
@@ -350,22 +346,22 @@ $("#date_table").datepicker({
 range: 'period', // режим - выбор периода
 numberOfMonths: 2,	
 autoclose: true,					
-minDate: "-1Y", maxDate: "+0D",				
+minDate: "-2Y", maxDate: "+0D",
 onSelect: function(dateText, inst, extensionRange) {
 
 	$('#date_table').val(jQuery.datepicker.formatDate('d MM yy'+' г.',extensionRange.startDate) + ' - ' + jQuery.datepicker.formatDate('d MM yy'+' г.',extensionRange.endDate));
 	
 	var iu=$('.content').attr('iu');
-	$.cookie("suddcc_mor"+iu, null, {path:'/',domain: window.is_session,secure: false});
-CookieList("suddcc_mor"+iu,jQuery.datepicker.formatDate('d MM yy'+' г.',extensionRange.startDate) + ' - ' + jQuery.datepicker.formatDate('d MM yy'+' г.',extensionRange.endDate),'add');
+	$.cookie("suddbc_mor"+iu, null, {path:'/',domain: window.is_session,secure: false});
+CookieList("suddbc_mor"+iu,jQuery.datepicker.formatDate('d MM yy'+' г.',extensionRange.startDate) + ' - ' + jQuery.datepicker.formatDate('d MM yy'+' г.',extensionRange.endDate),'add');
 	
 	
 	$('#date_hidden_start').val(jQuery.datepicker.formatDate('yy-mm-dd',extensionRange.startDate));
 	$('#date_hidden_end').val(jQuery.datepicker.formatDate('yy-mm-dd',extensionRange.endDate));
 	
 	$('[list_number=t2]').empty().append(jQuery.datepicker.formatDate('d MM yy'+' г.',extensionRange.startDate) + ' - ' + jQuery.datepicker.formatDate('d MM yy'+' г.',extensionRange.endDate));		
-		$.cookie("suddcc"+iu, null, {path:'/',domain: window.is_session,secure: false});
-CookieList("suddcc"+iu,$('#date_hidden_start').val()+'/'+$('#date_hidden_end').val(),'add');
+		$.cookie("suddbc"+iu, null, {path:'/',domain: window.is_session,secure: false});
+CookieList("suddbc"+iu,$('#date_hidden_start').val()+'/'+$('#date_hidden_end').val(),'add');
 
 	$('.js-reload-top').removeClass('active-r');
 $('.js-reload-top').addClass('active-r');	
@@ -394,12 +390,12 @@ setTimeout(function() {
 
 
 <?
-if((isset($_COOKIE["su_2cc".$id_user]))and(is_numeric($_COOKIE["su_2cc".$id_user]))and($_COOKIE["su_2cc".$id_user]==2))
+if((isset($_COOKIE["su_2bc".$id_user]))and(is_numeric($_COOKIE["su_2bc".$id_user]))and($_COOKIE["su_2bc".$id_user]==2))
 {
-$date_range=explode("/",$_COOKIE["suddcc".$id_user]);
+$date_range=explode("/",$_COOKIE["suddbc".$id_user]);
 echo'var st=\''.ipost_($date_range[0],'').'\';
 var st1=\''.ipost_($date_range[1],'').'\';
-var st2=\''.ipost_($_COOKIE["suddcc_mor".$id_user],'').'\';';
+var st2=\''.ipost_($_COOKIE["suddbc_mor".$id_user],'').'\';';
 echo'jopacalendar(st,st1,st2);';		  
 }
 ?>		
@@ -487,11 +483,11 @@ $('#date_table').val(date_all);
 if(isset($_GET["id"]))
 {
 
-    $sql_k='Select DISTINCT A.id from preorders as A where A.visible=1 AND A.id="'.ht($_GET["id"]).'" and A.id_company="'.$id_company.'" ';
+    $sql_k='Select DISTINCT A.id from trips as A where A.visible=1 AND A.id="'.ht($_GET["id"]).'" and A.id_a_company="'.$id_company.'" ';
 //echo $sql_k;
     $result_t2 = mysql_time_query($link, $sql_k);
 
-    $sql_count = 'Select count(DISTINCT A.id) as kol from preorders as A where A.visible=1 AND A.id="'.ht($_GET["id"]).'" and A.id_company="'.$id_company.'"';
+    $sql_count = 'Select count(DISTINCT A.id) as kol from trips as A where A.visible=1 AND A.id="'.ht($_GET["id"]).'" and A.id_a_company="'.$id_company.'"';
 
 
 } else {
@@ -678,7 +674,7 @@ $os_id2 = array("0","6","1","5","3","2");
 
     if ($su_2 == 2) {
         //Выбранные период пользователем
-        $date_range = explode("/", $_COOKIE["suddcc" . $id_user]);
+        $date_range = explode("/", $_COOKIE["suddbc" . $id_user]);
         $sql_su2 = ' and B.date_doc>="' . ht($date_range[0]) . '" and B.date_doc<="' . ht($date_range[1]) . '"';
     }
         //X
@@ -711,14 +707,14 @@ $os_id2 = array("0","6","1","5","3","2");
                 //$sql_order = ' order by xx.datetimes DESC';
 
 
+    $sql_order = ' order by A.datecreate DESC';
 
 
-        $sql_table=$sql_table1.$sql_table2.$sql_table3;
-        $sql_svyz_table=$sql_svyz_table1.$sql_svyz_table2;
 
-        $sql_k = 'Select 
-  
-  DISTINCT A.id as ids,A.id_user,A.doc,hotel,A.place_name,A.id_country'.$sql_columb.'
+    $sql_table=$sql_table1.$sql_table2.$sql_table3;
+    $sql_svyz_table=$sql_svyz_table1.$sql_svyz_table2;
+
+    $sql_k = 'Select A.*
   
   from trips as A'.$sql_table.'
   
@@ -726,13 +722,13 @@ $os_id2 = array("0","6","1","5","3","2");
 
 //echo($sql_k);
 
-                $sql_count = 'Select 
+    $sql_count = 'Select 
   
-  count(DISTINCT A.id) as kol' . $sql_columb . '
+  count(DISTINCT A.id) as kol'.$sql_columb.'
   
-  from trips as A' . $sql_table . '
+  from trips as A'.$sql_table.'
   
-  where A.visible=1 ' . $sql_svyz_table . ' ' . $sql_su2 . ' ' . $sql_su1 . ' ' . $sql_su3 . ' ' . $sql_su4 . ' ' . $sql_su5 . ' ' . $sql_su7;
+  where A.visible=1 '.$sql_svyz_table.' ' . $sql_su2 . ' ' . $sql_su1 . ' ' . $sql_su3 . ' ' . $sql_su4 . ' ' . $sql_su5 . ' ' . $sql_su7;
 
 
             //echo($sql_count);
@@ -760,7 +756,7 @@ $row__221= mysqli_fetch_assoc($result_t221);
 
 //echo'<div class="okss"><span class="title_book yop_booking"><i>'.$row__221["kol"].'</i><span>'.PadejNumber($row__221["kol"],'найденная задача,найденных задачи,найденных задач').'</span></span></div>';			
 
-      echo '<div class="hidden-count-task">' . $row__221["kol"] . ' ' . PadejNumber($row__221["kol"], 'найденный договор,найденных договора,найденных договоров') . '</div>';
+      echo '<div class="hidden-count-task">' . $row__221["kol"] . ' ' . PadejNumber($row__221["kol"], 'найденный тур,найденных тура,найденных тура') . '</div>';
 
 			
 
@@ -784,7 +780,7 @@ $new_class_block='';
 
                    $row_88 = mysqli_fetch_assoc($result_t2);
 
-                   include $url_system . 'contracts/code/block_doc.php';
+                   include $url_system . 'accounting/code/block_doc.php';
                    echo($task_cloud_block);
 
 
@@ -798,7 +794,7 @@ $new_class_block='';
 	  if($count_pages>1)
 	  {
 
-              displayPageLink_new('contracts/', 'contracts/.page-', "", NumberPageActive('n_st'), $count_pages, 5, 9, "journal_oo", 1);
+              displayPageLink_new('accounting/', 'accounting/.page-', "", NumberPageActive('n_st'), $count_pages, 5, 9, "journal_oo", 1);
 
 		  
 	  }
@@ -811,11 +807,11 @@ $new_class_block='';
 //echo'<div class="booking_div da_book1"><div class="not_booling"></div><span class="h4" style="width:calc(100% - 60px)"><span>Клиентов с такими параметрами пока нет. Измените параметры и попробуйте еще раз.</span></span></div>';
 
   if(!isset($_GET["tabs"])) {
-      echo '<div class="message_search_b js-message-doc-search"><span>Договоров с такими параметрами пока нет. Измените параметры и попробуйте еще раз.</span></div>';
+      echo '<div class="message_search_b js-message-doc-search"><span>Туров с такими параметрами пока нет. Измените параметры и попробуйте еще раз.</span></div>';
       echo '<div class="ring_block ring-block-line js-global-preorders-link"></div>';
   } else
   {
-      echo '<div class="message_search_b js-message-doc-search1"><span>Договоров с такими параметрами пока нет. Измените параметры и попробуйте еще раз.</span></div>';
+      echo '<div class="message_search_b js-message-doc-search1"><span>Туров с такими параметрами пока нет. Измените параметры и попробуйте еще раз.</span></div>';
       echo '<div class="ring_block ring-block-line js-global-doc-link1"></div>';
   }
 				  }

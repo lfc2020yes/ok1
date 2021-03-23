@@ -9888,6 +9888,17 @@ $('#name_stock_searcho').bind('change keyup input click', changesort7co);
 	};
 	$('#sort5cc').bind('change', changesort5cc);
 	//***************************************************************************************
+	var changesort5bc = function() {
+		var iu=$('.content').attr('iu');
+
+		$.cookie("su_5bc"+iu, null, {path:'/',domain: window.is_session,secure: false});
+		CookieList("su_5bc"+iu,$(this).val(),'add');
+
+		$('.js-reload-top').removeClass('active-r');
+		$('.js-reload-top').addClass('active-r');
+	};
+	$('#sort5bc').bind('change', changesort5bc);
+	//***************************************************************************************
 	var changesort5pr = function() {
 		var iu=$('.content').attr('iu');
 
@@ -9967,6 +9978,17 @@ $('#name_stock_searcho').bind('change keyup input click', changesort7co);
 	};
 	$('#sort2cc').bind('change', changesort2cc);
 
+	//***************************************************************************************
+	var changesort2bc = function() {
+		var iu=$('.content').attr('iu');
+
+		$.cookie("su_2bc"+iu, null, {path:'/',domain: window.is_session,secure: false});
+		CookieList("su_2bc"+iu,$(this).val(),'add');
+
+		$('.js-reload-top').removeClass('active-r');
+		$('.js-reload-top').addClass('active-r');
+	};
+	$('#sort2bc').bind('change', changesort2bc);
 
 //***************************************************************************************
 	var changesort1tu = function() {

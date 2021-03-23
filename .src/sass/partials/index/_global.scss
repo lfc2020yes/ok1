@@ -19248,7 +19248,7 @@ display:none !important;	}}
 
 
 
-.preorders_block_global,.preorders_block_history,.doc_block_contracts
+.preorders_block_global,.preorders_block_history,.doc_block_contracts,.doc_block_contracts1
 {
 
 	.issue-block {position: relative; font-size:12px;
@@ -19723,7 +19723,7 @@ display:none !important;	}}
 		text-align:center;
 		@include sw('tablet3') { width:15%; display: none; padding-top: 8px; }
 	}
-	.trips-b-info {z-index: 10; width:calc(100% - 50px - 200px - 200px - 200px);
+	.trips-b-info,.trips-b-touro {z-index: 10; width:calc(100% - 50px - 200px - 200px - 200px);
 		//@include sw('tablet3') { width:30%; }
 		@include sw('tablet-small') {
 
@@ -19935,7 +19935,7 @@ display:none !important;	}}
 }
 
 
-.preorders_block_global,.preorders_block_history,.doc_block_contracts {
+.preorders_block_global,.preorders_block_history,.doc_block_contracts,.doc_block_contracts1 {
 
 
 	.form-rate-ok-chat
@@ -20117,7 +20117,7 @@ display:none !important;	}}
 
 	}
 }
-.preorders_block_history,.doc_block_contracts { .pass_wh_trips {
+.preorders_block_history,.doc_block_contracts,.doc_block_contracts1 { .pass_wh_trips {
 	font-family: "GEInspiraRegular";
 	color: rgba(0, 0, 0, 0.7);
 	font-size: 11px;
@@ -20174,6 +20174,36 @@ display:none !important;	}}
 	.trips-b-user {width: calc(50% - 50px - 150px); padding: 30px 10px; padding-bottom:10px; @include sw('tablet-small') {
 		width: 100%;padding: 15px 10px;}}
 	.trips-b-comment { width: 150px; padding: 30px 10px; padding-bottom:10px; @include sw('tablet-small') {
+		width: 100%; padding: 15px 10px; .label-task-gg {
+			top: 0px;
+		} }}
+
+}
+
+
+.doc_block_contracts1 {
+	.pass_x{margin-bottom: 10px !important;
+      position: relative;
+      padding-top: 13px !important;}
+
+	.cost_bux {font-family: GEInspiraBold;
+		color: rgba(0, 0, 0, 0.7);
+		text-transform: uppercase;
+		font-size: 14px;
+		margin-left: 4px;
+		cursor: pointer;}
+
+	.trips-b-number {  padding: 30px 10px; padding-bottom:10px;
+		@include sw('tablet-small') {
+			display: none;}}
+	.trips-b-info,.trips-b-touro {width: calc((100% / 3) - 120px); padding: 30px 10px; padding-bottom:10px; @include sw('tablet-small') {
+		width: 100%;padding: 15px 10px; }  }
+
+
+    .buy-b-summ {width: 120px; padding: 30px 10px; padding-bottom:10px; @include sw('tablet-small') {
+		width: 50%;padding: 15px 10px; }  }
+
+	.trips-b-comment { width: calc((100% / 3) - 50px); padding: 30px 10px; padding-bottom:10px; @include sw('tablet-small') {
 		width: 100%; padding: 15px 10px; .label-task-gg {
 			top: 0px;
 		} }}
