@@ -773,7 +773,7 @@ $row__221= mysqli_fetch_assoc($result_t221);
 $new_class_block='';
 
 
-      echo '<div class="ring_block js-global-doc-link1" style="page-break-inside: avoid">';
+      echo '<div class="ring_block js-global-doc-link1">';
 
                       $date_paid='';
 	       for ($ksss=0; $ksss<$num_results_t2; $ksss++) {

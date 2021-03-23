@@ -9,7 +9,7 @@ if($row_88["date_buy_all"]=='0000-00-00 00:00:00') {
 }
 
 $new_sayx='';
-$task_cloud_block.='<div class="doc_block_contracts1 '.$new_sayx.' '.$cancel_class.'" id_pre="'.$row_88["id"].'"><span class="js-update-block-doc-h">';
+$task_cloud_block.='<div class="doc_block_contracts1 '.$new_sayx.' '.$cancel_class.'" id_pre="'.$row_88["id"].'" style="page-break-inside: avoid"><span class="js-update-block-doc-h">';
 
 
 $task_cloud_block.='<div class="trips-b-number"><div style="width: 100%;">'.$row_88["id"].'</div>';
