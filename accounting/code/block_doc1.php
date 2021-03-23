@@ -61,7 +61,7 @@ if ($num_results_uu != 0) {
 array_push($data1, $row_uu["cc"]);
 
 
-if($row_8["shopper"]==1) {
+if($row_88["shopper"]==1) {
     //частное лицо
     $result_uu = mysql_time_query($link, 'select fio from k_clients where id="'.ht($row_88["id_shopper"]) . '"');
 } else

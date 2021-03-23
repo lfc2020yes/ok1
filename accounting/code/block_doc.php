@@ -24,7 +24,7 @@ $task_cloud_block.='</div>
 
 
 
-if($row_8["shopper"]==1) {
+if($row_88["shopper"]==1) {
     //частное лицо
     $result_uu = mysql_time_query($link, 'select fio from k_clients where id="'.ht($row_88["id_shopper"]) . '"');
 } else
@@ -37,7 +37,7 @@ $num_results_uu = $result_uu->num_rows;
 if($num_results_uu!=0)
 {
     $row_uu = mysqli_fetch_assoc($result_uu);
-    if($row_8["shopper"]==1) {
+    if($row_88["shopper"]==1) {
         //частное лицо
         $task_cloud_block.='<div class="pass_wh_trips"><a class="js-client" iod="'.$row_88["id_shopper"].'"><span class="js-glu-f-'.$row_88["id_shopper"].' obi">'.$row_uu["fio"].'</span></a></div>';
     } else
