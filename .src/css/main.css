@@ -28031,6 +28031,16 @@ position: absolute;}  }
   }
 }
 
+@media print {
+  .doc_block_contracts1 {
+    margin-bottom: 0px !important;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .menu-09 {
+    display: none !important;
+  }
+}
 .bg-border {
   border-bottom: 1px solid transparent;
   border-image: linear-gradient(to right, #fd8080, #ffffff);
