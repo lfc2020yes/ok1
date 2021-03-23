@@ -70,11 +70,11 @@ if ($num_results_uu != 0) {
 }
 
 
-if($row_8['place_name']!='')
+if($row_88['place_name']!='')
 {
     $kuda_trips.=', '.$row_88['place_name'];
 }
-if($row_8['hotel']!='')
+if($row_88['hotel']!='')
 {
     $kuda_trips.=' / '.$row_88['hotel'];
 }
