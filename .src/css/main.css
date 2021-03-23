@@ -28036,6 +28036,13 @@ position: absolute;}  }
     margin-bottom: 0px !important;
     border-bottom: 1px solid #ccc;
   }
+  .doc_block_contracts1 .trips-b-number, .doc_block_contracts1 .trips-b-info, .doc_block_contracts1 .trips-b-touro, .doc_block_contracts1 .buy-b-summ, .doc_block_contracts1 .trips-b-comment {
+    padding: 10px 10px !important;
+  }
+
+  .js-update-block-doc-h {
+    margin-bottom: 0px !important;
+  }
 
   .menu-09 {
     display: none !important;
