@@ -172,11 +172,12 @@ echo'<h1 class="h1-filter js-h1-filter-doc ">Расширенные фильтр
 	 echo'<div class="choice-radio"><div class="center_vert1"><i class="active_task_cb"></i></div><input name="task[filter]" value="1" type="hidden"></div>'; 
 
 	 echo'<span class="search-count-task"></span>';
+echo'<a href="accounting/csv/csv.php" class="search-count-csv">excel</a>';
 echo'</h1>';	
 	
 	
 	
- $zindex=110;
+$zindex=110;
 
 $os2 = array( "Текущий месяц","Прошлый месяц","За ".month_rus1(date_step_sql('m', '-2m')),"За ".month_rus1(date_step_sql('m', '-3m')),"Текущий год","Выбрать период");
 $os_id2 = array("0","1","3","4","5","2");

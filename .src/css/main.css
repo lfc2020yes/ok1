@@ -23779,6 +23779,28 @@ font-size: 13px;
   }
 }
 
+.search-count-csv {
+  color: rgba(0, 0, 0, 0.7);
+  font-family: "GEInspiraBold";
+  margin-left: 5px;
+  background-color: #ffec57;
+  height: 24px;
+  line-height: 24px;
+  min-width: 24px;
+  padding: 0 12px;
+  font-size: 11px;
+  border-radius: 4px;
+  text-align: right;
+  margin-right: 20px;
+  float: right;
+}
+@media only screen and (max-width: 1023px) {
+  .search-count-csv {
+    float: none;
+    background-color: rgba(255, 255, 255, 0);
+  }
+}
+
 .hidden-count-task {
   display: none;
 }
