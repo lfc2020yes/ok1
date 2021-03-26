@@ -548,7 +548,7 @@ var dateParts1 = queryDate1.match(/(\d+)/g), realDate1 = new Date(dateParts1[0],
      $os5 = array( "Не важно","Мои клиенты");
 	 $os_id5 = array("0","777");	
 		
-	 $result_work_zz=mysql_time_query($link,'Select a.id,a.name_small from r_user as a where a.id_role=2 and a.enabled=1 and a.id_company="'.$id_company.'" and not(a.id="'.$id_user.'") order by a.name_small');				 
+	 $result_work_zz=mysql_time_query($link,'Select a.id,a.name_small from r_user as a where a.id_role=2 and a.id_company="'.$id_company.'" and not(a.id="'.$id_user.'") order by a.name_small');
         $num_results_work_zz = $result_work_zz->num_rows;
 	    if($num_results_work_zz!=0)
 	    {
