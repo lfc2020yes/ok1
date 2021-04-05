@@ -696,7 +696,8 @@ $month_rus1='за '.month_rus1($month_rus);
                     $sql_kogo=' and a.id_user="'.ht($_COOKIE["su_5s".$id_user]).'"';
                 }
 
-                $result_uu = mysql_time_query($link, 'select sum(a.cost_client) as summ from trips as a where a.id_a_company="'.$id_company.'" and a.status=1 and a.datecreate>="'.$date_start_obo.'" and a.datecreate<"'.$date_end_obo.'" and a.visible=1 '.$sql_kogo);
+                $sum_no=0;
+                $result_uu = mysql_time_query($link, 'select sum(a.cost_client) as summ from trips as a where a.id_a_company="'.$id_company.'" and a.status=1 and a.datecreate>="'.$date_start_obo.'" and a.buy_clients=0 and a.datecreate<"'.$date_end_obo.'" and a.visible=1 '.$sql_kogo);
 
 
 
@@ -704,10 +705,30 @@ $month_rus1='за '.month_rus1($month_rus);
 
                 if ($num_results_uu != 0) {
 
-                    $row_uu = mysqli_fetch_assoc($result_uu);
-                    echo'<span class="pay_summ_bill1">'.rtrim(rtrim(number_format($row_uu["summ"], 2, '.', ' '),'0'),'.').'</span>';
 
-                }
+
+                    $row_uu = mysqli_fetch_assoc($result_uu);
+                    $sum_no=$row_uu["summ"];
+                    }
+
+                $sum_yes=0;
+                  $result_uu = mysql_time_query($link, 'select sum(a.paid_client) as summ from trips as a where a.id_a_company="'.$id_company.'" and a.status=1 and a.datecreate>="'.$date_start_obo.'" and a.buy_clients=1 and a.datecreate<"'.$date_end_obo.'" and a.visible=1 '.$sql_kogo);
+
+
+
+                $num_results_uu = $result_uu->num_rows;
+
+                if ($num_results_uu != 0) {
+
+
+
+                    $row_uu = mysqli_fetch_assoc($result_uu);
+                    $sum_yes=$row_uu["summ"];
+                    }
+
+                    echo'<span class="pay_summ_bill1">'.rtrim(rtrim(number_format(($sum_yes+$sum_no), 2, '.', ' '),'0'),'.').'</span>';
+
+
 
 
   echo'</div>';
