@@ -405,7 +405,10 @@ $('#date_table').val(date_all);
 $month_rus=date("m");
 $month_rus1=date("m");
   $date_level_bonus=date("Y-m-").'01';
-	
+
+
+  $date_start_obo=date("Y-m-").'01 00:00:00';
+  $date_end_obo=date_step_sql('Y-m', '+1m').'-01 00:00:00';
 	
   if (( isset($_COOKIE["su_2s".$id_user]))and(is_numeric($_COOKIE["su_2s".$id_user]))and(array_search($_COOKIE["su_2s".$id_user],$os_id2)!==false)and($_COOKIE["su_2s".$id_user]==1))
   {
@@ -416,6 +419,9 @@ $month_rus1=date("m");
       $month_rus1=date_step_sql('m', '-1m');
 
       $date_level_bonus=date_step_sql('Y-m', '-1m').'-01';
+
+      $date_start_obo=date_step_sql('Y-m', '-1m').'-01 00:00:00';
+      $date_end_obo=date("Y-m-").'01 00:00:00';
 
   }
 
@@ -432,6 +438,9 @@ $month_rus1=date("m");
 
       $date_level_bonus=date_step_sql('Y-m', '-2m').'-01';
 
+      $date_start_obo=date_step_sql('Y-m', '-2m').'-01 00:00:00';
+      $date_end_obo=date_step_sql('Y-m', '-1m').'-01 00:00:00';
+
   }
   if (( isset($_COOKIE["su_2s".$id_user]))and(is_numeric($_COOKIE["su_2s".$id_user]))and(array_search($_COOKIE["su_2s".$id_user],$os_id2)!==false)and($_COOKIE["su_2s".$id_user]==4))
   {
@@ -446,7 +455,8 @@ $month_rus1=date("m");
 
       $date_level_bonus=date_step_sql('Y-m', '-3m').'-01';
 
-
+      $date_start_obo=date_step_sql('Y-m', '-3m').'-01 00:00:00';
+      $date_end_obo=date_step_sql('Y-m', '-2m').'-01 00:00:00';
   }
 
 
@@ -649,24 +659,59 @@ $month_rus1='за '.month_rus1($month_rus);
 		
 		
 		?>
-		<div class=" cell_big">
+
 				<?
   if (( isset($_COOKIE["su_5s".$id_user]))and(is_numeric($_COOKIE["su_5s".$id_user]))and(array_search($_COOKIE["su_5s".$id_user],$os_id5)!==false)and($_COOKIE["su_5s".$id_user]==0))
   {
+      echo'<div class="cell_small cell_big flex_pp"><div class="cell_1">';
 					echo'<div class="text_wallet1 padd"><span class="bill_str1">→</span>К выплате</div>';
+
+
+
+
+
 						} else
 						{
 	  
 	  	     if((($sign_admin==1)or($sign_level>1))and(!isset($_COOKIE["su_5s".$id_user])))
 		 {
+             echo'<div class="cell_small cell_big  flex_pp"><div class="cell_1">';
 				 	echo'<div class="text_wallet1 padd"><span class="bill_str1">→</span>К выплате</div>';
 			 } else
-		
+                 echo'<div class="cell_small cell_big flex_pp"><div class="cell_1">';
 					echo'<div class="text_wallet1 padd"><span class="bill_str1">→</span>Ваши личные бонусы</div>';
 							
 						}
 								
 			echo'<span class="pay_summ_bill1">'.rtrim(rtrim(number_format($bonus, 2, '.', ' '),'0'),'.').'</span>';
+
+  echo'</div>';
+  echo'<div class="cell_2">';
+
+                echo'<div class="text_wallet1 padd"><span class="bill_str1">→</span>Продаж на сумму</div>';
+
+                $sql_kogo='';
+                if(((( isset($_COOKIE["su_5s".$id_user]))and(is_numeric($_COOKIE["su_5s".$id_user]))and(array_search($_COOKIE["su_5s".$id_user],$os_id5)!==false)and($_COOKIE["su_5s".$id_user]!=0))or(!isset($_COOKIE["su_5s".$id_user])))and(($sign_admin==1)or($sign_level>1)))
+                {
+                    $sql_kogo=' and a.id_user="'.ht($_COOKIE["su_5s".$id_user]).'"';
+                }
+
+                $result_uu = mysql_time_query($link, 'select sum(a.cost_client) as summ from trips as a where a.id_a_company="'.$id_company.'" and a.status=1 and a.datecreate>="'.$date_start_obo.'" and a.datecreate<"'.$date_end_obo.'" and a.visible=1 '.$sql_kogo);
+
+
+
+                $num_results_uu = $result_uu->num_rows;
+
+                if ($num_results_uu != 0) {
+
+                    $row_uu = mysqli_fetch_assoc($result_uu);
+                    echo'<span class="pay_summ_bill1">'.rtrim(rtrim(number_format($row_uu["summ"], 2, '.', ' '),'0'),'.').'</span>';
+
+                }
+
+
+  echo'</div>';
+
 				?>
 			</div>
 	<?
