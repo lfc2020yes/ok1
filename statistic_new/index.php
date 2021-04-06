@@ -697,7 +697,7 @@ $month_rus1='за '.month_rus1($month_rus);
                 }
 
                 $sum_no=0;
-                $result_uu = mysql_time_query($link, 'select sum(a.cost_client) as summ from trips as a where a.id_a_company="'.$id_company.'" and a.status=1 and a.datecreate>="'.$date_start_obo.'" and a.buy_clients=0 and a.datecreate<"'.$date_end_obo.'" and a.visible=1 '.$sql_kogo);
+                $result_uu = mysql_time_query($link, 'select sum(a.cost_client) as summ from trips as a,trips_contract as b where a.id_contract=b.id and a.id_a_company="'.$id_company.'" and a.status=1 and b.date_doc>="'.$date_start_obo.'" and a.buy_clients=0 and b.date_doc<"'.$date_end_obo.'" and a.visible=1 '.$sql_kogo);
 
 
 
@@ -712,7 +712,7 @@ $month_rus1='за '.month_rus1($month_rus);
                     }
 
                 $sum_yes=0;
-                  $result_uu = mysql_time_query($link, 'select sum(a.paid_client) as summ from trips as a where a.id_a_company="'.$id_company.'" and a.status=1 and a.datecreate>="'.$date_start_obo.'" and a.buy_clients=1 and a.datecreate<"'.$date_end_obo.'" and a.visible=1 '.$sql_kogo);
+                  $result_uu = mysql_time_query($link, 'select sum(a.paid_client) as summ from trips as a,trips_contract as b  where a.id_contract=b.id and a.id_a_company="'.$id_company.'" and a.status=1 and b.date_doc>="'.$date_start_obo.'" and a.buy_clients=1 and b.date_doc<"'.$date_end_obo.'" and a.visible=1 '.$sql_kogo);
 
 
 
