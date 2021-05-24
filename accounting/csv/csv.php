@@ -486,7 +486,6 @@ if($num_results_t2!=0)
     $count_y=0;
     $new_class_block='';
 
-
     $date_paid='';
     $data = array();
     for ($ksss=0; $ksss<$num_results_t2; $ksss++) {

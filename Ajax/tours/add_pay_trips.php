@@ -298,9 +298,7 @@ if(($_POST["kto_komy"]==1)and($_POST["operation"]==1)) {
         if($all_paid>=$row_uu["cost_client_exchange"])
         {
             //теперь с этим платежом он все отдал
-            mysql_time_query($link, 'update trips set
-    buy_clients="1"
-    where id = "' . ht($_POST['id']) . '"');
+            mysql_time_query($link, 'update trips set buy_clients="1" where id="'.ht($_POST['id']).'"');
         }
 
         mysql_time_query($link, 'update trips set

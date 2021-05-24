@@ -420,7 +420,12 @@ echo'<div class="content" iu="'.$id_user.'">';
 
 		   
 		   echo'</div></div>';
-	
+/*
+        echo'<div class="left_drop menu1_prime book_menu_sel gop_io" style="z-index:105">
+<a href="clients/csv/csv.php" class="search-count-csv">excel</a>
+        </div>';
+*/
+
 	 echo'<div class="inline_reload js-reload-top"><a href="clients/" class="show_reload">Применить</a></div>'; 
 		
 		//echo'<a href="clients/" class="show_sort_supply">Применить</a>';
@@ -724,6 +729,11 @@ var dateParts1 = queryDate1.match(/(\d+)/g), realDate1 = new Date(dateParts1[0],
 
 		   
 		   echo'</div></div>';
+
+
+
+
+
 	
 	 echo'<div class="inline_reload js-reload-top"><a href="clients/?tabs=2" class="show_reload">Применить</a></div>'; 
 		
