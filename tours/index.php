@@ -1001,8 +1001,8 @@ if(isset($_GET["id"]))
             $sql_su1 = ' AND ((A.buy_clients=1)and(A.buy_operator=1))';
         }
             if($su_1 == 9) {
-                //Полностью оплаченные
-                $sql_su1 = ' AND ((A.buy_clients=1)and(A.buy_operator=1)) AND A.status=1 ';
+                //Полностью оплаченные аннулированные
+                $sql_su1 = ' AND ((A.buy_clients=1)and(A.buy_operator=1)) AND A.status=2 ';
             }
         if($su_1 == 5) {
             //оплаченные туристом
