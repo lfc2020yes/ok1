@@ -953,11 +953,11 @@ $download='<div class="comm-trips-block new-say-doc">
 //удалить промежуточные шаблоны
 $uploadfile = $_SERVER["DOCUMENT_ROOT"].'/tours/doc/intermediate/'.$row_8['id_contract'].'_template3.docx';
 if (file_exists($uploadfile)) {
-    //unlink($uploadfile);
+    unlink($uploadfile);
 }
 $uploadfile = $_SERVER["DOCUMENT_ROOT"].'/tours/doc/intermediate/'.$row_8['id_contract'].'_template1.docx';
 if (file_exists($uploadfile)) {
-    //unlink($uploadfile);
+    unlink($uploadfile);
 }
 
 
