@@ -72,7 +72,7 @@ if($num_results_t==0)
     $status_admin=$row_8['status_admin'];
 }
 
-if($status_admin!=0) {
+if(($status_admin!=0)and($sign_level<3)) {
     $debug=h4a(002,$echo_r,$debug);
     goto end_code;
 }
