@@ -384,9 +384,9 @@ if(($_POST["kto_komy"]==2)and($_POST["operation"]==1)) {
     //вдруг это последняя оплата туроператору, тогда считаем что этот тур полностью оплачен нами
     if($style_kurs==1) {
         //валютный тур
-        $all_paid=(float)$row_uu["paid_operator_rates"]+(float)$avans_rates;
-        $all_paid_rub=(float)$row_uu["paid_operator"]+(float)trimc($_POST["summ"]);
-        $debug=round($all_paid,4).'>='.round($row_uu["cost_operator_exchange"],4);
+        $all_paid=round(((float)$row_uu["paid_operator_rates"]+(float)$avans_rates),4);
+        $all_paid_rub=round(((float)$row_uu["paid_operator"]+(float)trimc($_POST["summ"])),4);
+        //$debug=round($all_paid,4).'>='.round($row_uu["cost_operator_exchange"],4);
         if($all_paid>=$row_uu["cost_operator_exchange"])
         {
             //теперь с этим платежом мы все отдали
