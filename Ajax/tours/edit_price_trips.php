@@ -237,8 +237,8 @@ $status_ee='ok';
         //валютный тур
 
         //клиент
-        $all_paid=(float)$row_uu11["paid_client_rates"];
-        if($all_paid>=(float)$cost_client_exchange)
+        $all_paid=round(((float)$row_uu11["paid_client_rates"]),4);
+        if($all_paid>round(((float)$cost_client_exchange),4))
         {
             //теперь с этим платежом он все отдал
             mysql_time_query($link, 'update trips set
@@ -252,8 +252,8 @@ $status_ee='ok';
         }
 
         //оператор
-        $all_paid=(float)$row_uu11["paid_operator_rates"];
-        if(($all_paid>=(float)$cost_operator_exchange)and($row_uu11["paid_operator_rates"]>0))
+        $all_paid=round(((float)$row_uu11["paid_operator_rates"]),4);
+        if(($all_paid>=round(((float)$cost_operator_exchange),4))and($row_uu11["paid_operator_rates"]>0))
         {
             //теперь с этим платежом он все отдал
             mysql_time_query($link, 'update trips set
@@ -272,8 +272,8 @@ $status_ee='ok';
         //рублевый тур
 
         //клиент
-        $all_paid=(float)$row_uu11["paid_client"];
-        if($all_paid>=(float)$cost_client)
+        $all_paid=round(((float)$row_uu11["paid_client"]),4);
+        if($all_paid>=round(((float)$cost_client),4))
         {
             //теперь с этим платежом он все отдал
             mysql_time_query($link, 'update trips set
@@ -287,8 +287,8 @@ $status_ee='ok';
         }
 
         //оператор
-        $all_paid=(float)$row_uu11["paid_operator"];
-        if(($all_paid>=(float)$cost_operator)and($row_uu11["paid_operator"]>0))
+        $all_paid=round(((float)$row_uu11["paid_operator"]),4);
+        if(($all_paid>=round(((float)$cost_operator),4))and($row_uu11["paid_operator"]>0))
         {
             //теперь с этим платежом он все отдал
             mysql_time_query($link, 'update trips set
