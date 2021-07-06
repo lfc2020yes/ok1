@@ -91,3 +91,7 @@ mysql_time_query($link,'update task_new set reminder=0 where visible=1 and not(a
 mysql_time_query($link,'update task_new set visible=0 where visible=1 and ((action=5)or(action=6)or(action=15)or(action=16)) and reminder=1 and status=0 and ring_datetime<"'.$date_ring.' 00:00:00"');
 
 //echo('update task_new set reminder=0 where visible=1 and reminder=1 and status=0 and ring_datetime<"'.$date_ring.' 00:00:00"');
+
+
+$cron_message='Выполнено';
+mysql_time_query($link,'INSERT INTO cron_history (id,datetimes,script,message) VALUES ("","'.date("y.m.d").' '.date("H:i:s").'","not_to_task_1d_.php","'.ht($cron_message).'")');

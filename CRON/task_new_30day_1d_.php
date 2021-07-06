@@ -385,4 +385,6 @@ if($result_8)
 
 
 
+$cron_message='Выполнено';
+mysql_time_query($link,'INSERT INTO cron_history (id,datetimes,script,message) VALUES ("","'.date("y.m.d").' '.date("H:i:s").'","task_new_30day_1d_.php","'.ht($cron_message).'")');
 

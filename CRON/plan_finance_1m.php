@@ -74,3 +74,6 @@ if ($result_uu_cs) {
 //ПЕРЕНОСУ ПЛАНОВ
 //ПЕРЕНОСУ ПЛАНОВ
 //ПЕРЕНОСУ ПЛАНОВ
+
+$cron_message='Выполнено';
+mysql_time_query($link,'INSERT INTO cron_history (id,datetimes,script,message) VALUES ("","'.date("y.m.d").' '.date("H:i:s").'","plan_finance_1m.php","'.ht($cron_message).'")');

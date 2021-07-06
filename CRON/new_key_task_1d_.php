@@ -21,3 +21,7 @@ include_once $url_system.'ilib/lib_interstroi.php';
            }
 			 
 		 }
+
+
+$cron_message='Выполнено';
+mysql_time_query($link,'INSERT INTO cron_history (id,datetimes,script,message) VALUES ("","'.date("y.m.d").' '.date("H:i:s").'","new_key_task_1d_.php","'.ht($cron_message).'")');

@@ -751,3 +751,7 @@ VALUES
 //********************************************************************
 //********************************************************************
 //рейтинг Лучший критик и комментатор
+
+
+$cron_message='Выполнено';
+mysql_time_query($link,'INSERT INTO cron_history (id,datetimes,script,message) VALUES ("","'.date("y.m.d").' '.date("H:i:s").'","rating_30day_1d.php","'.ht($cron_message).'")');

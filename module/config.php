@@ -17,6 +17,8 @@ $local_host="www.ok.umatravel.club"; //как называет домен в л�
 //echo($_SERVER['DOCUMENT_ROOT']);
 
 $local='C:/OpenServer/domains/'.$local_host.'';
+
+
 if($_SERVER['DOCUMENT_ROOT']!=$local)
 {
 $base_usr="https://www.ok.umatravel.club";
