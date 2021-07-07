@@ -216,7 +216,7 @@ $status_ee='ok';
 
         $cost_client_exchange=number_format(((float)$cost_client/(float)$exchange_rates), 2, '.', '');
 
-        $debug=$cost_client_exchange;
+        $debug=$cost_client_exchange;  //817.47
 
     }
 
@@ -239,7 +239,11 @@ $status_ee='ok';
         //валютный тур
 
         //клиент
+        $debug.=' '.$row_uu11["paid_client_rates"];
         $all_paid=round(((float)$row_uu11["paid_client_rates"]),4);
+
+        $debug.=' '.$all_paid;
+
         if($all_paid>round(((float)$cost_client_exchange),4))
         {
             //теперь с этим платежом он все отдал
