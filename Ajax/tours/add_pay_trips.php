@@ -242,7 +242,10 @@ $status_ee='ok';
 $date_=date("y.m.d").' '.date("H:i:s");
 $avans_rates=0;
 if($style_kurs==1) {
-    $avans_rates = number_format(((float)trimc($_POST["summ"]) / (float)trimc($_POST["curs"])), 2, '.', '');
+    //$avans_rates = number_format(((float)trimc($_POST["summ"]) / (float)trimc($_POST["curs"])), 2, '.', '');
+
+    $avans_rates =round(((float)trimc($_POST["summ"]) / (float)trimc($_POST["curs"])),2);
+
 }
 
 if((isset($_POST["curs"]))and($_POST["curs"]!='')) {
@@ -293,8 +296,8 @@ if(($_POST["kto_komy"]==1)and($_POST["operation"]==1)) {
    //вдруг это последняя оплата тогда считаем что этот тур полностью оплачен туристом
     if($style_kurs==1) {
         //валютный тур
-        $all_paid=round(((float)$row_uu["paid_client_rates"]+(float)$avans_rates),4);
-        $all_paid_rub=round(((float)$row_uu["paid_client"]+(float)trimc($_POST["summ"])),4);
+        $all_paid=round(((float)$row_uu["paid_client_rates"]+(float)$avans_rates),2);
+        $all_paid_rub=round(((float)$row_uu["paid_client"]+(float)trimc($_POST["summ"])),2);
        // $debug=$all_paid.'>='.$row_uu["cost_client_exchange"];
         if($all_paid>=$row_uu["cost_client_exchange"])
         {
@@ -314,7 +317,7 @@ if(($_POST["kto_komy"]==1)and($_POST["operation"]==1)) {
     {
         //рублевый счет
         $all_paid=0;
-        $all_paid_rub=round(((float)$row_uu["paid_client"]+(float)trimc($_POST["summ"])),4);
+        $all_paid_rub=round(((float)$row_uu["paid_client"]+(float)trimc($_POST["summ"])),2);
         if($all_paid_rub>=$row_uu["cost_client"])
         {
             //теперь с этим платежом он все отдал
@@ -387,8 +390,8 @@ if(($_POST["kto_komy"]==2)and($_POST["operation"]==1)) {
     //вдруг это последняя оплата туроператору, тогда считаем что этот тур полностью оплачен нами
     if($style_kurs==1) {
         //валютный тур
-        $all_paid=round(((float)$row_uu["paid_operator_rates"]+(float)$avans_rates),4);
-        $all_paid_rub=round(((float)$row_uu["paid_operator"]+(float)trimc($_POST["summ"])),4);
+        $all_paid=round(((float)$row_uu["paid_operator_rates"]+(float)$avans_rates),2);
+        $all_paid_rub=round(((float)$row_uu["paid_operator"]+(float)trimc($_POST["summ"])),2);
         if($all_paid>=$row_uu["cost_operator_exchange"])
         {
             //теперь с этим платежом мы все отдали
@@ -408,7 +411,7 @@ if(($_POST["kto_komy"]==2)and($_POST["operation"]==1)) {
     {
         //рублевый счет
         $all_paid=0;
-        $all_paid_rub=round(((float)$row_uu["paid_operator"]+(float)trimc($_POST["summ"])),4);
+        $all_paid_rub=round(((float)$row_uu["paid_operator"]+(float)trimc($_POST["summ"])),2);
         if($all_paid_rub>=$row_uu["cost_operator"])
         {
             //теперь с этим платежом он все отдал

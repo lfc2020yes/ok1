@@ -913,17 +913,17 @@ A.buy_operator
 if($style_kurs==0)
 {
     //рублевый
-    $new_paid_client = (float)$row_uu["paid_client"]-(float)$row_8["sum"];
-    if($new_paid_client<$row_uu["cost_client"])
+    $new_paid_client = round(((float)$row_uu["paid_client"]-(float)$row_8["sum"]),2);
+    if($new_paid_client<round($row_uu["cost_client"],2))
     {
         $new_buy_client=0;
     }
 } else
 {
     //валютный
-    $new_paid_client = (float)$row_uu["paid_client"]-(float)$row_8["sum"];
-    $new_paid_client_rates = (float)$row_uu["paid_client_rates"]-(float)$row_8["sum_rate"];
-    if($new_paid_client_rates<$row_uu["cost_client_exchange"])
+    $new_paid_client = round(((float)$row_uu["paid_client"]-(float)$row_8["sum"]),2);
+    $new_paid_client_rates = round(((float)$row_uu["paid_client_rates"]-(float)$row_8["sum_rate"]),2);
+    if($new_paid_client_rates<round($row_uu["cost_client_exchange"],2))
     {
         $new_buy_client=0;
     }
@@ -935,17 +935,17 @@ if($style_kurs==0)
                     if($style_kurs==0)
                     {
                         //рублевый
-                        $new_paid_client = (float)$row_uu["paid_client"]+(float)$row_8["sum"];
-                        if($new_paid_client<$row_uu["cost_client"])
+                        $new_paid_client = round(((float)$row_uu["paid_client"]+(float)$row_8["sum"]),2);
+                        if($new_paid_client<round($row_uu["cost_client"],2))
                         {
                             $new_buy_client=0;
                         }
                     } else
                     {
                         //валютный
-                        $new_paid_client = (float)$row_uu["paid_client"]+(float)$row_8["sum"];
-                        $new_paid_client_rates = (float)$row_uu["paid_client_rates"]+(float)$row_8["sum_rate"];
-                        if($new_paid_client_rates<$row_uu["cost_client_exchange"])
+                        $new_paid_client = round(((float)$row_uu["paid_client"]+(float)$row_8["sum"]),2);
+                        $new_paid_client_rates = round(((float)$row_uu["paid_client_rates"]+(float)$row_8["sum_rate"]),2);
+                        if($new_paid_client_rates<round($row_uu["cost_client_exchange"],2))
                         {
                             $new_buy_client=0;
                         }
@@ -959,17 +959,17 @@ if($style_kurs==0)
                     if($style_kurs==0)
                     {
                         //рублевый
-                        $new_paid_operator = (float)$row_uu["paid_operator"]-(float)$row_8["sum"];
-                        if($new_paid_operator<$row_uu["cost_operator"])
+                        $new_paid_operator = round(((float)$row_uu["paid_operator"]-(float)$row_8["sum"]),2);
+                        if($new_paid_operator<round($row_uu["cost_operator"],2))
                         {
                             $new_buy_operator=0;
                         }
                     } else
                     {
                         //валютный
-                        $new_paid_operator = (float)$row_uu["paid_operator"]-(float)$row_8["sum"];
-                        $new_paid_operator_rates = (float)$row_uu["paid_operator_rates"]-(float)$row_8["sum_rate"];
-                        if($new_paid_operator_rates<$row_uu["cost_operator_exchange"])
+                        $new_paid_operator = round(((float)$row_uu["paid_operator"]-(float)$row_8["sum"]),2);
+                        $new_paid_operator_rates = round(((float)$row_uu["paid_operator_rates"]-(float)$row_8["sum_rate"]),2);
+                        if($new_paid_operator_rates<round($row_uu["cost_operator_exchange"],2))
                         {
                             $new_buy_operator=0;
                         }
@@ -983,17 +983,17 @@ if($style_kurs==0)
                     if($style_kurs==0)
                     {
                         //                        //рублевый
-                        $new_paid_operator = (float)$row_uu["paid_operator"]+(float)$row_8["sum"];
-                        if($new_paid_operator<$row_uu["cost_operator"])
+                        $new_paid_operator = round(((float)$row_uu["paid_operator"]+(float)$row_8["sum"]),2);
+                        if($new_paid_operator<round($row_uu["cost_operator"],2))
                         {
                             $new_buy_operator=0;
                         }
                     } else
                     {
                         //валютный
-                        $new_paid_operator = (float)$row_uu["paid_operator"]+(float)$row_8["sum"];
-                        $new_paid_operator_rates = (float)$row_uu["paid_operator_rates"]+(float)$row_8["sum_rate"];
-                        if($new_paid_operator_rates<$row_uu["cost_operator_exchange"])
+                        $new_paid_operator = round(((float)$row_uu["paid_operator"]+(float)$row_8["sum"]),2);
+                        $new_paid_operator_rates = round(((float)$row_uu["paid_operator_rates"]+(float)$row_8["sum_rate"]),2);
+                        if($new_paid_operator_rates<round($row_uu["cost_operator_exchange"],2))
                         {
                             $new_buy_operator=0;
                         }
