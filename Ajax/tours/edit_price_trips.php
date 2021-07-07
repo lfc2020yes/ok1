@@ -216,7 +216,7 @@ $status_ee='ok';
 
         $cost_client_exchange=number_format(((float)$cost_client/(float)$exchange_rates), 2, '.', '');
 
-        $cost_client_exchange=round(((float)$cost_client/(float)$exchange_rates), 4);
+        //$cost_client_exchange=round(((float)$cost_client/(float)$exchange_rates), 4);
 
         $debug=$cost_client_exchange;  //817.47
 
@@ -242,11 +242,11 @@ $status_ee='ok';
 
         //клиент
         $debug.=' '.$row_uu11["paid_client_rates"];
-        $all_paid=round(((float)$row_uu11["paid_client_rates"]),4);
+        $all_paid=round(((float)$row_uu11["paid_client_rates"]),2);
 
         $debug.=' '.$all_paid;
 
-        if($all_paid>round(((float)$cost_client_exchange),4))
+        if($all_paid>round(((float)$cost_client_exchange),2))
         {
             //теперь с этим платежом он все отдал
             mysql_time_query($link, 'update trips set
@@ -260,8 +260,8 @@ $status_ee='ok';
         }
 
         //оператор
-        $all_paid=round(((float)$row_uu11["paid_operator_rates"]),4);
-        if(($all_paid>=round(((float)$cost_operator_exchange),4))and($row_uu11["paid_operator_rates"]>0))
+        $all_paid=round(((float)$row_uu11["paid_operator_rates"]),2);
+        if(($all_paid>=round(((float)$cost_operator_exchange),2))and($row_uu11["paid_operator_rates"]>0))
         {
             //теперь с этим платежом он все отдал
             mysql_time_query($link, 'update trips set
@@ -280,8 +280,8 @@ $status_ee='ok';
         //рублевый тур
 
         //клиент
-        $all_paid=round(((float)$row_uu11["paid_client"]),4);
-        if($all_paid>=round(((float)$cost_client),4))
+        $all_paid=round(((float)$row_uu11["paid_client"]),2);
+        if($all_paid>=round(((float)$cost_client),2))
         {
             //теперь с этим платежом он все отдал
             mysql_time_query($link, 'update trips set
@@ -295,8 +295,8 @@ $status_ee='ok';
         }
 
         //оператор
-        $all_paid=round(((float)$row_uu11["paid_operator"]),4);
-        if(($all_paid>=round(((float)$cost_operator),4))and($row_uu11["paid_operator"]>0))
+        $all_paid=round(((float)$row_uu11["paid_operator"]),2);
+        if(($all_paid>=round(((float)$cost_operator),2))and($row_uu11["paid_operator"]>0))
         {
             //теперь с этим платежом он все отдал
             mysql_time_query($link, 'update trips set
