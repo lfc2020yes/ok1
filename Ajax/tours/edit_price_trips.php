@@ -216,6 +216,8 @@ $status_ee='ok';
 
         $cost_client_exchange=number_format(((float)$cost_client/(float)$exchange_rates), 2, '.', '');
 
+        $cost_client_exchange=round(((float)$cost_client/(float)$exchange_rates), 4);
+
         $debug=$cost_client_exchange;  //817.47
 
     }
