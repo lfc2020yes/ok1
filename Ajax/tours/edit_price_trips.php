@@ -214,11 +214,11 @@ $status_ee='ok';
         //рассчитаем сколько для клиента это в валюте
         $exchange_rates=$_POST["curs"];
 
-        $cost_client_exchange=number_format(((float)$cost_client/(float)$exchange_rates), 2, '.', '');
+        //$cost_client_exchange=number_format(((float)$cost_client/(float)$exchange_rates), 2, '.', '');
 
-        //$cost_client_exchange=round(((float)$cost_client/(float)$exchange_rates), 4);
+        $cost_client_exchange=round(((float)$cost_client/(float)$exchange_rates), 2);
 
-        $debug=$cost_client_exchange;  //817.47
+     //   $debug=$cost_client_exchange;  //817.47
 
     }
 
@@ -231,7 +231,9 @@ $status_ee='ok';
 
         //рассчитаем сколько для клиента это в валюте
         $exchange_rates_operator=$_POST["curs1"];
-        $cost_operator_exchange=number_format(((float)$cost_operator/(float)$exchange_rates_operator), 2, '.', '');
+       // $cost_operator_exchange=number_format(((float)$cost_operator/(float)$exchange_rates_operator), 2, '.', '');
+
+        $cost_operator_exchange=round(((float)$cost_operator/(float)$exchange_rates_operator), 2);
     }
 
 
@@ -241,12 +243,12 @@ $status_ee='ok';
         //валютный тур
 
         //клиент
-        $debug.=' '.$row_uu11["paid_client_rates"];
+       // $debug.=' '.$row_uu11["paid_client_rates"];
         $all_paid=round(((float)$row_uu11["paid_client_rates"]),2);
 
-        $debug.=' '.$all_paid;
+       // $debug.=' '.$all_paid;
 
-        if($all_paid>round(((float)$cost_client_exchange),2))
+        if($all_paid>=round(((float)$cost_client_exchange),2))
         {
             //теперь с этим платежом он все отдал
             mysql_time_query($link, 'update trips set
