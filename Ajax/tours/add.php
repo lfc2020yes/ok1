@@ -515,9 +515,14 @@ if(validateDate($_POST['avans_end_date'],'d.m.Y')) {
 
     }
 }
+
 if((trimc($_POST["avans_client"])!='')and(trimc($_POST["cost_client"])!='')and(trimc($_POST["cost_client"])!=0)and(trimc($_POST["avans_client"])==trimc($_POST["cost_client"]))) {
+
     $buy_client=1;
+
 }
+
+$debug=trimc($_POST["avans_client"]).'=='.trimc($_POST["cost_client"]);
 
 
 //увеличиваем страну на один для статистики и вывода популярных в которую тур регистрируется

@@ -295,7 +295,7 @@ if(($_POST["kto_komy"]==1)and($_POST["operation"]==1)) {
         //валютный тур
         $all_paid=round(((float)$row_uu["paid_client_rates"]+(float)$avans_rates),4);
         $all_paid_rub=round(((float)$row_uu["paid_client"]+(float)trimc($_POST["summ"])),4);
-        $debug=$all_paid.'>='.$row_uu["cost_client_exchange"];
+       // $debug=$all_paid.'>='.$row_uu["cost_client_exchange"];
         if($all_paid>=$row_uu["cost_client_exchange"])
         {
             //теперь с этим платежом он все отдал
