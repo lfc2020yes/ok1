@@ -213,8 +213,10 @@ $status_ee='ok';
 
         //рассчитаем сколько для клиента это в валюте
         $exchange_rates=$_POST["curs"];
+
         $cost_client_exchange=number_format(((float)$cost_client/(float)$exchange_rates), 2, '.', '');
 
+        $debug=$cost_client_exchange;
 
     }
 
