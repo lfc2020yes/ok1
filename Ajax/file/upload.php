@@ -124,6 +124,7 @@ switch ($_POST["type"]) {
     case 9:
     case 10:
     case 11:
+    case 12:
 		$allowedExts = array("pdf","jpg","jpeg","png","doc","docx","zip"); 
         break;
 	case 7:	
@@ -131,71 +132,77 @@ switch ($_POST["type"]) {
         break;	
 	default:
         $allowedExts = array("pdf", "jpg","jpeg","png"); 
-}	
-	
-
-	
-	
-$mass_end=explode(".", $_FILES["thefile"]["name"]);
-$extension = end($mass_end);
-				 //echo($extension);
-if ( in_array(trim($extension), $allowedExts))
-{   				 
-
-$file_na=$ID_D.'_'.$name_imgs.'.'.$allowedExts[array_search(trim($extension), $allowedExts)];				 
-$uploadfile = $uploaddir.$file_na;
-//echo($uploadfile);	
-	
-if (move_uploaded_file($_FILES['thefile']['tmp_name'], $uploadfile)) {
- 
-	
-
-	
-
-	
- //загрузился
-  mysql_time_query($link,'update image_attach set visible="1",name="'.$name_imgs.'",name_user="'.ht($_FILES["thefile"]["name"]).'",type="'.$allowedExts[array_search($extension, $allowedExts)].'" where id = "'.$ID_D.'"');
-	
-$aRes = array("echo"=>$name_imgs);
-/*require_once $url_system.'Ajax/lib/Services_JSON.php';
-$oJson = new Services_JSON();
-//функция работает только с кодировкой UTF-8
-echo $oJson->encode($aRes);	
-	*/
-    echo json_encode($aRes);
-} else
-{
-	mysqli_query($link,'delete FROM image_attach where id="'.$ID_D.'"');
-
-	$v_error='1';	
-  mysqli_query($link,'insert into v_error (module,error,date_error)  values ("'.htmlspecialchars($_SERVER['REQUEST_URI']).'","'.htmlspecialchars($v_error).'","'.date("y.m.d").' '.date("H:i:s").'")');
-	
-	header("HTTP/1.1 404 Not Found");
-	header("Status: 404 Not Found");    
-	die ();
-}
-} else
-{
-		mysqli_query($link,'delete FROM image_attach where id="'.$ID_D.'"');
-	
-	$v_error='5';	
-  mysqli_query($link,'insert into v_error (module,error,date_error)  values ("'.htmlspecialchars($_SERVER['REQUEST_URI']).'","'.htmlspecialchars($v_error).'","'.date("y.m.d").' '.date("H:i:s").'")');
-	
-	header("HTTP/1.1 404 Not Found");
-	header("Status: 404 Not Found");    
-	die ();
 }
 
-			 
-			 			 } else
-			 {
-				 
-				 	$v_error='4';	
-  mysqli_query($link,'insert into v_error (module,error,date_error)  values ("'.htmlspecialchars($_SERVER['REQUEST_URI']).'","'.htmlspecialchars($v_error).'","'.date("y.m.d").' '.date("H:i:s").'")');
-				 	header("HTTP/1.1 404 Not Found");
-	header("Status: 404 Not Found");    
-	die ();
-			 }
-		  			
-				 
+
+
+    $mass_end=explode(".", $_FILES["thefile"]["name"]);
+    $extension = end($mass_end);
+    //echo($extension);
+    if ( in_array(trim($extension), $allowedExts))
+    {
+
+        $file_na=$ID_D.'_'.$name_imgs.'.'.$allowedExts[array_search(trim($extension), $allowedExts)];
+        $uploadfile = $uploaddir.$file_na;
+//echo($uploadfile);
+
+
+        // if ($file = upload::saveimg('thefile',$file_na,$uploadfile)) {
+
+
+        if (move_uploaded_file($_FILES['thefile']['tmp_name'], $uploadfile)) {
+
+
+
+
+
+
+            //загрузился
+            mysql_time_query($link,'update image_attach set visible="1",name="'.$name_imgs.'",name_user="'.ht($_FILES["thefile"]["name"]).'",type="'.$allowedExts[array_search($extension, $allowedExts)].'" where id = "'.$ID_D.'"');
+
+
+            $link='/upload/file/'. $ID_D.'_'.$name_imgs.'.'.$allowedExts[array_search($extension, $allowedExts)];
+
+            $aRes = array("echo"=>$name_imgs,"type"=>$allowedExts[array_search($extension, $allowedExts)],"link"=>$link);
+            /*require_once $url_system.'Ajax/lib/Services_JSON.php';
+            $oJson = new Services_JSON();
+            //функция работает только с кодировкой UTF-8
+            echo $oJson->encode($aRes);
+                */
+            echo json_encode($aRes);
+        } else
+        {
+            mysqli_query($link,'delete FROM image_attach where id="'.$ID_D.'"');
+
+            $v_error='1';
+            mysqli_query($link,'insert into v_error (module,error,date_error)  values ("'.htmlspecialchars($_SERVER['REQUEST_URI']).'","'.htmlspecialchars($v_error).'","'.date("y.m.d").' '.date("H:i:s").'")');
+
+            header("HTTP/1.1 404 Not Found");
+            header("Status: 404 Not Found");
+            die ();
+        }
+    } else
+    {
+        mysqli_query($link,'delete FROM image_attach where id="'.$ID_D.'"');
+
+        $v_error='5';
+        mysqli_query($link,'insert into v_error (module,error,date_error)  values ("'.htmlspecialchars($_SERVER['REQUEST_URI']).'","'.htmlspecialchars($v_error).'","'.date("y.m.d").' '.date("H:i:s").'")');
+
+        header("HTTP/1.1 404 Not Found");
+        header("Status: 404 Not Found");
+        die ();
+    }
+
+
+} else
+{
+
+    $v_error='4';
+    mysqli_query($link,'insert into v_error (module,error,date_error)  values ("'.htmlspecialchars($_SERVER['REQUEST_URI']).'","'.htmlspecialchars($v_error).'","'.date("y.m.d").' '.date("H:i:s").'")');
+    header("HTTP/1.1 404 Not Found");
+    header("Status: 404 Not Found");
+    die ();
+}
+
+
 ?>

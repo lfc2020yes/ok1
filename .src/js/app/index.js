@@ -149,6 +149,9 @@ $('.menu_jjs').on("change keyup input click",'.js-menu-jjs-b',menubuttclick);
 //при изменении роли в системе подружать уведомления или скрывать для конкретной роли
 $('body').on("change keyup input click",'.js-checkbox-role',RoleNotif);
 
+	NumberBlockFile();
+
+
 });
 
 //постфункция добавление нового обращения

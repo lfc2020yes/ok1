@@ -394,6 +394,20 @@ $(\'.tyyo\').trigger(\'keyup\');
 	</div>';
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 $query_string.='</div>';
 	 
 //форма задачи

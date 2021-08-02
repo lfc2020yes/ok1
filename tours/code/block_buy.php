@@ -58,7 +58,15 @@ $query_string.='<div class="buy-b-number">'.$row_uu["id"].$whos.'</div>
 
 
 <div class="buy-b-date"><span class="label-task-gg ">Дата оплаты
-</span><div class="help-jjx">'.date_ex(0,$row_uu["date_payment"]).'</div></div>';
+</span><div class="help-jjx">'.date_ex(0,$row_uu["date_payment"]).'</div>';
+
+
+
+
+
+
+
+$query_string.='</div>';
 
 
 $result_uu_rate=mysql_time_query($link,'select a.char,a.small_name,a.code from booking_exchange as a  where a.id="'.ht($row_8["id_exchange"]).'"');
@@ -109,9 +117,40 @@ $query_string.='</div></div>';
 
 
 
-$query_string.='<div class="buy-b-comment"><span class="label-task-gg ">Комментарий
-        </span><span class="spans ggh-e">'.$row_uu["comment"].'</span>
-</div>';
+$query_string.='<div class="buy-b-comment"><span class="label-task-gg ">Комментарий/Чек
+        </span><span class="spans ggh-e">'.$row_uu["comment"].'</span>';
+
+$result_6 = mysql_time_query($link, 'select A.* from image_attach as A WHERE A.for_what="12" and A.visible=1 and A.id_object="' . ht($row_uu["id"]) . '"');
+$num_results_uu = $result_6->num_rows;
+$class_aa = '';
+$style_aa = '';
+if ($num_results_uu != 0) {
+    $class_aa = 'eshe-load-file';
+    $style_aa = 'style="display: block;"';
+}
+$query_string .= '<div style="display: block;
+margin-top: 10px;" class="photo-akt-invoice"><div class="img_invoice_div1 js-image-gl"><div style="display: inline-block"><div class="list-image list-image-icons" ' . $style_aa . '>';
+if ($num_results_uu != 0) {
+    $i = 1;
+    while ($row_6 = mysqli_fetch_assoc($result_6)) {
+        $query_string .= '	<div number_li="' . $i . '" class="li-image yes-load"><span class="name-img"><a href="/upload/file/' . $row_6["id"] . '_' . $row_6["name"] . '.' . $row_6["type"] . '">' . $row_6["name_user"] . '</a></span>';
+
+        $query_string .= '<span class="type-img">'.$row_6["type"].'</span>';
+
+        $query_string .= '<span class="del-img js-dell-image" id="' . $row_6["name"] . '"></span>';
+
+
+        $query_string .= '<div class="progress-img"><div class="p-img" style="width: 0px; display: none;"></div></div></div>';
+        $i++;
+    }
+}
+$query_string .= '</div></div>';
+$query_string .= '<input type="hidden" class="js-files-acc-new" name="files_9" value=""><div type_load="12" id_object="' . ht($row_uu["id"]) . '" data-tooltip="загрузить чек" class="invoice_upload js-upload-file js-helps ' . $class_aa . ' upload-but-2022" style="background-color: #fff !important;" ></div>';
+$query_string .= '</div></div>';
+
+
+
+$query_string.='</div>';
 
 
 

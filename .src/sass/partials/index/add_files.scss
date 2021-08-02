@@ -300,3 +300,29 @@
     }
 
   }
+
+.yes-load {  .name-img {&::before {position: absolute;
+  content: "\E001";
+  left: 0px;
+  color:
+          #25ae88;
+  top:2px;
+  font-family: "icon1";
+  font-size: 14px;}}  .del-img {background-image: url(../image/svg/delete-cross.svg);}    }
+
+.download-file { height: auto; margin-bottom: 0px; padding-bottom: 5px;  .name-img {padding-right: 10px; display: inline; line-height: 16px; overflow: auto;  text-overflow: inherit; white-space: normal; float: none; &::before {position: absolute;
+  content: "";
+  left: 0px;
+  height: 16px;
+  width: 20px;
+  margin-right: 3px;
+  vertical-align: top;
+  top:-2px;
+  background-image: url(../image/svg/download.svg);
+  background-repeat: no-repeat;
+  font-size: 14px;}
+
+  a {color:#2c60a4; border-bottom: 0px;   &:hover {border-bottom: 1px solid #2c60a4;}}
+
+} .size-img {padding-left: 0px; display: inline-block; float: none; text-align: inherit; text-transform: uppercase; }   .del-img {background-image: url(../image/svg/delete-cross.svg);}    }
+
