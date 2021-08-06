@@ -17489,7 +17489,8 @@ display: inline-block;
 		text-transform: uppercase;
 		margin-top: 10px;
 		@include sw('tablet-small') {
-			display: none;
+			//display: none;
+			width: 100%;
 		}
 	}
 	.buy-b-user {

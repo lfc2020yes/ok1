@@ -24614,7 +24614,7 @@ position: absolute;}  }
 }
 @media only screen and (max-width: 639px) {
   .buy_block_global .buy-b-comment {
-    display: none;
+    width: 100%;
   }
 }
 .buy_block_global .buy-b-user {
