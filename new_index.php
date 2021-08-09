@@ -499,14 +499,18 @@ if($ssr!=0) {
 //кол-во проданный туров в этом месяце
 $views=0;
 $result_uu = mysql_time_query($link, 'select count(id) as ss from trips where visible=1 and id_a_company="'.ht($id_company).'" and datecreate>="'.$date_startr.'" and datecreate<"'.$date_endr.'"');
+
+
 $num_results_uu = $result_uu->num_rows;
 $views=0;
+
 if ($num_results_uu != 0) {
     $row_uu = mysqli_fetch_assoc($result_uu);
     if (($row_uu["ss"] != '') and ($row_uu["ss"] != 0)) {
         $views=$row_uu["ss"];
     }
 }
+
 $sred=0;
 if($views!=0) {
     $sred = $dox / $views;
@@ -523,7 +527,48 @@ echo'<div class="gr-50">
         <div class="circlestat" data-dimension="80" data-text="'.$procc.'%" data-width="1" data-fontsize="27" data-percent="'.$procc.'" data-fgcolor="#24c32d" data-bgcolor="rgba(0,0,0,0)" data-fill="#f5f5f6"></div>
     </div>';
 if($sred!=0) {
-    echo'<strong >~<b>'.$eshe_nado.' '.PadejNumber($eshe_nado,'тур,тура,туров').'</b> еще <br> необходимо продать </strong >';
+/*
+if($procc<100) {
+    echo '<strong >~<b>' . $eshe_nado . ' ' . PadejNumber($eshe_nado, 'тур,тура,туров') . '</b> еще <br> необходимо продать </strong >';
+} else
+{
+*/
+    //отстаем от прошлого месяца на 12 туров
+
+      $trip_prev_mon=0;
+  $date_start=date_step_sql('Y-m-', '-1m').'01';
+  $date_end=date_step(date('Y-m-d'),'-1m');
+
+      $result_uurr = mysql_time_query($link, 'select count(id) as ss from trips where visible=1 and id_a_company="'.ht($id_company).'" and datecreate>="'.$date_start.'" and datecreate<"'.$date_end.'"');
+      $num_results_uurr = $result_uurr->num_rows;
+$views=0;
+      if ($num_results_uurr != 0) {
+          $row_uurr = mysqli_fetch_assoc($result_uurr);
+          $trip_prev_mon=$row_uurr["ss"];
+}
+            $trip_mon=0;
+  $date_start=date('Y-m-').'01';
+  $date_end=date('Y-m-d');
+
+      $result_uurr = mysql_time_query($link, 'select count(id) as ss from trips where visible=1 and id_a_company="'.ht($id_company).'" and datecreate>="'.$date_start.'" and datecreate<"'.$date_end.'"');
+      $num_results_uurr = $result_uurr->num_rows;
+$views=0;
+      if ($num_results_uurr != 0) {
+          $row_uurr = mysqli_fetch_assoc($result_uurr);
+          $trip_mon=$row_uurr["ss"];
+}
+
+      $raz_count_trips=abs($trip_mon-$trip_prev_mon);
+      $text_stat='отстаем от прошлого месяца на<br>';
+      if($trip_mon>$trip_prev_mon)
+      {
+          $text_stat='превышаем прошлый месяца на<br>';
+      }
+
+    echo '<strong >'.$text_stat.'<b>' . $raz_count_trips . ' ' . PadejNumber($raz_count_trips, 'тур,тура,туров') . '</b> </strong >';
+//}
+
+
     } else
 {
     echo'<strong > выполнения из <br> запланированного плана. </strong >';
