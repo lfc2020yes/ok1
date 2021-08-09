@@ -537,7 +537,7 @@ if($procc<100) {
 
       $trip_prev_mon=0;
   $date_start=date_step_sql('Y-m-', '-1m').'01';
-  $date_end=date_step(date('Y-m-d'),'-1m');
+  $date_end=date_step_sql_more(date('Y-m-d'),'-1m');
 
       $result_uurr = mysql_time_query($link, 'select count(id) as ss from trips where visible=1 and id_a_company="'.ht($id_company).'" and datecreate>="'.$date_start.'" and datecreate<"'.$date_end.'"');
 
@@ -554,8 +554,6 @@ $views=0;
   $date_end=date('Y-m-d');
 
       $result_uurr = mysql_time_query($link, 'select count(id) as ss from trips where visible=1 and id_a_company="'.ht($id_company).'" and datecreate>="'.$date_start.'" and datecreate<"'.$date_end.'"');
-
-      echo('select count(id) as ss from trips where visible=1 and id_a_company="'.ht($id_company).'" and datecreate>="'.$date_start.'" and datecreate<"'.$date_end.'"');
 
       $num_results_uurr = $result_uurr->num_rows;
 $views=0;
