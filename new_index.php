@@ -527,12 +527,12 @@ echo'<div class="gr-50">
         <div class="circlestat" data-dimension="80" data-text="'.$procc.'%" data-width="1" data-fontsize="27" data-percent="'.$procc.'" data-fgcolor="#24c32d" data-bgcolor="rgba(0,0,0,0)" data-fill="#f5f5f6"></div>
     </div>';
 if($sred!=0) {
-/*
+
 if($procc<100) {
     echo '<strong >~<b>' . $eshe_nado . ' ' . PadejNumber($eshe_nado, 'тур,тура,туров') . '</b> еще <br> необходимо продать </strong >';
 } else
 {
-*/
+
     //отстаем от прошлого месяца на 12 туров
 
       $trip_prev_mon=0;
@@ -570,7 +570,7 @@ $views=0;
       }
 
     echo '<strong >'.$text_stat.'<b>' . $raz_count_trips . ' ' . PadejNumber($raz_count_trips, 'тур,тура,туров') . '</b> </strong >';
-//}
+}
 
 
     } else
