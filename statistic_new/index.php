@@ -923,7 +923,7 @@ $month_rus1='за '.month_rus1($month_rus);
 		  
 	  } else
 	  {
-	echo'<div class="level_more '.$class_color_level.'">'.$row_status_b["level"].' бонусный уровень <strong>('.$row_status_b["proc"].'%)</strong>';
+	echo'<div class="level_more material-prime-v2 '.$class_color_level.'">'.$row_status_b["level"].' бонусный уровень <strong>('.$row_status_b["proc"].'%)</strong>';
 
 
 
