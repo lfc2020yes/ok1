@@ -692,7 +692,7 @@ $month_rus1='за '.month_rus1($month_rus);
 				 	echo'<div class="text_wallet1 padd"><span class="bill_str1">→</span>К выплате</div>';
 			 } else {
                  echo'<div class="cell_small cell_big flex_pp"><div class="cell_1">';
-					echo'<div class="text_wallet1 padd"><span class="bill_str1">→</span>Ваши личные бонусы</div>';}
+					echo'<div class="text_wallet1 padd"><span class="bill_str1">→</span>Личные бонусы</div>';}
 							
 						}
 								
