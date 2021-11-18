@@ -94,11 +94,12 @@ if($active_menu!='statistic_new')
     //есть ли запись с такой коммиссией по этому пользователю за данный месяц
     if($sign_admin==1)
     {
+        //управляющий организацией - вообще все коммиссии всех
         $result_status22=mysql_time_query($link,'SELECT sum(a.sum) as sum from users_commission_trips as a,r_user as b where a.id_users=b.id and b.id_company="'.ht($id_company).'" and  not(a.id_users=0) and a.date="'.$month_s.'"');
     } else {
         if($sign_level==3)
         {
-            //директор
+            //директор и все комиссии подчиненных
             $mass_ei=users_hierarchy($id_user,$link);
             rm_from_array($id_user,$mass_ei);
             $mass_ei= array_unique($mass_ei);
@@ -128,6 +129,8 @@ if($active_menu!='statistic_new')
 
 
         } else {
+
+            //для конкретного пользователя
         $result_status22 = mysql_time_query($link, 'SELECT a.sum from users_commission_trips as a where a.id_users="' . $id_user . '" and a.date="' . $month_s . '"');
     }
     }
@@ -145,6 +148,8 @@ if($active_menu!='statistic_new')
 
     if($sign_admin==1)
     {
+      //для управляющего у которого вообще все в подчинение
+
 
         $result_status223=mysql_time_query($link,'SELECT a.* from users_commission_trips as a,r_user as b where a.id_users=b.id and b.id_company="'.ht($id_company).'" and not(a.id_users=0) and  a.date="'.$month_s.'"');
         $num223 = $result_status223->num_rows;
@@ -153,7 +158,18 @@ if($active_menu!='statistic_new')
             for ($i=0; $i<$num223; $i++)
             {
                 $row223 = mysqli_fetch_assoc($result_status223);
-                $result_status_b=mysql_time_query($link,'SELECT a.* from users_commission_level as a where a.sum_start<="'.$row223["sum"].'" and a.sum_end>"'.$row223["sum"].'"  and a.dates="'.date("Y-m-").'01" and a.id_company="'.ht($id_company).'"');
+
+
+                //проверяем вдруг для этого менеджера свои level условия а не общие
+                $result_status_b=mysql_time_query($link,'SELECT a.* from users_commission_level as a where a.id_users="'.$row223["id_users"].'" and a.sum_start<="'.$row223["sum"].'" and a.sum_end>"'.$row223["sum"].'"  and a.dates="'.date("Y-m-").'01" and a.id_company="'.ht($id_company).'"');
+
+                if($result_status_b->num_rows==0)
+                {
+
+                    $result_status_b=mysql_time_query($link,'SELECT a.* from users_commission_level as a where a.id_users=0 and a.sum_start<="'.$row223["sum"].'" and a.sum_end>"'.$row223["sum"].'"  and a.dates="'.date("Y-m-").'01" and a.id_company="'.ht($id_company).'"');
+
+                }
+
 
                 if($result_status_b->num_rows!=0)
                 {
@@ -171,7 +187,9 @@ if($active_menu!='statistic_new')
 
         if($sign_level==3)
         {
-            //директор
+            //директор у которого могут быть не все в подчинение
+            //директоров может быть много в каждом городе свой
+
             $mass_ei=users_hierarchy($id_user,$link);
             rm_from_array($id_user,$mass_ei);
             $mass_ei= array_unique($mass_ei);
@@ -203,7 +221,17 @@ if($active_menu!='statistic_new')
                 for ($i=0; $i<$num223; $i++)
                 {
                     $row223 = mysqli_fetch_assoc($result_status223);
-                    $result_status_b=mysql_time_query($link,'SELECT a.* from users_commission_level as a where a.sum_start<="'.$row223["sum"].'" and a.sum_end>"'.$row223["sum"].'"  and a.dates="'.date("Y-m-").'01" and a.id_company="'.ht($id_company).'"');
+
+
+
+                    $result_status_b = mysql_time_query($link, 'SELECT a.* from users_commission_level as a where a.id_users="'.$row223["id_users"].'" and a.sum_start<="' . $row223["sum"] . '" and a.sum_end>"' . $row223["sum"] . '"  and a.dates="' . date("Y-m-") . '01" and a.id_company="' . ht($id_company) . '"');
+
+                    if($result_status_b->num_rows==0) {
+
+
+                        $result_status_b = mysql_time_query($link, 'SELECT a.* from users_commission_level as a where a.id_users=0 and a.sum_start<="' . $row223["sum"] . '" and a.sum_end>"' . $row223["sum"] . '"  and a.dates="' . date("Y-m-") . '01" and a.id_company="' . ht($id_company) . '"');
+
+                    }
 
                     if($result_status_b->num_rows!=0)
                     {
@@ -218,8 +246,18 @@ if($active_menu!='statistic_new')
 
 
         } else {
+//это просто менеджер который видет только сколько ему выплата должна быть
 
-        $result_status_b = mysql_time_query($link, 'SELECT a.* from users_commission_level as a where a.sum_start<="' . $row_status22["sum"] . '" and a.sum_end>"' . $row_status22["sum"] . '" and a.dates="'.date("Y-m-").'01" and a.id_company="'.ht($id_company).'"');
+
+            $result_status_b = mysql_time_query($link, 'SELECT a.* from users_commission_level as a where a.id_users="'.$id_user.'" and a.sum_start<="' . $row_status22["sum"] . '" and a.sum_end>"' . $row_status22["sum"] . '" and a.dates="' . date("Y-m-") . '01" and a.id_company="' . ht($id_company) . '"');
+
+            if($result_status_b->num_rows==0) {
+
+                $result_status_b = mysql_time_query($link, 'SELECT a.* from users_commission_level as a where a.id_users=0 and a.sum_start<="' . $row_status22["sum"] . '" and a.sum_end>"' . $row_status22["sum"] . '" and a.dates="' . date("Y-m-") . '01" and a.id_company="' . ht($id_company) . '"');
+
+
+            }
+
 
         if ($result_status_b->num_rows != 0) {
             $row_status_b = mysqli_fetch_assoc($result_status_b);

@@ -508,7 +508,14 @@ $month_rus1='за '.month_rus1($month_rus);
 					 for ($i=0; $i<$num223; $i++)
 		         {			   			  			   
 			    $row223 = mysqli_fetch_assoc($result_status223);
-				  $result_status_b=mysql_time_query($link,'SELECT a.* from users_commission_level as a where a.sum_start<="'.$row223["sum"].'" and a.sum_end>"'.$row223["sum"].'" and a.dates="'.$date_level_bonus.'" and a.id_company="'.ht($id_company).'"');
+
+                     $result_status_b=mysql_time_query($link,'SELECT a.* from users_commission_level as a where a.id_users="'.$row223["id_users"].'" and a.sum_start<="'.$row223["sum"].'" and a.sum_end>"'.$row223["sum"].'" and a.dates="'.$date_level_bonus.'" and a.id_company="'.ht($id_company).'"');
+
+                     if($result_status_b->num_rows==0) {
+
+                         $result_status_b = mysql_time_query($link, 'SELECT a.* from users_commission_level as a where a.id_users=0 and a.sum_start<="' . $row223["sum"] . '" and a.sum_end>"' . $row223["sum"] . '" and a.dates="' . $date_level_bonus . '" and a.id_company="' . ht($id_company) . '"');
+
+                     }
 		
            if($result_status_b->num_rows!=0)
            { 
@@ -524,8 +531,14 @@ $month_rus1='за '.month_rus1($month_rus);
 				
 			} else
 			{
-  $result_status_b=mysql_time_query($link,'SELECT a.* from users_commission_level as a where a.sum_start<="'.$row_status22["sum"].'" and a.sum_end>"'.$row_status22["sum"].'"  and a.dates="'.$date_level_bonus.'" and a.id_company="'.ht($id_company).'"');
-		
+  $result_status_b=mysql_time_query($link,'SELECT a.* from users_commission_level as a where a.id_users="'.$id_user.'" and a.sum_start<="'.$row_status22["sum"].'" and a.sum_end>"'.$row_status22["sum"].'"  and a.dates="'.$date_level_bonus.'" and a.id_company="'.ht($id_company).'"');
+  if($result_status_b->num_rows==0)
+  {
+      $result_status_b=mysql_time_query($link,'SELECT a.* from users_commission_level as a where a.id_users=0 and a.sum_start<="'.$row_status22["sum"].'" and a.sum_end>"'.$row_status22["sum"].'"  and a.dates="'.$date_level_bonus.'" and a.id_company="'.ht($id_company).'"');
+
+  }
+
+
            if($result_status_b->num_rows!=0)
            { 
 			     $row_status_b = mysqli_fetch_assoc($result_status_b);
@@ -812,9 +825,11 @@ $month_rus1='за '.month_rus1($month_rus);
                   }
 
                   $bonus=0;
+                  $result_status_b=mysql_time_query($link,'SELECT a.* from users_commission_level as a where a.id_users="'.$row_8["id"].'" and a.sum_start<="'.$row_status22["sum"].'" and a.sum_end>"'.$row_status22["sum"].'"  and a.dates="'.$date_level_bonus.'"  and a.id_company="'.ht($id_company).'"');
 
-                  $result_status_b=mysql_time_query($link,'SELECT a.* from users_commission_level as a where a.sum_start<="'.$row_status22["sum"].'" and a.sum_end>"'.$row_status22["sum"].'"  and a.dates="'.$date_level_bonus.'"  and a.id_company="'.ht($id_company).'"');
-
+                  if($result_status_b->num_rows==0) {
+                      $result_status_b = mysql_time_query($link, 'SELECT a.* from users_commission_level as a where a.id_users=0 and a.sum_start<="' . $row_status22["sum"] . '" and a.sum_end>"' . $row_status22["sum"] . '"  and a.dates="' . $date_level_bonus . '"  and a.id_company="' . ht($id_company) . '"');
+                  }
                   if($result_status_b->num_rows!=0)
                   {
                       $row_status_b = mysqli_fetch_assoc($result_status_b);
@@ -836,9 +851,54 @@ $month_rus1='за '.month_rus1($month_rus);
                   }
 
 
-                  echo'<div class="level_more '.$class_color_level.'">
+                  echo'<div class="material-prime-v2 level_more '.$class_color_level.'">
 	
-	<div class="le_1">'.$row_8["name_user"].'</div>
+	<div class="le_1">'.$row_8["name_user"];
+
+
+
+                  echo '<span class="edit_panel11_mat"><span data-tooltip="узнать limit level" for="' . $row_8["id"] . '" class="history_icon_level">M</span>';
+
+                              echo '<div class="history_act_mat history-prime-mat">
+                                             <div class="line_brock"><div class="count_brock count_brock_1"><span>Уровень</span></div><div class="count_brock count_brock_2"><span>Комиссия</span></div><div class="count_brock count_brock_3"><span>Процент</span></div></div>';
+
+
+
+//для конкретного пользователя
+                  $result_uu_xo = mysql_time_query($link, 'SELECT a.* from users_commission_level as a where a.id_users="'.$row_8["id"].'" and a.dates="' . date("Y-m-") . '01" and a.id_company="' . ht($id_company) . '" order by a.level');
+
+                  if($result_uu_xo->num_rows==0) {
+//общее если нет конкретики по уровням
+                      $result_uu_xo = mysql_time_query($link, 'SELECT a.* from users_commission_level as a where a.id_users=0 and a.dates="' . date("Y-m-") . '01" and a.id_company="' . ht($id_company) . '" order by a.level');
+
+
+                  }
+
+
+
+
+                                  while ($row_uu_xo = mysqli_fetch_assoc($result_uu_xo)) {
+
+
+                                      echo '<div class="line_brock"><div class="count_brock count_brock_1">'.$row_uu_xo["level"].'</div><div class="count_brock count_brock_2">' . rtrim(rtrim(number_format($row_uu_xo["sum_start"], 2, '.', ' '),'0'),'.') . '<b>₽</b> - ' . rtrim(rtrim(number_format($row_uu_xo["sum_end"], 2, '.', ' '),'0'),'.') . '<b>₽</b></div>
+<div class="count_brock count_brock_3">';
+                                      echo $row_uu_xo["proc"].'<b>%</b>';
+
+
+                                      echo'</div>
+
+</div>';
+
+                                  }
+
+
+                              echo'</div>';
+                              echo '</span>';
+
+
+
+
+                  echo'</div>
 	<div class="le_2">'.rtrim(rtrim(number_format(($row_status22["sum"]), 2, '.', ' '),'0'),'.').' РУБ.</div>	
 	
 	</div>';

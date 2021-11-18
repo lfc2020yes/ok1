@@ -8850,7 +8850,18 @@ $(document).mouseup(function (e) {
 				 $('var.highlight').each(function(){ $(this).after($(this).html()).remove(); });
 			}
 	}
-	
+
+
+	if(($(e.target).closest(".history_act_mat").length==0)&&($(e.target).closest(".edit_panel11_mat").length==0)&&($(e.target).closest(".history_icon_level").length==0)  ){
+		if( $('.history_act_mat').is(':visible') ) {
+
+			$('.history_act_mat').hide();
+		}
+	}
+
+
+
+
 	/*
 	if(($(e.target).closest(".loll_drop").length==0)  ){
 	       $('.loll_drop').hide();		

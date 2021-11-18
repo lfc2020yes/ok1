@@ -400,11 +400,14 @@ $('#date_table').val(date_all);
   $date_end=date_step_sql('Y-m-', '+1m').'01';
   $more_mon=0;
 
+  $date_start_bonus_last=date_step_sql('Y-m-', '-1m').'01';
+
 
   if (( isset($_COOKIE["su_2f".$id_user]))and(is_numeric($_COOKIE["su_2f".$id_user]))and(array_search($_COOKIE["su_2f".$id_user],$os_id2)!==false)and($_COOKIE["su_2f".$id_user]==1))
   {
       //находим прошлый месяц
       $date_start=date_step_sql('Y-m-', '-1m').'01';
+      $date_start_bonus_last=date_step_sql('Y-m-', '-2m').'01';
       $date_end=date("Y-m-").'01';
   }
 
@@ -412,6 +415,7 @@ $('#date_table').val(date_all);
   {
       //находим -2 месяца назад
       $date_start=date_step_sql('Y-m-', '-2m').'01';
+      $date_start_bonus_last=date_step_sql('Y-m-', '-3m').'01';
       $date_end=date_step_sql('Y-m-', '-1m').'01';
 
 
@@ -420,6 +424,7 @@ $('#date_table').val(date_all);
   {
       //находим -3 месяца назад
       $date_start=date_step_sql('Y-m-', '-3m').'01';
+      $date_start_bonus_last=date_step_sql('Y-m-', '-4m').'01';
       $date_end=date_step_sql('Y-m-', '-2m').'01';
   }
 
@@ -461,14 +466,33 @@ $raz_array=array();
 if($more_mon==0)
 {
     $bonus=0;
-    $result_status223=mysql_time_query($link,'SELECT a.* from users_commission_trips as a,r_user as b where a.id_users=b.id and b.id_company="'.$id_company.'" and a.date="'.$date_start.'"');
+    //$result_status223=mysql_time_query($link,'SELECT a.* from users_commission_trips as a,r_user as b where a.id_users=b.id and b.id_company="'.$id_company.'" and a.date="'.$date_start.'"');
+
+    $result_status223=mysql_time_query($link,'SELECT a.* from users_commission_trips as a,r_user as b where a.id_users=b.id and b.id_company="'.$id_company.'" and a.date="'.$date_start_bonus_last.'"');
+
+
+
+
     $num223 = $result_status223->num_rows;
     if($result_status223->num_rows!=0)
     {
         for ($i=0; $i<$num223; $i++)
         {
             $row223 = mysqli_fetch_assoc($result_status223);
-            $result_status_b=mysql_time_query($link,'SELECT a.* from users_commission_level as a where a.sum_start<="'.$row223["sum"].'" and a.sum_end>"'.$row223["sum"].'" and a.dates="'.$date_start.'" and a.id_company="'.ht($id_company).'"');
+
+
+           // $result_status_b=mysql_time_query($link,'SELECT a.* from users_commission_level as a where a.id_users="'.$row223["id_users"].'" and a.sum_start<="'.$row223["sum"].'" and a.sum_end>"'.$row223["sum"].'" and a.dates="'.$date_start.'" and a.id_company="'.ht($id_company).'"');
+
+            $result_status_b=mysql_time_query($link,'SELECT a.* from users_commission_level as a where a.id_users="'.$row223["id_users"].'" and a.sum_start<="'.$row223["sum"].'" and a.sum_end>"'.$row223["sum"].'" and a.dates="'.$date_start_bonus_last.'" and a.id_company="'.ht($id_company).'"');
+
+
+            if($result_status_b->num_rows==0)
+            {
+               // $result_status_b=mysql_time_query($link,'SELECT a.* from users_commission_level as a where a.id_users=0 and a.sum_start<="'.$row223["sum"].'" and a.sum_end>"'.$row223["sum"].'" and a.dates="'.$date_start.'" and a.id_company="'.ht($id_company).'"');
+
+                $result_status_b=mysql_time_query($link,'SELECT a.* from users_commission_level as a where a.id_users=0 and a.sum_start<="'.$row223["sum"].'" and a.sum_end>"'.$row223["sum"].'" and a.dates="'.$date_start_bonus_last.'" and a.id_company="'.ht($id_company).'"');
+            }
+
 
             if($result_status_b->num_rows!=0)
             {
@@ -490,16 +514,32 @@ if($more_mon==0)
     while ($date_start_while!= $date_end) {
 
        // echo($date_start.' () ');
+        $date_start_while_bonus_last=date_step_sql_more($date_start_while,'-1m');
 
-        $result_status223=mysql_time_query($link,'SELECT a.* from users_commission_trips as a,r_user as b where a.id_users=b.id and b.id_company="'.$id_company.'" and a.date="'.$date_start_while.'"');
+
+        //$result_status223=mysql_time_query($link,'SELECT a.* from users_commission_trips as a,r_user as b where a.id_users=b.id and b.id_company="'.$id_company.'" and a.date="'.$date_start_while.'"');
+
+        $result_status223=mysql_time_query($link,'SELECT a.* from users_commission_trips as a,r_user as b where a.id_users=b.id and b.id_company="'.$id_company.'" and a.date="'.$date_start_while_bonus_last.'"');
+
         $num223 = $result_status223->num_rows;
         if($result_status223->num_rows!=0)
         {
             for ($i=0; $i<$num223; $i++)
             {
                 $row223 = mysqli_fetch_assoc($result_status223);
-                $result_status_b=mysql_time_query($link,'SELECT a.* from users_commission_level as a where a.sum_start<="'.$row223["sum"].'" and a.sum_end>"'.$row223["sum"].'" and a.dates="'.$date_start_while.'" and a.id_company="'.ht($id_company).'"');
 
+                $result_status_b=mysql_time_query($link,'SELECT a.* from users_commission_level as a where a.id_users="'.$row223["id_users"].'" and a.sum_start<="'.$row223["sum"].'" and a.sum_end>"'.$row223["sum"].'" and a.dates="'.$date_start_while_bonus_last.'" and a.id_company="'.ht($id_company).'"');
+
+                //$result_status_b=mysql_time_query($link,'SELECT a.* from users_commission_level as a where a.id_users="'.$row223["id_users"].'" and a.sum_start<="'.$row223["sum"].'" and a.sum_end>"'.$row223["sum"].'" and a.dates="'.$date_start_while.'" and a.id_company="'.ht($id_company).'"');
+
+                if($result_status_b->num_rows==0) {
+
+                    //$result_status_b = mysql_time_query($link, 'SELECT a.* from users_commission_level as a where a.id_users=0 and a.sum_start<="' . $row223["sum"] . '" and a.sum_end>"' . $row223["sum"] . '" and a.dates="' . $date_start_while . '" and a.id_company="' . ht($id_company) . '"');
+
+                    $result_status_b = mysql_time_query($link, 'SELECT a.* from users_commission_level as a where a.id_users=0 and a.sum_start<="' . $row223["sum"] . '" and a.sum_end>"' . $row223["sum"] . '" and a.dates="' . $date_start_while_bonus_last . '" and a.id_company="' . ht($id_company) . '"');
+
+
+                }
                 if($result_status_b->num_rows!=0)
                 {
                     $row_status_b = mysqli_fetch_assoc($result_status_b);

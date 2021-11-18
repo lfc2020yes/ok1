@@ -20404,4 +20404,80 @@ strong {font-weight:normal; }
 
 }
 
+.edit_panel11_mat {
+	display: inline-block;
+	position: relative;
+	height: 10px;
+	line-height: 1px;
+	width: 1px;
+}
+
+
+.history_icon_level {
+	color: rgba(0, 0, 0, 0.2);
+	cursor: pointer;
+	float: left;
+	font-family: "icon1";
+	font-size: 28px;
+	line-height: 10px;
+	transition: all 0.5s ease 0s
+}
+
+.history_icon_level:hover {
+	color: #01a5fe
+}
+
+
+.history_act_mat {
+	position: absolute;
+	top:15px;
+	left:30px;
+	line-height: 25px;
+	display: none;
+	z-index: 10;
+	@include box-shadow(0 4px 8px rgba(17, 56, 86, 0.1));
+	border-radius: 5px;
+	background-color: #fff;
+	padding: 20px;
+	min-width: 200px;
+
+	.line_brock {
+		@include flexbox();
+		width: 100%;
+		text-align: left;
+		@include justify-content(space-between);
+
+		.count_brock { width: 50%; white-space:nowrap; color: #1e1f1f;
+			font-family: "GEInspiraRegular";
+			font-size: 16px;    span {font-size: 11px;
+			font-family: "GEInspiraRegular";
+			color: rgba(0, 0, 0, 0.3);}  b {color: rgba(0, 0, 0, 0.3); font-weight: normal; padding-left: 5px;}  }
+		.price_brock { width:50%; padding-left:15px; white-space:nowrap; color: #1e1f1f;
+			font-family: "GEInspiraRegular";
+			font-size: 16px;   span {font-size: 11px;
+			font-family: "GEInspiraRegular";
+			color: rgba(0, 0, 0, 0.3);} b {color: rgba(0, 0, 0, 0.3); font-weight: normal; padding-left: 5px;}}
+
+	}
+
+
+
+
+}
+
+.history-prime-mat { .count_brock_1,.count_brock_3 {width:20% !important;} .count_brock_2 {width:60% !important;} min-width: 350px !important; top: 18px !important;
+	left: 5px !important; @include box-shadow(0 4px 8px rgba(17, 56, 86, 0.2));  a {font-size: 14px;
+																					   font-family: "GEInspiraBold" !important; text-decoration: none; border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+																					   color: rgba(0, 0, 0, 0.7);}
+
+	.line_brock .count_brock {font-size:14px !important;}
+
+	.line_brock .count_brock span {
+		color: rgba(0, 0, 0, 0.4);
+		text-transform: uppercase;
+	}
+
+}
+
+.material-prime-v2 {overflow:visible !important;}
 
