@@ -865,11 +865,11 @@ $month_rus1='за '.month_rus1($month_rus);
 
 
 //для конкретного пользователя
-                  $result_uu_xo = mysql_time_query($link, 'SELECT a.* from users_commission_level as a where a.id_users="'.$row_8["id"].'" and a.dates="' . date("Y-m-") . '01" and a.id_company="' . ht($id_company) . '" order by a.level');
+                  $result_uu_xo = mysql_time_query($link, 'SELECT a.* from users_commission_level as a where a.id_users="'.$row_8["id"].'" and a.dates="'.$date_level_bonus.'" and a.id_company="' . ht($id_company) . '" order by a.level');
 
                   if($result_uu_xo->num_rows==0) {
 //общее если нет конкретики по уровням
-                      $result_uu_xo = mysql_time_query($link, 'SELECT a.* from users_commission_level as a where a.id_users=0 and a.dates="' . date("Y-m-") . '01" and a.id_company="' . ht($id_company) . '" order by a.level');
+                      $result_uu_xo = mysql_time_query($link, 'SELECT a.* from users_commission_level as a where a.id_users=0 and a.dates="' . $date_level_bonus . '" and a.id_company="' . ht($id_company) . '" order by a.level');
 
 
                   }
@@ -923,7 +923,62 @@ $month_rus1='за '.month_rus1($month_rus);
 		  
 	  } else
 	  {
-	echo'<div class="level_more '.$class_color_level.'">'.$row_status_b["level"].' бонусный уровень <strong>('.$row_status_b["proc"].'%)</strong></div>';
+	echo'<div class="level_more '.$class_color_level.'">'.$row_status_b["level"].' бонусный уровень <strong>('.$row_status_b["proc"].'%)</strong>';
+
+
+
+          echo '<span class="edit_panel11_mat"><span data-tooltip="узнать limit level" for="' . $row_8["id"] . '" class="history_icon_level">M</span>';
+
+          echo '<div class="history_act_mat history-prime-mat">
+                                             <div class="line_brock"><div class="count_brock count_brock_1"><span>Уровень</span></div><div class="count_brock count_brock_2"><span>Комиссия</span></div><div class="count_brock count_brock_3"><span>Процент</span></div></div>';
+
+
+          $id_users_moss=$id_user;
+
+        if((isset($_COOKIE["su_5s".$id_user]))and($_COOKIE["su_5s".$id_user]!=0)and(($sign_admin==1)or($sign_level>1)))
+        {
+
+            $id_users_moss=$_COOKIE["su_5s".$id_user];
+
+        }
+
+
+//для конкретного пользователя
+          $result_uu_xo = mysql_time_query($link, 'SELECT a.* from users_commission_level as a where a.id_users="'.ht($id_users_moss).'" and a.dates="'.$date_level_bonus.'" and a.id_company="' . ht($id_company) . '" order by a.level');
+
+          if($result_uu_xo->num_rows==0) {
+//общее если нет конкретики по уровням
+              $result_uu_xo = mysql_time_query($link, 'SELECT a.* from users_commission_level as a where a.id_users=0 and a.dates="' . $date_level_bonus . '" and a.id_company="' . ht($id_company) . '" order by a.level');
+
+
+          }
+
+
+
+
+          while ($row_uu_xo = mysqli_fetch_assoc($result_uu_xo)) {
+
+
+              echo '<div class="line_brock"><div class="count_brock count_brock_1">'.$row_uu_xo["level"].'</div><div class="count_brock count_brock_2">' . rtrim(rtrim(number_format($row_uu_xo["sum_start"], 2, '.', ' '),'0'),'.') . '<b>₽</b> - ' . rtrim(rtrim(number_format($row_uu_xo["sum_end"], 2, '.', ' '),'0'),'.') . '<b>₽</b></div>
+<div class="count_brock count_brock_3">';
+              echo $row_uu_xo["proc"].'<b>%</b>';
+
+
+              echo'</div>
+
+</div>';
+
+          }
+
+
+          echo'</div>';
+          echo '</span>';
+
+
+
+
+
+          echo'</div>';
 		echo'<div class="level_more_j">комиссия < <strong>'.rtrim(rtrim(number_format(($row_status_b["sum_end"]), 2, '.', ' '),'0'),'.').' руб.</strong></div>';
 	  }
 			
