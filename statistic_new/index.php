@@ -1418,13 +1418,70 @@ echo'<strong>'.PadejNumber($row__223["cc"],'невыполненная зада�
          $date_end=date_step_sql('Y-m','-1m').'-01 00:00:00';
          $date_start=date_step_sql('Y-m','-2m').'-01 00:00:00';
          }
+
          if (( isset($_COOKIE["su_2s".$id_user]))and(is_numeric($_COOKIE["su_2s".$id_user]))and($_COOKIE["su_2s".$id_user]==4))
          {
          //-2 месяц
          $date_end=date_step_sql('Y-m','-2m').'-01 00:00:00';
          $date_start=date_step_sql('Y-m','-3m').'-01 00:00:00';
          }
-         $sql_line1=' and a.date_create>="'.$date_start.'" and a.date_create<"'.$date_end.'"';
+
+if (( isset($_COOKIE["su_2s".$id_user]))and(is_numeric($_COOKIE["su_2s".$id_user]))and($_COOKIE["su_2s".$id_user]==5))
+{
+    //-2 месяц
+    $date_end=date_step_sql('Y-m','-3m').'-01 00:00:00';
+    $date_start=date_step_sql('Y-m','-4m').'-01 00:00:00';
+}
+if (( isset($_COOKIE["su_2s".$id_user]))and(is_numeric($_COOKIE["su_2s".$id_user]))and($_COOKIE["su_2s".$id_user]==6))
+{
+    //-2 месяц
+    $date_end=date_step_sql('Y-m','-4m').'-01 00:00:00';
+    $date_start=date_step_sql('Y-m','-5m').'-01 00:00:00';
+}
+if (( isset($_COOKIE["su_2s".$id_user]))and(is_numeric($_COOKIE["su_2s".$id_user]))and($_COOKIE["su_2s".$id_user]==7))
+{
+    //-2 месяц
+    $date_end=date_step_sql('Y-m','-5m').'-01 00:00:00';
+    $date_start=date_step_sql('Y-m','-6m').'-01 00:00:00';
+}
+if (( isset($_COOKIE["su_2s".$id_user]))and(is_numeric($_COOKIE["su_2s".$id_user]))and($_COOKIE["su_2s".$id_user]==8))
+{
+    //-2 месяц
+    $date_end=date_step_sql('Y-m','-6m').'-01 00:00:00';
+    $date_start=date_step_sql('Y-m','-7m').'-01 00:00:00';
+}
+if (( isset($_COOKIE["su_2s".$id_user]))and(is_numeric($_COOKIE["su_2s".$id_user]))and($_COOKIE["su_2s".$id_user]==9))
+{
+    //-2 месяц
+    $date_end=date_step_sql('Y-m','-7m').'-01 00:00:00';
+    $date_start=date_step_sql('Y-m','-8m').'-01 00:00:00';
+}
+if (( isset($_COOKIE["su_2s".$id_user]))and(is_numeric($_COOKIE["su_2s".$id_user]))and($_COOKIE["su_2s".$id_user]==10))
+{
+    //-2 месяц
+    $date_end=date_step_sql('Y-m','-8m').'-01 00:00:00';
+    $date_start=date_step_sql('Y-m','-9m').'-01 00:00:00';
+}
+if (( isset($_COOKIE["su_2s".$id_user]))and(is_numeric($_COOKIE["su_2s".$id_user]))and($_COOKIE["su_2s".$id_user]==11))
+{
+    //-2 месяц
+    $date_end=date_step_sql('Y-m','-9m').'-01 00:00:00';
+    $date_start=date_step_sql('Y-m','-10m').'-01 00:00:00';
+}
+if (( isset($_COOKIE["su_2s".$id_user]))and(is_numeric($_COOKIE["su_2s".$id_user]))and($_COOKIE["su_2s".$id_user]==12))
+{
+    //-2 месяц
+    $date_end=date_step_sql('Y-m','-10m').'-01 00:00:00';
+    $date_start=date_step_sql('Y-m','-11m').'-01 00:00:00';
+}
+if (( isset($_COOKIE["su_2s".$id_user]))and(is_numeric($_COOKIE["su_2s".$id_user]))and($_COOKIE["su_2s".$id_user]==13))
+{
+    //-2 месяц
+    $date_end=date_step_sql('Y-m','-11m').'-01 00:00:00';
+    $date_start=date_step_sql('Y-m','-12m').'-01 00:00:00';
+}
+
+$sql_line1=' and a.date_create>="'.$date_start.'" and a.date_create<"'.$date_end.'"';
 
 
          //выбрал конкретный период
@@ -1517,6 +1574,60 @@ if (( isset($_COOKIE["su_2s".$id_user]))and(is_numeric($_COOKIE["su_2s".$id_user
     //-2 месяц
     $date_end=date_step_sql('Y-m','-2m').'-01 00:00:00';
     $date_start=date_step_sql('Y-m','-3m').'-01 00:00:00';
+}
+if (( isset($_COOKIE["su_2s".$id_user]))and(is_numeric($_COOKIE["su_2s".$id_user]))and($_COOKIE["su_2s".$id_user]==5))
+{
+    //-2 месяц
+    $date_end=date_step_sql('Y-m','-4m').'-01 00:00:00';
+    $date_start=date_step_sql('Y-m','-5m').'-01 00:00:00';
+}
+if (( isset($_COOKIE["su_2s".$id_user]))and(is_numeric($_COOKIE["su_2s".$id_user]))and($_COOKIE["su_2s".$id_user]==6))
+{
+    //-2 месяц
+    $date_end=date_step_sql('Y-m','-5m').'-01 00:00:00';
+    $date_start=date_step_sql('Y-m','-6m').'-01 00:00:00';
+}
+if (( isset($_COOKIE["su_2s".$id_user]))and(is_numeric($_COOKIE["su_2s".$id_user]))and($_COOKIE["su_2s".$id_user]==7))
+{
+    //-2 месяц
+    $date_end=date_step_sql('Y-m','-6m').'-01 00:00:00';
+    $date_start=date_step_sql('Y-m','-7m').'-01 00:00:00';
+}
+if (( isset($_COOKIE["su_2s".$id_user]))and(is_numeric($_COOKIE["su_2s".$id_user]))and($_COOKIE["su_2s".$id_user]==8))
+{
+    //-2 месяц
+    $date_end=date_step_sql('Y-m','-7m').'-01 00:00:00';
+    $date_start=date_step_sql('Y-m','-8m').'-01 00:00:00';
+}
+if (( isset($_COOKIE["su_2s".$id_user]))and(is_numeric($_COOKIE["su_2s".$id_user]))and($_COOKIE["su_2s".$id_user]==9))
+{
+    //-2 месяц
+    $date_end=date_step_sql('Y-m','-8m').'-01 00:00:00';
+    $date_start=date_step_sql('Y-m','-9m').'-01 00:00:00';
+}
+if (( isset($_COOKIE["su_2s".$id_user]))and(is_numeric($_COOKIE["su_2s".$id_user]))and($_COOKIE["su_2s".$id_user]==10))
+{
+    //-2 месяц
+    $date_end=date_step_sql('Y-m','-9m').'-01 00:00:00';
+    $date_start=date_step_sql('Y-m','-10m').'-01 00:00:00';
+}
+if (( isset($_COOKIE["su_2s".$id_user]))and(is_numeric($_COOKIE["su_2s".$id_user]))and($_COOKIE["su_2s".$id_user]==11))
+{
+    //-2 месяц
+    $date_end=date_step_sql('Y-m','-10m').'-01 00:00:00';
+    $date_start=date_step_sql('Y-m','-11m').'-01 00:00:00';
+}
+if (( isset($_COOKIE["su_2s".$id_user]))and(is_numeric($_COOKIE["su_2s".$id_user]))and($_COOKIE["su_2s".$id_user]==12))
+{
+    //-2 месяц
+    $date_end=date_step_sql('Y-m','-11m').'-01 00:00:00';
+    $date_start=date_step_sql('Y-m','-12m').'-01 00:00:00';
+}
+if (( isset($_COOKIE["su_2s".$id_user]))and(is_numeric($_COOKIE["su_2s".$id_user]))and($_COOKIE["su_2s".$id_user]==13))
+{
+    //-2 месяц
+    $date_end=date_step_sql('Y-m','-12m').'-01 00:00:00';
+    $date_start=date_step_sql('Y-m','-13m').'-01 00:00:00';
 }
 $sql_line1=' and a.date_buy_all>="'.$date_start.'" and a.date_buy_all<"'.$date_end.'"';
 
