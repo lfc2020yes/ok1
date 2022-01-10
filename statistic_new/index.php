@@ -149,8 +149,18 @@ include_once $url_system.'template/body_top.php';
        $os2 = array( "Текущий месяц","Прошлый месяц","-2 месяца","Выбрать период");
 	   $os_id2 = array("0","1","3","2");
 
-    $os2 = array( "Текущий месяц","Прошлый месяц","За ".month_rus1(date_step_sql('m', '-2m')),"За ".month_rus1(date_step_sql('m', '-3m')));
-    $os_id2 = array("0","1","3","4");
+    $os2 = array("Текущий месяц","Прошлый месяц","За ".month_rus1(date_step_sql('m', '-2m')).' '.date_step_sql('Y', '-2m').'г.',"За ".month_rus1(date_step_sql('m', '-3m')).' '.date_step_sql('Y', '-3m').'г.'
+    ,"За ".month_rus1(date_step_sql('m', '-4m')).' '.date_step_sql('Y', '-4m').'г.'
+    ,"За ".month_rus1(date_step_sql('m', '-5m')).' '.date_step_sql('Y', '-5m').'г.'
+    ,"За ".month_rus1(date_step_sql('m', '-6m')).' '.date_step_sql('Y', '-6m').'г.'
+    ,"За ".month_rus1(date_step_sql('m', '-7m')).' '.date_step_sql('Y', '-7m').'г.'
+    ,"За ".month_rus1(date_step_sql('m', '-8m')).' '.date_step_sql('Y', '-8m').'г.'
+    ,"За ".month_rus1(date_step_sql('m', '-9m')).' '.date_step_sql('Y', '-9m').'г.'
+    ,"За ".month_rus1(date_step_sql('m', '-10m')).' '.date_step_sql('Y', '-10m').'г.'
+    ,"За ".month_rus1(date_step_sql('m', '-11m')).' '.date_step_sql('Y', '-11m').'г.'
+    ,"За ".month_rus1(date_step_sql('m', '-12m')).' '.date_step_sql('Y', '-12m').'г.'
+    );
+    $os_id2 = array("0","1","3","4","5","6","7","8","9","10","11","12","13");
 
 		$su_2=0;
 		$date_su='';
@@ -458,10 +468,152 @@ $month_rus1=date("m");
       $date_start_obo=date_step_sql('Y-m', '-3m').'-01 00:00:00';
       $date_end_obo=date_step_sql('Y-m', '-2m').'-01 00:00:00';
   }
+  if (( isset($_COOKIE["su_2s".$id_user]))and(is_numeric($_COOKIE["su_2s".$id_user]))and(array_search($_COOKIE["su_2s".$id_user],$os_id2)!==false)and($_COOKIE["su_2s".$id_user]==5))
+  {
+      //находим -3месяца назад
 
+      $month_s=$date_start=date_step_sql('Y-m', '-4m').'-01';
+      $month_s_like=$date_start=date_step_sql('Y-m', '-4m');
+      $month_rus=date_step_sql('m', '-4m');
+      $month_rus1=date_step_sql('m', '-4m');
 
+      $date_end=date_step_sql('Y-m-', '-3m').'01';
 
-$month_rus1='за '.month_rus1($month_rus);
+      $date_level_bonus=date_step_sql('Y-m', '-4m').'-01';
+
+      $date_start_obo=date_step_sql('Y-m', '-4m').'-01 00:00:00';
+      $date_end_obo=date_step_sql('Y-m', '-3m').'-01 00:00:00';
+  }
+  if (( isset($_COOKIE["su_2s".$id_user]))and(is_numeric($_COOKIE["su_2s".$id_user]))and(array_search($_COOKIE["su_2s".$id_user],$os_id2)!==false)and($_COOKIE["su_2s".$id_user]==6))
+  {
+      //находим -3месяца назад
+
+      $month_s=$date_start=date_step_sql('Y-m', '-5m').'-01';
+      $month_s_like=$date_start=date_step_sql('Y-m', '-5m');
+      $month_rus=date_step_sql('m', '-5m');
+      $month_rus1=date_step_sql('m', '-5m');
+
+      $date_end=date_step_sql('Y-m-', '-4m').'01';
+
+      $date_level_bonus=date_step_sql('Y-m', '-5m').'-01';
+
+      $date_start_obo=date_step_sql('Y-m', '-5m').'-01 00:00:00';
+      $date_end_obo=date_step_sql('Y-m', '-4m').'-01 00:00:00';
+  }
+  if (( isset($_COOKIE["su_2s".$id_user]))and(is_numeric($_COOKIE["su_2s".$id_user]))and(array_search($_COOKIE["su_2s".$id_user],$os_id2)!==false)and($_COOKIE["su_2s".$id_user]==7))
+  {
+      //находим -3месяца назад
+
+      $month_s=$date_start=date_step_sql('Y-m', '-6m').'-01';
+      $month_s_like=$date_start=date_step_sql('Y-m', '-6m');
+      $month_rus=date_step_sql('m', '-6m');
+      $month_rus1=date_step_sql('m', '-6m');
+
+      $date_end=date_step_sql('Y-m-', '-5m').'01';
+
+      $date_level_bonus=date_step_sql('Y-m', '-6m').'-01';
+
+      $date_start_obo=date_step_sql('Y-m', '-6m').'-01 00:00:00';
+      $date_end_obo=date_step_sql('Y-m', '-5m').'-01 00:00:00';
+  }
+  if (( isset($_COOKIE["su_2s".$id_user]))and(is_numeric($_COOKIE["su_2s".$id_user]))and(array_search($_COOKIE["su_2s".$id_user],$os_id2)!==false)and($_COOKIE["su_2s".$id_user]==8))
+  {
+      //находим -3месяца назад
+
+      $month_s=$date_start=date_step_sql('Y-m', '-7m').'-01';
+      $month_s_like=$date_start=date_step_sql('Y-m', '-7m');
+      $month_rus=date_step_sql('m', '-7m');
+      $month_rus1=date_step_sql('m', '-7m');
+
+      $date_end=date_step_sql('Y-m-', '-6m').'01';
+
+      $date_level_bonus=date_step_sql('Y-m', '-7m').'-01';
+
+      $date_start_obo=date_step_sql('Y-m', '-7m').'-01 00:00:00';
+      $date_end_obo=date_step_sql('Y-m', '-6m').'-01 00:00:00';
+  }
+  if (( isset($_COOKIE["su_2s".$id_user]))and(is_numeric($_COOKIE["su_2s".$id_user]))and(array_search($_COOKIE["su_2s".$id_user],$os_id2)!==false)and($_COOKIE["su_2s".$id_user]==9))
+  {
+      //находим -3месяца назад
+
+      $month_s=$date_start=date_step_sql('Y-m', '-8m').'-01';
+      $month_s_like=$date_start=date_step_sql('Y-m', '-8m');
+      $month_rus=date_step_sql('m', '-8m');
+      $month_rus1=date_step_sql('m', '-8m');
+
+      $date_end=date_step_sql('Y-m-', '-7m').'01';
+
+      $date_level_bonus=date_step_sql('Y-m', '-8m').'-01';
+
+      $date_start_obo=date_step_sql('Y-m', '-8m').'-01 00:00:00';
+      $date_end_obo=date_step_sql('Y-m', '-7m').'-01 00:00:00';
+  }
+  if (( isset($_COOKIE["su_2s".$id_user]))and(is_numeric($_COOKIE["su_2s".$id_user]))and(array_search($_COOKIE["su_2s".$id_user],$os_id2)!==false)and($_COOKIE["su_2s".$id_user]==10))
+  {
+      //находим -3месяца назад
+
+      $month_s=$date_start=date_step_sql('Y-m', '-9m').'-01';
+      $month_s_like=$date_start=date_step_sql('Y-m', '-9m');
+      $month_rus=date_step_sql('m', '-9m');
+      $month_rus1=date_step_sql('m', '-9m');
+
+      $date_end=date_step_sql('Y-m-', '-8m').'01';
+
+      $date_level_bonus=date_step_sql('Y-m', '-9m').'-01';
+
+      $date_start_obo=date_step_sql('Y-m', '-9m').'-01 00:00:00';
+      $date_end_obo=date_step_sql('Y-m', '-8m').'-01 00:00:00';
+  }
+  if (( isset($_COOKIE["su_2s".$id_user]))and(is_numeric($_COOKIE["su_2s".$id_user]))and(array_search($_COOKIE["su_2s".$id_user],$os_id2)!==false)and($_COOKIE["su_2s".$id_user]==11))
+  {
+      //находим -3месяца назад
+
+      $month_s=$date_start=date_step_sql('Y-m', '-10m').'-01';
+      $month_s_like=$date_start=date_step_sql('Y-m', '-10m');
+      $month_rus=date_step_sql('m', '-10m');
+      $month_rus1=date_step_sql('m', '-10m');
+
+      $date_end=date_step_sql('Y-m-', '-9m').'01';
+
+      $date_level_bonus=date_step_sql('Y-m', '-10m').'-01';
+
+      $date_start_obo=date_step_sql('Y-m', '-10m').'-01 00:00:00';
+      $date_end_obo=date_step_sql('Y-m', '-9m').'-01 00:00:00';
+  }
+  if (( isset($_COOKIE["su_2s".$id_user]))and(is_numeric($_COOKIE["su_2s".$id_user]))and(array_search($_COOKIE["su_2s".$id_user],$os_id2)!==false)and($_COOKIE["su_2s".$id_user]==12))
+  {
+      //находим -3месяца назад
+
+      $month_s=$date_start=date_step_sql('Y-m', '-11m').'-01';
+      $month_s_like=$date_start=date_step_sql('Y-m', '-11m');
+      $month_rus=date_step_sql('m', '-11m');
+      $month_rus1=date_step_sql('m', '-11m');
+
+      $date_end=date_step_sql('Y-m-', '-10m').'01';
+
+      $date_level_bonus=date_step_sql('Y-m', '-11m').'-01';
+
+      $date_start_obo=date_step_sql('Y-m', '-11m').'-01 00:00:00';
+      $date_end_obo=date_step_sql('Y-m', '-10m').'-01 00:00:00';
+  }
+  if (( isset($_COOKIE["su_2s".$id_user]))and(is_numeric($_COOKIE["su_2s".$id_user]))and(array_search($_COOKIE["su_2s".$id_user],$os_id2)!==false)and($_COOKIE["su_2s".$id_user]==13))
+  {
+      //находим -3месяца назад
+
+      $month_s=$date_start=date_step_sql('Y-m', '-12m').'-01';
+      $month_s_like=$date_start=date_step_sql('Y-m', '-12m');
+      $month_rus=date_step_sql('m', '-12m');
+      $month_rus1=date_step_sql('m', '-12m');
+
+      $date_end=date_step_sql('Y-m-', '-11m').'01';
+
+      $date_level_bonus=date_step_sql('Y-m', '-12m').'-01';
+
+      $date_start_obo=date_step_sql('Y-m', '-12m').'-01 00:00:00';
+      $date_end_obo=date_step_sql('Y-m', '-11m').'-01 00:00:00';
+  }
+
+  $month_rus1='за '.month_rus1($month_rus);
 //echo('!'.$month_rus1);
   if (( isset($_COOKIE["su_2s".$id_user]))and(is_numeric($_COOKIE["su_2s".$id_user]))and(array_search($_COOKIE["su_2s".$id_user],$os_id2)!==false)and($_COOKIE["su_2s".$id_user]==2))
   {	
