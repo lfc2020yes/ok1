@@ -1535,6 +1535,11 @@ $sql_line1=' and a.date_create>="'.$date_start.'" and a.date_create<"'.$date_end
 		 
 </div>				
 </div>
+     <?
+     if ((!isset($_COOKIE["su_5s".$id_user]))or(( isset($_COOKIE["su_5s".$id_user]))and(($_COOKIE["su_5s".$id_user]!=0))))
+     {
+
+     ?>
 
      <div class="statistic-2022-graf">
 <?
@@ -1871,7 +1876,7 @@ if ((!isset($_COOKIE["su_5s".$id_user]))or(( isset($_COOKIE["su_5s".$id_user]))a
 
      </div>';
 
-
+}
 
 		
 	/*
