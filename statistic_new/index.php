@@ -1838,11 +1838,11 @@ if ((!isset($_COOKIE["su_5s".$id_user]))or(( isset($_COOKIE["su_5s".$id_user]))a
                      firstDate.setHours(0, 0, 0, 0);
 
 
-                     var hits = 0;
-                     var views = 0;
-                     var bonus = 0;
+                     var hits = 1600;
+                     var views = 8700;
+                     var bonus = 2900;
 
-                     for (var i = 0; i < 5; i++) {
+                     for (var i = 0; i < 12; i++) {
                          // we create date objects here. In your data, you can have date strings
                          // and then set format of your dates using chart.dataDateFormat property,
                          // however when possible, use date objects, as this will speed up chart rendering.
