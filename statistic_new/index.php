@@ -683,7 +683,15 @@ $month_rus1=date("m");
 				
 			} else
 			{
-  $result_status_b=mysql_time_query($link,'SELECT a.* from users_commission_level as a where a.id_users="'.$id_user.'" and a.sum_start<="'.$row_status22["sum"].'" and a.sum_end>"'.$row_status22["sum"].'"  and a.dates="'.$date_level_bonus.'" and a.id_company="'.ht($id_company).'"');
+
+  if ((( !isset($_COOKIE["su_5s".$id_user]))or($_COOKIE["su_5s".$id_user]!=0))and(($sign_admin==1)or($sign_level>1)))
+  {
+      $result_status_b = mysql_time_query($link, 'SELECT a.* from users_commission_level as a where a.id_users="' . ht($_COOKIE["su_5s".$id_user]) . '" and a.sum_start<="' . $row_status22["sum"] . '" and a.sum_end>"' . $row_status22["sum"] . '"  and a.dates="' . $date_level_bonus . '" and a.id_company="' . ht($id_company) . '"');
+  }else {
+
+
+      $result_status_b = mysql_time_query($link, 'SELECT a.* from users_commission_level as a where a.id_users="' . $id_user . '" and a.sum_start<="' . $row_status22["sum"] . '" and a.sum_end>"' . $row_status22["sum"] . '"  and a.dates="' . $date_level_bonus . '" and a.id_company="' . ht($id_company) . '"');
+  }
   if($result_status_b->num_rows==0)
   {
       $result_status_b=mysql_time_query($link,'SELECT a.* from users_commission_level as a where a.id_users=0 and a.sum_start<="'.$row_status22["sum"].'" and a.sum_end>"'.$row_status22["sum"].'"  and a.dates="'.$date_level_bonus.'" and a.id_company="'.ht($id_company).'"');
