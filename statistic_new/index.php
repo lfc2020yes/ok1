@@ -1546,7 +1546,7 @@ $sql_line1=' and a.date_create>="'.$date_start.'" and a.date_create<"'.$date_end
 
          echo'<div class="h1-fin">Статистика продаж за год</div>
 
-         <div id="chartdiv2"></div>';
+         <div id="chartdiv2" style="min-height:300px;"></div>';
          $xy=array();
 $date_end=date('Y-m-'.'01');
 
@@ -1606,7 +1606,7 @@ if ((!isset($_COOKIE["su_5s".$id_user]))or(( isset($_COOKIE["su_5s".$id_user]))a
                  $row_status_b = mysqli_fetch_assoc($result_status_b);
                  if($row_status_b["level"]!=1)
                  {
-                     $bonus=($row_uu["summ"]*$row_status_b["proc"])/100;
+                     $bonus=round(($row_uu["summ"]*$row_status_b["proc"])/100);
                  }
              }
 
@@ -1652,7 +1652,7 @@ if ((!isset($_COOKIE["su_5s".$id_user]))or(( isset($_COOKIE["su_5s".$id_user]))a
 //
 
 // Increase contrast by taking evey second color
-                 chart2.colors.step = 1;
+                 chart2.colors.step = 3;
 
 // Add data
                  chart2.data = ' . $json2 . ';
@@ -1691,14 +1691,17 @@ if ((!isset($_COOKIE["su_5s".$id_user]))or(( isset($_COOKIE["su_5s".$id_user]))a
                  var dateAxis = chart2.xAxes.push(new am4charts.DateAxis());
                  dateAxis.renderer.minGridDistance = 20;
                  dateAxis.dateFormats.setKey("day", "MMMM");
-
+                   dateAxis.cursorTooltipEnabled=false;
+//var valueAxis = chart2.yAxes.push(new am4charts.ValueAxis());
 
 // Create series
                  function createAxisAndSeries(field, name, opposite, bullet) {
+                    
                      var valueAxis = chart2.yAxes.push(new am4charts.ValueAxis());
-                     if(chart2.yAxes.indexOf(valueAxis) != 0){
-                         valueAxis.syncWithAxis = chart2.yAxes.getIndex(0);
-                     }
+             valueAxis.visible=false;
+              valueAxis.cursorTooltipEnabled=false;
+                       //  valueAxis.syncWithAxis = chart2.yAxes.getIndex(0);
+                     
 
                      var series = chart2.series.push(new am4charts.LineSeries());
                      series.dataFields.valueY = field;
@@ -1777,6 +1780,7 @@ if ((!isset($_COOKIE["su_5s".$id_user]))or(( isset($_COOKIE["su_5s".$id_user]))a
                              circleBullet.circle.strokeWidth = 2;
                              circleBullet.strokeOpacity=1;
                              */
+                             
                              var labelBullet = series.bullets.push(new am4charts.LabelBullet());
                              labelBullet.label.text = "{valueY}";
                              labelBullet.label.fontSize=14;
@@ -1824,6 +1828,7 @@ if ((!isset($_COOKIE["su_5s".$id_user]))or(( isset($_COOKIE["su_5s".$id_user]))a
 
 // Add cursor
                  chart2.cursor = new am4charts.XYCursor();
+                 //chart2.cursor.tooltip.disabled = true;
 
                  // var axisTooltip = categoryAxis.tooltip;
 //axisTooltip.background.fill = am4core.color("#ffffff");
@@ -1836,37 +1841,7 @@ if ((!isset($_COOKIE["su_5s".$id_user]))or(( isset($_COOKIE["su_5s".$id_user]))a
                  */
 
 // generate some random data, quite different range
-                 function generateChartData() {
-                     var chartData = [];
-                     var firstDate = new Date();
-                     firstDate.setDate(firstDate.getDate() - 100);
-                     firstDate.setHours(0, 0, 0, 0);
-
-
-                     var hits = 1600;
-                     var views = 8700;
-                     var bonus = 2900;
-
-                     for (var i = 0; i < 12; i++) {
-                         // we create date objects here. In your data, you can have date strings
-                         // and then set format of your dates using chart.dataDateFormat property,
-                         // however when possible, use date objects, as this will speed up chart rendering.
-                         var newDate = new Date(firstDate);
-                         newDate.setDate(newDate.getDate() + i);
-
-                         hits += Math.round((Math.random()<0.5?1:-1)*Math.random()*10);
-                         views += Math.round((Math.random()<0.5?1:-1)*Math.random()*10);
-                         bonus += Math.round((Math.random()<0.5?1:-1)*Math.random()*10);
-
-                         chartData.push({
-                             date: newDate,
-                             hits: hits,
-                             bonus:bonus,
-                             views: views
-                         });
-                     }
-                     return chartData;
-                 }
+    
 
              }); // end am4core.ready()
 
