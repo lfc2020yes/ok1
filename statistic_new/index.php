@@ -1536,7 +1536,343 @@ $sql_line1=' and a.date_create>="'.$date_start.'" and a.date_create<"'.$date_end
 </div>				
 </div>
 
+     <div class="statistic-2022-graf">
 <?
+
+         echo'<div class="h1-fin">Статистика продаж за год</div>
+
+         <div id="chartdiv2"></div>';
+         $xy=array();
+$date_end=date('Y-m-'.'01');
+
+         $date_start_while=date_step_sql_more($date_end,'-12m');
+
+$id_user_2022=$id_user;
+if ((!isset($_COOKIE["su_5s".$id_user]))or(( isset($_COOKIE["su_5s".$id_user]))and(($_COOKIE["su_5s".$id_user]!=0))))
+{
+    if(isset($_COOKIE["su_5s".$id_user]))
+    {
+        $id_user_2022=$_COOKIE["su_5s".$id_user];
+    }
+
+}
+
+
+         while ($date_start_while!= $date_end) {
+
+         //какой то период выбран значит по нему и выводим
+         $date_start_while22=date_step_sql_more($date_start_while,'+1m');
+
+
+
+
+
+         $result_status22 = mysql_time_query($link, 'SELECT sum(a.sum) as summ from users_commission_trips as a,r_user as b where a.id_users=b.id and b.id_company="' . ht($id_company) . '" and  a.id_users='.ht($id_user_2022).' and a.date>="' . ht($date_start_while) . '" and  a.date<"' . ht($date_start_while22) . '"');
+
+
+         $num_results_uu = $result_status22->num_rows;
+         $hits=0;
+         $bonus=0;
+         if ($num_results_uu != 0) {
+         $row_uu = mysqli_fetch_assoc($result_status22);
+         if (($row_uu["summ"] != '') and ($row_uu["summ"] != 0)) {
+         $hits=round($row_uu["summ"]);
+         }
+
+         }
+
+
+         if($hits!=0)
+         {
+
+             $date_level_bonus='';
+
+             $result_status_b=mysql_time_query($link,'SELECT a.* from users_commission_level as a where a.id_users="'.ht($id_user_2022).'" and a.sum_start<="'.$row_uu["summ"].'" and a.sum_end>"'.$row_uu["summ"].'"  and a.dates="'.$date_start_while22.'" and a.id_company="'.ht($id_company).'"');
+
+             if($result_status_b->num_rows==0)
+             {
+                 $result_status_b=mysql_time_query($link,'SELECT a.* from users_commission_level as a where a.id_users=0 and a.sum_start<="'.$row_uu["summ"].'" and a.sum_end>"'.$row_uu["summ"].'"  and a.dates="'.$date_start_while22.'" and a.id_company="'.ht($id_company).'"');
+
+             }
+
+
+             if($result_status_b->num_rows!=0)
+             {
+                 $row_status_b = mysqli_fetch_assoc($result_status_b);
+                 if($row_status_b["level"]!=1)
+                 {
+                     $bonus=($row_uu["summ"]*$row_status_b["proc"])/100;
+                 }
+             }
+
+         }
+
+
+
+         $result_uu = mysql_time_query($link, 'select count(id) as ss from trips where visible=1 and id_a_company="'.ht($id_company).'" and id_user="'.ht($id_user_2022).'" and datecreate>="'.$date_start_while.'" and datecreate<"'.$date_start_while22.'"');
+         $num_results_uu = $result_uu->num_rows;
+         $views=0;
+         if ($num_results_uu != 0) {
+         $row_uu = mysqli_fetch_assoc($result_uu);
+         if (($row_uu["ss"] != '') and ($row_uu["ss"] != 0)) {
+         $views=$row_uu["ss"];
+         }
+         }
+         $date_mass = explode("-", ht($date_start_while));
+         //$xy[]['date']=$date_start_while;
+
+
+         $xy[] = ['views' => $views, 'hits' => $hits,'bonus'=>$bonus, 'date' => $date_start_while];
+         $date_start_while=date_step_sql_more($date_start_while,'+1m');
+         }
+
+
+
+         $json2 = json_encode($xy);
+         //print_r($json2);
+         echo'<script src="public/no_public/core.js"></script>
+         <script src="public/no_public/charts.js"></script>
+         <script src="public/no_public/animated.js"></script>';
+         echo'<script>
+
+             am4core.ready(function() {
+
+// Themes begin
+                 am4core.useTheme(am4themes_animated);
+// Themes end
+
+// Create chart instance
+                 window.chart2 = am4core.create("chartdiv2", am4charts.XYChart);
+
+//
+
+// Increase contrast by taking evey second color
+                 chart2.colors.step = 1;
+
+// Add data
+                 chart2.data = ' . $json2 . ';
+//chart2.dateFormatter.dateFormat = "yyyy-MM-dd";
+                 chart2.dataDateFormat = "YYYY-MM-DD";
+                 /*
+                 dataxx = [{
+                   "val": 90,
+                   "name":12000
+                 }, {
+                   "val": 90,
+                   "name":12000
+                 }, {
+                   "val": 90,
+                   "name":12000
+                 }];
+                 */
+                 /*
+                 chart2.data = [{
+                   "date": "2018-05-01",
+                   "views": 90,
+                   "hits":12000
+                 }, {
+                   "date": "2018-06-01",
+                   "views": 51,
+                   "hits":124644
+                 }, {
+                   "date": "2018-07-01",
+                   "views": 65,
+                   "hits":174644
+                 }];
+                 */
+
+// Create axes
+
+                 var dateAxis = chart2.xAxes.push(new am4charts.DateAxis());
+                 dateAxis.renderer.minGridDistance = 20;
+                 dateAxis.dateFormats.setKey("day", "MMMM");
+
+
+// Create series
+                 function createAxisAndSeries(field, name, opposite, bullet) {
+                     var valueAxis = chart2.yAxes.push(new am4charts.ValueAxis());
+                     if(chart2.yAxes.indexOf(valueAxis) != 0){
+                         valueAxis.syncWithAxis = chart2.yAxes.getIndex(0);
+                     }
+
+                     var series = chart2.series.push(new am4charts.LineSeries());
+                     series.dataFields.valueY = field;
+                     series.dataFields.dateX = "date";
+                     series.strokeWidth = 2;
+                     series.yAxis = valueAxis;
+                     series.name = name;
+                     series.dataFields.fill = am4core.color("#fff");
+
+
+                     //series.fill = am4core.color("#434443");
+                     series.tooltipText = "{name}: {valueY}[/]";
+
+                     series.tooltip.getFillFromObject = false;
+                     series.tooltip.background.fill = am4core.color("#fff");
+                     series.tooltip.label.fontSize = 12;
+                     series.tooltip.label.fill = am4core.color("#434443");
+                     series.tooltip.label.fontFamily = "GEInspiraBold";
+
+                     var segment = series.segments.template;
+                     segment.interactionsEnabled = true;
+
+                     var hs = segment.states.create("hover");
+                     hs.properties.strokeWidth = 4;
+
+
+                     //series.tensionX = 0;
+                     series.showOnInit = true;
+
+                     var interfaceColors = new am4core.InterfaceColorSet();
+
+                     switch(bullet) {
+                         case "triangle":
+                             var bullet = series.bullets.push(new am4charts.Bullet());
+                             bullet.width = 12;
+                             bullet.height = 12;
+                             bullet.horizontalCenter = "middle";
+                             bullet.verticalCenter = "middle";
+                             bullet.fill = am4core.color("#00b05a");
+
+                             var triangle = bullet.createChild(am4core.Triangle);
+                            triangle.stroke = interfaceColors.getFor("background");
+                            // triangle.stroke.fill= am4core.color("#00b05a");
+                             triangle.strokeWidth = 2;
+                             triangle.direction = "top";
+                             triangle.width = 12;
+                             triangle.height = 12;
+                             triangle.fill = am4core.color("#00b05a");
+
+                             break;
+                             
+                         case "rectangle":
+                             var bullet = series.bullets.push(new am4charts.Bullet());
+                             bullet.width = 10;
+                             bullet.height = 10;
+                             bullet.horizontalCenter = "middle";
+                             bullet.verticalCenter = "middle";
+
+                             var rectangle = bullet.createChild(am4core.Rectangle);
+                             rectangle.stroke = interfaceColors.getFor("background");
+                             rectangle.strokeWidth = 2;
+                             rectangle.width = 10;
+                             rectangle.height = 10;
+                             break;
+                         default:
+                             /*
+                           var bullet = series.bullets.push(new am4charts.CircleBullet());
+                           bullet.circle.stroke.fill = am4core.color("#434443");
+                           bullet.circle.strokeWidth = 2;
+                           */
+                             var circleBullet = series.bullets.push(new am4charts.CircleBullet());
+                             /*
+                             circleBullet.fill=am4core.color("#fff");
+                             circleBullet.circle.radius=10;
+                             circleBullet.circle.fillOpacity=1;
+                             circleBullet.circle.strokeWidth = 2;
+                             circleBullet.strokeOpacity=1;
+                             */
+                             var labelBullet = series.bullets.push(new am4charts.LabelBullet());
+                             labelBullet.label.text = "{valueY}";
+                             labelBullet.label.fontSize=14;
+                             labelBullet.label.fill = am4core.color("#383738");
+                             labelBullet.label.dy=-15;
+                             labelBullet.label.fontFamily = "GEInspiraBold";
+                             break;
+                     }
+
+                     valueAxis.renderer.line.strokeOpacity = 1;
+                     valueAxis.renderer.line.strokeWidth = 2;
+                     valueAxis.renderer.line.stroke = series.stroke;
+                     //valueAxis.renderer.labels.template.fill = series.stroke;
+
+                     //valueAxis.renderer.labels.fontSize = 12;
+                     //valueAxis.renderer.labels.fill = am4core.color("#434443");
+                     // valueAxis.renderer.labels.fontFamily = \"GEInspiraBold\";
+
+                     valueAxis.renderer.labels.template.fill = am4core.color("#797779");
+                     valueAxis.renderer.labels.template.fontSize = 12;
+                     valueAxis.renderer.labels.template.fontFamily = "GEInspiraRegular";
+                     valueAxis.renderer.opposite = opposite;
+
+                     valueAxis.renderer.grid.template.strokeOpacity = 1;
+                     valueAxis.renderer.grid.template.stroke = am4core.color("#eeefee");
+                     valueAxis.renderer.grid.template.strokeWidth = 1;
+
+
+//dateAxis.renderer.inside = true;
+
+                     dateAxis.renderer.labels.template.fill = am4core.color("#797779");
+                     dateAxis.renderer.labels.template.fontSize = 11;
+                     dateAxis.renderer.labels.template.fontFamily = "GEInspiraRegular";
+
+
+                 }
+
+                 createAxisAndSeries("hits", "Комиссия", true, "rectangle");
+                 createAxisAndSeries("bonus", "Бонусы", true, "triangle");
+                 createAxisAndSeries("views", "Продажи", false, "");
+
+
+// Add legend
+                 chart2.legend = new am4charts.Legend();
+
+// Add cursor
+                 chart2.cursor = new am4charts.XYCursor();
+
+                 // var axisTooltip = categoryAxis.tooltip;
+//axisTooltip.background.fill = am4core.color("#ffffff");
+                 /*
+                          chart2.legend.getFillFromObject = false;
+                          chart2.legend.background.fill = am4core.color("#fff");
+                          chart2.legend.label.fontSize = 12;
+                          chart2.legend.label.fill = am4core.color("#434443");
+                          chart2.legend.label.fontFamily = "GEInspiraBold";
+                 */
+
+// generate some random data, quite different range
+                 function generateChartData() {
+                     var chartData = [];
+                     var firstDate = new Date();
+                     firstDate.setDate(firstDate.getDate() - 100);
+                     firstDate.setHours(0, 0, 0, 0);
+
+
+                     var hits = 0;
+                     var views = 0;
+                     var bonus = 0;
+
+                     for (var i = 0; i < 5; i++) {
+                         // we create date objects here. In your data, you can have date strings
+                         // and then set format of your dates using chart.dataDateFormat property,
+                         // however when possible, use date objects, as this will speed up chart rendering.
+                         var newDate = new Date(firstDate);
+                         newDate.setDate(newDate.getDate() + i);
+
+                         hits += Math.round((Math.random()<0.5?1:-1)*Math.random()*10);
+                         views += Math.round((Math.random()<0.5?1:-1)*Math.random()*10);
+                         bonus += Math.round((Math.random()<0.5?1:-1)*Math.random()*10);
+
+                         chartData.push({
+                             date: newDate,
+                             hits: hits,
+                             bonus:bonus,
+                             views: views
+                         });
+                     }
+                     return chartData;
+                 }
+
+             }); // end am4core.ready()
+
+         </script>
+
+
+
+     </div>';
+
+
+
 		
 	/*
   $result_t2=mysql_time_query($link,'Select 
