@@ -868,6 +868,11 @@ $month_rus1=date("m");
                 {
                     $sql_kogo=' and a.id_user="'.ht($_COOKIE["su_5s".$id_user]).'"';
                 }
+                if(((( isset($_COOKIE["su_5s".$id_user]))and(is_numeric($_COOKIE["su_5s".$id_user]))and(array_search($_COOKIE["su_5s".$id_user],$os_id5)!==false)and($_COOKIE["su_5s".$id_user]==0))or(!isset($_COOKIE["su_5s".$id_user])))and(($sign_admin==1)or($sign_level>1)))
+                {
+                    $sql_kogo='';
+                }
+
 
                 $sum_no=0;
                 $result_uu = mysql_time_query($link, 'select sum(a.cost_client) as summ from trips as a,trips_contract as b where a.id_contract=b.id and a.id_a_company="'.$id_company.'" and a.status=1 and b.date_doc>="'.$date_start_obo.'" and a.buy_clients=0 and b.date_doc<"'.$date_end_obo.'" and a.visible=1 '.$sql_kogo);
