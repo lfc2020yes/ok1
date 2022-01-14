@@ -863,7 +863,7 @@ $month_rus1=date("m");
 
                 echo'<div class="text_wallet1 padd"><span class="bill_str1">→</span>Продаж на сумму</div>';
 
-                $sql_kogo='';
+                $sql_kogo=' and a.id_user="'.ht($id_user).'"';
                 if(((( isset($_COOKIE["su_5s".$id_user]))and(is_numeric($_COOKIE["su_5s".$id_user]))and(array_search($_COOKIE["su_5s".$id_user],$os_id5)!==false)and($_COOKIE["su_5s".$id_user]!=0))or(!isset($_COOKIE["su_5s".$id_user])))and(($sign_admin==1)or($sign_level>1)))
                 {
                     $sql_kogo=' and a.id_user="'.ht($_COOKIE["su_5s".$id_user]).'"';
