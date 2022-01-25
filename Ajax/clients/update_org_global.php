@@ -76,13 +76,22 @@ if($num_results_t==0)
 } else
 {
 	$row_score = mysqli_fetch_assoc($result_t);
-	
+	/*
 	//получать обновленные данные по клиентам только своей компании umatravel или другой
 	if($row_score["id_company"]!=$id_company)
 	{
 		$debug=h4a(8,$echo_r,$debug);
 		goto end_code;		
 	}
+*/
+
+
+    $date_mass56 = explode(",", ht($id_company));
+    if(array_search($row_score["id_company"], $date_mass56, true)===FALSE)
+    {
+        $debug=h4a(8,$echo_r,$debug);
+        goto end_code;
+    }
 }
 
 

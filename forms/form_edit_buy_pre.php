@@ -106,13 +106,13 @@ switch($row_uu["id_type_clients"])
 {
     case "1":{
         //частное лицо
-        $sql_tt='Select b.id,b.fio,b.potential from k_clients as b where b.id="'.ht($row_uu["id_k_clients"]).'" and b.potential=0 and b.visible=1 and b.id_a_company="'.ht($id_company).'"';
+        $sql_tt='Select b.id,b.fio,b.potential from k_clients as b where b.id="'.ht($row_uu["id_k_clients"]).'" and b.potential=0 and b.visible=1 and b.id_a_company IN ('.ht($id_company).')';
         $poten=1;
         break;
     }
     case "2":{
         //организация
-        $sql_tt='Select b.id,b.name as fio,5 as potential from k_organization as b where b.id="'.ht($row_uu["id_k_clients"]).'" and  b.visible=1 and b.id_a_company="'.ht($id_company).'"';
+        $sql_tt='Select b.id,b.name as fio,5 as potential from k_organization as b where b.id="'.ht($row_uu["id_k_clients"]).'" and  b.visible=1 and b.id_a_company IN ('.ht($id_company).')';
         $poten=2;
         break;
     }
@@ -190,7 +190,7 @@ $query_string.='<div class="left_drop list_2018 menu1_prime"><label class="activ
 
 
 
-$result_89 = mysql_time_query($link,'select A.* from  booking_sourse as A where A.visible=1 and A.id_a_company="'.$id_company.'" order by A.displayOrder');
+$result_89 = mysql_time_query($link,'select A.* from  booking_sourse as A where A.visible=1 and A.id_a_company IN ('.$id_group_company_list.') order by A.displayOrder');
 
 $num_89 = $result_89->num_rows;
 //$row_1 = mysqli_fetch_assoc($result2);

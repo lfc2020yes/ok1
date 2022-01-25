@@ -58,8 +58,87 @@ padej_woo();
   $query_string.='<div style="margin-top: 30px;"><div class="input_2018"><label>Email<span>*</span></label><input name="offers[0][org_email]" value="" id="date_124" class="input_new_2018 required gloab no_upperr " autocomplete="off" type="text"><div class="div_new_2018"><hr class="one"><hr class="two"><div class="oper_name"></div></div></div>
 </div>';
 
-	
-$query_string.='</div>
+
+     if(($more_city==1)and($_COOKIE["cc_town".$id_user]==0)) {
+
+
+
+
+         ?>
+
+         <?
+
+         $os_say55 = array();
+         $os_id_say55 = array();
+         $su_say55=-1;
+
+         $query_string.='<div style="margin-top: 30px;" >	';
+
+         $query_string.='<div class="left_drop menu1_prime"><label class="">Организация<span>*</span></label><div class="select eddd zin_2019"><a class="slct" list_number="t1" data_src=""></a><ul class="drop">';
+
+
+         $result_8 = mysql_time_query($link,'Select a.name,a.id from a_company as a where a.id IN ('.$id_company_sql.')');
+
+         $num_8 = $result_8->num_rows;
+//$row_1 = mysqli_fetch_assoc($result2);
+         if($result_8)
+         {
+
+             /*
+                            $query_string.='<li class="sel_active"><a href="javascript:void(0);"  rel="'.$os_id_say55[array_search(1, $os_id_say55)].'">'.$os_say55[array_search(0, $os_id_say55)].'</a></li>';
+             */
+
+             while($row_8 = mysqli_fetch_assoc($result_8)){
+
+                 if($su_say55==$row_8["id"])
+                 {
+                     $query_string.='<li class="sel_active"><a href="javascript:void(0);"  rel="'.$row_8["id"].'">'.$row_8["name"].'</a></li>';
+                 } else
+                 {
+                     $query_string.='<li><a href="javascript:void(0);"  rel="'.$row_8["id"].'">'.$row_8["name"].'</a></li>';
+                 }
+
+             }
+         }
+
+
+
+         $query_string.='</ul><input type="hidden" class="gloab gloab_potential gloab_turist"  name="offers[0][id_company]" id="pol_clients4554" value=""><div class="div_new_2018"><hr class="one"></div></div></div></div>';
+         //echo $query_string;
+
+
+         ?>
+
+         <?
+
+
+
+
+
+
+
+     } else
+     {
+
+         $result_uuyyt = mysql_time_query($link, 'select name from a_company where id="' . ht($id_company) . '"');
+         $num_results_uuyyt = $result_uuyyt->num_rows;
+
+         if ($num_results_uuyyt != 0) {
+             $row_uuyyt = mysqli_fetch_assoc($result_uuyyt);
+         }
+
+
+         $query_string.='<!--input start	-->	
+        <div style="margin-top: 30px;" ><div class="input_2018"><label>Организация<span>*</span></label><input name="id_company_name" value="'.$row_uuyyt["name"].'" readonly id="date_124" class="input_new_2018 required    no_upperr" autocomplete="off" type="text"><input class="gloab gloab_potential gloab_turist" name="offers[0][id_company]" type="hidden" value="'.$id_company.'"><div class="div_new_2018"><hr class="one"><hr class="two"><div class="oper_name"></div></div></div>
+</div>
+<!--input end	-->	';
+
+     }
+
+
+
+
+     $query_string.='</div>
 <div class="px_right">';
 
 

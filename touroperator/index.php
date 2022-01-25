@@ -180,7 +180,7 @@ include_once $url_system.'template/body_top.php';
   
   from booking_operator as b
   
-  where b.visible=1 '.$sql_su1.' '.limitPage('n_st',$count_write));
+  where b.id_a_company IN ('.$id_group_company_list.') and b.visible=1 '.$sql_su1.' '.limitPage('n_st',$count_write));
 	  
 		
 				
@@ -191,7 +191,7 @@ include_once $url_system.'template/body_top.php';
   
   from booking_operator as a
   
-  where a.visible=1 '.$sql_su2_.' '.$sql_su3_.' '.$sql_su4_;
+  where  a.id_a_company IN ('.$id_group_company_list.') and a.visible=1 '.$sql_su2_.' '.$sql_su3_.' '.$sql_su4_;
 			
 
 $result_t221=mysql_time_query($link,$sql_count);	  
@@ -244,14 +244,14 @@ echo'<a href="touroperator/'.$row_8["id"].'/" class="h57"><span>'.$row_8["name"]
 
 						 echo'</a>';	
 					
-		$result_status22=mysql_time_query($link,'SELECT count(a.id) as cc FROM booking_offers AS a WHERE a.id_operator="'.htmlspecialchars(trim($row_8["id"])).'"');	
+		$result_status22=mysql_time_query($link,'SELECT count(a.id) as cc FROM trips AS a WHERE a.id_operator="'.htmlspecialchars(trim($row_8["id"])).'" and a.id_a_company IN ('.$id_company.')');
 					 //echo('SELECT a.* FROM r_status AS a WHERE a.numer_status="'.$row1ss["status"].'" and a.id_system=13');
                 if($result_status22->num_rows!=0)
                 {  
                    $row_status22 = mysqli_fetch_assoc($result_status22);
 				} 
 		 
-echo'<div class="yop_count" data-tooltip="Кол-во предложений"><i></i>'.$row_status22["cc"].'</div>';
+echo'<div class="yop_count" data-tooltip="Кол-во продаж"><i></i>'.$row_status22["cc"].'</div>';
 						 
 						 
 echo'<div id="copy'.$copy.'" data-tooltip="Логин" data-clipboard-action="copy" data-clipboard-target="#copy'.$copy.'"  class="login_o  btn">'.$row_8["login"].'</div>';

@@ -32,7 +32,7 @@ for ($xx=0; $xx<31; $xx++)
 
    //echo($date_birth.'<br>');
 
-    $result_8 = mysql_time_query($link,'SELECT A.id,A.fio,A.date_birthday,A.id_user,A.code,B.id_company,A.inter_srok FROM k_clients AS A,r_user as B WHERE  A.visible=1 and A.id_user=B.id and A.inter_srok="'.$date_birth.'"');
+    $result_8 = mysql_time_query($link,'SELECT A.id,A.fio,A.date_birthday,A.id_user,A.code,A.id_a_company,A.inter_srok FROM k_clients AS A,r_user as B WHERE  A.visible=1 and A.id_user=B.id and A.inter_srok="'.$date_birth.'"');
 
     $num_8 = $result_8->num_rows;
     if($result_8)
@@ -43,7 +43,7 @@ for ($xx=0; $xx<31; $xx++)
             $text_task="Заканчивает срок действия паспорта-".$date_start;
 
 
-            TASK_SEND_NEW($date_ring.' 23:59:59',$text_task,$row_8["id"],1,21,$link,0, $row_8["id_user"],$row_8["id_company"]);
+            TASK_SEND_NEW($date_ring.' 23:59:59',$text_task,$row_8["id"],1,21,$link,0, $row_8["id_user"],$row_8["id_a_company"]);
             echo $text_task.'-'.$row_8["id_user"].'-'.$row_8["id"].'<br>';
         }
     }
@@ -70,7 +70,7 @@ for ($xx=0; $xx<31; $xx++)
 
 $date_ring=date_step_sql('Y-m-d','+'.(3+$xx).'d');
 $date_birth=date_step_sql('-m-d','+'.(3+$xx).'d');
-$result_8 = mysql_time_query($link,'SELECT A.id,A.fio,A.date_birthday,A.id_user,A.code,B.id_company FROM k_clients AS A,r_user as B WHERE ((A.potential=0)or(A.potential=1)) and  A.visible=1 and A.id_user=B.id and LOWER(A.date_birthday) LIKE "%'.$date_birth.'"');
+$result_8 = mysql_time_query($link,'SELECT A.id,A.fio,A.date_birthday,A.id_user,A.code,A.id_a_company FROM k_clients AS A,r_user as B WHERE ((A.potential=0)or(A.potential=1)) and  A.visible=1 and A.id_user=B.id and LOWER(A.date_birthday) LIKE "%'.$date_birth.'"');
 	
 $num_8 = $result_8->num_rows;	
 if($result_8)
@@ -79,7 +79,7 @@ if($result_8)
 			   $text_task="Поздравить с днем рождения";
 	  
 	  
-      TASK_SEND_NEW($date_ring.' 23:59:59',$text_task,$row_8["id"],1,7,$link,0, $row_8["id_user"],$row_8["id_company"]);	
+      TASK_SEND_NEW($date_ring.' 23:59:59',$text_task,$row_8["id"],1,7,$link,0, $row_8["id_user"],$row_8["id_a_company"]);
 	  echo $text_task.'-'.$row_8["id_user"].'-'.$row_8["id"].'<br>';
   }
 }

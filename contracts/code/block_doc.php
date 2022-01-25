@@ -116,6 +116,24 @@ if($num_results_uu!=0)
     $task_cloud_block.='<span class="my-history-pre">'.$row_uu['name_user'].'</span>';
 }
 
+
+if($more_city==1)
+{
+    //выводить к какой организации относится тур
+
+    $result_cop = mysql_time_query($link, 'select * from a_company where id="'.ht($row_88["id_a_company"]).'"');
+    $num_results_cop = $result_cop->num_rows;
+
+    if ($num_results_cop != 0) {
+        $row_cop = mysqli_fetch_assoc($result_cop);
+        $task_cloud_block.=' <div class="issue-block oo_date" style="color: rgba(0, 0, 0, 0.6);
+font-family:\'GEInspiraBold\'">('.$row_cop["name_dop"].')</div>';
+    }
+
+
+}
+
+
 $task_cloud_block.='</div>';
 /*
 	$task_cloud_block.='</div><div class="trips-b-user"><span class="label-task-gg ">Комментарий/последнее событие

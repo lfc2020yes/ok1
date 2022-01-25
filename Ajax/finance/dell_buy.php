@@ -66,7 +66,7 @@ if(!token_access_new($token,'dell_buy_finance',$_GET["id"],"rema",2880))
 
 
 $mas_responsible=array();
-$result_uu=mysql_time_query($link,'Select b.id from finance_operation as b where b.id="'.htmlspecialchars(trim($_GET['id'])).'" and b.visible=1 and b.id_a_company="'.ht($id_company).'"');
+$result_uu=mysql_time_query($link,'Select b.id from finance_operation as b where b.id="'.htmlspecialchars(trim($_GET['id'])).'" and b.visible=1 and b.id_a_company IN ('.ht($id_company).')');
 $num_results_uu = $result_uu->num_rows;
 
 if ($num_results_uu != 0) {

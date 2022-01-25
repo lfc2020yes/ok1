@@ -158,7 +158,40 @@ if($num_results_uu!=0)
     $row_uu = mysqli_fetch_assoc($result_uu);
     $task_cloud_block.='<div class="pass_wh_trips pass_x"><label >Менеджер</label><span class="obi">'.$row_uu['name_user'].'</span></div>';
 
-    $task_cloud_block.='<div class="pass_wh_trips pass_x"><label >Комментарий</label><span class="obi"></span></div>';
+
+    if($more_city==1)
+    {
+        //выводить к какой организации относится тур
+
+        $result_cop = mysql_time_query($link, 'select * from a_company where id="'.ht($row_88["id_a_company"]).'"');
+        $num_results_cop = $result_cop->num_rows;
+
+        if ($num_results_cop != 0) {
+            $row_cop = mysqli_fetch_assoc($result_cop);
+
+            $task_cloud_block.='<div class="pass_wh_trips pass_x"><label >Организация</label><span class="obi">'.$row_cop["name"].'</span></div>';
+        }
+
+
+    }
+
+
+    if (($role->permission('Договора','R'))or($sign_admin==1)) {
+//выводим последний комментарий если тур просматривает хозяин тура или хозяин этого комментария
+        $result_uui = mysql_time_query($link, 'select comment from trips_contract_status_history_new where id_contract="' . ht($row_88["id_contract"]) . '" and action_history="1" and id_user="' . $id_user . '" order by datetimes desc limit 1');
+
+
+
+        $num_results_uui = $result_uui->num_rows;
+
+        if ($num_results_uui != 0) {
+            $row_uui = mysqli_fetch_assoc($result_uui);
+            $message = $row_uui["comment"];
+
+
+            $task_cloud_block .= '<div class="pass_wh_trips pass_x"><label >Ваш Комментарий</label><span class="obi">'.$message.'</span></div>';
+        }
+    }
 
 }
 

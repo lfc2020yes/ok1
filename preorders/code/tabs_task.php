@@ -4,7 +4,7 @@
 $query_string.='<div class="input-block-2020">';
 
 
-$result_8 = mysql_time_query($link,'SELECT * FROM((select A.*,0 as flag from  task_new as A,preorders as K WHERE K.id=A.id_object and A.id_user_responsible="' . ht($id_user) . '" and A.visible=1 and A.id_a_company="' . ht($id_company) . '" and A.status=0 and A.action=20 and A.id_object="' . ht($row_8["id"]) . '"  
+$result_8 = mysql_time_query($link,'SELECT * FROM((select A.*,0 as flag from  task_new as A,preorders as K WHERE K.id=A.id_object and A.id_user_responsible="' . ht($id_user) . '" and A.visible=1 and A.id_a_group IN (' . ht($id_group_u) . ') and A.status=0 and A.action=20 and A.id_object="' . ht($row_8["id"]) . '"  
   )) LL order by LL.ring_datetime');
 
 $max_day_ring=10;

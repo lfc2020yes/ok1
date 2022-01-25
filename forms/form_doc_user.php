@@ -141,20 +141,20 @@ $date_end_plus3=date_step_sql('Y-m-d','+'.$p.'d');
 $result_8 = mysql_time_query($link,'CREATE TEMPORARY TABLE task_temp  as ( SELECT * FROM(
 
   (
-    select A.*,0 as flag from  task_new as A WHERE A.id_user_responsible="' . ht($id_user) . '" and A.visible=1 and A.id_a_company="' . ht($id_company) . '" and A.status=0 and A.action IN ("7", "11","12") and A.id_object="' . ht($_GET["id"]) . '"
+    select A.*,0 as flag from  task_new as A WHERE A.id_user_responsible="' . ht($id_user) . '" and A.visible=1 and A.id_a_group IN (' . ht($id_group_u) . ') and A.status=0 and A.action IN ("7", "11","12") and A.id_object="' . ht($_GET["id"]) . '"
   )
   
   UNION
   (
-    select A.*,0 as flag from  task_new as A,k_clients_commun as K WHERE K.id=A.id_object and A.id_user_responsible="' . ht($id_user) . '" and A.visible=1 and A.id_a_company="' . ht($id_company) . '" and A.status=0 and A.action=10 and K.id_client="' . ht($_GET["id"]) . '"  
+    select A.*,0 as flag from  task_new as A,k_clients_commun as K WHERE K.id=A.id_object and A.id_user_responsible="' . ht($id_user) . '" and A.visible=1 and A.id_a_group IN (' . ht($id_group_u) . ') and A.status=0 and A.action=10 and K.id_client="' . ht($_GET["id"]) . '"  
   )
   UNION
   (
-    select A.*,0 as flag from  task_new as A,trips as K WHERE K.id=A.id_object and A.id_user_responsible="' . ht($id_user) . '" and A.visible=1 and A.id_a_company="' . ht($id_company) . '" and A.status=0 and A.action IN ("15", "16","17","19") and K.id_shopper="' . ht($_GET["id"]) . '" and K.shopper=1
+    select A.*,0 as flag from  task_new as A,trips as K WHERE K.id=A.id_object and A.id_user_responsible="' . ht($id_user) . '" and A.visible=1 and A.id_a_group IN (' . ht($id_group_u) . ') and A.status=0 and A.action IN ("15", "16","17","19") and K.id_shopper="' . ht($_GET["id"]) . '" and K.shopper=1
   ) 
   UNION
   (
-    select A.*,0 as flag from  task_new as A,preorders as K WHERE K.id=A.id_object and A.id_user_responsible="' . ht($id_user) . '" and A.visible=1 and A.id_a_company="' . ht($id_company) . '" and A.status=0 and A.action=20 and K.id_k_clients="' . ht($_GET["id"]) . '"  
+    select A.*,0 as flag from  task_new as A,preorders as K WHERE K.id=A.id_object and A.id_user_responsible="' . ht($id_user) . '" and A.visible=1 and A.id_a_group IN (' . ht($id_group_u) . ') and A.status=0 and A.action=20 and K.id_k_clients="' . ht($_GET["id"]) . '"  
   )  
   
  
@@ -163,57 +163,57 @@ $result_8 = mysql_time_query($link,'CREATE TEMPORARY TABLE task_temp  as ( SELEC
 
 //добавление во временную таблицу значений
 mysql_time_query($link, 'INSERT INTO task_temp (
-    select A.*,1 as flag from  task_new as A WHERE A.id_user_responsible LIKE "'.$id_user.',%" and A.visible=1 and A.id_a_company="' . ht($id_company) . '" and A.status=0 and A.action IN ("7", "11","12") and A.id_object="' . ht($_GET["id"]) . '"
+    select A.*,1 as flag from  task_new as A WHERE A.id_user_responsible LIKE "'.$id_user.',%" and A.visible=1 and A.id_a_group IN (' . ht($id_group_u) . ') and A.status=0 and A.action IN ("7", "11","12") and A.id_object="' . ht($_GET["id"]) . '"
   )
   
   UNION
   (
-    select A.*,1 as flag from  task_new as A,k_clients_commun as K WHERE K.id=A.id_object and A.id_user_responsible LIKE "'.$id_user.',%" and A.visible=1 and A.id_a_company="' . ht($id_company) . '" and A.status=0 and A.action=10 and K.id_client="' . ht($_GET["id"]) . '"  
+    select A.*,1 as flag from  task_new as A,k_clients_commun as K WHERE K.id=A.id_object and A.id_user_responsible LIKE "'.$id_user.',%" and A.visible=1 and A.id_a_group IN (' . ht($id_group_u) . ') and A.status=0 and A.action=10 and K.id_client="' . ht($_GET["id"]) . '"  
   )
   UNION
   (
-    select A.*,1 as flag from  task_new as A,trips as K WHERE K.id=A.id_object and A.id_user_responsible LIKE "'.$id_user.',%" and A.visible=1 and A.id_a_company="' . ht($id_company) . '" and A.status=0 and A.action IN ("15", "16","17","19") and K.id_shopper="' . ht($_GET["id"]) . '" and K.shopper=1
+    select A.*,1 as flag from  task_new as A,trips as K WHERE K.id=A.id_object and A.id_user_responsible LIKE "'.$id_user.',%" and A.visible=1 and A.id_a_group IN (' . ht($id_group_u) . ') and A.status=0 and A.action IN ("15", "16","17","19") and K.id_shopper="' . ht($_GET["id"]) . '" and K.shopper=1
   ) 
   UNION
   (
-    select A.*,1 as flag from  task_new as A,preorders as K WHERE K.id=A.id_object and A.id_user_responsible LIKE "'.$id_user.',%" and A.visible=1 and A.id_a_company="' . ht($id_company) . '" and A.status=0 and A.action=20 and K.id_k_clients="' . ht($_GET["id"]) . '"  
+    select A.*,1 as flag from  task_new as A,preorders as K WHERE K.id=A.id_object and A.id_user_responsible LIKE "'.$id_user.',%" and A.visible=1 and A.id_a_group IN (' . ht($id_group_u) . ') and A.status=0 and A.action=20 and K.id_k_clients="' . ht($_GET["id"]) . '"  
     )');
 
 
 //добавление во временную таблицу значений
 mysql_time_query($link, 'INSERT INTO task_temp (
-    select A.*,1 as flag from  task_new as A WHERE A.id_user_responsible LIKE "%,'.$id_user.',%" and A.visible=1 and A.id_a_company="' . ht($id_company) . '" and A.status=0 and A.action IN ("7", "11","12") and A.id_object="' . ht($_GET["id"]) . '"
+    select A.*,1 as flag from  task_new as A WHERE A.id_user_responsible LIKE "%,'.$id_user.',%" and A.visible=1 and A.id_a_group IN (' . ht($id_group_u) . ') and A.status=0 and A.action IN ("7", "11","12") and A.id_object="' . ht($_GET["id"]) . '"
   )
   
   UNION
   (
-    select A.*,1 as flag from  task_new as A,k_clients_commun as K WHERE K.id=A.id_object and A.id_user_responsible LIKE "%,'.$id_user.',%" and A.visible=1 and A.id_a_company="' . ht($id_company) . '" and A.status=0 and A.action=10 and K.id_client="' . ht($_GET["id"]) . '"  
+    select A.*,1 as flag from  task_new as A,k_clients_commun as K WHERE K.id=A.id_object and A.id_user_responsible LIKE "%,'.$id_user.',%" and A.visible=1 and A.id_a_group IN (' . ht($id_group_u) . ') and A.status=0 and A.action=10 and K.id_client="' . ht($_GET["id"]) . '"  
   )
   UNION
   (
-    select A.*,1 as flag from  task_new as A,trips as K WHERE K.id=A.id_object and A.id_user_responsible LIKE "%,'.$id_user.',%" and A.visible=1 and A.id_a_company="' . ht($id_company) . '" and A.status=0 and A.action IN ("15", "16","17","19") and K.id_shopper="' . ht($_GET["id"]) . '" and K.shopper=1
+    select A.*,1 as flag from  task_new as A,trips as K WHERE K.id=A.id_object and A.id_user_responsible LIKE "%,'.$id_user.',%" and A.visible=1 and A.id_a_group IN (' . ht($id_group_u) . ') and A.status=0 and A.action IN ("15", "16","17","19") and K.id_shopper="' . ht($_GET["id"]) . '" and K.shopper=1
   ) 
   UNION
   (
-    select A.*,1 as flag from  task_new as A,preorders as K WHERE K.id=A.id_object and A.id_user_responsible LIKE "%,'.$id_user.',%" and A.visible=1 and A.id_a_company="' . ht($id_company) . '" and A.status=0 and A.action=20 and K.id_k_clients="' . ht($_GET["id"]) . '"  
+    select A.*,1 as flag from  task_new as A,preorders as K WHERE K.id=A.id_object and A.id_user_responsible LIKE "%,'.$id_user.',%" and A.visible=1 and A.id_a_group IN (' . ht($id_group_u) . ') and A.status=0 and A.action=20 and K.id_k_clients="' . ht($_GET["id"]) . '"  
     )');
 
 //добавление во временную таблицу значений
 mysql_time_query($link, 'INSERT INTO task_temp (
-    select A.*,1 as flag from  task_new as A WHERE A.id_user_responsible LIKE "%,'.$id_user.'" and A.visible=1 and A.id_a_company="' . ht($id_company) . '" and A.status=0 and A.action IN ("7", "11","12") and A.id_object="' . ht($_GET["id"]) . '"
+    select A.*,1 as flag from  task_new as A WHERE A.id_user_responsible LIKE "%,'.$id_user.'" and A.visible=1 and A.id_a_group IN (' . ht($id_group_u) . ') and A.status=0 and A.action IN ("7", "11","12") and A.id_object="' . ht($_GET["id"]) . '"
   )
   
   UNION
   (
-    select A.*,1 as flag from  task_new as A,k_clients_commun as K WHERE K.id=A.id_object and A.id_user_responsible LIKE "%,'.$id_user.'" and A.visible=1 and A.id_a_company="' . ht($id_company) . '" and A.status=0 and A.action=10 and K.id_client="' . ht($_GET["id"]) . '"  
+    select A.*,1 as flag from  task_new as A,k_clients_commun as K WHERE K.id=A.id_object and A.id_user_responsible LIKE "%,'.$id_user.'" and A.visible=1 and A.id_a_group  IN (' . ht($id_group_u) . ') and A.status=0 and A.action=10 and K.id_client="' . ht($_GET["id"]) . '"  
   )
   UNION
   (
-    select A.*,1 as flag from  task_new as A,trips as K WHERE K.id=A.id_object and A.id_user_responsible LIKE "%,'.$id_user.'" and A.visible=1 and A.id_a_company="' . ht($id_company) . '" and A.status=0 and A.action IN ("15", "16","17","19") and K.id_shopper="' . ht($_GET["id"]) . '" and K.shopper=1
+    select A.*,1 as flag from  task_new as A,trips as K WHERE K.id=A.id_object and A.id_user_responsible LIKE "%,'.$id_user.'" and A.visible=1 and A.id_a_group IN (' . ht($id_group_u) . ') and A.status=0 and A.action IN ("15", "16","17","19") and K.id_shopper="' . ht($_GET["id"]) . '" and K.shopper=1
   ) 
   UNION
   (
-    select A.*,1 as flag from  task_new as A,preorders as K WHERE K.id=A.id_object and A.id_user_responsible LIKE "%,'.$id_user.'" and A.visible=1 and A.id_a_company="' . ht($id_company) . '" and A.status=0 and A.action=20 and K.id_k_clients="' . ht($_GET["id"]) . '"  
+    select A.*,1 as flag from  task_new as A,preorders as K WHERE K.id=A.id_object and A.id_user_responsible LIKE "%,'.$id_user.'" and A.visible=1 and A.id_a_group IN (' . ht($id_group_u) . ') and A.status=0 and A.action=20 and K.id_k_clients="' . ht($_GET["id"]) . '"  
     )');
 
 

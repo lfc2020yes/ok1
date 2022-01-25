@@ -36,7 +36,7 @@ if ((!$role->permission('Задачи','A'))and($sign_admin!=1))
 
 if((isset($_GET["id"]))and(!isset($_GET["pre"]))) {
 //смотрим может ли для этого клиента добавлять задачу
-    $sql_tt = 'Select b.id,b.potential,b.fio from k_clients as b where b.id="' . ht($_GET['id']) . '" and b.visible=1 and b.id_a_company="' . ht($id_company) . '"';
+    $sql_tt = 'Select b.id,b.potential,b.fio from k_clients as b where b.id="' . ht($_GET['id']) . '" and b.visible=1 and b.id_a_company IN (' . ht($id_company) . ')';
     $result_t = mysql_time_query($link, $sql_tt);
 
 

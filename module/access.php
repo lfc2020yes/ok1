@@ -19,8 +19,59 @@
         {	       
 $row_town_user = mysqli_fetch_assoc($auth_key_query);
 $name_user=$row_town_user['name_user'];
-$id_company=$row_town_user['id_company'];
-$id_role=$row_town_user['id_role'];				
+            $id_company_sql = $row_town_user['id_company'];
+
+$more_city=0;
+            if (is_numeric(trim($row_town_user['id_company']))) {
+                $id_company = $row_town_user['id_company'];
+                $mass_city[0]=$row_town_user['id_company'];
+                $id_group_company_list=$row_town_user['id_company'];
+            } else
+            {
+                $mass_city = explode(",", ht($row_town_user['id_company']));
+                $more_city=1;
+                $id_company = $row_town_user['id_company'];
+
+                //значит у него несколько организаций и смотрим выбрана ли какая то определенно
+                if(( isset($_COOKIE["cc_town".$id_user]))and($_COOKIE["cc_town".$id_user]!='')and(is_numeric(trim($_COOKIE["cc_town".$id_user])))) {
+
+                    if (in_array($_COOKIE["cc_town".$id_user], $mass_city)) {
+
+                        $id_company = $_COOKIE["cc_town".$id_user];
+
+                    }
+
+
+                }
+
+            }
+
+            //определяем к какой группе копманий относится пользователь
+            //определяем к какой группе копманий относится пользователь
+            $id_group_u=0;
+            $result_gr = mysql_time_query($link, 'select id_group from a_company_group where id_a_company="' . ht($mass_city[0]) . '"');
+            $num_results_gr = $result_gr->num_rows;
+
+            if ($num_results_gr != 0) {
+                $row_gr = mysqli_fetch_assoc($result_gr);
+                $id_group_u=$row_gr["id_group"];
+
+                $result_gr1 = mysql_time_query($link, 'select company_list from a_group where id="' . ht($id_group_u) . '"');
+                $num_results_gr1 = $result_gr1->num_rows;
+
+                if ($num_results_gr1 != 0) {
+                    $row_gr1 = mysqli_fetch_assoc($result_gr1);
+                    $id_group_company_list=$row_gr1["company_list"];
+                }
+
+
+
+            }
+            //определяем к какой группе копманий относится пользователь
+            //определяем к какой группе копманий относится пользователь
+
+
+$id_role=$row_town_user['id_role'];
         }     
 $role=new RoleUser($link,$id_user);  //создаем класс прав
 }

@@ -484,11 +484,11 @@ $('#date_table').val(date_all);
 if(isset($_GET["id"]))
 {
 
-    $sql_k='Select DISTINCT A.id from trips as A where A.visible=1 AND A.id="'.ht($_GET["id"]).'" and A.id_a_company="'.$id_company.'" ';
+    $sql_k='Select DISTINCT A.id from trips as A where A.visible=1 AND A.id="'.ht($_GET["id"]).'" and A.id_a_company IN ('.$id_company.') ';
 //echo $sql_k;
     $result_t2 = mysql_time_query($link, $sql_k);
 
-    $sql_count = 'Select count(DISTINCT A.id) as kol from trips as A where A.visible=1 AND A.id="'.ht($_GET["id"]).'" and A.id_a_company="'.$id_company.'"';
+    $sql_count = 'Select count(DISTINCT A.id) as kol from trips as A where A.visible=1 AND A.id="'.ht($_GET["id"]).'" and A.id_a_company IN ('.$id_company.')';
 
 
 } else {
@@ -502,7 +502,7 @@ if(isset($_GET["id"]))
         $sql_su4 = '';
         $sql_su5 = '';
         $sql_su5_search = '';
-        $sql_su7 = ' AND A.id_a_company="' . $id_company . '" ';
+        $sql_su7 = ' AND A.id_a_company IN (' . $id_company . ') ';
 
         //********************************************************************
 //********************************************************************

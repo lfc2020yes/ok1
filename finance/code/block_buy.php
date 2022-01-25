@@ -58,7 +58,25 @@ $query_string.='<div class="buy-b-number">'.$row_uu["id"].$whos.'</div>
 
 
 <div class="buy-b-date"><span class="label-task-gg ">Дата оплаты
-</span><div class="help-jjx">'.date_ex(0,$row_uu["date"]).'</div></div>';
+</span><div class="help-jjx">'.date_ex(0,$row_uu["date"]).'</div>';
+
+if($more_city==1)
+{
+    //выводить к какой организации относится тур
+
+    $result_cop = mysql_time_query($link, 'select * from a_company where id="'.ht($row_uu["id_a_company"]).'"');
+    $num_results_cop = $result_cop->num_rows;
+
+    if ($num_results_cop != 0) {
+        $row_cop = mysqli_fetch_assoc($result_cop);
+        $query_string.=' <div class="com_type_fin">('.$row_cop["name_dop"].')</div>';
+    }
+
+
+}
+
+
+$query_string.='</div>';
 
 
 $result_uu_rate=mysql_time_query($link,'select a.char,a.small_name,a.code from booking_exchange as a  where a.id="'.ht($row_8["id_exchange"]).'"');

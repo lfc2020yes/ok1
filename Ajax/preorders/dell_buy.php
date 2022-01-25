@@ -66,7 +66,7 @@ if(!token_access_new($token,'dell_buy_preorders',$_GET["id"],"rema",2880))
 
 
 $mas_responsible=array();
-$result_uu=mysql_time_query($link,'Select b.id,b.id_user from preorders as b where b.id="'.htmlspecialchars(trim($_GET['id'])).'" and b.visible=1 and b.id_company="'.ht($id_company).'"');
+$result_uu=mysql_time_query($link,'Select b.id,b.id_user from preorders as b where b.id="'.htmlspecialchars(trim($_GET['id'])).'" and b.visible=1 and b.id_company IN ('.ht($id_company).')');
 $num_results_uu = $result_uu->num_rows;
 
 if ($num_results_uu != 0) {
@@ -101,14 +101,14 @@ mysql_time_query($link, 'update trips set
       
       id_booking="0"
       
-      where id_booking="'.ht($id).'" and id_a_company="'.$id_company.'"');
+      where id_booking="'.ht($id).'" and id_a_company IN ('.$id_company.')');
 
 //удаление задач по обращению
 mysql_time_query($link, 'update task_new set
       
       visible="0"
       
-      where action="20" and id_object="'.ht($id).'" and id_a_company="'.$id_company.'"');
+      where action="20" and id_object="'.ht($id).'" and id_a_company IN ('.$id_company.')');
 
 end_code:
 

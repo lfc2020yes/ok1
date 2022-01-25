@@ -133,7 +133,7 @@ if($tabs_menu_x_visible[4]!="1")
 
 
 $status_admin=0;
-$result_t=mysql_time_query($link,'select DISTINCT A.id,A.discount, A.id_user,A.shopper,A.id_shopper,A.id_contract,A.comment,A.number_to,A.hotel,A.id_country,A.place_name,A.date_start,A.date_end,A.number_to,A.id_contract,A.cost_client,A.id_exchange,A.cost_operator_exchange,A.cost_operator,A.cost_client_exchange,A.buy_clients,A.buy_operator,A.paid_operator,A.paid_operator_rates,A.exchange_rates,A.paid_client,A.paid_client_rates,A.date_prepaid,A.status_admin from trips as A where A.id_a_company="'.$id_company.'" and A.id="'.ht($row_uu11['id_trips']).'" and A.visible=1');
+$result_t=mysql_time_query($link,'select DISTINCT A.id,A.discount, A.id_user,A.shopper,A.id_shopper,A.id_contract,A.comment,A.number_to,A.hotel,A.id_country,A.place_name,A.date_start,A.date_end,A.number_to,A.id_contract,A.cost_client,A.id_exchange,A.cost_operator_exchange,A.cost_operator,A.cost_client_exchange,A.buy_clients,A.buy_operator,A.paid_operator,A.paid_operator_rates,A.exchange_rates,A.paid_client,A.paid_client_rates,A.date_prepaid,A.status_admin from trips as A where A.id_a_company IN ('.$id_company.') and A.id="'.ht($row_uu11['id_trips']).'" and A.visible=1');
 $num_results_t = $result_t->num_rows;
 if($num_results_t==0)
 {
@@ -285,7 +285,7 @@ where id = "' . ht($_POST['id']) . '"');
 $new_id_payment=ht($_POST['id']);
 
 
-$result_t=mysql_time_query($link,'select DISTINCT A.id,A.discount, A.id_user,A.shopper,A.id_shopper,A.id_contract,A.comment,A.number_to,A.hotel,A.id_country,A.place_name,A.date_start,A.date_end,A.number_to,A.id_contract,A.cost_client,A.id_exchange,A.cost_operator_exchange,A.cost_operator,A.cost_client_exchange,A.buy_clients,A.buy_operator,A.paid_operator,A.paid_operator_rates,A.exchange_rates,A.paid_client,A.paid_client_rates,A.date_prepaid from trips as A where A.id_a_company="'.$id_company.'" and A.id="'.ht($row_uu11['id_trips']).'" and A.visible=1');
+$result_t=mysql_time_query($link,'select DISTINCT A.id,A.discount, A.id_user,A.shopper,A.id_shopper,A.id_contract,A.comment,A.number_to,A.hotel,A.id_country,A.place_name,A.date_start,A.date_end,A.number_to,A.id_contract,A.cost_client,A.id_exchange,A.cost_operator_exchange,A.cost_operator,A.cost_client_exchange,A.buy_clients,A.buy_operator,A.paid_operator,A.paid_operator_rates,A.exchange_rates,A.paid_client,A.paid_client_rates,A.date_prepaid from trips as A where A.id_a_company IN ('.$id_company.') and A.id="'.ht($row_uu11['id_trips']).'" and A.visible=1');
 
 $row_uu = mysqli_fetch_assoc($result_t);
 

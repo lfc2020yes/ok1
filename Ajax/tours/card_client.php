@@ -64,7 +64,7 @@ if((isset($_GET["tabs"]))and($_GET["tabs"]==1))
 {
 	 if (is_numeric($_GET['id_tabs'])) {
 		 //нужна одна карточка по клиенту
-$result_t=mysql_time_query($link,'Select a.fio,a.id,a.code,a.latin,a.date_birthday,a.inter_seria,a.inter_number,a.inter_kem,a.inter_kogda,a.inter_srok,a.inner_seria,a.inner_number,a.inner_kem,a.inner_kogda,a.pol from k_clients as a where a.visible=1 and ((a.potential=0)or(a.potential=2)) and a.id="'.ht($_GET['id_tabs']).'" and a.id_a_company="'.ht($id_company).'"');
+$result_t=mysql_time_query($link,'Select a.fio,a.id,a.code,a.latin,a.date_birthday,a.inter_seria,a.inter_number,a.inter_kem,a.inter_kogda,a.inter_srok,a.inner_seria,a.inner_number,a.inner_kem,a.inner_kogda,a.pol from k_clients as a where a.visible=1 and ((a.potential=0)or(a.potential=2)) and a.id="'.ht($_GET['id_tabs']).'" and a.id_a_company IN ('.ht($id_company).')');
 
 //echo('Select b.*,r.id_company from k_clients as b,r_user as r where b.id="'.ht($_GET['id']).'" and b.visible=1 and b.id_user=r.id');
 $num_results_t = $result_t->num_rows;
@@ -87,7 +87,7 @@ if($num_results_t==0)
 }
 if((isset($_GET["tabs"]))and($_GET["tabs"]==2))
 {
-$result_t=mysql_time_query($link,'Select a.* from k_organization as a where a.visible=1 and a.id="'.ht($_GET['id_tabs']).'" and a.id_a_company="'.ht($id_company).'"');
+$result_t=mysql_time_query($link,'Select a.* from k_organization as a where a.visible=1 and a.id="'.ht($_GET['id_tabs']).'" and a.id_a_company IN ('.ht($id_company).')');
 
 //echo('Select b.*,r.id_company from k_clients as b,r_user as r where b.id="'.ht($_GET['id']).'" and b.visible=1 and b.id_user=r.id');
 $num_results_t = $result_t->num_rows;
@@ -379,7 +379,7 @@ $query_string_xx1.='<div class="right_gl"><div class="icc_gl_2 js-glu-d-'.$row_t
 	 for ($op=0; $op<count($c_op); $op++)
      {
 	  if (is_numeric($c_op[$op])) {
-		  $result_t=mysql_time_query($link,'Select a.fio,a.id,a.code,a.latin,a.date_birthday,inter_seria,inter_number,inter_kem,inter_kogda,inter_srok,inner_seria,inner_number,inner_kem,inner_kogda from k_clients as a where a.visible=1 and ((a.potential=0)or(a.potential=2)) and a.id="'.ht($c_op[$op]).'" and a.id_a_company="'.ht($id_company).'"');
+		  $result_t=mysql_time_query($link,'Select a.fio,a.id,a.code,a.latin,a.date_birthday,inter_seria,inter_number,inter_kem,inter_kogda,inter_srok,inner_seria,inner_number,inner_kem,inner_kogda from k_clients as a where a.visible=1 and ((a.potential=0)or(a.potential=2)) and a.id="'.ht($c_op[$op]).'" and a.id_a_company IN ('.ht($id_company).')');
 		  $num_results_t = $result_t->num_rows;
 if($num_results_t==0)
 {	

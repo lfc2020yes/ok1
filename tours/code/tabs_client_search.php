@@ -6,7 +6,7 @@ $echo_xx=1;
 $count_say=15;
 $redd__='';
 $query_string='';
-$result_8 = mysql_time_query($link,'SELECT A.id,A.fio,A.date_birthday,A.id_user,A.phone  FROM k_clients AS A WHERE A.visible=1 and A.potential=0 and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" order by A.fio limit 0,'.$count_say);
+$result_8 = mysql_time_query($link,'SELECT A.id,A.fio,A.date_birthday,A.id_user,A.phone  FROM k_clients AS A WHERE A.visible=1 and A.potential=0 and A.id_a_company IN('.htmlspecialchars(trim($id_company)).') order by A.fio limit 0,'.$count_say);
 
 
 
@@ -82,7 +82,7 @@ $query_string.=$query_string_xx;
 	
 
 	//выводить кнопку еще или нет
-	  $sql_gog2='select count(A.id) as cc from k_clients as A where A.visible=1 and A.potential=0 and A.id_a_company="'.htmlspecialchars(trim($id_company)).'"';  
+	  $sql_gog2='select count(A.id) as cc from k_clients as A where A.visible=1 and A.potential=0 and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).')';
 	
 	//echo($sql_gog2);
       $result_gog2=mysql_time_query($link,$sql_gog2);
@@ -93,7 +93,10 @@ $query_string.=$query_string_xx;
 		     if(($row_gog2["cc"]!=0)and($row_gog2["cc"]>$count_say))
 			 {	
 	            $query_string.='<div class="cb_eshe_client js-eshe-client-x" pg="1" start="0" all="'.$count_say.'" ><span>показать еще</span></div>';
-			 }
+			 }  else
+             {
+                 $query_string.='<div style="display:none;" class="cb_eshe_client js-eshe-client-x" pg="1" start="0" all="'.$count_say.'" ><span>показать еще</span></div>';
+             }
 	  }		
 	
 	

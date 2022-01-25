@@ -61,7 +61,7 @@ if ((count($_POST) != 3))
 
 
 $mas_responsible=array();
-$result_uu = mysql_time_query($link, 'select A.id,A.id_user  from trips as A where A.id_contract="' . ht($_POST['id']) . '" and A.id_a_company="'.$id_company.'"');
+$result_uu = mysql_time_query($link, 'select A.id,A.id_user  from trips as A where A.id_contract="' . ht($_POST['id']) . '" and A.id_a_company IN ('.$id_company.')');
 $num_results_uu = $result_uu->num_rows;
 
 if ($num_results_uu != 0) {

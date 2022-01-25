@@ -96,38 +96,38 @@ if($_GET['tabs']==4)
 
 select * from(     
    (   
-SELECT A.id,A.fio,A.date_birthday,A.id_user,A.phone FROM k_clients AS A where A.visible=1 and ((A.potential=0)or(A.potential=2)) and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.fio) LIKE "'.$query.'%"   
+SELECT A.id,A.fio,A.date_birthday,A.id_user,A.phone FROM k_clients AS A where A.visible=1 and ((A.potential=0)or(A.potential=2)) and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.fio) LIKE "'.$query.'%"   
 )
 UNION
 (
 
-SELECT A.id,A.fio,A.date_birthday,A.id_user,A.phone FROM k_clients AS A where A.visible=1 and ((A.potential=0)or(A.potential=2)) and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.fio) LIKE "%'.$query.'%"
+SELECT A.id,A.fio,A.date_birthday,A.id_user,A.phone FROM k_clients AS A where A.visible=1 and ((A.potential=0)or(A.potential=2)) and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.fio) LIKE "%'.$query.'%"
 AND A.fio NOT IN 
-(SELECT A.fio FROM k_clients A WHERE A.visible=1 and ((A.potential=0)or(A.potential=2)) and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.fio) LIKE "'.$query.'%")
+(SELECT A.fio FROM k_clients A WHERE A.visible=1 and ((A.potential=0)or(A.potential=2)) and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.fio) LIKE "'.$query.'%")
 ) 
 UNION
 (
-SELECT A.id,A.fio,A.date_birthday,A.id_user,A.phone FROM k_clients AS A where A.visible=1 and ((A.potential=0)or(A.potential=2)) and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.phone) LIKE "%'.$query.'%" 
+SELECT A.id,A.fio,A.date_birthday,A.id_user,A.phone FROM k_clients AS A where A.visible=1 and ((A.potential=0)or(A.potential=2)) and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.phone) LIKE "%'.$query.'%" 
 AND A.fio NOT IN 
-(SELECT A.fio FROM k_clients A WHERE A.visible=1 and ((A.potential=0)or(A.potential=2)) and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.fio) LIKE "'.$query.'%")
+(SELECT A.fio FROM k_clients A WHERE A.visible=1 and ((A.potential=0)or(A.potential=2)) and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.fio) LIKE "'.$query.'%")
 AND A.fio NOT IN 
-(SELECT A.fio FROM k_clients A WHERE A.visible=1 and ((A.potential=0)or(A.potential=2)) and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.fio) LIKE "%'.$query.'%")
+(SELECT A.fio FROM k_clients A WHERE A.visible=1 and ((A.potential=0)or(A.potential=2)) and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.fio) LIKE "%'.$query.'%")
 ORDER BY A.fio
 ) 
 
 UNION
 (
-SELECT A.id,A.fio,A.date_birthday,A.id_user,A.phone FROM k_clients AS A where A.visible=1 and ((A.potential=0)or(A.potential=2)) and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND A.code="'.$query.'" 
-AND A.fio NOT IN (SELECT A.fio FROM k_clients A WHERE A.visible=1 and ((A.potential=0)or(A.potential=2)) and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.fio) LIKE "'.$query.'%") AND A.fio 
-NOT IN (SELECT A.fio FROM k_clients A WHERE A.visible=1 and ((A.potential=0)or(A.potential=2)) and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.fio) LIKE "%'.$query.'%") AND A.fio 
-NOT IN (SELECT A.fio FROM k_clients A WHERE A.visible=1 and ((A.potential=0)or(A.potential=2)) and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.phone) LIKE "%'.$query.'%")
+SELECT A.id,A.fio,A.date_birthday,A.id_user,A.phone FROM k_clients AS A where A.visible=1 and ((A.potential=0)or(A.potential=2)) and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND A.code="'.$query.'" 
+AND A.fio NOT IN (SELECT A.fio FROM k_clients A WHERE A.visible=1 and ((A.potential=0)or(A.potential=2)) and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.fio) LIKE "'.$query.'%") AND A.fio 
+NOT IN (SELECT A.fio FROM k_clients A WHERE A.visible=1 and ((A.potential=0)or(A.potential=2)) and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.fio) LIKE "%'.$query.'%") AND A.fio 
+NOT IN (SELECT A.fio FROM k_clients A WHERE A.visible=1 and ((A.potential=0)or(A.potential=2)) and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.phone) LIKE "%'.$query.'%")
 ORDER BY A.fio
 ) 
 
 ) Z order by Z.fio limit '.htmlspecialchars(trim($_GET['pg']*$_GET['all'])).','.htmlspecialchars(trim($_GET['all'])));
     } else
     {
-        $result_8 = mysql_time_query($link,'SELECT A.id,A.fio,A.date_birthday,A.id_user,A.phone  FROM k_clients AS A WHERE A.visible=1 and ((A.potential=0)or(A.potential=2)) and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" order by A.fio limit '.htmlspecialchars(trim($_GET['pg']*$_GET['all'])).','.htmlspecialchars(trim($_GET['all'])));
+        $result_8 = mysql_time_query($link,'SELECT A.id,A.fio,A.date_birthday,A.id_user,A.phone  FROM k_clients AS A WHERE A.visible=1 and ((A.potential=0)or(A.potential=2)) and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') order by A.fio limit '.htmlspecialchars(trim($_GET['pg']*$_GET['all'])).','.htmlspecialchars(trim($_GET['all'])));
     }
 }
 
@@ -141,38 +141,38 @@ if((isset($_GET['query']))&&($_GET['query']!=''))
 
 select * from(     
    (   
-SELECT A.id,A.fio,A.date_birthday,A.id_user,A.phone FROM k_clients AS A where A.visible=1 and A.potential=0 and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.fio) LIKE "'.$query.'%"   
+SELECT A.id,A.fio,A.date_birthday,A.id_user,A.phone FROM k_clients AS A where A.visible=1 and A.potential=0 and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.fio) LIKE "'.$query.'%"   
 )
 UNION
 (
 
-SELECT A.id,A.fio,A.date_birthday,A.id_user,A.phone FROM k_clients AS A where A.visible=1 and A.potential=0 and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.fio) LIKE "%'.$query.'%"
+SELECT A.id,A.fio,A.date_birthday,A.id_user,A.phone FROM k_clients AS A where A.visible=1 and A.potential=0 and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.fio) LIKE "%'.$query.'%"
 AND A.fio NOT IN 
-(SELECT A.fio FROM k_clients A WHERE A.visible=1 and A.potential=0 and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.fio) LIKE "'.$query.'%")
+(SELECT A.fio FROM k_clients A WHERE A.visible=1 and A.potential=0 and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.fio) LIKE "'.$query.'%")
 ) 
 UNION
 (
-SELECT A.id,A.fio,A.date_birthday,A.id_user,A.phone FROM k_clients AS A where A.visible=1 and A.potential=0 and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.phone) LIKE "%'.$query.'%" 
+SELECT A.id,A.fio,A.date_birthday,A.id_user,A.phone FROM k_clients AS A where A.visible=1 and A.potential=0 and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.phone) LIKE "%'.$query.'%" 
 AND A.fio NOT IN 
-(SELECT A.fio FROM k_clients A WHERE A.visible=1 and A.potential=0 and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.fio) LIKE "'.$query.'%")
+(SELECT A.fio FROM k_clients A WHERE A.visible=1 and A.potential=0 and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.fio) LIKE "'.$query.'%")
 AND A.fio NOT IN 
-(SELECT A.fio FROM k_clients A WHERE A.visible=1 and A.potential=0 and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.fio) LIKE "%'.$query.'%")
+(SELECT A.fio FROM k_clients A WHERE A.visible=1 and A.potential=0 and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.fio) LIKE "%'.$query.'%")
 ORDER BY A.fio
 ) 
 
 UNION
 (
-SELECT A.id,A.fio,A.date_birthday,A.id_user,A.phone FROM k_clients AS A where A.visible=1 and A.potential=0 and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND A.code="'.$query.'" 
-AND A.fio NOT IN (SELECT A.fio FROM k_clients A WHERE A.visible=1 and A.potential=0 and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.fio) LIKE "'.$query.'%") AND A.fio 
-NOT IN (SELECT A.fio FROM k_clients A WHERE A.visible=1 and A.potential=0 and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.fio) LIKE "%'.$query.'%") AND A.fio 
-NOT IN (SELECT A.fio FROM k_clients A WHERE A.visible=1 and A.potential=0 and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.phone) LIKE "%'.$query.'%")
+SELECT A.id,A.fio,A.date_birthday,A.id_user,A.phone FROM k_clients AS A where A.visible=1 and A.potential=0 and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND A.code="'.$query.'" 
+AND A.fio NOT IN (SELECT A.fio FROM k_clients A WHERE A.visible=1 and A.potential=0 and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.fio) LIKE "'.$query.'%") AND A.fio 
+NOT IN (SELECT A.fio FROM k_clients A WHERE A.visible=1 and A.potential=0 and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.fio) LIKE "%'.$query.'%") AND A.fio 
+NOT IN (SELECT A.fio FROM k_clients A WHERE A.visible=1 and A.potential=0 and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.phone) LIKE "%'.$query.'%")
 ORDER BY A.fio
 ) 
 
 ) Z order by Z.fio limit '.htmlspecialchars(trim($_GET['pg']*$_GET['all'])).','.htmlspecialchars(trim($_GET['all'])));  
 } else
 {
-$result_8 = mysql_time_query($link,'SELECT A.id,A.fio,A.date_birthday,A.id_user,A.phone  FROM k_clients AS A WHERE A.visible=1 and A.potential=0 and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" order by A.fio limit '.htmlspecialchars(trim($_GET['pg']*$_GET['all'])).','.htmlspecialchars(trim($_GET['all'])));
+$result_8 = mysql_time_query($link,'SELECT A.id,A.fio,A.date_birthday,A.id_user,A.phone  FROM k_clients AS A WHERE A.visible=1 and A.potential=0 and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') order by A.fio limit '.htmlspecialchars(trim($_GET['pg']*$_GET['all'])).','.htmlspecialchars(trim($_GET['all'])));
 }
 } 
 if($_GET['tabs']==2)
@@ -184,28 +184,28 @@ if((isset($_GET['query']))&&($_GET['query']!=''))
 
 select * from(     
 (   
-SELECT A.id,A.name,A.code_inn,A.id_user FROM k_organization AS A where A.visible=1 and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.name) LIKE "'.$query.'%"   
+SELECT A.id,A.name,A.code_inn,A.id_user FROM k_organization AS A where A.visible=1 and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.name) LIKE "'.$query.'%"   
 )
 UNION
 (
-SELECT A.id,A.name,A.code_inn,A.id_user FROM k_organization AS A where A.visible=1 and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.name) LIKE "%'.$query.'%"
+SELECT A.id,A.name,A.code_inn,A.id_user FROM k_organization AS A where A.visible=1 and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.name) LIKE "%'.$query.'%"
 AND A.name NOT IN 
-(SELECT A.name FROM k_organization A WHERE A.visible=1 and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.name) LIKE "'.$query.'%")
+(SELECT A.name FROM k_organization A WHERE A.visible=1 and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.name) LIKE "'.$query.'%")
 ) 
 UNION
 (
-SELECT A.id,A.name,A.code_inn,A.id_user FROM k_organization AS A where A.visible=1 and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.code_inn) LIKE "'.$query.'%" 
+SELECT A.id,A.name,A.code_inn,A.id_user FROM k_organization AS A where A.visible=1 and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.code_inn) LIKE "'.$query.'%" 
 AND A.name NOT IN 
-(SELECT A.name FROM k_organization A WHERE A.visible=1 and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.name) LIKE "'.$query.'%")
+(SELECT A.name FROM k_organization A WHERE A.visible=1 and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.name) LIKE "'.$query.'%")
 AND A.name NOT IN 
-(SELECT A.name FROM k_organization A WHERE A.visible=1 and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.name) LIKE "%'.$query.'%")
+(SELECT A.name FROM k_organization A WHERE A.visible=1 and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.name) LIKE "%'.$query.'%")
 ) 
 
 
 ) Z order by Z.name limit '.htmlspecialchars(trim($_GET['pg']*$_GET['all'])).','.htmlspecialchars(trim($_GET['all'])));  
 }	else	
 {	
-$result_8 = mysql_time_query($link,'SELECT A.id,A.name,A.code_inn,A.id_user  FROM k_organization AS A WHERE A.visible=1 and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" order by A.name limit '.htmlspecialchars(trim($_GET['pg']*$_GET['all'])).','.htmlspecialchars(trim($_GET['all'])));
+$result_8 = mysql_time_query($link,'SELECT A.id,A.name,A.code_inn,A.id_user  FROM k_organization AS A WHERE A.visible=1 and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') order by A.name limit '.htmlspecialchars(trim($_GET['pg']*$_GET['all'])).','.htmlspecialchars(trim($_GET['all'])));
 }  
 
 }
@@ -219,38 +219,38 @@ if((isset($_GET['query']))&&($_GET['query']!=''))
 
 select * from(     
    (   
-SELECT A.id,A.fio,A.date_birthday,A.id_user,A.phone FROM k_clients AS A where A.visible=1 and ((A.potential=1)or(A.potential=2)) and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.fio) LIKE "'.$query.'%"   
+SELECT A.id,A.fio,A.date_birthday,A.id_user,A.phone FROM k_clients AS A where A.visible=1 and ((A.potential=1)or(A.potential=2)) and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.fio) LIKE "'.$query.'%"   
 )
 UNION
 (
 
-SELECT A.id,A.fio,A.date_birthday,A.id_user,A.phone FROM k_clients AS A where A.visible=1 and ((A.potential=1)or(A.potential=2)) and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.fio) LIKE "%'.$query.'%"
+SELECT A.id,A.fio,A.date_birthday,A.id_user,A.phone FROM k_clients AS A where A.visible=1 and ((A.potential=1)or(A.potential=2)) and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.fio) LIKE "%'.$query.'%"
 AND A.fio NOT IN 
-(SELECT A.fio FROM k_clients A WHERE A.visible=1 and A.potential=1 and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.fio) LIKE "'.$query.'%")
+(SELECT A.fio FROM k_clients A WHERE A.visible=1 and A.potential=1 and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.fio) LIKE "'.$query.'%")
 ) 
 UNION
 (
-SELECT A.id,A.fio,A.date_birthday,A.id_user,A.phone FROM k_clients AS A where A.visible=1 and ((A.potential=1)or(A.potential=2)) and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.phone) LIKE "%'.$query.'%" 
+SELECT A.id,A.fio,A.date_birthday,A.id_user,A.phone FROM k_clients AS A where A.visible=1 and ((A.potential=1)or(A.potential=2)) and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.phone) LIKE "%'.$query.'%" 
 AND A.fio NOT IN 
-(SELECT A.fio FROM k_clients A WHERE A.visible=1 and ((A.potential=1)or(A.potential=2)) and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.fio) LIKE "'.$query.'%")
+(SELECT A.fio FROM k_clients A WHERE A.visible=1 and ((A.potential=1)or(A.potential=2)) and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.fio) LIKE "'.$query.'%")
 AND A.fio NOT IN 
-(SELECT A.fio FROM k_clients A WHERE A.visible=1 and ((A.potential=1)or(A.potential=2)) and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.fio) LIKE "%'.$query.'%")
+(SELECT A.fio FROM k_clients A WHERE A.visible=1 and ((A.potential=1)or(A.potential=2)) and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.fio) LIKE "%'.$query.'%")
 ORDER BY A.fio
 ) 
 
 UNION
 (
-SELECT A.id,A.fio,A.date_birthday,A.id_user,A.phone FROM k_clients AS A where A.visible=1 and ((A.potential=1)or(A.potential=2)) and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND A.code="'.$query.'" 
-AND A.fio NOT IN (SELECT A.fio FROM k_clients A WHERE A.visible=1 and ((A.potential=1)or(A.potential=2)) and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.fio) LIKE "'.$query.'%") AND A.fio 
-NOT IN (SELECT A.fio FROM k_clients A WHERE A.visible=1 and ((A.potential=1)or(A.potential=2)) and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.fio) LIKE "%'.$query.'%") AND A.fio 
-NOT IN (SELECT A.fio FROM k_clients A WHERE A.visible=1 and ((A.potential=1)or(A.potential=2)) and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.phone) LIKE "%'.$query.'%")
+SELECT A.id,A.fio,A.date_birthday,A.id_user,A.phone FROM k_clients AS A where A.visible=1 and ((A.potential=1)or(A.potential=2)) and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND A.code="'.$query.'" 
+AND A.fio NOT IN (SELECT A.fio FROM k_clients A WHERE A.visible=1 and ((A.potential=1)or(A.potential=2)) and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.fio) LIKE "'.$query.'%") AND A.fio 
+NOT IN (SELECT A.fio FROM k_clients A WHERE A.visible=1 and ((A.potential=1)or(A.potential=2)) and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.fio) LIKE "%'.$query.'%") AND A.fio 
+NOT IN (SELECT A.fio FROM k_clients A WHERE A.visible=1 and ((A.potential=1)or(A.potential=2)) and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.phone) LIKE "%'.$query.'%")
 ORDER BY A.fio
 ) 
 
 ) Z order by Z.fio limit '.htmlspecialchars(trim($_GET['pg']*$_GET['all'])).','.htmlspecialchars(trim($_GET['all'])));  
 } else
 {
-$result_8 = mysql_time_query($link,'SELECT A.id,A.fio,A.date_birthday,A.id_user,A.phone  FROM k_clients AS A WHERE A.visible=1 and ((A.potential=1)or(A.potential=2)) and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" order by A.fio limit '.htmlspecialchars(trim($_GET['pg']*$_GET['all'])).','.htmlspecialchars(trim($_GET['all'])));
+$result_8 = mysql_time_query($link,'SELECT A.id,A.fio,A.date_birthday,A.id_user,A.phone  FROM k_clients AS A WHERE A.visible=1 and ((A.potential=1)or(A.potential=2)) and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') order by A.fio limit '.htmlspecialchars(trim($_GET['pg']*$_GET['all'])).','.htmlspecialchars(trim($_GET['all'])));
 }
 } 
 
@@ -357,36 +357,36 @@ $count_say=$pg*$_GET['all'];
         {
             $sql_gog2='select count(A.id) as cc from(     
    (   
-SELECT A.id FROM k_clients AS A where A.visible=1 and ((A.potential=0)or(A.potential=2)) and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.fio) LIKE "'.$query.'%"   
+SELECT A.id FROM k_clients AS A where A.visible=1 and ((A.potential=0)or(A.potential=2)) and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.fio) LIKE "'.$query.'%"   
 )
 UNION
 (
 
-SELECT A.id FROM k_clients AS A where A.visible=1 and ((A.potential=0)or(A.potential=2)) and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.fio) LIKE "%'.$query.'%"
+SELECT A.id FROM k_clients AS A where A.visible=1 and ((A.potential=0)or(A.potential=2)) and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.fio) LIKE "%'.$query.'%"
 AND A.fio NOT IN 
-(SELECT A.fio FROM k_clients A WHERE A.visible=1 and ((A.potential=0)or(A.potential=2)) and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.fio) LIKE "'.$query.'%")
+(SELECT A.fio FROM k_clients A WHERE A.visible=1 and ((A.potential=0)or(A.potential=2)) and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.fio) LIKE "'.$query.'%")
 ) 
 UNION
 (
-SELECT A.id FROM k_clients AS A where A.visible=1 and ((A.potential=0)or(A.potential=2)) and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.phone) LIKE "%'.$query.'%" 
+SELECT A.id FROM k_clients AS A where A.visible=1 and ((A.potential=0)or(A.potential=2)) and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.phone) LIKE "%'.$query.'%" 
 AND A.fio NOT IN 
-(SELECT A.fio FROM k_clients A WHERE A.visible=1 and ((A.potential=0)or(A.potential=2)) and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.fio) LIKE "'.$query.'%")
+(SELECT A.fio FROM k_clients A WHERE A.visible=1 and ((A.potential=0)or(A.potential=2)) and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.fio) LIKE "'.$query.'%")
 AND A.fio NOT IN 
-(SELECT A.fio FROM k_clients A WHERE A.visible=1 and ((A.potential=0)or(A.potential=2)) and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.fio) LIKE "%'.$query.'%")
+(SELECT A.fio FROM k_clients A WHERE A.visible=1 and ((A.potential=0)or(A.potential=2)) and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.fio) LIKE "%'.$query.'%")
 ) 
 
 UNION
 (
-SELECT A.id FROM k_clients AS A where A.visible=1 and ((A.potential=0)or(A.potential=2)) and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND A.code="'.$query.'" 
-AND A.fio NOT IN (SELECT A.fio FROM k_clients A WHERE A.visible=1 and ((A.potential=0)or(A.potential=2)) and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.fio) LIKE "'.$query.'%") AND A.fio 
-NOT IN (SELECT A.fio FROM k_clients A WHERE A.visible=1 and ((A.potential=0)or(A.potential=2)) and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.fio) LIKE "%'.$query.'%") AND A.fio 
-NOT IN (SELECT A.fio FROM k_clients A WHERE A.visible=1 and ((A.potential=0)or(A.potential=2))0 and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.phone) LIKE "%'.$query.'%")
+SELECT A.id FROM k_clients AS A where A.visible=1 and ((A.potential=0)or(A.potential=2)) and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND A.code="'.$query.'" 
+AND A.fio NOT IN (SELECT A.fio FROM k_clients A WHERE A.visible=1 and ((A.potential=0)or(A.potential=2)) and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.fio) LIKE "'.$query.'%") AND A.fio 
+NOT IN (SELECT A.fio FROM k_clients A WHERE A.visible=1 and ((A.potential=0)or(A.potential=2)) and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.fio) LIKE "%'.$query.'%") AND A.fio 
+NOT IN (SELECT A.fio FROM k_clients A WHERE A.visible=1 and ((A.potential=0)or(A.potential=2))0 and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.phone) LIKE "%'.$query.'%")
 ) 
 
 ) A';
         } else
         {
-            $sql_gog2='select count(A.id) as cc from k_clients as A where A.visible=1 and ((A.potential=0)or(A.potential=2)) and A.id_a_company="'.htmlspecialchars(trim($id_company)).'"';
+            $sql_gog2='select count(A.id) as cc from k_clients as A where A.visible=1 and ((A.potential=0)or(A.potential=2)) and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).')';
         }
     }
 
@@ -396,36 +396,36 @@ if((isset($_GET['query']))&&($_GET['query']!=''))
 {
 	$sql_gog2='select count(A.id) as cc from(     
    (   
-SELECT A.id FROM k_clients AS A where A.visible=1 and A.potential=0 and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.fio) LIKE "'.$query.'%"   
+SELECT A.id FROM k_clients AS A where A.visible=1 and A.potential=0 and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.fio) LIKE "'.$query.'%"   
 )
 UNION
 (
 
-SELECT A.id FROM k_clients AS A where A.visible=1 and A.potential=0 and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.fio) LIKE "%'.$query.'%"
+SELECT A.id FROM k_clients AS A where A.visible=1 and A.potential=0 and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.fio) LIKE "%'.$query.'%"
 AND A.fio NOT IN 
-(SELECT A.fio FROM k_clients A WHERE A.visible=1 and A.potential=0 and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.fio) LIKE "'.$query.'%")
+(SELECT A.fio FROM k_clients A WHERE A.visible=1 and A.potential=0 and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.fio) LIKE "'.$query.'%")
 ) 
 UNION
 (
-SELECT A.id FROM k_clients AS A where A.visible=1 and A.potential=0 and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.phone) LIKE "%'.$query.'%" 
+SELECT A.id FROM k_clients AS A where A.visible=1 and A.potential=0 and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.phone) LIKE "%'.$query.'%" 
 AND A.fio NOT IN 
-(SELECT A.fio FROM k_clients A WHERE A.visible=1 and A.potential=0 and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.fio) LIKE "'.$query.'%")
+(SELECT A.fio FROM k_clients A WHERE A.visible=1 and A.potential=0 and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.fio) LIKE "'.$query.'%")
 AND A.fio NOT IN 
-(SELECT A.fio FROM k_clients A WHERE A.visible=1 and A.potential=0 and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.fio) LIKE "%'.$query.'%")
+(SELECT A.fio FROM k_clients A WHERE A.visible=1 and A.potential=0 and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.fio) LIKE "%'.$query.'%")
 ) 
 
 UNION
 (
-SELECT A.id FROM k_clients AS A where A.visible=1 and A.potential=0 and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND A.code="'.$query.'" 
-AND A.fio NOT IN (SELECT A.fio FROM k_clients A WHERE A.visible=1 and A.potential=0 and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.fio) LIKE "'.$query.'%") AND A.fio 
-NOT IN (SELECT A.fio FROM k_clients A WHERE A.visible=1 and A.potential=0 and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.fio) LIKE "%'.$query.'%") AND A.fio 
-NOT IN (SELECT A.fio FROM k_clients A WHERE A.visible=1 and A.potential=0 and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.phone) LIKE "%'.$query.'%")
+SELECT A.id FROM k_clients AS A where A.visible=1 and A.potential=0 and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND A.code="'.$query.'" 
+AND A.fio NOT IN (SELECT A.fio FROM k_clients A WHERE A.visible=1 and A.potential=0 and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.fio) LIKE "'.$query.'%") AND A.fio 
+NOT IN (SELECT A.fio FROM k_clients A WHERE A.visible=1 and A.potential=0 and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.fio) LIKE "%'.$query.'%") AND A.fio 
+NOT IN (SELECT A.fio FROM k_clients A WHERE A.visible=1 and A.potential=0 and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.phone) LIKE "%'.$query.'%")
 ) 
 
 ) A';
 } else
 {	
-	  $sql_gog2='select count(A.id) as cc from k_clients as A where A.visible=1 and A.potential=0 and A.id_a_company="'.htmlspecialchars(trim($id_company)).'"'; 
+	  $sql_gog2='select count(A.id) as cc from k_clients as A where A.visible=1 and A.potential=0 and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).')';
 }
 		} 
 	if($_GET['tabs']==2)
@@ -437,21 +437,21 @@ if((isset($_GET['query']))&&($_GET['query']!=''))
 
 select count(A.id) as cc from(     
 (   
-SELECT A.id FROM k_organization AS A where A.visible=1 and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.name) LIKE "'.$query.'%"   
+SELECT A.id FROM k_organization AS A where A.visible=1 and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.name) LIKE "'.$query.'%"   
 )
 UNION
 (
-SELECT A.id FROM k_organization AS A where A.visible=1 and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.name) LIKE "%'.$query.'%"
+SELECT A.id FROM k_organization AS A where A.visible=1 and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.name) LIKE "%'.$query.'%"
 AND A.name NOT IN 
-(SELECT A.name FROM k_organization A WHERE A.visible=1 and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.name) LIKE "'.$query.'%")
+(SELECT A.name FROM k_organization A WHERE A.visible=1 and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.name) LIKE "'.$query.'%")
 ) 
 UNION
 (
-SELECT A.id FROM k_organization AS A where A.visible=1 and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.code_inn) LIKE "'.$query.'%" 
+SELECT A.id FROM k_organization AS A where A.visible=1 and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.code_inn) LIKE "'.$query.'%" 
 AND A.name NOT IN 
-(SELECT A.name FROM k_organization A WHERE A.visible=1 and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.name) LIKE "'.$query.'%")
+(SELECT A.name FROM k_organization A WHERE A.visible=1 and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.name) LIKE "'.$query.'%")
 AND A.name NOT IN 
-(SELECT A.name FROM k_organization A WHERE A.visible=1 and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.name) LIKE "%'.$query.'%")
+(SELECT A.name FROM k_organization A WHERE A.visible=1 and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.name) LIKE "%'.$query.'%")
 ) 
 
 
@@ -459,7 +459,7 @@ AND A.name NOT IN
 } else
 {	
 	
-		$sql_gog2='SELECT count(A.id) as cc  FROM k_organization AS A WHERE A.visible=1 and A.id_a_company="'.htmlspecialchars(trim($id_company)).'"';
+		$sql_gog2='SELECT count(A.id) as cc  FROM k_organization AS A WHERE A.visible=1 and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).')';
 	
 }			
 		}
@@ -470,36 +470,36 @@ if((isset($_GET['query']))&&($_GET['query']!=''))
 {
 	$sql_gog2='select count(A.id) as cc from(     
    (   
-SELECT A.id FROM k_clients AS A where A.visible=1 and ((A.potential=1)or(A.potential=2)) and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.fio) LIKE "'.$query.'%"   
+SELECT A.id FROM k_clients AS A where A.visible=1 and ((A.potential=1)or(A.potential=2)) and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.fio) LIKE "'.$query.'%"   
 )
 UNION
 (
 
-SELECT A.id FROM k_clients AS A where A.visible=1 and ((A.potential=1)or(A.potential=2)) and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.fio) LIKE "%'.$query.'%"
+SELECT A.id FROM k_clients AS A where A.visible=1 and ((A.potential=1)or(A.potential=2)) and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.fio) LIKE "%'.$query.'%"
 AND A.fio NOT IN 
-(SELECT A.fio FROM k_clients A WHERE A.visible=1 and ((A.potential=1)or(A.potential=2)) and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.fio) LIKE "'.$query.'%")
+(SELECT A.fio FROM k_clients A WHERE A.visible=1 and ((A.potential=1)or(A.potential=2)) and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.fio) LIKE "'.$query.'%")
 ) 
 UNION
 (
-SELECT A.id FROM k_clients AS A where A.visible=1 and ((A.potential=1)or(A.potential=2)) and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.phone) LIKE "%'.$query.'%" 
+SELECT A.id FROM k_clients AS A where A.visible=1 and ((A.potential=1)or(A.potential=2)) and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.phone) LIKE "%'.$query.'%" 
 AND A.fio NOT IN 
-(SELECT A.fio FROM k_clients A WHERE A.visible=1 and ((A.potential=1)or(A.potential=2)) and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.fio) LIKE "'.$query.'%")
+(SELECT A.fio FROM k_clients A WHERE A.visible=1 and ((A.potential=1)or(A.potential=2)) and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.fio) LIKE "'.$query.'%")
 AND A.fio NOT IN 
-(SELECT A.fio FROM k_clients A WHERE A.visible=1 and ((A.potential=1)or(A.potential=2)) and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.fio) LIKE "%'.$query.'%")
+(SELECT A.fio FROM k_clients A WHERE A.visible=1 and ((A.potential=1)or(A.potential=2)) and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.fio) LIKE "%'.$query.'%")
 ) 
 
 UNION
 (
-SELECT A.id FROM k_clients AS A where A.visible=1 and ((A.potential=1)or(A.potential=2)) and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND A.code="'.$query.'" 
-AND A.fio NOT IN (SELECT A.fio FROM k_clients A WHERE A.visible=1 and ((A.potential=1)or(A.potential=2)) and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.fio) LIKE "'.$query.'%") AND A.fio 
-NOT IN (SELECT A.fio FROM k_clients A WHERE A.visible=1 and ((A.potential=1)or(A.potential=2)) and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.fio) LIKE "%'.$query.'%") AND A.fio 
-NOT IN (SELECT A.fio FROM k_clients A WHERE A.visible=1 and ((A.potential=1)or(A.potential=2)) and A.id_a_company="'.htmlspecialchars(trim($id_company)).'" AND LOWER(A.phone) LIKE "%'.$query.'%")
+SELECT A.id FROM k_clients AS A where A.visible=1 and ((A.potential=1)or(A.potential=2)) and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND A.code="'.$query.'" 
+AND A.fio NOT IN (SELECT A.fio FROM k_clients A WHERE A.visible=1 and ((A.potential=1)or(A.potential=2)) and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.fio) LIKE "'.$query.'%") AND A.fio 
+NOT IN (SELECT A.fio FROM k_clients A WHERE A.visible=1 and ((A.potential=1)or(A.potential=2)) and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.fio) LIKE "%'.$query.'%") AND A.fio 
+NOT IN (SELECT A.fio FROM k_clients A WHERE A.visible=1 and ((A.potential=1)or(A.potential=2)) and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).') AND LOWER(A.phone) LIKE "%'.$query.'%")
 ) 
 
 ) A';
 } else
 {	
-	  $sql_gog2='select count(A.id) as cc from k_clients as A where A.visible=1 and ((A.potential=1)or(A.potential=2)) and A.id_a_company="'.htmlspecialchars(trim($id_company)).'"';
+	  $sql_gog2='select count(A.id) as cc from k_clients as A where A.visible=1 and ((A.potential=1)or(A.potential=2)) and A.id_a_company IN ('.htmlspecialchars(trim($id_company)).')';
 }
 		} 	
 	

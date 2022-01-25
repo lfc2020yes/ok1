@@ -45,7 +45,7 @@ if(!is_numeric($value))
 	goto end_code;
 }
 	
-$result_t=mysql_time_query($link,'Select b.* from preorders as b where b.id="'.htmlspecialchars(trim($value)).'" and b.visible=1 and b.id_company="'.$id_company.'"');
+$result_t=mysql_time_query($link,'Select b.* from preorders as b where b.id="'.htmlspecialchars(trim($value)).'" and b.visible=1 and b.id_company IN ('.$id_company.')');
 $num_results_t = $result_t->num_rows;
 if($num_results_t==0)
 {	

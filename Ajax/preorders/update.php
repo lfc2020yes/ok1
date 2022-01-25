@@ -76,21 +76,21 @@ if ((isset($_POST['preorders']["client_type"]))and(is_numeric($_POST['preorders'
               {
 		 case "1":{ 
 			 //частное лицо
-			 $sql_tt='Select b.id,b.fio from k_clients as b where b.id="'.ht($_POST['preorders']['id_client']).'" and b.potential=0 and b.visible=1 and b.id_a_company="'.ht($id_company).'"';
+			 $sql_tt='Select b.id,b.fio from k_clients as b where b.id="'.ht($_POST['preorders']['id_client']).'" and b.potential=0 and b.visible=1 and b.id_a_company IN ('.ht($id_company).')';
 			 $class_js_script='js-client';
              $class_js_scrip1='js-glu-f-';
 			 break; 
                   }	
 		case "2":{ 
 			 //организация
-			 $sql_tt='Select b.id,b.name as fio from k_organization as b where b.id="'.ht($_POST['preorders']['id_client']).'" and  b.visible=1 and b.id_a_company="'.ht($id_company).'"';
+			 $sql_tt='Select b.id,b.name as fio from k_organization as b where b.id="'.ht($_POST['preorders']['id_client']).'" and  b.visible=1 and b.id_a_company IN ('.ht($id_company).')';
             $class_js_script='js-org';
             $class_js_scrip1='js-glo-n-';
 			 break; 
                   }		
 		 case "3":{ 
 			 //потенциальный
-			 $sql_tt='Select b.id,b.fio from k_clients as b where b.id="'.ht($_POST['preorders']['id_client']).'" and b.potential=1 and b.visible=1 and b.id_a_company="'.ht($id_company).'"';
+			 $sql_tt='Select b.id,b.fio from k_clients as b where b.id="'.ht($_POST['preorders']['id_client']).'" and b.potential=1 and b.visible=1 and b.id_a_company IN ('.ht($id_company).')';
              $class_js_script='js-client';
              $class_js_scrip1='js-glu-f-';
 			 break; 
@@ -118,7 +118,7 @@ if ((isset($_POST['preorders']["client_type"]))and(is_numeric($_POST['preorders'
 }
 
 
-$result_t=mysql_time_query($link,'Select A.* from preorders as A where A.visible=1 AND A.id="'.ht($id).'" and A.id_company="'.$id_company.'"');
+$result_t=mysql_time_query($link,'Select A.* from preorders as A where A.visible=1 AND A.id="'.ht($id).'" and A.id_company IN ('.$id_company.')');
 $num_results_t = $result_t->num_rows;
 if($num_results_t==0)
 {
@@ -216,14 +216,14 @@ switch($row_uu["id_type_clients"])
 {
     case "1":{
         //частное лицо
-        $sql_tt='Select b.id,b.fio from k_clients as b where b.id="'.ht($row_uu["id_k_clients"]).'" and b.potential=0 and b.visible=1 and b.id_a_company="'.ht($id_company).'"';
+        $sql_tt='Select b.id,b.fio from k_clients as b where b.id="'.ht($row_uu["id_k_clients"]).'" and b.potential=0 and b.visible=1 and b.id_a_company IN ('.ht($id_company).')';
         $class_js_script='js-client';
         $class_js_scrip1='js-glu-f-';
         break;
     }
     case "2":{
         //организация
-        $sql_tt='Select b.id,b.name as fio from k_organization as b where b.id="'.ht($row_uu["id_k_clients"]).'" and  b.visible=1 and b.id_a_company="'.ht($id_company).'"';
+        $sql_tt='Select b.id,b.name as fio from k_organization as b where b.id="'.ht($row_uu["id_k_clients"]).'" and  b.visible=1 and b.id_a_company IN ('.ht($id_company).')';
         $class_js_script='js-org';
         $class_js_scrip1='js-glo-n-';
         break;

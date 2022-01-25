@@ -69,7 +69,7 @@ if(((!isset($_POST['tk1']))or(trim($_POST['tk1'])!='dsQ642dSadfd2re')))
 
 $status_admin=0;
 $mas_responsible=array();
-$result_uu11 = mysql_time_query($link, 'select A.id,A.id_exchange,A.id_user,A.cost_client,A.cost_client_exchange,A.exchange_rates,A.cost_operator,A.cost_operator_exchange,A.discount,A.exchange_rates_operator,A.paid_client,A.paid_client_rates,A.paid_operator,A.paid_operator_rates,A.buy_clients,A.buy_operator,A.status_admin  from trips as A where A.id="' . ht($_POST['id']) . '" and A.visible=1 and A.id_a_company="'.$id_company.'"');
+$result_uu11 = mysql_time_query($link, 'select A.id,A.id_exchange,A.id_user,A.cost_client,A.cost_client_exchange,A.exchange_rates,A.cost_operator,A.cost_operator_exchange,A.discount,A.exchange_rates_operator,A.paid_client,A.paid_client_rates,A.paid_operator,A.paid_operator_rates,A.buy_clients,A.buy_operator,A.status_admin  from trips as A where A.id="' . ht($_POST['id']) . '" and A.visible=1 and A.id_a_company IN ('.$id_company.')');
 $num_results_uu11 = $result_uu11->num_rows;
 
 if ($num_results_uu11 != 0) {
@@ -233,7 +233,11 @@ $status_ee='ok';
         $exchange_rates_operator=$_POST["curs1"];
        // $cost_operator_exchange=number_format(((float)$cost_operator/(float)$exchange_rates_operator), 2, '.', '');
 
-        $cost_operator_exchange=round(((float)$cost_operator/(float)$exchange_rates_operator), 2);
+        if($exchange_rates_operator!=0) {
+
+            $cost_operator_exchange = round(((float)$cost_operator / (float)$exchange_rates_operator), 2);
+        }
+
     }
 
 

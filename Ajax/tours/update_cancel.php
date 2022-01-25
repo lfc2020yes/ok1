@@ -110,7 +110,7 @@ if ($num_results_uu != 0) {
     $row_uu = mysqli_fetch_assoc($result_uu);
 
     $prix='—';
-    $result_uutt = mysql_time_query($link, 'select a.why from trips_why_annulation as a where a.id="' . ht($row_uu['id_why']) . '" and a.visible=1 and a.id_a_company="'.$id_company.'"');
+    $result_uutt = mysql_time_query($link, 'select a.why from trips_why_annulation as a where a.id="' . ht($row_uu['id_why']) . '" and a.visible=1 and a.id_a_company IN ('.$id_group_company_list.')');
     $num_results_uutt = $result_uutt->num_rows;
 
     if ($num_results_uutt != 0) {
@@ -122,7 +122,7 @@ $prix1='—';
     if(($row_uu["id_refund"]!='')and($row_uu["id_refund"]!=0))
     {
 
-        $result_uuii = mysql_time_query($link, 'select a.name from trips_cancel_refund as a where a.id="' . ht($row_uu['id_refund']) . '" and a.visible=1 and a.id_a_company="'.$id_company.'"');
+        $result_uuii = mysql_time_query($link, 'select a.name from trips_cancel_refund as a where a.id="' . ht($row_uu['id_refund']) . '" and a.visible=1 and a.id_a_company IN ('.$id_group_company_list.')');
         $num_results_uuii = $result_uuii->num_rows;
 
         if ($num_results_uuii != 0) {
@@ -230,7 +230,7 @@ $array_param_comment=array(
 
 
 
-$result_uucc = mysql_time_query($link, 'select a.why from trips_why_annulation as a where a.id="' . ht($_POST['id_why']) . '" and a.visible=1 and a.id_a_company="'.$id_company.'"');
+$result_uucc = mysql_time_query($link, 'select a.why from trips_why_annulation as a where a.id="' . ht($_POST['id_why']) . '" and a.visible=1 and a.id_a_company IN ('.$id_group_company_list.')');
 $num_results_uucc = $result_uucc->num_rows;
 
 if ($num_results_uucc != 0) {
@@ -242,7 +242,7 @@ $prix1='—';
 if(($_POST["id_refund"]!='')and($_POST["id_refund"]!=0))
 {
 
-    $result_uuvv = mysql_time_query($link, 'select a.name from trips_cancel_refund as a where a.id="' . ht($_POST['id_refund']) . '" and a.visible=1 and a.id_a_company="'.$id_company.'"');
+    $result_uuvv = mysql_time_query($link, 'select a.name from trips_cancel_refund as a where a.id="' . ht($_POST['id_refund']) . '" and a.visible=1 and a.id_a_company IN ('.$id_group_company_list.')');
     $num_results_uuvv = $result_uuvv->num_rows;
 
     if ($num_results_uuvv != 0) {

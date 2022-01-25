@@ -70,7 +70,7 @@ if(((!isset($_POST['tk1']))or(trim($_POST['tk1'])!='dsQ278Stsd2io')))
 
 
 
-$result_t=mysql_time_query($link,'Select A.* from finance_operation as A where A.visible=1 AND A.id="'.ht($_POST["id"]).'" and A.id_a_company="'.$id_company.'"');
+$result_t=mysql_time_query($link,'Select A.* from finance_operation as A where A.visible=1 AND A.id="'.ht($_POST["id"]).'" and A.id_a_company IN ('.$id_company.')');
 $num_results_t = $result_t->num_rows;
 if($num_results_t==0)
 {

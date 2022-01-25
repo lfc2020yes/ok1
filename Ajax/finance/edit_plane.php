@@ -112,7 +112,7 @@ $cost_2=trimc($_POST["summ1"]);
 $date_new=date("Y-m-").'01';
 mysql_time_query($link, 'update finance_plane set
     income="'.ht($cost_1).'",expense="'.ht($cost_2).'"
-    where id_a_company = "' . ht($id_company) . '" and date="'.$date_new.'"');
+    where id_a_company IN (' . ht($id_company) . ') and date="'.$date_new.'"');
 
 
 end_code:

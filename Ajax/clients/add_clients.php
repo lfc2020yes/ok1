@@ -114,6 +114,15 @@ $date_cl3=$date_end4[2].'-'.$date_end4[1].'-'.$date_end4[0];
 	{
 		$date_cl3='0000-00-00';
 	}
+
+	$org=$id_company;
+	//echo($_POST['offers'][0]["id_company"]);
+	if(is_numeric($_POST['offers'][0]["id_company"]))
+    {
+        $org=ht($_POST['offers'][0]["id_company"]);
+    }
+
+
 /*
 $date_end2=explode(".",htmlspecialchars(trim($_POST['offers'][0]["client_z_kogda"])));	
 $date_cl1=$date_end2[2].'-'.$date_end2[1].'-'.$date_end2[0];
@@ -146,7 +155,7 @@ if($_POST['radio_potential']==0)
 {
 //не потенциальный клиент
 mysql_time_query($link,'INSERT INTO k_clients (id_a_company,code,potential,latin,adress,id_company,id_user,fio,phone,email,date_birthday,datetime,comment,inter_seria,inter_number,inter_kem,inter_kogda,inter_srok,inner_seria,inner_number,inner_kem,inner_kogda,visible,pol) VALUES( 
-"'.ht($id_company).'","'.ht($code).'","0","'.ht($_POST['offers'][0]["client_latin"]).'",
+"'.ht($org).'","'.ht($code).'","0","'.ht($_POST['offers'][0]["client_latin"]).'",
 "'.ht($_POST['offers'][0]["client_adress"]).'","0",
 "'.ht($id_user).'",
 "'.ht($_POST['offers'][0]["client_fio"]).'",
@@ -189,24 +198,24 @@ if($_POST['radio_potential']==1)
 {
 	//потенциальный клиент
 	mysql_time_query($link,'INSERT INTO k_clients (id_a_company,code,potential,latin,adress,id_company,id_user,fio,phone,email,date_birthday,datetime,comment,inter_seria,inter_number,inter_kem,inter_kogda,inter_srok,inner_seria,inner_number,inner_kem,inner_kogda,visible,pol) VALUES( 
-"'.ht($id_company).'","'.ht($code).'","1","",
+"'.ht($org).'","'.ht($code).'","1","",
 "","0",
 "'.ht($id_user).'",
 "'.ht($_POST['offers'][0]["client_fio"]).'",
 "'.$phone_end.'",
 "'.ht($_POST['offers'][0]["client_email"]).'",
-"",
+"0000-00-00",
 "'.$date_.'",
 "'.ht($_POST['offers'][0]["client_comment"]).'",
 "",
 "",
 "",
+"0000-00-00",
+"0000-00-00",
 "",
 "",
 "",
-"",
-"",
-"",
+"0000-00-00",
 "1","1")');
 
 
@@ -220,7 +229,7 @@ if($_POST['radio_potential']==2)
 {
     //турист летит с покупателем
     mysql_time_query($link,'INSERT INTO k_clients (id_a_company,code,potential,latin,adress,id_company,id_user,fio,phone,email,date_birthday,datetime,comment,inter_seria,inter_number,inter_kem,inter_kogda,inter_srok,inner_seria,inner_number,inner_kem,inner_kogda,visible,pol) VALUES( 
-"'.ht($id_company).'","'.ht($code).'","2","'.ht($_POST['offers'][0]["client_latin"]).'",
+"'.ht($org).'","'.ht($code).'","2","'.ht($_POST['offers'][0]["client_latin"]).'",
 "","0",
 "'.ht($id_user).'",
 "'.ht($_POST['offers'][0]["client_fio"]).'",

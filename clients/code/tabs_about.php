@@ -103,7 +103,7 @@ $date_inn=$D_date_c[2].'.'.$D_date_c[1].'.'.$D_date_c[0];
 {
 	$date_inn='';
 }
-  $query_string.='<div style="margin-top: 30px; " class="js-potential-hide"><div class="input_2018"><label>Дата рождения<span>*</span></label><input name="offers[0][client_date]" value="'.ipost_($date_inn,"").'" id="date_124" class="input_new_2018 required  gloab gloab_turist date_picker_x" autocomplete="off" type="text"><div class="div_new_2018"><hr class="one"><hr class="two"><div class="oper_name"></div></div></div>
+  $query_string.='<div style="margin-top: 30px; '.$poten.'" class="js-potential-hide"><div class="input_2018"><label>Дата рождения<span>*</span></label><input name="offers[0][client_date]" value="'.ipost_($date_inn,"").'" id="date_124" class="input_new_2018 required  gloab gloab_turist date_picker_x" autocomplete="off" type="text"><div class="div_new_2018"><hr class="one"><hr class="two"><div class="oper_name"></div></div></div>
 </div>';
 
 	
@@ -395,7 +395,26 @@ $query_string.='<div class="pass_wh"><label>Адрес</label><span>'.rooo($row_
 	
 	$D = explode(' ', $row_score["datetime"]);
 	$query_string.='<div class="pass_wh"><label>Добавлен</label><span>'.MaskDate_D_M_Y_ss($D[0]).'</span></div>';
-	
+
+
+if($more_city==1)
+{
+    //выводить к какой организации относится тур
+
+    $result_cop = mysql_time_query($link, 'select * from a_company where id="'.ht($row_score["id_a_company"]).'"');
+    $num_results_cop = $result_cop->num_rows;
+
+    if ($num_results_cop != 0) {
+        $row_cop = mysqli_fetch_assoc($result_cop);
+        $task_cloud_block.=' <div class="issue-block oo_date">('.$row_cop["name_dop"].')</div>';
+
+        $query_string.='<div class="pass_wh"><label>Организация</label><span>'.($row_cop["name"] ?? 'незвестно').'</span></div>';
+    }
+
+
+}
+
+
 
 
 	$query_string.='</div><div class="px_right"><div class="strong_wh">Особенности туриста</div>';

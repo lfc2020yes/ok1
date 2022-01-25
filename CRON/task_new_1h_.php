@@ -23,7 +23,7 @@ for ($xx=0; $xx<3; $xx++)
 
 $date_ring=date_step_sql('Y-m-d','+'.$xx.'d');
 $date_birth=date_step_sql('-m-d','+'.$xx.'d');
-$result_8 = mysql_time_query($link,'SELECT A.id,A.fio,A.date_birthday,A.id_user,A.code,B.id_company FROM k_clients AS A,r_user as B WHERE ((A.potential=0)or(A.potential=1)) and  A.visible=1 and A.id_user=B.id and LOWER(A.date_birthday) LIKE "%'.$date_birth.'"');
+$result_8 = mysql_time_query($link,'SELECT A.id,A.fio,A.date_birthday,A.id_user,A.code,A.id_a_company FROM k_clients AS A,r_user as B WHERE ((A.potential=0)or(A.potential=1)) and  A.visible=1 and A.id_user=B.id and LOWER(A.date_birthday) LIKE "%'.$date_birth.'"');
 	
 $num_8 = $result_8->num_rows;	
 if($result_8)
@@ -32,7 +32,7 @@ if($result_8)
 			   $text_task="Поздравить с днем рождения";
 	  
 	  
-      TASK_SEND_NEW($date_ring.' 23:59:59',$text_task,$row_8["id"],1,7,$link,0, $row_8["id_user"],$row_8["id_company"]);	
+      TASK_SEND_NEW($date_ring.' 23:59:59',$text_task,$row_8["id"],1,7,$link,0, $row_8["id_user"],$row_8["id_a_company"]);
 	  echo $text_task.'-'.$row_8["id_user"].'-'.$row_8["id"].'<br>';
   }
 }
@@ -54,6 +54,7 @@ if($result_8)
     $date_end_plus3 = date_step_sql('Y-m-d', '+3d');
     $result_8 = mysql_time_query($link, 'SELECT DISTINCT A.id,A.id_user,
 (SELECT yy.start_fly FROM trips_fly_history AS yy WHERE yy.id_trips=A.id ORDER BY yy.datetime DESC LIMIT 0,1) AS start_fly,A.id_a_company FROM trips AS A,trips_fly_history AS D WHERE D.id_trips=A.id AND (SELECT ysy.start_fly FROM trips_fly_history AS ysy WHERE ysy.id_trips=A.id ORDER BY ysy.datetime DESC LIMIT 0,1)>="' . date("Y-m-d") . ' 00:00:00" and (SELECT ysy.start_fly FROM trips_fly_history AS ysy WHERE ysy.id_trips=A.id ORDER BY ysy.datetime DESC LIMIT 0,1)<"' . $date_end_plus3 . ' 00:00:00" AND A.visible=1');
+
     $num_8 = $result_8->num_rows;
     if ($result_8) {
         while ($row_8 = mysqli_fetch_assoc($result_8)) {

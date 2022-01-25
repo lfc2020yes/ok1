@@ -138,7 +138,7 @@ id_user,
 comment,                                                                 
 visible                                                                               
 ) VALUES( 
-"'.ht($id_company).'",
+"'.ht($_POST["org"]).'",
 "'.ht($_POST["vid_fin"]).'",
 "'.ht(((int)$_POST["kto_komy"]-1)).'",
 "'.ht((int)$_POST["type_fin"]-1).'",

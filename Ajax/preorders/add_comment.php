@@ -61,7 +61,7 @@ if ((count($_GET) != 3))
 
 
 $mas_responsible=array();
-$result_uu = mysql_time_query($link, 'select A.id,A.id_user  from preorders as A where A.id_company="'.$id_company.'" and A.id="' . ht($_GET['id']) . '"');
+$result_uu = mysql_time_query($link, 'select A.id,A.id_user  from preorders as A where A.id_company IN ('.$id_company.') and A.id="' . ht($_GET['id']) . '"');
 $num_results_uu = $result_uu->num_rows;
 
 if ($num_results_uu != 0) {

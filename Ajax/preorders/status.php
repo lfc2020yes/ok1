@@ -33,7 +33,7 @@ if ((!$role->permission('Обращения','U'))and($sign_admin!=1))
   goto end_code;
 }
 //**************************************************
-$result_url=mysql_time_query($link,'select A.id,A.status,A.id_user,B.name from preorders as A,preorders_status as B where B.number=A.status and B.id_company="'.$id_company.'" and A.id="'.ht($id).'" and A.id_company="'.$id_company.'" and A.id_user="'.$id_user.'"');
+$result_url=mysql_time_query($link,'select A.id,A.status,A.id_user,B.name from preorders as A,preorders_status as B where B.number=A.status and B.id_company IN ('. $id_group_company_list.') and A.id="'.ht($id).'" and A.id_company IN ('.$id_company.') and A.id_user="'.$id_user.'"');
         $num_results_custom_url = $result_url->num_rows;
         if($num_results_custom_url==0)
         {
@@ -62,7 +62,7 @@ if((!isset($_SESSION["user_id"]))or(!is_numeric(id_key_crypt_encrypt($_SESSION["
 
 
 //определим какой следующий статус идет
-$result_uust = mysql_time_query($link, 'select number,menu,name from preorders_status where id_company="' . ht($id_company) . '" and number>"'.$row_list["status"].'" and visible=1 order by displayOrder limit 1');
+$result_uust = mysql_time_query($link, 'select number,menu,name from preorders_status where id_company IN (' . ht( $id_group_company_list) . ') and number>"'.$row_list["status"].'" and visible=1 order by displayOrder limit 1');
 $num_results_uust = $result_uust->num_rows;
 $next=0;
 $status_new='';
@@ -104,7 +104,7 @@ if ($num_results_uust != 0) {
       
       id_booking="0"
       
-      where id_booking="'.ht($id).'" and id_a_company="'.$id_company.'"');
+      where id_booking="'.ht($id).'" and id_a_company IN ('.$id_company.')');
 
 
 //заносим историю по туру

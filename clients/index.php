@@ -361,9 +361,49 @@ echo'<div class="content" iu="'.$id_user.'">';
 
 		
      $os5 = array( "Не важно","Мои клиенты");
-	 $os_id5 = array("0","777");	
-		
-	 $result_work_zz=mysql_time_query($link,'Select a.id,a.name_small from r_user as a where a.id_role=2 and a.id_company="'.$id_company.'" and not(a.id="'.$id_user.'") order by a.name_small');
+	 $os_id5 = array("0","777");
+
+
+        $ccom='';
+        if(($more_city==1)and(is_numeric($id_company)))
+        {
+            $ccom= ' and ((a.id_company LIKE "'.ht($id_company).',%")or(a.id_company LIKE "%,'.ht($id_company).',%")or(a.id_company LIKE "%,'.ht($id_company).'")or(a.id_company="'.ht($id_company).'")) ';
+        } else
+        {
+            if(($more_city==1))
+            {
+
+
+                $ccom='';
+                $date_mass1 = explode(",", ht($id_company));
+
+
+                for ($i = 0; $i < count($date_mass1); $i++) {
+
+                    if($ccom=='')
+                    {
+                        $ccom=' and ( ((a.id_company LIKE "'.ht($date_mass1[$i]).',%")or(a.id_company LIKE "%,'.ht($date_mass1[$i]).',%")or(a.id_company LIKE "%,'.ht($date_mass1[$i]).'")or(a.id_company="'.ht($date_mass1[$i]).'")) ';
+                    } else
+                    {
+                        $ccom.='or ((a.id_company LIKE "'.ht($date_mass1[$i]).',%")or(a.id_company LIKE "%,'.ht($date_mass1[$i]).',%")or(a.id_company LIKE "%,'.ht($date_mass1[$i]).'")or(a.id_company="'.ht($date_mass1[$i]).'")) ';
+                    }
+
+                }
+                if($ccom!='')
+                {
+                    $ccom.=') ';
+                }
+
+
+            } else {
+
+                $ccom = '  and  a.id_company="' . $id_company . '" ';
+            }
+        }
+
+
+
+	 $result_work_zz=mysql_time_query($link,'Select a.id,a.name_small from r_user as a where a.id_role=2 '.$ccom.' and not(a.id="'.$id_user.'") order by a.name_small');
         $num_results_work_zz = $result_work_zz->num_rows;
 	    if($num_results_work_zz!=0)
 	    {
@@ -551,9 +591,48 @@ var dateParts1 = queryDate1.match(/(\d+)/g), realDate1 = new Date(dateParts1[0],
 
 		
      $os5 = array( "Не важно","Мои клиенты");
-	 $os_id5 = array("0","777");	
-		
-	 $result_work_zz=mysql_time_query($link,'Select a.id,a.name_small from r_user as a where a.id_role=2 and a.id_company="'.$id_company.'" and not(a.id="'.$id_user.'") order by a.name_small');
+	 $os_id5 = array("0","777");
+
+            $ccom='';
+            if(($more_city==1)and(is_numeric($id_company)))
+            {
+                $ccom= ' and ((a.id_company LIKE "'.ht($id_company).',%")or(a.id_company LIKE "%,'.ht($id_company).',%")or(a.id_company LIKE "%,'.ht($id_company).'")or(a.id_company="'.ht($id_company).'")) ';
+            } else
+            {
+                if(($more_city==1))
+                {
+
+
+                    $ccom='';
+                    $date_mass1 = explode(",", ht($id_company));
+
+
+                    for ($i = 0; $i < count($date_mass1); $i++) {
+
+                        if($ccom=='')
+                        {
+                            $ccom=' and ( ((a.id_company LIKE "'.ht($date_mass1[$i]).',%")or(a.id_company LIKE "%,'.ht($date_mass1[$i]).',%")or(a.id_company LIKE "%,'.ht($date_mass1[$i]).'")or(a.id_company="'.ht($date_mass1[$i]).'")) ';
+                        } else
+                        {
+                            $ccom.='or ((a.id_company LIKE "'.ht($date_mass1[$i]).',%")or(a.id_company LIKE "%,'.ht($date_mass1[$i]).',%")or(a.id_company LIKE "%,'.ht($date_mass1[$i]).'")or(a.id_company="'.ht($date_mass1[$i]).'")) ';
+                        }
+
+                    }
+                    if($ccom!='')
+                    {
+                        $ccom.=') ';
+                    }
+
+
+                } else {
+
+                    $ccom = '  and  a.id_company="' . $id_company . '" ';
+                }
+            }
+
+
+
+            $result_work_zz=mysql_time_query($link,'Select a.id,a.name_small from r_user as a where a.id_role=2 '.$ccom.' and not(a.id="'.$id_user.'") order by a.name_small');
         $num_results_work_zz = $result_work_zz->num_rows;
 	    if($num_results_work_zz!=0)
 	    {
@@ -670,9 +749,50 @@ var dateParts1 = queryDate1.match(/(\d+)/g), realDate1 = new Date(dateParts1[0],
        
 		
      $os5 = array( "Не важно","Мои клиенты");
-	 $os_id5 = array("0","777");	
-		
-	 $result_work_zz=mysql_time_query($link,'Select a.id,a.name_small from r_user as a where a.id_role=2 and a.id_company="'.$id_company.'" and not(a.id="'.$id_user.'") order by a.name_small');
+	 $os_id5 = array("0","777");
+
+        $os5 = array( "Не важно","Мои клиенты");
+        $os_id5 = array("0","777");
+
+        $ccom='';
+        if(($more_city==1)and(is_numeric($id_company)))
+        {
+            $ccom= ' and ((a.id_company LIKE "'.ht($id_company).',%")or(a.id_company LIKE "%,'.ht($id_company).',%")or(a.id_company LIKE "%,'.ht($id_company).'")or(a.id_company="'.ht($id_company).'")) ';
+        } else
+        {
+if(($more_city==1))
+{
+
+
+    $ccom='';
+    $date_mass1 = explode(",", ht($id_company));
+
+
+    for ($i = 0; $i < count($date_mass1); $i++) {
+
+        if($ccom=='')
+        {
+            $ccom=' and ( ((a.id_company LIKE "'.ht($date_mass1[$i]).',%")or(a.id_company LIKE "%,'.ht($date_mass1[$i]).',%")or(a.id_company LIKE "%,'.ht($date_mass1[$i]).'")or(a.id_company="'.ht($date_mass1[$i]).'")) ';
+        } else
+        {
+            $ccom.='or ((a.id_company LIKE "'.ht($date_mass1[$i]).',%")or(a.id_company LIKE "%,'.ht($date_mass1[$i]).',%")or(a.id_company LIKE "%,'.ht($date_mass1[$i]).'")or(a.id_company="'.ht($date_mass1[$i]).'")) ';
+        }
+
+    }
+    if($ccom!='')
+    {
+        $ccom.=') ';
+    }
+
+
+} else {
+
+    $ccom = '  and  a.id_company="' . $id_company . '" ';
+}
+
+        }
+
+	 $result_work_zz=mysql_time_query($link,'Select a.id,a.name_small from r_user as a where a.id_role=2 '.$ccom.' and not(a.id="'.$id_user.'") order by a.name_small');
         $num_results_work_zz = $result_work_zz->num_rows;
 	    if($num_results_work_zz!=0)
 	    {
@@ -828,12 +948,12 @@ $sql_su5_='';
 			
 	   if((isset($_GET["tabs"]))and($_GET["tabs"]==2))
 	   {
-		  $sql_p=' and b.id_a_company="'.$id_company.'" and ((b.potential=1)or(b.potential=2)) ';
-	      $sql_p_=' and a.id_a_company="'.$id_company.'" and ((a.potential=1)or(a.potential=2)) ';
+		  $sql_p=' and b.id_a_company IN ('.$id_company.') and ((b.potential=1)or(b.potential=2)) ';
+	      $sql_p_=' and a.id_a_company IN ('.$id_company.') and ((a.potential=1)or(a.potential=2)) ';
 	   } else
 	   {
-		  $sql_p=' and b.id_a_company="'.$id_company.'" and b.potential=0 ';
-	      $sql_p_=' and a.id_a_company="'.$id_company.'" and a.potential=0 ';		   
+		  $sql_p=' and b.id_a_company IN ('.$id_company.') and b.potential=0 ';
+	      $sql_p_=' and a.id_a_company IN ('.$id_company.') and a.potential=0 ';
 	   }
 			
 			
@@ -1439,7 +1559,7 @@ b.place_name
   
   from trips as b,k_clients as t, trips_fly_history as xx'.$sql_dop.'
   
-  where t.id=b.id_shopper and b.shopper=1 and xx.id_trips=b.id and (SELECT ysy.start_fly FROM trips_fly_history AS ysy WHERE ysy.id_trips=b.id ORDER BY ysy.datetime DESC LIMIT 0,1)>="'.date("Y-m-d").' 00:00:00" and b.visible=1 and b.id_a_company="'.$id_company.'" '.$sql_su5.' 
+  where t.id=b.id_shopper and b.shopper=1 and xx.id_trips=b.id and (SELECT ysy.start_fly FROM trips_fly_history AS ysy WHERE ysy.id_trips=b.id ORDER BY ysy.datetime DESC LIMIT 0,1)>="'.date("Y-m-d").' 00:00:00" and b.visible=1 and b.id_a_company IN ('.$id_company.') '.$sql_su5.' 
 )
 
   UNION
@@ -1451,7 +1571,7 @@ Select
   
   from trips as b,k_clients as t, trips_fly_history as xx'.$sql_dop.'
   
-  where t.id=b.id_shopper and b.shopper=1 and xx.id_trips=b.id and (SELECT ysy.end_fly FROM trips_fly_history AS ysy WHERE ysy.id_trips=b.id ORDER BY ysy.datetime DESC LIMIT 0,1)>="'.date("Y-m-d").' 00:00:00" and b.visible=1 and b.id_a_company="'.$id_company.'" '.$sql_su5.' 
+  where t.id=b.id_shopper and b.shopper=1 and xx.id_trips=b.id and (SELECT ysy.end_fly FROM trips_fly_history AS ysy WHERE ysy.id_trips=b.id ORDER BY ysy.datetime DESC LIMIT 0,1)>="'.date("Y-m-d").' 00:00:00" and b.visible=1 and b.id_a_company IN ('.$id_company.') '.$sql_su5.' 
 )
 
 
@@ -1471,7 +1591,7 @@ Select
   
   from trips as b,k_clients as t, trips_fly_history as xx'.$sql_dop.'
   
-  where t.id=b.id_shopper and b.shopper=1 and xx.id_trips=b.id and (SELECT ysy.start_fly FROM trips_fly_history AS ysy WHERE ysy.id_trips=b.id ORDER BY ysy.datetime DESC LIMIT 0,1)>="'.date("Y-m-d").' 00:00:00" and b.visible=1 and b.id_a_company="'.$id_company.'" '.$sql_su5.' 
+  where t.id=b.id_shopper and b.shopper=1 and xx.id_trips=b.id and (SELECT ysy.start_fly FROM trips_fly_history AS ysy WHERE ysy.id_trips=b.id ORDER BY ysy.datetime DESC LIMIT 0,1)>="'.date("Y-m-d").' 00:00:00" and b.visible=1 and b.id_a_company IN ('.$id_company.') '.$sql_su5.' 
 )
 
   UNION
@@ -1483,7 +1603,7 @@ Select
   
   from trips as b,k_clients as t, trips_fly_history as xx'.$sql_dop.'
   
-  where t.id=b.id_shopper and b.shopper=1 and xx.id_trips=b.id and (SELECT ysy.end_fly FROM trips_fly_history AS ysy WHERE ysy.id_trips=b.id ORDER BY ysy.datetime DESC LIMIT 0,1)>="'.date("Y-m-d").' 00:00:00" and b.visible=1 and b.id_a_company="'.$id_company.'" '.$sql_su5.' 
+  where t.id=b.id_shopper and b.shopper=1 and xx.id_trips=b.id and (SELECT ysy.end_fly FROM trips_fly_history AS ysy WHERE ysy.id_trips=b.id ORDER BY ysy.datetime DESC LIMIT 0,1)>="'.date("Y-m-d").' 00:00:00" and b.visible=1 and b.id_a_company IN ('.$id_company.') '.$sql_su5.' 
 )
 
 
@@ -1553,8 +1673,8 @@ echo'<div class="okss"><span class="title_book yop_booking"><i>'.$row__221["kol"
 		{
 		//организации
 		
-				  $sql_p=' and b.id_a_company="'.$id_company.'"';
-	      $sql_p_=' and a.id_a_company="'.$id_company.'"';	
+				  $sql_p=' and b.id_a_company IN ('.$id_company.')';
+	      $sql_p_=' and a.id_a_company IN ('.$id_company.')';
 		
 		 $sql_su1=' order by b.name ';
 	  $sql_su1_=' order by a.name';

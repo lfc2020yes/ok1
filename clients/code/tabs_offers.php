@@ -14,7 +14,7 @@ select DISTINCT Z.id from(
   
   from trips as A
 
-  where  A.visible=1 AND A.id_a_company="' . $id_company . '" and A.id_shopper="'.$id.'" and A.shopper=1
+  where  A.visible=1 AND A.id_a_company IN (' . $id_company . ') and A.id_shopper="'.$id.'" and A.shopper=1
 )
 
   UNION
@@ -27,7 +27,7 @@ select DISTINCT Z.id from(
   
   from trips as A,trips_clients_fly as B
 
-  where B.id_trips=A.id and A.visible=1 AND A.id_a_company="' . $id_company . '" and B.id_k_clients="'.$id.'"
+  where B.id_trips=A.id and A.visible=1 AND A.id_a_company IN (' . $id_company . ') and B.id_k_clients="'.$id.'"
 
 )
 

@@ -137,7 +137,7 @@ if (( isset($_COOKIE["su_2f".$id_user]))and(is_numeric($_COOKIE["su_2f".$id_user
 
 //расходы
 $rasx=0;
-$result_uu = mysql_time_query($link, 'select sum(A.sum) as ss  from finance_operation as A where A.income=0 and A.visible=1 and A.id_a_company="'.ht($id_company).'" and  A.date>="' . ht($date_start) . '" and  A.date<="' . ht($date_end) . '"');
+$result_uu = mysql_time_query($link, 'select sum(A.sum) as ss  from finance_operation as A where A.income=0 and A.visible=1 and A.id_a_company IN ('.ht($id_company).') and  A.date>="' . ht($date_start) . '" and  A.date<="' . ht($date_end) . '"');
 $num_results_uu = $result_uu->num_rows;
 
 if ($num_results_uu != 0) {
@@ -220,7 +220,7 @@ if($bonus!=0)
 
 
 $dox=0;
-$result_uu = mysql_time_query($link, 'select sum(A.sum) as ss  from finance_operation as A where A.income=1 and A.visible=1 and A.id_a_company="'.ht($id_company).'" and  A.date>="' . ht($date_start) . '" and  A.date<="' . ht($date_end) . '"');
+$result_uu = mysql_time_query($link, 'select sum(A.sum) as ss  from finance_operation as A where A.income=1 and A.visible=1 and A.id_a_company IN ('.ht($id_company).') and  A.date>="' . ht($date_start) . '" and  A.date<="' . ht($date_end) . '"');
 $num_results_uu = $result_uu->num_rows;
 
 if ($num_results_uu != 0) {
@@ -253,7 +253,7 @@ if($dox_bonus!=0)
 
 //вывод денег
 $viv=0;
-$result_uu = mysql_time_query($link, 'select sum(A.sum) as ss  from finance_operation as A where A.income=2 and A.visible=1 and A.id_a_company="'.ht($id_company).'" and  A.date>="' . ht($date_start) . '" and  A.date<="' . ht($date_end) . '"');
+$result_uu = mysql_time_query($link, 'select sum(A.sum) as ss  from finance_operation as A where A.income=2 and A.visible=1 and A.id_a_company IN ('.ht($id_company).') and  A.date>="' . ht($date_start) . '" and  A.date<="' . ht($date_end) . '"');
 $num_results_uu = $result_uu->num_rows;
 
 if ($num_results_uu != 0) {
@@ -279,7 +279,7 @@ if($pri<0)
 //планы за период
 $ss=0;
 $ss1=0;
-$result_uu = mysql_time_query($link, 'select sum(A.income) as ss,sum(A.expense) as ss1   from finance_plane as A where A.id_a_company="'.ht($id_company).'" and  A.date>="' . ht($date_start) . '" and  A.date<="' . ht($date_end) . '"');
+$result_uu = mysql_time_query($link, 'select sum(A.income) as ss,sum(A.expense) as ss1   from finance_plane as A where A.id_a_company IN ('.ht($id_company).') and  A.date>="' . ht($date_start) . '" and  A.date<="' . ht($date_end) . '"');
 $num_results_uu = $result_uu->num_rows;
 
 if ($num_results_uu != 0) {
@@ -423,7 +423,7 @@ for ($op=0; $op<count($c_op); $op++)
 
                                  }
 
-                                 $result_uu = mysql_time_query($link, 'select count(id) as ss from trips where visible=1 and id_a_company="'.ht($id_company).'" and datecreate>="'.$date_start_while.'" and datecreate<"'.$date_start_while22.'"');
+                                 $result_uu = mysql_time_query($link, 'select count(id) as ss from trips where visible=1 and id_a_company IN ('.ht($id_company).') and datecreate>="'.$date_start_while.'" and datecreate<"'.$date_start_while22.'"');
                                  $num_results_uu = $result_uu->num_rows;
                                  $views=0;
                                  if ($num_results_uu != 0) {
@@ -462,7 +462,7 @@ for ($op=0; $op<count($c_op); $op++)
 
                                  }
 
-                                 $result_uu = mysql_time_query($link, 'select count(id) as ss from trips where visible=1 and id_a_company="'.ht($id_company).'" and datecreate>="'.$date_start_while.'" and datecreate<"'.$date_start_while22.'"');
+                                 $result_uu = mysql_time_query($link, 'select count(id) as ss from trips where visible=1 and id_a_company IN ('.ht($id_company).') and datecreate>="'.$date_start_while.'" and datecreate<"'.$date_start_while22.'"');
                                  $num_results_uu = $result_uu->num_rows;
                                  $views=0;
                                  if ($num_results_uu != 0) {
@@ -489,7 +489,7 @@ for ($op=0; $op<count($c_op); $op++)
 			 if($c_op[$op]==1) {
 
 
-                 $result_uu = mysql_time_query($link, 'select distinct A.id_type,C.name,(select sum(b.sum) from finance_operation as b where b.income=1 and b.id_type=A.id_type and b.visible=1 and b.id_a_company="'.ht($id_company).'" and  b.date>="' . ht($date_start) . '" and  b.date<="' . ht($date_end) . '" ) as ss  from finance_operation as A, finance_operation_type as C where C.id=A.id_type and A.income=1 and A.visible=1 and A.id_a_company="'.ht($id_company).'" and  A.date>="' . ht($date_start) . '" and  A.date<="' . ht($date_end) . '"');
+                 $result_uu = mysql_time_query($link, 'select distinct A.id_type,C.name,(select sum(b.sum) from finance_operation as b where b.income=1 and b.id_type=A.id_type and b.visible=1 and b.id_a_company IN ('.ht($id_company).') and  b.date>="' . ht($date_start) . '" and  b.date<="' . ht($date_end) . '" ) as ss  from finance_operation as A, finance_operation_type as C where C.id=A.id_type and A.income=1 and A.visible=1 and A.id_a_company IN ('.ht($id_company).') and  A.date>="' . ht($date_start) . '" and  A.date<="' . ht($date_end) . '"');
                  $num_results_uu = $result_uu->num_rows;
 
                  if ($num_results_uu != 0) {
@@ -516,7 +516,7 @@ for ($op=0; $op<count($c_op); $op++)
 			 if($c_op[$op]==1) {
 
 
-                 $result_uu = mysql_time_query($link, 'select distinct A.id_type,C.name,(select sum(b.sum) from finance_operation as b where b.income=0 and b.id_type=A.id_type and b.visible=1 and b.id_a_company="'.ht($id_company).'" and  b.date>="' . ht($date_start) . '" and  b.date<="' . ht($date_end) . '" ) as ss  from finance_operation as A, finance_operation_type as C where C.id=A.id_type and A.income=0 and A.visible=1 and A.id_a_company="'.ht($id_company).'" and  A.date>="' . ht($date_start) . '" and  A.date<="' . ht($date_end) . '"');
+                 $result_uu = mysql_time_query($link, 'select distinct A.id_type,C.name,(select sum(b.sum) from finance_operation as b where b.income=0 and b.id_type=A.id_type and b.visible=1 and b.id_a_company IN ('.ht($id_company).') and  b.date>="' . ht($date_start) . '" and  b.date<="' . ht($date_end) . '" ) as ss  from finance_operation as A, finance_operation_type as C where C.id=A.id_type and A.income=0 and A.visible=1 and A.id_a_company IN ('.ht($id_company).') and  A.date>="' . ht($date_start) . '" and  A.date<="' . ht($date_end) . '"');
 
 
 

@@ -281,7 +281,7 @@ if($num_results_uu_dop!=0)
 			?>
 			<ul class="drop drop-search js-drop-search" style="transform: scaleY(0);">
 			<?
-		$result_work_zz=mysql_time_query($link,'Select a.* from booking_operator as a WHERE a.id_a_company="'.ht($id_company).'" and a.visible=1 ORDER BY a.eye DESC,a.id limit 0,15');				 
+		$result_work_zz=mysql_time_query($link,'Select a.* from booking_operator as a WHERE a.id_a_company IN ('.ht($id_group_company_list).') and a.visible=1 ORDER BY a.eye DESC,a.id limit 0,15');
         $num_results_work_zz = $result_work_zz->num_rows;
 	    if($num_results_work_zz!=0)
 	    {
@@ -309,7 +309,7 @@ if($num_results_uu_dop!=0)
     if($row_list["id_booking"]!=0) {
         $preo = $row_list["id_booking"];
         $preo_dop='style="display:inline-block;"';
-        $result_uu_dop = mysql_time_query($link, 'select a.id,a.date_create,a.id_type_clients,a.id_k_clients,a.id_country from preorders as a WHERE a.id_company="' . ht($id_company) . '" and a.visible=1 and a.id="' . ht($row_list["id_booking"]) . '"');
+        $result_uu_dop = mysql_time_query($link, 'select a.id,a.date_create,a.id_type_clients,a.id_k_clients,a.id_country from preorders as a WHERE a.id_company IN (' . ht($id_company) . ') and a.visible=1 and a.id="' . ht($row_list["id_booking"]) . '"');
         $num_results_uu_dop = $result_uu_dop->num_rows;
 
         if ($num_results_uu_dop != 0) {
@@ -361,7 +361,7 @@ if($num_results_uu_dop!=0)
 ?>
 			<ul class="drop drop-search js-drop-search" style="transform: scaleY(0);">
 			<?
-            $result_work_zz=mysql_time_query($link,'Select a.id,a.date_create,a.id_type_clients,a.id_k_clients,a.id_country from preorders as a WHERE a.id_company="'.ht($id_company).'" and a.visible=1 and a.id_user="'.ht($id_user).'" and not(a.status IN ("5","6")) ORDER BY a.date_create desc limit 0,15');
+            $result_work_zz=mysql_time_query($link,'Select a.id,a.date_create,a.id_type_clients,a.id_k_clients,a.id_country from preorders as a WHERE a.id_company IN ('.ht($id_company).') and a.visible=1 and a.id_user="'.ht($id_user).'" and not(a.status IN ("5","6")) ORDER BY a.date_create desc limit 0,15');
             $num_results_work_zz = $result_work_zz->num_rows;
             if($num_results_work_zz!=0)
             {
@@ -451,7 +451,7 @@ $query_string='<div style="margin-top: 30px;" class="input_doc_turs js-zindex">	
 $query_string.='<div class="left_drop list_2018 menu1_prime"><label class="'.$class_label.'">Рекламный источник<span>*</span></label><div class="select eddd zin_2019"><a class="slct" list_number="t1" data_src="'.$su_say55_val.'">'.$su_say55_name.'</a><ul class="drop">';
 
 	
-$result_8 = mysql_time_query($link,'select A.* from  booking_sourse as A where A.id_a_company="'.ht($id_company).'" and A.visible=1 order by A.displayOrder');
+$result_8 = mysql_time_query($link,'select A.* from  booking_sourse as A where A.id_a_company IN ('.ht($id_group_company_list).') and A.visible=1 order by A.displayOrder');
 		
 $num_8 = $result_8->num_rows;	
 //$row_1 = mysqli_fetch_assoc($result2);
@@ -626,12 +626,12 @@ $query_string_xx2='';
 if($row_list["shopper"]==1)
 {
     //частное
-    $result_t=mysql_time_query($link,'Select a.fio,a.id,a.code,a.latin,a.date_birthday,a.inter_seria,a.inter_number,a.inter_kem,a.inter_kogda,a.inter_srok,a.inner_seria,a.inner_number,a.inner_kem,a.inner_kogda,a.pol from k_clients as a where a.visible=1 and a.potential=0 and a.id="'.ht($row_list['id_shopper']).'" and a.id_a_company="'.ht($id_company).'"');
+    $result_t=mysql_time_query($link,'Select a.fio,a.id,a.code,a.latin,a.date_birthday,a.inter_seria,a.inter_number,a.inter_kem,a.inter_kogda,a.inter_srok,a.inner_seria,a.inner_number,a.inner_kem,a.inner_kogda,a.pol from k_clients as a where a.visible=1 and a.potential=0 and a.id="'.ht($row_list['id_shopper']).'" and a.id_a_company IN ('.ht($id_company).')');
 
 } else
 {
     //организация
-    $result_t=mysql_time_query($link,'Select a.* from k_organization as a where a.visible=1 and a.id="'.ht($row_list['id_shopper']).'" and a.id_a_company="'.ht($id_company).'"');
+    $result_t=mysql_time_query($link,'Select a.* from k_organization as a where a.visible=1 and a.id="'.ht($row_list['id_shopper']).'" and a.id_a_company IN ('.ht($id_company).')');
 }
 $num_results_t = $result_t->num_rows;
 if($num_results_t!=0)

@@ -213,7 +213,7 @@ if((isset($_POST['number_contract']))and(trim($_POST['number_contract'])!='')) {
     $stringx = trim($date_r[0]);
     $stringx = preg_replace('/[^0-9]/', '', $stringx);
 
-    $result_uu = mysql_time_query($link, 'select a.id from trips_contract as a,trips as b where a.id=b.id_contract and b.visible=1 and  a.id_a_company="' . ht($id_company) . '" and  a.number="' . ht($stringx) . '" and a.years="' . trim($date_r1[2]) . '" and not(b.id="'.ht($_POST["id"]).'")');
+    $result_uu = mysql_time_query($link, 'select a.id from trips_contract as a,trips as b where a.id=b.id_contract and b.visible=1 and  a.id_a_company IN (' . ht($id_group_company_list) . ') and  a.number="' . ht($stringx) . '" and a.years="' . trim($date_r1[2]) . '" and not(b.id="'.ht($_POST["id"]).'")');
     $num_results_uu = $result_uu->num_rows;
     $number_d = 0;
     if ($num_results_uu != 0) {
@@ -223,7 +223,7 @@ if((isset($_POST['number_contract']))and(trim($_POST['number_contract'])!='')) {
         //определяем какой следующий точно свободен в этом году по этой компании
 
 
-        $result_status2d = mysql_time_query($link, 'SELECT MAX(b.number) AS cc FROM trips_contract AS b,trips as a WHERE b.id_a_company="' . ht($id_company) . '" and a.visible=1 and a.id_contract=b.id and b.years="' . date('Y') . '"');
+        $result_status2d = mysql_time_query($link, 'SELECT MAX(b.number) AS cc FROM trips_contract AS b,trips as a WHERE b.id_a_company IN (' . ht($id_group_company_list) . ') and a.visible=1 and a.id_contract=b.id and b.years="' . date('Y') . '"');
         //echo('SELECT a.* FROM r_status AS a WHERE a.numer_status="'.$row1ss["status"].'" and a.id_system=13');
         if ($result_status2d->num_rows != 0) {
             $row_status2d = mysqli_fetch_assoc($result_status2d);

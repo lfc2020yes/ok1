@@ -122,7 +122,7 @@ $query_string.='<div class="left_drop list_2018 menu1_prime"><label class="activ
 //если начальный аванс был наличкой - то остальные платежи только наличкой
 //если начальный аванс был не наличкой - то все методы оплаты
 
-$result_8 = mysql_time_query($link,'select A.* from  preorders_status as A where A.visible=1 and A.id_company="'.$id_company.'" order by A.displayOrder');
+$result_8 = mysql_time_query($link,'select A.* from  preorders_status as A where A.visible=1 and A.id_company IN ('. $id_group_company_list.') order by A.displayOrder');
 
 $num_8 = $result_8->num_rows;
 //$row_1 = mysqli_fetch_assoc($result2);
@@ -165,7 +165,7 @@ $query_string .= '<div style="margin-top: 30px;" class="input_doc_turs js-zindex
 
         <ul class="drop drop-search js-drop-search" style="transform: scaleY(0);">';
 
-            $result_work_zz=mysql_time_query($link,'Select a.*,b.name,b.date_doc,a.id,a.shopper,a.id_shopper from trips as a,trips_contract as b WHERE a.visible=1 and a.id_booking=0 and a.id_a_company="'.$id_company.'" and a.id_contract=b.id ORDER BY a.datecreate DESC limit 0,30');
+            $result_work_zz=mysql_time_query($link,'Select a.*,b.name,b.date_doc,a.id,a.shopper,a.id_shopper from trips as a,trips_contract as b WHERE a.visible=1 and a.id_booking=0 and a.id_a_company IN ('.$id_company.') and a.id_contract=b.id ORDER BY a.datecreate DESC limit 0,30');
             $num_results_work_zz = $result_work_zz->num_rows;
             if($num_results_work_zz!=0)
             {
@@ -216,7 +216,7 @@ $query_string.='<div class="left_drop list_2018 menu1_prime"><label >Причи�
 //если начальный аванс был наличкой - то остальные платежи только наличкой
 //если начальный аванс был не наличкой - то все методы оплаты
 
-$result_8 = mysql_time_query($link,'select A.* from  preorders_reasons as A where A.visible=1 and A.id_company="'.$id_company.'"');
+$result_8 = mysql_time_query($link,'select A.* from  preorders_reasons as A where A.visible=1 and A.id_company IN ('. $id_group_company_list.')');
 
 $num_8 = $result_8->num_rows;
 //$row_1 = mysqli_fetch_assoc($result2);

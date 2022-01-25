@@ -147,19 +147,19 @@ for ($p=0; $p<3; $p++)
 		$result_8 = mysql_time_query($link,'
 select * from( 
 (
-select A.*,0 as flag from  task_new as A WHERE A.id_user_responsible="'.ht($id_user).'" and A.visible=1 and A.id_a_company="'.ht($id_company).'" and A.status=0 and  LOWER(A.ring_datetime) LIKE "'.$date_end_plus3.' %"
+select A.*,0 as flag from  task_new as A WHERE A.id_user_responsible="'.ht($id_user).'" and A.visible=1 and A.id_a_group IN ('.ht($id_group_u).') and A.status=0 and  LOWER(A.ring_datetime) LIKE "'.$date_end_plus3.' %"
 )
 UNION
 (
-select A.*,1 as flag from  task_new as A WHERE A.id_user_responsible LIKE "'.$id_user.',%" and A.visible=1 and A.id_a_company="'.ht($id_company).'" and A.status=0 and  LOWER(A.ring_datetime) LIKE "'.$date_end_plus3.' %"
+select A.*,1 as flag from  task_new as A WHERE A.id_user_responsible LIKE "'.$id_user.',%" and A.visible=1 and A.id_a_group IN ('.ht($id_group_u).') and A.status=0 and  LOWER(A.ring_datetime) LIKE "'.$date_end_plus3.' %"
 )
 UNION
 (
-select A.*,1 as flag from  task_new as A WHERE A.id_user_responsible LIKE "%,'.$id_user.',%" and A.visible=1 and A.id_a_company="'.ht($id_company).'" and A.status=0 and  LOWER(A.ring_datetime) LIKE "'.$date_end_plus3.' %"
+select A.*,1 as flag from  task_new as A WHERE A.id_user_responsible LIKE "%,'.$id_user.',%" and A.visible=1 and A.id_a_group IN ('.ht($id_group_u).') and A.status=0 and  LOWER(A.ring_datetime) LIKE "'.$date_end_plus3.' %"
 )
 UNION
 (
-select A.*,1 as flag from  task_new as A WHERE A.id_user_responsible LIKE "%,'.$id_user.'" and A.visible=1 and A.id_a_company="'.ht($id_company).'" and A.status=0 and  LOWER(A.ring_datetime) LIKE "'.$date_end_plus3.' %"
+select A.*,1 as flag from  task_new as A WHERE A.id_user_responsible LIKE "%,'.$id_user.'" and A.visible=1 and A.id_a_group IN ('.ht($id_group_u).') and A.status=0 and  LOWER(A.ring_datetime) LIKE "'.$date_end_plus3.' %"
 )
 
 
@@ -262,7 +262,7 @@ $result_txs=mysql_time_query($link,'Select a.name_user,a.timelast,a.id from r_us
 <div class="rating-model">
     <div class="model-1">
     <?
-    $result_uu = mysql_time_query($link, 'select A.* from rating as A where A.visible=1 and A.id_a_company="'.$id_company.'" order by A.displayOrder');
+    $result_uu = mysql_time_query($link, 'select A.* from rating as A where A.visible=1 and A.id_a_company IN ('.$id_company.') order by A.displayOrder');
     $query_rating='';
     if ($result_uu) {
         $i = 0;
@@ -274,7 +274,7 @@ $result_txs=mysql_time_query($link,'Select a.name_user,a.timelast,a.id from r_us
             if($row_uu["default"]==1) {  $hide='';  }
             echo'<div class="js-rating '.$hide.'" idrr="'.$row_uu["number"].'"> <span class="title_name">'.$row_uu["name"].'</span>';
             $date_start_plus3 = date_step_sql('Y-m-d', '-1d');
-            $result_uu1 = mysql_time_query($link, 'select A.*,B.name_user from users_rating as A,r_user as B where B.id=A.id_users and A.date="'.$date_start_plus3.'" and A.id_a_company="'.$id_company.'" and A.number_rating="' . ht($row_uu["number"]) . '" order by A.numbers');
+            $result_uu1 = mysql_time_query($link, 'select A.*,B.name_user from users_rating as A,r_user as B where B.id=A.id_users and A.date="'.$date_start_plus3.'" and A.id_a_company IN ('.$id_company.') and A.number_rating="' . ht($row_uu["number"]) . '" order by A.numbers');
 
             if ($result_uu1) {
                 $i = 0;
@@ -299,7 +299,7 @@ $win='';
 
 
                     $date_start_plus2 = date_step_sql('Y-m-', '-1m').'01';
-                    $result_uu2 = mysql_time_query($link, 'select A.id from users_rating_record as A where A.id_a_company="'.$id_company.'" and A.number_rating="' . ht($row_uu["number"]) . '" and A.date="'.$date_start_plus2.'" and A.id_users_winner="' . ht($row_uu1["id_users"]) . '"');
+                    $result_uu2 = mysql_time_query($link, 'select A.id from users_rating_record as A where A.id_a_company IN ('.$id_company.') and A.number_rating="' . ht($row_uu["number"]) . '" and A.date="'.$date_start_plus2.'" and A.id_users_winner="' . ht($row_uu1["id_users"]) . '"');
                     $num_results_uu2 = $result_uu2->num_rows;
 
                     if ($num_results_uu2 != 0) {
@@ -469,7 +469,7 @@ $date_endr=date_step_sql('Y-m-', '+1m').'01';
 $ssr=0;
 
 //какой план должен быть
-$result_uur = mysql_time_query($link, 'select sum(A.income) as ss   from finance_plane as A where A.id_a_company="'.ht($id_company).'" and  A.date>="' . ht($date_startr) . '" and  A.date<"' . ht($date_endr) . '"');
+$result_uur = mysql_time_query($link, 'select sum(A.income) as ss   from finance_plane as A where A.id_a_company IN ('.ht($id_company).') and  A.date>="' . ht($date_startr) . '" and  A.date<"' . ht($date_endr) . '"');
 $num_results_uur = $result_uur->num_rows;
 
 if ($num_results_uur != 0) {
@@ -498,7 +498,7 @@ if($ssr!=0) {
 
 //кол-во проданный туров в этом месяце
 $views=0;
-$result_uu = mysql_time_query($link, 'select count(id) as ss from trips where visible=1 and id_a_company="'.ht($id_company).'" and datecreate>="'.$date_startr.'" and datecreate<"'.$date_endr.'"');
+$result_uu = mysql_time_query($link, 'select count(id) as ss from trips where visible=1 and id_a_company IN ('.ht($id_company).') and datecreate>="'.$date_startr.'" and datecreate<"'.$date_endr.'"');
 
 
 $num_results_uu = $result_uu->num_rows;
@@ -539,7 +539,7 @@ if($procc<100) {
   $date_start=date_step_sql('Y-m-', '-1m').'01';
   $date_end=date_step_sql_more(date('Y-m-d'),'-1m');
 
-      $result_uurr = mysql_time_query($link, 'select count(id) as ss from trips where visible=1 and id_a_company="'.ht($id_company).'" and datecreate>="'.$date_start.'" and datecreate<"'.$date_end.'"');
+      $result_uurr = mysql_time_query($link, 'select count(id) as ss from trips where visible=1 and id_a_company IN ('.ht($id_company).') and datecreate>="'.$date_start.'" and datecreate<"'.$date_end.'"');
 
      // echo('select count(id) as ss from trips where visible=1 and id_a_company="'.ht($id_company).'" and datecreate>="'.$date_start.'" and datecreate<"'.$date_end.'"');
 
@@ -553,7 +553,7 @@ $views=0;
   $date_start=date('Y-m-').'01';
   $date_end=date('Y-m-d');
 
-      $result_uurr = mysql_time_query($link, 'select count(id) as ss from trips where visible=1 and id_a_company="'.ht($id_company).'" and datecreate>="'.$date_start.'" and datecreate<"'.$date_end.'"');
+      $result_uurr = mysql_time_query($link, 'select count(id) as ss from trips where visible=1 and id_a_company IN ('.ht($id_company).') and datecreate>="'.$date_start.'" and datecreate<"'.$date_end.'"');
 
       $num_results_uurr = $result_uurr->num_rows;
 $views=0;
@@ -594,7 +594,7 @@ echo'</div>';
 
     $sql_user_buy = " and A.datecreate>'" . $date_sql_start . "' and A.datecreate<'" . $date_sql_end . "'";
 
-    $result_uuh = mysql_time_query($link, 'select Z.* from (select DISTINCT A.id,A.comment,A.id_user,A.id_country,A.place_name,A.hotel from trips as A where A.id_a_company="'.ht($id_company).'" '.$sql_user_buy.') Z order by rand() limit 6');
+    $result_uuh = mysql_time_query($link, 'select Z.* from (select DISTINCT A.id,A.comment,A.id_user,A.id_country,A.place_name,A.hotel from trips as A where A.id_a_company IN ('.ht($id_company).') '.$sql_user_buy.') Z order by rand() limit 6');
     $num_results_uuh = $result_uuh->num_rows;
 
 
@@ -655,7 +655,7 @@ echo'</div>';
 
     //За последний месяц по фирме по всем работникам
     //пусть изучают что люди пишут и что они сами пишут
-    $result_uuh = mysql_time_query($link, 'select Z.* from (select DISTINCT A.id,A.comment,A.id_user,A.id_country,A.place_name,A.hotel from trips as A,trips_status_history_new as B where B.id_trips=A.id and A.id_a_company="'.ht($id_company).'" and B.action_history="2" and not(A.comment="") order by B.datetimes desc limit 30) Z order by rand() limit 2');
+    $result_uuh = mysql_time_query($link, 'select Z.* from (select DISTINCT A.id,A.comment,A.id_user,A.id_country,A.place_name,A.hotel from trips as A,trips_status_history_new as B where B.id_trips=A.id and A.id_a_company IN ('.ht($id_company).') and B.action_history="2" and not(A.comment="") order by B.datetimes desc limit 30) Z order by rand() limit 2');
     $num_results_uuh = $result_uuh->num_rows;
 
 
@@ -727,19 +727,19 @@ $p=0;
 		$result_8 = mysql_time_query($link,'
 select * from( 
 (
-select A.*,0 as flag from  task_new as A WHERE A.id_user_responsible="'.ht($id_user).'" and A.visible=1 and A.id_a_company="'.ht($id_company).'" and A.reminder=0 and A.status=0 and  LOWER(A.ring_datetime)<"'.date("Y-m-d").' 00:00:00"
+select A.*,0 as flag from  task_new as A WHERE A.id_user_responsible="'.ht($id_user).'" and A.visible=1 and A.id_a_group IN('.ht($id_group_u).') and A.reminder=0 and A.status=0 and  LOWER(A.ring_datetime)<"'.date("Y-m-d").' 00:00:00"
 )
 UNION
 (
-select A.*,1 as flag from  task_new as A WHERE A.id_user_responsible LIKE "'.$id_user.',%" and A.visible=1 and A.id_a_company="'.ht($id_company).'" and A.reminder=0 and A.status=0 and  LOWER(A.ring_datetime)<"'.date("Y-m-d").' 00:00:00"
+select A.*,1 as flag from  task_new as A WHERE A.id_user_responsible LIKE "'.$id_user.',%" and A.visible=1 and A.id_a_group IN('.ht($id_group_u).') and A.reminder=0 and A.status=0 and  LOWER(A.ring_datetime)<"'.date("Y-m-d").' 00:00:00"
 )
 UNION
 (
-select A.*,1 as flag from  task_new as A WHERE A.id_user_responsible LIKE "%,'.$id_user.',%" and A.visible=1 and A.id_a_company="'.ht($id_company).'" and A.reminder=0 and A.status=0 and  LOWER(A.ring_datetime)<"'.date("Y-m-d").' 00:00:00"
+select A.*,1 as flag from  task_new as A WHERE A.id_user_responsible LIKE "%,'.$id_user.',%" and A.visible=1 and A.id_a_group IN('.ht($id_group_u).') and A.reminder=0 and A.status=0 and  LOWER(A.ring_datetime)<"'.date("Y-m-d").' 00:00:00"
 )
 UNION
 (
-select A.*,1 as flag from  task_new as A WHERE A.id_user_responsible LIKE "%,'.$id_user.'" and A.visible=1 and A.id_a_company="'.ht($id_company).'" and A.reminder=0 and A.status=0 and LOWER(A.ring_datetime)<"'.date("Y-m-d").' 00:00:00"
+select A.*,1 as flag from  task_new as A WHERE A.id_user_responsible LIKE "%,'.$id_user.'" and A.visible=1 and A.id_a_group IN('.ht($id_group_u).') and A.reminder=0 and A.status=0 and LOWER(A.ring_datetime)<"'.date("Y-m-d").' 00:00:00"
 )
 
 
@@ -858,13 +858,20 @@ if($sign_admin==1)
 }
 $sql_order = ' order by A.datecreate DESC';
  $sql_su7 = ' AND A.id_a_company="' . $id_company . '" ';
-$sql_k = 'Select 
+
+    $sql_su7 = ' AND A.id_a_company IN (' . $id_company . ') ';
+
+
+    $sql_k = 'Select
   
-  DISTINCT A.id
+ DISTINCT A.id
   
   from trips as A
   
   where A.visible=1 ' . $sql_su5_search . ' ' . $sql_su7 . ' ' . $sql_order . ' limit 0,10';
+
+
+//echo($sql_k);
 
 $result_t2 = mysql_time_query($link, $sql_k);
 
@@ -883,14 +890,14 @@ if($num_results_t2!=0) {
 
         $row_88= mysqli_fetch_assoc($result_t2);
 
-        $result_uuy = mysql_time_query($link, 'select A.id,A.discount,A.doc, A.id_user,A.shopper,A.id_shopper,A.id_contract,A.comment,A.number_to,A.hotel,A.id_country,A.place_name,A.date_start,A.date_end,A.number_to,A.id_contract,A.cost_client,A.id_exchange,A.cost_operator_exchange,A.cost_operator,A.cost_client_exchange,A.buy_clients,A.buy_operator,A.paid_operator,A.paid_operator_rates,A.exchange_rates,A.paid_client,A.paid_client_rates,A.date_prepaid,A.comment,A.status_admin from trips as A where A.id="' . ht($row_88['id']) . '"');
+        $result_uuy = mysql_time_query($link, 'select A.id,A.discount,A.doc,A.id_a_company, A.id_user,A.shopper,A.id_shopper,A.id_contract,A.comment,A.number_to,A.hotel,A.id_country,A.place_name,A.date_start,A.date_end,A.number_to,A.id_contract,A.cost_client,A.id_exchange,A.cost_operator_exchange,A.cost_operator,A.cost_client_exchange,A.buy_clients,A.buy_operator,A.paid_operator,A.paid_operator_rates,A.exchange_rates,A.paid_client,A.paid_client_rates,A.date_prepaid,A.comment,A.status_admin from trips as A where A.id="' . ht($row_88['id']) . '"');
         $num_results_uuy = $result_uuy->num_rows;
 
         if ($num_results_uuy != 0) {
             $row_8 = mysqli_fetch_assoc($result_uuy);
         }
 
-
+//echo($row_8["id_a_company"]);
 
         include $url_system.'tours/code/block_tours.php';
         echo($task_cloud_block);

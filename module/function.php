@@ -1,5 +1,8 @@
 <?
 
+
+
+
 //формирование списка кому нужны новые уведомления с учетом руводства
 function notif_role_list($id_user,$id_user_send,$text,$number_notif)
 {
@@ -1611,6 +1614,27 @@ function AddHistoryTask($action,$id_user,$id_task,$comment,$text,$date,$komy,$te
 	
 }
 
+function GETGROUPCO($id_company)
+{
+    $id_group_u1 = 0;
+
+    if (is_numeric(trim($id_company))) {
+        $mass_city[0] = $id_company;
+    } else {
+        $mass_city = explode(",", ht($id_company));
+    }
+
+        $result_gr = mysql_time_query($link, 'select id_group from a_company_group where id_a_company="' . ht($mass_city[0]) . '"');
+        $num_results_gr = $result_gr->num_rows;
+
+        if ($num_results_gr != 0) {
+            $row_gr = mysqli_fetch_assoc($result_gr);
+            $id_group_u1 = $row_gr["id_group"];
+        }
+        return $id_group_u1;
+}
+
+
 //ВЫПОЛНИТЬ АВТОМАТИЧЕСКИ ЗАДАЧУ ЕСЛИ ТАКАЯ ЕСТЬ В СИСТЕМЕ
 function TASK_MAKE($id_object,$action,$link,$id_company,$id_user)
 {
@@ -1620,7 +1644,7 @@ function TASK_MAKE($id_object,$action,$link,$id_company,$id_user)
     //проверим может уже есть такая напоминалка то оставляем ее или добавляем новую
     $result_8 = mysql_time_query($link, 'SELECT A.id,A.id_user_responsible FROM task_new AS A WHERE 
 	
-	A.id_a_company="' . ht($id_company) . '" and 
+	A.id_a_group IN (' . GETGROUPCO($id_company) . ') and 
 	A.action="' . ht($action) . '" and
 	A.id_object="' . ht($id_object) . '" and A.visible=1 and A.status=0');
 
@@ -1668,7 +1692,7 @@ function TASK_SEND_NEW_NO_REMINDER($ring,$text,$id_object,$click,$action,$link,$
     //проверим может уже есть такая напоминалка то оставляем ее или добавляем новую
     $result_8 = mysql_time_query($link,'SELECT A.id FROM task_new AS A WHERE A.id_user="'.ht($id_user).'" and 
 	
-	A.id_a_company="'.ht($id_company).'" and 
+	A.id_a_group IN ('.GETGROUPCO($id_company).') and 
 	A.ring_datetime="'.ht($ring).'" and 
 	A.reminder=0 and
 	A.comment="'.ht($text).'" and
@@ -1681,7 +1705,7 @@ function TASK_SEND_NEW_NO_REMINDER($ring,$text,$id_object,$click,$action,$link,$
     {
 
 
-        mysql_time_query($link,'INSERT INTO task_new (id_a_company,id_user,id_user_responsible,reminder,ring_datetime,comment,date_create,visible,status,click,action,id_object) VALUES ("'.ht($id_company).'","'.ht($id_user).'","'.ht($id_user_responsible).'",0,
+        mysql_time_query($link,'INSERT INTO task_new (id_a_group,id_user,id_user_responsible,reminder,ring_datetime,comment,date_create,visible,status,click,action,id_object) VALUES ("'.GETGROUPCO($id_company).'","'.ht($id_user).'","'.ht($id_user_responsible).'",0,
 		"'.ht($ring).'",
 		"'.ht($text).'",
 		"'.$today.'",
@@ -1731,7 +1755,7 @@ function TASK_SEND_NEW($ring,$text,$id_object,$click,$action,$link,$id_user,$id_
 	//проверим может уже есть такая напоминалка то оставляем ее или добавляем новую
 	$result_8 = mysql_time_query($link,'SELECT A.id FROM task_new AS A WHERE A.id_user="'.ht($id_user).'" and 
 	
-	A.id_a_company="'.ht($id_company).'" and 
+	A.id_a_group IN ('.GETGROUPCO($id_company).') and 
 	A.ring_datetime="'.ht($ring).'" and 
 	A.reminder=1 and
 	A.comment="'.ht($text).'" and
@@ -1744,7 +1768,7 @@ $num_8 = $result_8->num_rows;
 	{
 	
 	
-		mysql_time_query($link,'INSERT INTO task_new (id_a_company,id_user,id_user_responsible,reminder,ring_datetime,comment,date_create,visible,status,click,action,id_object) VALUES ("'.ht($id_company).'","'.ht($id_user).'","'.ht($id_user_responsible).'",1,
+		mysql_time_query($link,'INSERT INTO task_new (id_a_group,id_user,id_user_responsible,reminder,ring_datetime,comment,date_create,visible,status,click,action,id_object) VALUES ("'.GETGROUPCO($id_company).'","'.ht($id_user).'","'.ht($id_user_responsible).'",1,
 		"'.ht($ring).'",
 		"'.ht($text).'",
 		"'.$today.'",
@@ -4672,11 +4696,23 @@ users_hierarchy(7,$link)  [2,48]
 function users_hierarchy($id_user,$link)
 {
 	    $subor = array();
-		$result_work_zz=mysql_time_query($link,'Select a.id_user_subordinates from r_user_subordinates as a,r_user as b where b.id=a.id_user_subordinates and b.enabled=1 and a.id_user="'.$id_user.'"');
+
+	    global $more_city;
+	    global $id_company;
+
+	    $ccom='';
+    if(($more_city==1)and(is_numeric($id_company)))
+    {
+        $ccom= ' and ((b.id_company LIKE "'.ht($id_company).',%")or(b.id_company LIKE "%,'.ht($id_company).',%")or(b.id_company LIKE "%,'.ht($id_company).'")or(b.id_company="'.ht($id_company).'")) ';
+    }
+
+
+		$result_work_zz=mysql_time_query($link,'Select a.id_user_subordinates from r_user_subordinates as a,r_user as b where b.id=a.id_user_subordinates '.$ccom.' and b.enabled=1 and a.id_user="'.$id_user.'"');
+
+
         $num_results_work_zz = $result_work_zz->num_rows;
 	    if($num_results_work_zz!=0)
 	    {
-
 		   for ($i=0; $i<$num_results_work_zz; $i++)
 		   {			   			  			   
 			   $row_work_zz = mysqli_fetch_assoc($result_work_zz);
@@ -4684,7 +4720,6 @@ function users_hierarchy($id_user,$link)
 			   array_push($subor,$row_work_zz['id_user_subordinates']);
 			   if($row_work_zz['id_user_subordinates']!=$id_user)
 			   {
-				   //echo("!");
 				   //print_r (users_hierarchy($row_work_zz['id_user_subordinates'],$link));
 				   $subor=array_merge($subor, (users_hierarchy($row_work_zz['id_user_subordinates'],$link)));
 			   }
@@ -4763,8 +4798,37 @@ function all_chief($id_user,$link)
 //получить иерархию подчиненных для пользователя
 function all_manager($id_company,$link)
 {
+
+
+    $LIKE='';
+    if(is_numeric($id_company))
+    {
+        $LIKE=' and ((a.id_company LIKE "'.ht($id_company).',%")or(a.id_company LIKE "%,'.ht($id_company).',%")or(a.id_company LIKE "%,'.ht($id_company).'")or(a.id_company="'.ht($id_company).'")) ';
+    } else
+    {
+        $date_new_ada = explode(",", ht($id_company));
+        for ($ada = 0; $ada < count($date_new_ada); $ada++) {
+
+            if($LIKE=='')
+            {
+                $LIKE=' and ( ((a.id_company LIKE "'.ht($date_new_ada[$ada]).',%")or(a.id_company LIKE "%,'.ht($date_new_ada[$ada]).',%")or(a.id_company LIKE "%,'.ht($date_new_ada[$ada]).'")or(a.id_company="'.ht($date_new_ada[$ada]).'")) ';
+            } else
+            {
+                $LIKE.='or ((a.id_company LIKE "'.ht($date_new_ada[$ada]).',%")or(a.id_company LIKE "%,'.ht($date_new_ada[$ada]).',%")or(a.id_company LIKE "%,'.ht($date_new_ada[$ada]).'")or(a.id_company="'.ht($date_new_ada[$ada]).'")) ';
+            }
+
+        }
+        if($LIKE!='')
+        {
+            $LIKE.=') ';
+        }
+
+
+    }
+
+
 	    $subor = array();
-		$result_work_zz=mysql_time_query($link,'Select a.id from r_user as a where a.id_role IN ("2", "3") and a.id_company="'.$id_company.'"');				 
+		$result_work_zz=mysql_time_query($link,'Select a.id from r_user as a where a.id_role IN ("2", "3") '.$LIKE);
         $num_results_work_zz = $result_work_zz->num_rows;
 	    if($num_results_work_zz!=0)
 	    {
@@ -4802,7 +4866,38 @@ function adminOC($link,$id_company)
 function adminAC($link,$id_company)
 {
  $mass_a=array();
-   $result_authority=mysql_time_query($link,'select C.id from r_user as C,r_role as D where C.id_company="'.htmlspecialchars(trim($id_company)).'" and D.id=C.id_role and D.role="admin_company"');
+
+
+    $LIKE='';
+    if(is_numeric($id_company))
+    {
+        $LIKE=' and ((C.id_company LIKE "'.ht($id_company).',%")or(C.id_company LIKE "%,'.ht($id_company).',%")or(C.id_company LIKE "%,'.ht($id_company).'")or(C.id_company="'.ht($id_company).'")) ';
+    } else
+    {
+        $date_new_ada = explode(",", ht($id_company));
+        for ($ada = 0; $ada < count($date_new_ada); $ada++) {
+
+            if($LIKE=='')
+            {
+                $LIKE=' and ( ((C.id_company LIKE "'.ht($date_new_ada[$ada]).',%")or(C.id_company LIKE "%,'.ht($date_new_ada[$ada]).',%")or(C.id_company LIKE "%,'.ht($date_new_ada[$ada]).'")or(C.id_company="'.ht($date_new_ada[$ada]).'")) ';
+            } else
+            {
+                $LIKE.='or ((C.id_company LIKE "'.ht($date_new_ada[$ada]).',%")or(C.id_company LIKE "%,'.ht($date_new_ada[$ada]).',%")or(C.id_company LIKE "%,'.ht($date_new_ada[$ada]).'")or(C.id_company="'.ht($date_new_ada[$ada]).'")) ';
+            }
+
+        }
+        if($LIKE!='')
+        {
+            $LIKE.=') ';
+        }
+
+
+    }
+
+
+
+
+   $result_authority=mysql_time_query($link,'select C.id from r_user as C,r_role as D where D.id=C.id_role and D.role="admin_company" '.$LIKE);
    $num_results_authority = $result_authority->num_rows; 
    
    if($num_results_authority<>0)
@@ -4867,8 +4962,37 @@ function companyA($link,$id_user)
 //получение пользователей управления которые должны получить уведомление по номеру уведомления но в определенной компании
 function UserNotNumberCompany($number,$id_company,$link)
 {
+
+    $LIKE='';
+    if(is_numeric($id_company))
+    {
+        $LIKE=' and ((C.id_company LIKE "'.ht($id_company).',%")or(C.id_company LIKE "%,'.ht($id_company).',%")or(C.id_company LIKE "%,'.ht($id_company).'")or(C.id_company="'.ht($id_company).'")) ';
+    } else
+    {
+        $date_new_ada = explode(",", ht($id_company));
+        for ($ada = 0; $ada < count($date_new_ada); $ada++) {
+
+            if($LIKE=='')
+            {
+                $LIKE=' and ( ((C.id_company LIKE "'.ht($date_new_ada[$ada]).',%")or(C.id_company LIKE "%,'.ht($date_new_ada[$ada]).',%")or(C.id_company LIKE "%,'.ht($date_new_ada[$ada]).'")or(C.id_company="'.ht($date_new_ada[$ada]).'")) ';
+            } else
+            {
+                $LIKE.='or ((C.id_company LIKE "'.ht($date_new_ada[$ada]).',%")or(C.id_company LIKE "%,'.ht($date_new_ada[$ada]).',%")or(C.id_company LIKE "%,'.ht($date_new_ada[$ada]).'")or(C.id_company="'.ht($date_new_ada[$ada]).'")) ';
+            }
+
+        }
+        if($LIKE!='')
+        {
+            $LIKE.=') ';
+        }
+
+
+    }
+
+
+
     $mass_a=array();
-    $result_authority=mysql_time_query($link,'SELECT C.id FROM a_notification_user_option AS A,a_notification_type_role AS B,r_user AS C WHERE A.number_type="'.ht($number).'" AND A.val=1 AND C.id=A.id_user AND C.id_role=B.id_role AND B.number_type="'.ht($number).'" AND B.val=1 AND C.id_company="'.ht($id_company).'"');
+    $result_authority=mysql_time_query($link,'SELECT C.id FROM a_notification_user_option AS A,a_notification_type_role AS B,r_user AS C WHERE A.number_type="'.ht($number).'" AND A.val=1 AND C.id=A.id_user AND C.id_role=B.id_role AND B.number_type="'.ht($number).'" AND B.val=1 '.$LIKE);
     $num_results_authority = $result_authority->num_rows;
 
     if($num_results_authority<>0)

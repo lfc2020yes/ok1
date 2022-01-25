@@ -75,17 +75,17 @@ if ((isset($_POST['preorders']["client_type"]))and(is_numeric($_POST['preorders'
               {
 		 case "1":{ 
 			 //частное лицо
-			 $sql_tt='Select b.id from k_clients as b where b.id="'.ht($_POST['preorders']['id_client']).'" and b.potential=0 and b.visible=1 and b.id_a_company="'.ht($id_company).'"';
+			 $sql_tt='Select b.id from k_clients as b where b.id="'.ht($_POST['preorders']['id_client']).'" and b.potential=0 and b.visible=1 and b.id_a_company IN ('.ht($id_company).')';
 			 break; 
                   }	
 		case "2":{ 
 			 //организация
-			 $sql_tt='Select b.id from k_organization as b where b.id="'.ht($_POST['preorders']['id_client']).'" and  b.visible=1 and b.id_a_company="'.ht($id_company).'"';
+			 $sql_tt='Select b.id from k_organization as b where b.id="'.ht($_POST['preorders']['id_client']).'" and  b.visible=1 and b.id_a_company IN ('.ht($id_company).')';
 			 break; 
                   }		
 		 case "3":{ 
 			 //потенциальный
-			 $sql_tt='Select b.id from k_clients as b where b.id="'.ht($_POST['preorders']['id_client']).'" and b.potential=1 and b.visible=1 and b.id_a_company="'.ht($id_company).'"';
+			 $sql_tt='Select b.id from k_clients as b where b.id="'.ht($_POST['preorders']['id_client']).'" and b.potential=1 and b.visible=1 and b.id_a_company IN ('.ht($id_company).')';
 			 break; 
                   }		
 		}
@@ -125,7 +125,7 @@ if(($_POST['preorders']["client_type"]==1)or($_POST['preorders']["client_type"]=
 
 
 mysql_time_query($link, 'INSERT INTO preorders(id_company,id_user,id_type_clients,id_k_clients,id_booking_sourse,id_country,text,id_mark,date_create,visible,status,id_reasons) VALUES( 
-"' . ht($id_company) . '",
+"' . ht($_POST['id_org']) . '",
 "' . ht($id_user) . '",
 "'. $type_c.'",
 "' . ht($_POST['preorders']['id_client']) . '",
@@ -181,7 +181,7 @@ if($sign_admin!=1)
 if(ht($_POST['preorders']["task"])==1)
 {
 
-    mysql_time_query($link,'INSERT INTO task_new (id_a_company,id_user,id_user_responsible,ring_datetime,comment,date_create,visible,status,click,action,id_object) VALUES ("'.$id_company.'","'.$id_user.'","'.$id_user.'","'.ht($_POST['date_sele_task_form2']).' '.ht($_POST['task_time_form2']).':00","'.ht($_POST['task_comment']).'","'.date("y.m.d").' '.date("H:i:s").'","1","0","1","20","'.$ID_N.'")');
+    mysql_time_query($link,'INSERT INTO task_new (id_a_group,id_user,id_user_responsible,ring_datetime,comment,date_create,visible,status,click,action,id_object) VALUES ("'.ht($id_group_u).'","'.$id_user.'","'.$id_user.'","'.ht($_POST['date_sele_task_form2']).' '.ht($_POST['task_time_form2']).':00","'.ht($_POST['task_comment']).'","'.date("y.m.d").' '.date("H:i:s").'","1","0","1","20","'.$ID_N.'")');
 
 
     $ID_N1=mysqli_insert_id($link);

@@ -286,7 +286,7 @@ $ID_N=mysqli_insert_id($link);
 if(ht($_POST['task'])==1)
 {	
 	
-	mysql_time_query($link,'INSERT INTO task_new (id_a_company,id_user,id_user_responsible,ring_datetime,comment,date_create,visible,status,click,action,id_object) VALUES ("'.$id_company.'","'.$id_user.'","'.$id_user.'","'.ht($_POST['date']).' '.ht($_POST['time']).':00","'.ht($_POST['comment']).'","'.date("y.m.d").' '.date("H:i:s").'","1","0","1","10","'.$ID_N.'")');
+	mysql_time_query($link,'INSERT INTO task_new (id_a_group,id_user,id_user_responsible,ring_datetime,comment,date_create,visible,status,click,action,id_object) VALUES ("'.$id_group_u.'","'.$id_user.'","'.$id_user.'","'.ht($_POST['date']).' '.ht($_POST['time']).':00","'.ht($_POST['comment']).'","'.date("y.m.d").' '.date("H:i:s").'","1","0","1","10","'.$ID_N.'")');
 	
 
 $ID_N1=mysqli_insert_id($link);

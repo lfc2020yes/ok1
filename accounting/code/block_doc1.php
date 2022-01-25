@@ -139,6 +139,20 @@ if($num_results_uu!=0)
     array_push($data1, $row_uu['name_user']);
 }
 
+
+$result_cop = mysql_time_query($link, 'select * from a_company where id="'.ht($row_88["id_a_company"]).'"');
+$num_results_cop = $result_cop->num_rows;
+
+if ($num_results_cop != 0) {
+    $row_cop = mysqli_fetch_assoc($result_cop);
+/*
+    $task_cloud_block.='<div class="pass_wh_trips pass_x"><label >Организация</label><span class="obi">'.$row_cop["name"].'</span></div>';
+    */
+    array_push($data1, $row_cop["name"]);
+}
+
+
+
 //$task_cloud_block.='</div>';
 /*
 	$task_cloud_block.='</div><div class="trips-b-user"><span class="label-task-gg ">Комментарий/последнее событие

@@ -59,7 +59,7 @@ if((!$role->permission('Договора','R'))and($sign_admin!=1))
 
 if(isset($_GET["id"])) {
 //если есть id то смотрим может ли он смотеть этот тур
-    $result_t = mysql_time_query($link, 'select A.id from trips as A where A.id_a_company="' . $id_company . '" and A.id_contract="' . ht($_GET['id']) . '" and A.visible=1');
+    $result_t = mysql_time_query($link, 'select A.id from trips as A where A.id_a_company IN (' . $id_company . ') and A.id_contract="' . ht($_GET['id']) . '" and A.visible=1');
     $num_results_t = $result_t->num_rows;
     if ($num_results_t == 0) {
         header404(322, $echo_r);
@@ -485,11 +485,11 @@ $('#date_table').val(date_all);
 if(isset($_GET["id"]))
 {
 
-    $sql_k='Select DISTINCT A.id from preorders as A where A.visible=1 AND A.id="'.ht($_GET["id"]).'" and A.id_company="'.$id_company.'" ';
+    $sql_k='Select DISTINCT A.id from preorders as A where A.visible=1 AND A.id="'.ht($_GET["id"]).'" and A.id_company IN ('.$id_company.') ';
 //echo $sql_k;
     $result_t2 = mysql_time_query($link, $sql_k);
 
-    $sql_count = 'Select count(DISTINCT A.id) as kol from preorders as A where A.visible=1 AND A.id="'.ht($_GET["id"]).'" and A.id_company="'.$id_company.'"';
+    $sql_count = 'Select count(DISTINCT A.id) as kol from preorders as A where A.visible=1 AND A.id="'.ht($_GET["id"]).'" and A.id_company IN ('.$id_company.')';
 
 
 } else {
@@ -503,7 +503,7 @@ if(isset($_GET["id"]))
         $sql_su4 = '';
         $sql_su5 = '';
         $sql_su5_search = '';
-        $sql_su7 = ' AND A.id_a_company="' . $id_company . '" ';
+        $sql_su7 = ' AND A.id_a_company IN (' . $id_company . ') ';
 
         //********************************************************************
 //********************************************************************

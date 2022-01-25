@@ -41,7 +41,7 @@ if ((count($_GET) != 1)or(!isset($_GET["id_buy"]))or((!is_numeric($_GET["id_buy"
 
 
 $status_admin=0;
-$result_t=mysql_time_query($link,'Select b.* from finance_operation as b where b.id="'.htmlspecialchars(trim($_GET['id_buy'])).'" and b.visible=1 and b.id_a_company="'.ht($id_company).'"');
+$result_t=mysql_time_query($link,'Select b.* from finance_operation as b where b.id="'.htmlspecialchars(trim($_GET['id_buy'])).'" and b.visible=1 and b.id_a_company IN ('.ht($id_company).')');
 $num_results_t = $result_t->num_rows;
 if($num_results_t==0)
 {	

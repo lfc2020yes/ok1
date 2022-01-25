@@ -120,45 +120,47 @@ return $endText;
 if($query!='')
 {
 
+    //echo('!'.$id_group_company_list);
+
   $sql='
 
 select * from(     
    (   
-SELECT A.id,A.name FROM booking_operator AS A where A.visible=1 AND LOWER(A.name) LIKE "'.$query.'%"   
+SELECT A.id,A.name FROM booking_operator AS A where A.id_a_company IN ('.ht($id_group_company_list).') AND A.visible=1 AND LOWER(A.name) LIKE "'.$query.'%"   
 )
 UNION
 (
 
-SELECT A.id,A.name FROM booking_operator AS A where A.visible=1 AND LOWER(A.name) LIKE "%'.$query.'%"
+SELECT A.id,A.name FROM booking_operator AS A where A.id_a_company IN ('.ht($id_group_company_list).') AND A.visible=1 AND LOWER(A.name) LIKE "%'.$query.'%"
 AND A.id NOT IN 
-(SELECT A.id FROM booking_operator A WHERE A.visible=1 AND LOWER(A.name) LIKE "'.$query.'%")
+(SELECT A.id FROM booking_operator A WHERE A.id_a_company IN ('.ht($id_group_company_list).') AND A.visible=1 AND LOWER(A.name) LIKE "'.$query.'%")
 ) 
 
 UNION
 (
-SELECT A.id,A.name FROM booking_operator AS A where A.visible=1 AND LOWER(A.name_search) LIKE "%'.$query.'%" 
+SELECT A.id,A.name FROM booking_operator AS A where A.id_a_company IN ('.ht($id_group_company_list).') AND A.visible=1 AND LOWER(A.name_search) LIKE "%'.$query.'%" 
 AND A.id NOT IN 
-(SELECT A.id FROM booking_operator A WHERE A.visible=1 AND LOWER(A.name) LIKE "'.$query.'%")
+(SELECT A.id FROM booking_operator A WHERE A.id_a_company IN ('.ht($id_group_company_list).') AND A.visible=1 AND LOWER(A.name) LIKE "'.$query.'%")
 AND A.id NOT IN 
-(SELECT A.id FROM booking_operator A WHERE A.visible=1 AND LOWER(A.name) LIKE "%'.$query.'%")
+(SELECT A.id FROM booking_operator A WHERE A.id_a_company IN ('.ht($id_group_company_list).') AND A.visible=1 AND LOWER(A.name) LIKE "%'.$query.'%")
 ) 
 
 UNION
 (
-SELECT A.id,A.name FROM booking_operator AS A where A.visible=1 AND LOWER(A.name_search) LIKE "'.$query.'%" 
+SELECT A.id,A.name FROM booking_operator AS A where A.id_a_company IN ('.ht($id_group_company_list).') AND A.visible=1 AND LOWER(A.name_search) LIKE "'.$query.'%" 
 AND A.id NOT IN 
-(SELECT A.id FROM booking_operator A WHERE A.visible=1 AND LOWER(A.name_search) LIKE "%'.$query.'%")
+(SELECT A.id FROM booking_operator A WHERE A.id_a_company IN ('.ht($id_group_company_list).') AND A.visible=1 AND LOWER(A.name_search) LIKE "%'.$query.'%")
 AND A.id NOT IN 
-(SELECT A.id FROM booking_operator A WHERE A.visible=1 AND LOWER(A.name) LIKE "'.$query.'%")
+(SELECT A.id FROM booking_operator A WHERE A.id_a_company IN ('.ht($id_group_company_list).') AND A.visible=1 AND LOWER(A.name) LIKE "'.$query.'%")
 AND A.id NOT IN 
-(SELECT A.id FROM booking_operator A WHERE A.visible=1 AND LOWER(A.name) LIKE "%'.$query.'%")
+(SELECT A.id FROM booking_operator A WHERE A.id_a_company IN ('.ht($id_group_company_list).') AND A.visible=1 AND LOWER(A.name) LIKE "%'.$query.'%")
 ) 
 
 
 ) Z order by Z.name limit 0,15';  
 } else
 {
-	$sql='Select a.name,a.id from booking_operator as a WHERE a.visible=1 ORDER BY a.eye DESC,a.id limit 0,15';
+	$sql='Select a.name,a.id from booking_operator as a WHERE a.id_a_company IN ('.ht($id_group_company_list).') and a.visible=1 ORDER BY a.eye DESC,a.id limit 0,15';
 }
 
 //echo($sql);

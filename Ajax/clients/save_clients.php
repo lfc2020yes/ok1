@@ -215,18 +215,15 @@ fio="' . htmlspecialchars(trim($_POST['offers'][0]["client_fio"])) . '",
 email="' . htmlspecialchars(trim($_POST['offers'][0]["client_email"])) . '",
 comment="' . htmlspecialchars(trim($_POST['offers'][0]["client_comment"])) . '",
 phone="' . $phone_end . '",
-date_birthday="",
 
 inter_seria="",
 inter_number="",
 inter_kem="",
-inter_kogda="",
-inter_srok="",
+
 
 inner_seria="",
 inner_number="",
-inner_kem="",
-inner_kogda=""
+inner_kem=""
 
 where id = "' . htmlspecialchars($_POST['id']) . '"');
 

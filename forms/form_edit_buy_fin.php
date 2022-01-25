@@ -36,7 +36,7 @@ $id_user=id_key_crypt_encrypt($_SESSION["user_id"]);
 //проверить есть ли переменная id и можно ли этому пользователю это делать
 
 
-$result_t=mysql_time_query($link,'Select A.* from finance_operation as A where A.visible=1 AND A.id="'.ht($_GET["id_buy"]).'" and A.id_a_company="'.$id_company.'"');
+$result_t=mysql_time_query($link,'Select A.* from finance_operation as A where A.visible=1 AND A.id="'.ht($_GET["id_buy"]).'" and A.id_a_company IN ('.$id_company.')');
 $num_results_t = $result_t->num_rows;
 if($num_results_t==0)
 {

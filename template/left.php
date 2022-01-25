@@ -37,17 +37,17 @@ $result_uu=mysql_time_query($link,'select a.*,b.name_role,b.role from r_user as 
    }
 }
 
-echo'<div class="users">';
+echo'<div class="users" >';
 	  $filename=$url_system.'img/users/'.$row_uu["id"].'_100x100.jpg';
 if (file_exists($filename)) {	  
 
 echo'<div class="cover--1"><img src="img/users/'.$row_uu["id"].'_100x100.jpg?a='.$row_uu["img_xah"].'"></div>
-<div class="users_rule" tas="'.$row_uu["task_key"].'" not="'.$row_uu["noti_key"].'">';
+<div id_hax="'.$id_user.'" class="users_rule" tas="'.$row_uu["task_key"].'" not="'.$row_uu["noti_key"].'">';
 } else
 {
 //echo'<div class="users_rule" style="padding-left:22px;">';
 	echo'<div class="cover--1"><img src="img/users/0_100x100.jpg"></div>
-<div class="users_rule" tas="'.$row_uu["task_key"].'" not="'.$row_uu["noti_key"].'">';
+<div id_hax="'.$id_user.'" class="users_rule" tas="'.$row_uu["task_key"].'" not="'.$row_uu["noti_key"].'">';
 }
 
 
@@ -83,12 +83,76 @@ $nav_url_a=array("","","","","","","");
 $found = array_search($active_menu,$nav_url);
 
 ?>
+
+
+
 <ul class="nav">
 <li class="line" style="padding-top: 0px;"><div></div></li>
-	
-	
-<?
 
+    <?
+    if($more_city==1)
+    {
+    ?>
+    <li class="not_li_sel" style="overflow: visible;">
+        <?
+
+        $su_5=0;
+
+        if(( isset($_COOKIE["cc_town".$id_user]))and($_COOKIE["cc_town".$id_user]!='')and(is_numeric(trim($_COOKIE["cc_town".$id_user])))) {
+
+            if (in_array($_COOKIE["cc_town" . $id_user], $mass_city)) {
+
+                {
+                    $su_5 = $_COOKIE["cc_town" . $id_user];
+                }
+            }
+        }
+
+        $os5 = array( "Все организации");
+        $os_id5 = array("0");
+
+
+        $result_work_zz=mysql_time_query($link,'Select a.name,a.id from a_company as a where a.id IN ('.$id_company_sql.')');
+        $num_results_work_zz = $result_work_zz->num_rows;
+        if($num_results_work_zz!=0)
+        {
+
+            for ($i=0; $i<$num_results_work_zz; $i++)
+            {
+                $row_work_zz = mysqli_fetch_assoc($result_work_zz);
+                array_push($os5, $row_work_zz["name"]);
+                array_push($os_id5, $row_work_zz["id"]);
+            }
+        }
+
+
+
+        echo'<span class="city_ses"><div class="left_drop menu1_prime book_menu_sel js--sort gop_io '.$class_js_search.'" style="height: 31px; margin-top: 0px !important; z-index:'.$zindex.'"><div class="select eddd"><a style="font-size: 13px;
+color: rgba(0,0,0,0.7);" class="slct" list_number="t6" data_src="'.$su_5.'">'.$os5[array_search($su_5, $os_id5)].'</a><ul class="drop">';
+        //$os_id2[array_search($su_2, $os_id2)]
+        $zindex--;
+
+        for ($i=0; $i<count($os5); $i++)
+        {
+            //echo($su_5.'-'.$os_id5[$i].'<br>');
+            if($su_5==$os_id5[$i])
+            {
+                echo'<li class="sel_active"><a href="javascript:void(0);"  rel="'.$os_id5[$i].'">'.$os5[$i].'</a></li>';
+            } else
+            {
+                echo'<li><a href="javascript:void(0);"  rel="'.$os_id5[$i].'">'.$os5[$i].'</a></li>';
+            }
+
+        }
+        echo'</ul><input type="hidden" '.$class_js_readonly.' name="city_oo" id="city_oo" value="'.$su_5.'"></div></div></span>';
+
+
+
+        ?>
+
+
+<?
+    }
 //выводим кошелек только для менеджеров	для новых туров
 //|
 //V
@@ -103,7 +167,7 @@ if($active_menu!='statistic_new')
     if($sign_admin==1)
     {
         //управляющий организацией - вообще все коммиссии всех
-        $result_status22=mysql_time_query($link,'SELECT sum(a.sum) as sum from users_commission_trips as a,r_user as b where a.id_users=b.id and b.id_company="'.ht($id_company).'" and  not(a.id_users=0) and a.date="'.$month_s.'"');
+        $result_status22=mysql_time_query($link,'SELECT sum(a.sum) as sum from users_commission_trips as a,r_user as b where a.id_users=b.id and b.id_company IN ('.ht($id_company).') and  not(a.id_users=0) and a.date="'.$month_s.'"');
     } else {
         if($sign_level==3)
         {
@@ -159,7 +223,7 @@ if($active_menu!='statistic_new')
       //для управляющего у которого вообще все в подчинение
 
 
-        $result_status223=mysql_time_query($link,'SELECT a.* from users_commission_trips as a,r_user as b where a.id_users=b.id and b.id_company="'.ht($id_company).'" and not(a.id_users=0) and  a.date="'.$month_s.'"');
+        $result_status223=mysql_time_query($link,'SELECT a.* from users_commission_trips as a,r_user as b where a.id_users=b.id and b.id_company IN ('.ht($id_company).') and not(a.id_users=0) and  a.date="'.$month_s.'"');
         $num223 = $result_status223->num_rows;
         if($result_status223->num_rows!=0)
         {
@@ -169,12 +233,12 @@ if($active_menu!='statistic_new')
 
 
                 //проверяем вдруг для этого менеджера свои level условия а не общие
-                $result_status_b=mysql_time_query($link,'SELECT a.* from users_commission_level as a where a.id_users="'.$row223["id_users"].'" and a.sum_start<="'.$row223["sum"].'" and a.sum_end>"'.$row223["sum"].'"  and a.dates="'.date("Y-m-").'01" and a.id_company="'.ht($id_company).'"');
+                $result_status_b=mysql_time_query($link,'SELECT a.* from users_commission_level as a where a.id_users="'.$row223["id_users"].'" and a.sum_start<="'.$row223["sum"].'" and a.sum_end>"'.$row223["sum"].'"  and a.dates="'.date("Y-m-").'01" and a.id_company IN ('.ht($id_company).')');
 
                 if($result_status_b->num_rows==0)
                 {
 
-                    $result_status_b=mysql_time_query($link,'SELECT a.* from users_commission_level as a where a.id_users=0 and a.sum_start<="'.$row223["sum"].'" and a.sum_end>"'.$row223["sum"].'"  and a.dates="'.date("Y-m-").'01" and a.id_company="'.ht($id_company).'"');
+                    $result_status_b=mysql_time_query($link,'SELECT a.* from users_commission_level as a where a.id_users=0 and a.sum_start<="'.$row223["sum"].'" and a.sum_end>"'.$row223["sum"].'"  and a.dates="'.date("Y-m-").'01" and a.id_company IN ('.ht($id_company).')');
 
                 }
 
@@ -232,12 +296,12 @@ if($active_menu!='statistic_new')
 
 
 
-                    $result_status_b = mysql_time_query($link, 'SELECT a.* from users_commission_level as a where a.id_users="'.$row223["id_users"].'" and a.sum_start<="' . $row223["sum"] . '" and a.sum_end>"' . $row223["sum"] . '"  and a.dates="' . date("Y-m-") . '01" and a.id_company="' . ht($id_company) . '"');
+                    $result_status_b = mysql_time_query($link, 'SELECT a.* from users_commission_level as a where a.id_users="'.$row223["id_users"].'" and a.sum_start<="' . $row223["sum"] . '" and a.sum_end>"' . $row223["sum"] . '"  and a.dates="' . date("Y-m-") . '01" and a.id_company IN (' . ht($id_company) . ')');
 
                     if($result_status_b->num_rows==0) {
 
 
-                        $result_status_b = mysql_time_query($link, 'SELECT a.* from users_commission_level as a where a.id_users=0 and a.sum_start<="' . $row223["sum"] . '" and a.sum_end>"' . $row223["sum"] . '"  and a.dates="' . date("Y-m-") . '01" and a.id_company="' . ht($id_company) . '"');
+                        $result_status_b = mysql_time_query($link, 'SELECT a.* from users_commission_level as a where a.id_users=0 and a.sum_start<="' . $row223["sum"] . '" and a.sum_end>"' . $row223["sum"] . '"  and a.dates="' . date("Y-m-") . '01" and a.id_company IN (' . ht($id_company) . ')');
 
                     }
 
@@ -257,11 +321,11 @@ if($active_menu!='statistic_new')
 //это просто менеджер который видет только сколько ему выплата должна быть
 
 
-            $result_status_b = mysql_time_query($link, 'SELECT a.* from users_commission_level as a where a.id_users="'.$id_user.'" and a.sum_start<="' . $row_status22["sum"] . '" and a.sum_end>"' . $row_status22["sum"] . '" and a.dates="' . date("Y-m-") . '01" and a.id_company="' . ht($id_company) . '"');
+            $result_status_b = mysql_time_query($link, 'SELECT a.* from users_commission_level as a where a.id_users="'.$id_user.'" and a.sum_start<="' . $row_status22["sum"] . '" and a.sum_end>"' . $row_status22["sum"] . '" and a.dates="' . date("Y-m-") . '01" and a.id_company IN (' . ht($id_company) . ')');
 
             if($result_status_b->num_rows==0) {
 
-                $result_status_b = mysql_time_query($link, 'SELECT a.* from users_commission_level as a where a.id_users=0 and a.sum_start<="' . $row_status22["sum"] . '" and a.sum_end>"' . $row_status22["sum"] . '" and a.dates="' . date("Y-m-") . '01" and a.id_company="' . ht($id_company) . '"');
+                $result_status_b = mysql_time_query($link, 'SELECT a.* from users_commission_level as a where a.id_users=0 and a.sum_start<="' . $row_status22["sum"] . '" and a.sum_end>"' . $row_status22["sum"] . '" and a.dates="' . date("Y-m-") . '01" and a.id_company IN (' . ht($id_company) . ')');
 
 
             }
@@ -363,7 +427,7 @@ echo'<li class="not_li" style=""><a class="a11" href="notification/"><span class
         {
             $obi_left='<span class="left--mm-pre">';
             $obi_right='</span>';
-            $result_uu = mysql_time_query($link, 'select count(id) as cc from preorders where id_user="' . ht($id_user) . '" and id_company="'.ht($id_company).'" and visible=1 and not(status IN("5","6"))');
+            $result_uu = mysql_time_query($link, 'select count(id) as cc from preorders where id_user="' . ht($id_user) . '" and id_company IN ('.ht($id_company).') and visible=1 and not(status IN("5","6"))');
             $num_results_uu = $result_uu->num_rows;
 
             if ($num_results_uu != 0) {
@@ -384,7 +448,7 @@ echo'<li class="not_li" style=""><a class="a11" href="notification/"><span class
             {
 
                 //значит чем-то управляет
-                $result_uu = mysql_time_query($link, 'select count(id) as cc from preorders where id_user IN('.implode(",", $mass_ei).') and id_company="'.ht($id_company).'" and visible=1 and not(status IN("5","6"))');
+                $result_uu = mysql_time_query($link, 'select count(id) as cc from preorders where id_user IN('.implode(",", $mass_ei).') and id_company IN ('.ht($id_company).') and visible=1 and not(status IN("5","6"))');
 
                 $num_results_uu = $result_uu->num_rows;
 

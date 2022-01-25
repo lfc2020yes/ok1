@@ -38,7 +38,7 @@ if (count($_GET) != 1)
 }
 $status_admin=0;
 $mas_responsible=array();
-$result_t=mysql_time_query($link,'Select A.id,A.id_exchange,A.id_user,A.status from trips as A where A.visible=1 AND A.id="'.ht($_GET["id"]).'" and A.id_a_company="'.$id_company.'"');
+$result_t=mysql_time_query($link,'Select A.id,A.id_exchange,A.id_user,A.status from trips as A where A.visible=1 AND A.id="'.ht($_GET["id"]).'" and A.id_a_company IN ('.$id_company.')');
 $num_results_t = $result_t->num_rows;
 if($num_results_t==0)
 {
@@ -225,7 +225,7 @@ if($num_results_uu_rate!=0) {
             $os_id_say = array();
 
             $result_work_zz=mysql_time_query($link,'Select A.* from trips_why_annulation
- as A where A.visible=1 and A.id_a_company="'.$id_company.'" order by A.displayOrder');
+ as A where A.visible=1 and A.id_a_company IN ('.$id_group_company_list.') order by A.displayOrder');
             $num_results_work_zz = $result_work_zz->num_rows;
             if($num_results_work_zz!=0)
             {
@@ -302,7 +302,7 @@ if($num_results_uu_rate!=0) {
             $os_id_say = array('0');
 
             $result_work_zz=mysql_time_query($link,'Select A.* from trips_cancel_refund
- as A where A.visible=1 and A.id_a_company="'.$id_company.'" order by A.displayOrder');
+ as A where A.visible=1 and A.id_a_company IN ('.$id_group_company_list.') order by A.displayOrder');
             $num_results_work_zz = $result_work_zz->num_rows;
             if($num_results_work_zz!=0)
             {

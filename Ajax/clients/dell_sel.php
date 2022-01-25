@@ -97,7 +97,7 @@ $status_ee='ok';
 mysql_time_query($link,'update selection set visible="0" where id = "'.htmlspecialchars($_GET['sel']).'"');
 
 $result_8 = mysql_time_query($link,'SELECT A.id,A.ring_datetime,A.comment FROM task_new AS A WHERE A.id_user="'.ht($id_user).'" and 
-	A.id_a_company="'.ht($id_company).'" and 
+	A.id_a_group IN ('.ht($id_group_u).') and 
 	A.reminder=0 and
 	A.click="1" and
 	A.action="9" and

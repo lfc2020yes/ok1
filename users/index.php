@@ -224,7 +224,7 @@ if($echo_help!=0)
   
   DISTINCT b.*
   
-  from r_user as b where b.id_company="'.$id_company.'" and b.id in('.implode(',',$mass_ei).')
+  from r_user as b where b.id_company IN ('.$id_company.') and b.id in('.implode(',',$mass_ei).')
   
   '.$sql_su1.' '.limitPage('n_st',$count_write));
 	  
@@ -235,7 +235,7 @@ if($echo_help!=0)
   
   count(b.id) as kol
   
-  from r_user as b where b.id_company="'.$id_company.'" and b.id in('.implode(',',$mass_ei).')';
+  from r_user as b where b.id_company IN ('.$id_company.') and b.id in('.implode(',',$mass_ei).')';
 			
 
 $result_t221=mysql_time_query($link,$sql_count);	  
@@ -301,9 +301,35 @@ if($row_8["timelast"]!='')
 
                echo'</a><div class="tender-status">'.$rowxs["name_role"].'</div>
 
-<div class="tender-status">'.$kogda.'</div>
+<div class="tender-status">'.$kogda.'</div>';
 
-</div>';
+
+               if($more_city==1)
+               {
+                   //выводить к какой организации относится тур
+                   $exp_org = explode(",", ht($row_8["id_company"]));
+
+                   for ($io = 0; $io < count($exp_org); $io++) {
+
+
+                   $result_cop = mysql_time_query($link, 'select * from a_company where id="'.ht($exp_org[$io]).'"');
+                   $num_results_cop = $result_cop->num_rows;
+
+                   if ($num_results_cop != 0) {
+                       $row_cop = mysqli_fetch_assoc($result_cop);
+                       if($io!=0)
+                           {
+                               echo', ';
+                           }
+
+                       echo' <div class="city_dop_viv">'.$row_cop["name"].'</div>';
+                   }
+}
+
+               }
+
+
+echo'</div>';
 					
 		$result_status22=mysql_time_query($link,'SELECT count(a.id) as cc FROM trips AS a WHERE a.visible=1 and a.id_user="'.htmlspecialchars(trim($row_8["id"])).'"');
                 if($result_status22->num_rows!=0)

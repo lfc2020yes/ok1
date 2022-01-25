@@ -19,14 +19,16 @@
 $count_all_bi[0]=0;
 $count_all_bi[1]=0;
 $count_all_bi[2]=0;
+
     $hdmi='';
 	if($sign_admin!=1)
 	{
 		$hdmi=' a.id_user="'.$id_user.'" and ';					
 	}
 
-				$result_all=mysql_time_query($link,'SELECT count(a.id) as koll FROM k_clients AS a WHERE '.$hdmi.' a.visible=1 and a.id_a_company="'.$id_company.'" and a.potential=0');	
+				$result_all=mysql_time_query($link,'SELECT count(a.id) as koll FROM k_clients AS a WHERE '.$hdmi.' a.visible=1 and a.id_a_company IN ('.$id_company.') and a.potential=0');
 
+	echo('SELECT count(a.id) as koll FROM k_clients AS a WHERE '.$hdmi.' a.visible=1 and a.id_a_company IN ('.$id_company.') and a.potential=0');
                 if($result_all->num_rows!=0)
                 {  
                    $row_all = mysqli_fetch_assoc($result_all);
@@ -35,7 +37,7 @@ $count_all_bi[2]=0;
 							
 						
 
-				$result_all=mysql_time_query($link,'SELECT count(a.id) as koll FROM k_organization AS a WHERE   '.$hdmi.' a.visible=1 and a.id_a_company="'.$id_company.'"');	
+				$result_all=mysql_time_query($link,'SELECT count(a.id) as koll FROM k_organization AS a WHERE   '.$hdmi.' a.visible=1 and a.id_a_company IN ('.$id_company.')');
 
                 if($result_all->num_rows!=0)
                 {  
@@ -43,7 +45,7 @@ $count_all_bi[2]=0;
 				  $count_all_bi[1]=$row_all["koll"];
 				}
 
-				$result_all=mysql_time_query($link,'SELECT count(a.id) as koll FROM k_clients AS a WHERE '.$hdmi.' a.visible=1 and a.id_a_company="'.$id_company.'" and ((a.potential=1)or(a.potential=2))');
+				$result_all=mysql_time_query($link,'SELECT count(a.id) as koll FROM k_clients AS a WHERE '.$hdmi.' a.visible=1 and a.id_a_company IN ('.$id_company.') and ((a.potential=1)or(a.potential=2))');
 
                 if($result_all->num_rows!=0)
                 {  

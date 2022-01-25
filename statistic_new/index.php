@@ -15,18 +15,13 @@ $hie_kvartal=$hie->id_kvartal;
 $hie_town=$hie->id_town;
 $hie_user=$hie->user;
 
-
-
 $sign_level=$hie->sign_level;
 $sign_admin=$hie->admin;
-
 
 $role->GetColumns();
 $role->GetRows();
 $role->GetPermission();
 //правам к просмотру к действиям
-
-
 
 $active_menu='statistic';  // в каком меню
 
@@ -404,7 +399,31 @@ $('#date_table').val(date_all);
   <?
 
 
-	
+  $LIKE='';
+  if(is_numeric($id_company))
+  {
+      $LIKE=' and ((b.id_company LIKE "'.ht($id_company).',%")or(b.id_company LIKE "%,'.ht($id_company).',%")or(b.id_company LIKE "%,'.ht($id_company).'")or(b.id_company="'.ht($id_company).'")) ';
+  } else
+  {
+      $date_new_ada = explode(",", ht($id_company));
+      for ($ada = 0; $ada < count($date_new_ada); $ada++) {
+
+          if($LIKE=='')
+          {
+              $LIKE=' and ( ((b.id_company LIKE "'.ht($date_new_ada[$ada]).',%")or(b.id_company LIKE "%,'.ht($date_new_ada[$ada]).',%")or(b.id_company LIKE "%,'.ht($date_new_ada[$ada]).'")or(b.id_company="'.ht($date_new_ada[$ada]).'")) ';
+          } else
+          {
+              $LIKE.='or ((b.id_company LIKE "'.ht($date_new_ada[$ada]).',%")or(b.id_company LIKE "%,'.ht($date_new_ada[$ada]).',%")or(b.id_company LIKE "%,'.ht($date_new_ada[$ada]).'")or(b.id_company="'.ht($date_new_ada[$ada]).'")) ';
+          }
+
+      }
+      if($LIKE!='')
+      {
+          $LIKE.=') ';
+      }
+
+
+  }
 	
 	
   //Получаем комиссию пользователя и его бонусы	
@@ -625,17 +644,21 @@ $month_rus1=date("m");
 		   //есть ли запись с такой коммиссией по этому пользователю за данный месяц
   if (((( isset($_COOKIE["su_5s".$id_user]))and(is_numeric($_COOKIE["su_5s".$id_user]))and(array_search($_COOKIE["su_5s".$id_user],$os_id5)!==false)and($_COOKIE["su_5s".$id_user]==0))or(!isset($_COOKIE["su_5s".$id_user])))and(($sign_admin==1)or($sign_level>1)))
   {
+
+
+
+
 	  //общая статистика по всем подчиненным менеджерам для директоров и всех кто выже менеджеров
-  $result_status22=mysql_time_query($link,'SELECT sum(a.sum) as sum from users_commission_trips as a,r_user as b where a.id_users=b.id and b.id_company="'.$id_company.'" and a.date="'.$month_s.'" and not(a.id_users=0)');
+  $result_status22=mysql_time_query($link,'SELECT sum(a.sum) as sum from users_commission_trips as a,r_user as b where a.id_users=b.id '.$LIKE.' and a.date="'.$month_s.'" and not(a.id_users=0)');
 			} else
 		{
 	  if((isset($_COOKIE["su_5s".$id_user]))and($_COOKIE["su_5s".$id_user]!=0)and(($sign_admin==1)or($sign_level>1)))
 	  {
 	      //статистика по какому то конкретному менеждеру директоров и всех кто выже менеджеров
-	  $result_status22=mysql_time_query($link,'SELECT a.sum from users_commission_trips as a,r_user as b where a.id_users=b.id and b.id_company="'.$id_company.'" and  a.id_users="'.htmlspecialchars(trim($_COOKIE["su_5s".$id_user])).'" and a.date="'.$month_s.'"');
+	  $result_status22=mysql_time_query($link,'SELECT a.sum from users_commission_trips as a,r_user as b where a.id_users=b.id '.$LIKE.' and  a.id_users="'.htmlspecialchars(trim($_COOKIE["su_5s".$id_user])).'" and a.date="'.$month_s.'"');
 	  } else{
 	      //своя статистика для менеджеров
-  $result_status22=mysql_time_query($link,'SELECT a.sum from users_commission_trips as a,r_user as b where a.id_users=b.id and b.id_company="'.$id_company.'" and a.id_users="'.$id_user.'" and a.date="'.$month_s.'"');
+  $result_status22=mysql_time_query($link,'SELECT a.sum from users_commission_trips as a,r_user as b where a.id_users=b.id '.$LIKE.' and a.id_users="'.$id_user.'" and a.date="'.$month_s.'"');
 	  }
 	  
 	  
@@ -653,7 +676,7 @@ $month_rus1=date("m");
  if ((( !isset($_COOKIE["su_5s".$id_user]))or($_COOKIE["su_5s".$id_user]==0))and(($sign_admin==1)or($sign_level>1)))
   {
       //общая статистика по всем подчиненным менеджерам для директоров и всех кто выже менеджеров
-				  $result_status223=mysql_time_query($link,'SELECT a.* from users_commission_trips as a,r_user as b where a.id_users=b.id and b.id_company="'.$id_company.'" and a.date="'.$month_s.'"');
+				  $result_status223=mysql_time_query($link,'SELECT a.* from users_commission_trips as a,r_user as b where a.id_users=b.id '.$LIKE.' and a.date="'.$month_s.'"');
 				$num223 = $result_status223->num_rows;
 				  if($result_status223->num_rows!=0)
                    { 
@@ -661,11 +684,14 @@ $month_rus1=date("m");
 		         {			   			  			   
 			    $row223 = mysqli_fetch_assoc($result_status223);
 
-                     $result_status_b=mysql_time_query($link,'SELECT a.* from users_commission_level as a where a.id_users="'.$row223["id_users"].'" and a.sum_start<="'.$row223["sum"].'" and a.sum_end>"'.$row223["sum"].'" and a.dates="'.$date_level_bonus.'" and a.id_company="'.ht($id_company).'"');
+
+
+
+                     $result_status_b=mysql_time_query($link,'SELECT a.* from users_commission_level as a where a.id_users="'.$row223["id_users"].'" and a.sum_start<="'.$row223["sum"].'" and a.sum_end>"'.$row223["sum"].'" and a.dates="'.$date_level_bonus.'" and a.id_company IN ('.ht($id_company).')');
 
                      if($result_status_b->num_rows==0) {
 
-                         $result_status_b = mysql_time_query($link, 'SELECT a.* from users_commission_level as a where a.id_users=0 and a.sum_start<="' . $row223["sum"] . '" and a.sum_end>"' . $row223["sum"] . '" and a.dates="' . $date_level_bonus . '" and a.id_company="' . ht($id_company) . '"');
+                         $result_status_b = mysql_time_query($link, 'SELECT a.* from users_commission_level as a where a.id_users=0 and a.sum_start<="' . $row223["sum"] . '" and a.sum_end>"' . $row223["sum"] . '" and a.dates="' . $date_level_bonus . '" and a.id_company IN (' . ht($id_company) . ')');
 
                      }
 		
@@ -686,15 +712,15 @@ $month_rus1=date("m");
 
   if ((( !isset($_COOKIE["su_5s".$id_user]))or($_COOKIE["su_5s".$id_user]!=0))and(($sign_admin==1)or($sign_level>1)))
   {
-      $result_status_b = mysql_time_query($link, 'SELECT a.* from users_commission_level as a where a.id_users="' . ht($_COOKIE["su_5s".$id_user]) . '" and a.sum_start<="' . $row_status22["sum"] . '" and a.sum_end>"' . $row_status22["sum"] . '"  and a.dates="' . $date_level_bonus . '" and a.id_company="' . ht($id_company) . '"');
+      $result_status_b = mysql_time_query($link, 'SELECT a.* from users_commission_level as a where a.id_users="' . ht($_COOKIE["su_5s".$id_user]) . '" and a.sum_start<="' . $row_status22["sum"] . '" and a.sum_end>"' . $row_status22["sum"] . '"  and a.dates="' . $date_level_bonus . '" and a.id_company IN (' . ht($id_company) . ')');
   }else {
 
 
-      $result_status_b = mysql_time_query($link, 'SELECT a.* from users_commission_level as a where a.id_users="' . $id_user . '" and a.sum_start<="' . $row_status22["sum"] . '" and a.sum_end>"' . $row_status22["sum"] . '"  and a.dates="' . $date_level_bonus . '" and a.id_company="' . ht($id_company) . '"');
+      $result_status_b = mysql_time_query($link, 'SELECT a.* from users_commission_level as a where a.id_users="' . $id_user . '" and a.sum_start<="' . $row_status22["sum"] . '" and a.sum_end>"' . $row_status22["sum"] . '"  and a.dates="' . $date_level_bonus . '" and a.id_company IN (' . ht($id_company) . ')');
   }
   if($result_status_b->num_rows==0)
   {
-      $result_status_b=mysql_time_query($link,'SELECT a.* from users_commission_level as a where a.id_users=0 and a.sum_start<="'.$row_status22["sum"].'" and a.sum_end>"'.$row_status22["sum"].'"  and a.dates="'.$date_level_bonus.'" and a.id_company="'.ht($id_company).'"');
+      $result_status_b=mysql_time_query($link,'SELECT a.* from users_commission_level as a where a.id_users=0 and a.sum_start<="'.$row_status22["sum"].'" and a.sum_end>"'.$row_status22["sum"].'"  and a.dates="'.$date_level_bonus.'" and a.id_company IN ('.ht($id_company).')');
 
   }
 
@@ -875,7 +901,7 @@ $month_rus1=date("m");
 
 
                 $sum_no=0;
-                $result_uu = mysql_time_query($link, 'select sum(a.cost_client) as summ from trips as a,trips_contract as b where a.id_contract=b.id and a.id_a_company="'.$id_company.'" and a.status=1 and b.date_doc>="'.$date_start_obo.'" and a.buy_clients=0 and b.date_doc<"'.$date_end_obo.'" and a.visible=1 '.$sql_kogo);
+                $result_uu = mysql_time_query($link, 'select sum(a.cost_client) as summ from trips as a,trips_contract as b where a.id_contract=b.id and a.id_a_company IN ('.$id_company.') and a.status=1 and b.date_doc>="'.$date_start_obo.'" and a.buy_clients=0 and b.date_doc<"'.$date_end_obo.'" and a.visible=1 '.$sql_kogo);
 
 
 
@@ -890,7 +916,7 @@ $month_rus1=date("m");
                     }
 
                 $sum_yes=0;
-                  $result_uu = mysql_time_query($link, 'select sum(a.paid_client) as summ from trips as a,trips_contract as b  where a.id_contract=b.id and a.id_a_company="'.$id_company.'" and a.status=1 and b.date_doc>="'.$date_start_obo.'" and a.buy_clients=1 and b.date_doc<"'.$date_end_obo.'" and a.visible=1 '.$sql_kogo);
+                  $result_uu = mysql_time_query($link, 'select sum(a.paid_client) as summ from trips as a,trips_contract as b  where a.id_contract=b.id and a.id_a_company IN ('.$id_company.') and a.status=1 and b.date_doc>="'.$date_start_obo.'" and a.buy_clients=1 and b.date_doc<"'.$date_end_obo.'" and a.visible=1 '.$sql_kogo);
 
 
 
@@ -990,10 +1016,10 @@ $month_rus1=date("m");
                   }
 
                   $bonus=0;
-                  $result_status_b=mysql_time_query($link,'SELECT a.* from users_commission_level as a where a.id_users="'.$row_8["id"].'" and a.sum_start<="'.$row_status22["sum"].'" and a.sum_end>"'.$row_status22["sum"].'"  and a.dates="'.$date_level_bonus.'"  and a.id_company="'.ht($id_company).'"');
+                  $result_status_b=mysql_time_query($link,'SELECT a.* from users_commission_level as a where a.id_users="'.$row_8["id"].'" and a.sum_start<="'.$row_status22["sum"].'" and a.sum_end>"'.$row_status22["sum"].'"  and a.dates="'.$date_level_bonus.'"  and a.id_company IN ('.ht($id_company).')');
 
                   if($result_status_b->num_rows==0) {
-                      $result_status_b = mysql_time_query($link, 'SELECT a.* from users_commission_level as a where a.id_users=0 and a.sum_start<="' . $row_status22["sum"] . '" and a.sum_end>"' . $row_status22["sum"] . '"  and a.dates="' . $date_level_bonus . '"  and a.id_company="' . ht($id_company) . '"');
+                      $result_status_b = mysql_time_query($link, 'SELECT a.* from users_commission_level as a where a.id_users=0 and a.sum_start<="' . $row_status22["sum"] . '" and a.sum_end>"' . $row_status22["sum"] . '"  and a.dates="' . $date_level_bonus . '"  and a.id_company IN (' . ht($id_company) . ')');
                   }
                   if($result_status_b->num_rows!=0)
                   {
@@ -1030,11 +1056,11 @@ $month_rus1=date("m");
 
 
 //для конкретного пользователя
-                  $result_uu_xo = mysql_time_query($link, 'SELECT a.* from users_commission_level as a where a.id_users="'.$row_8["id"].'" and a.dates="'.$date_level_bonus.'" and a.id_company="' . ht($id_company) . '" order by a.level');
+                  $result_uu_xo = mysql_time_query($link, 'SELECT a.* from users_commission_level as a where a.id_users="'.$row_8["id"].'" and a.dates="'.$date_level_bonus.'" and a.id_company IN (' . ht($id_company) . ') order by a.level');
 
                   if($result_uu_xo->num_rows==0) {
 //общее если нет конкретики по уровням
-                      $result_uu_xo = mysql_time_query($link, 'SELECT a.* from users_commission_level as a where a.id_users=0 and a.dates="' . $date_level_bonus . '" and a.id_company="' . ht($id_company) . '" order by a.level');
+                      $result_uu_xo = mysql_time_query($link, 'SELECT a.* from users_commission_level as a where a.id_users=0 and a.dates="' . $date_level_bonus . '" and a.id_company IN (' . ht($id_company) . ') order by a.level');
 
 
                   }
@@ -1109,11 +1135,11 @@ $month_rus1=date("m");
 
 
 //для конкретного пользователя
-          $result_uu_xo = mysql_time_query($link, 'SELECT a.* from users_commission_level as a where a.id_users="'.ht($id_users_moss).'" and a.dates="'.$date_level_bonus.'" and a.id_company="' . ht($id_company) . '" order by a.level');
+          $result_uu_xo = mysql_time_query($link, 'SELECT a.* from users_commission_level as a where a.id_users="'.ht($id_users_moss).'" and a.dates="'.$date_level_bonus.'" and a.id_company IN (' . ht($id_company) . ') order by a.level');
 
           if($result_uu_xo->num_rows==0) {
 //общее если нет конкретики по уровням
-              $result_uu_xo = mysql_time_query($link, 'SELECT a.* from users_commission_level as a where a.id_users=0 and a.dates="' . $date_level_bonus . '" and a.id_company="' . ht($id_company) . '" order by a.level');
+              $result_uu_xo = mysql_time_query($link, 'SELECT a.* from users_commission_level as a where a.id_users=0 and a.dates="' . $date_level_bonus . '" and a.id_company IN (' . ht($id_company) . ') order by a.level');
 
 
           }
@@ -1265,7 +1291,7 @@ if (( isset($_COOKIE["su_2s".$id_user]))and(is_numeric($_COOKIE["su_2s".$id_user
 				  }
 			  }
 	
-$result_scores3=mysql_time_query($link,'SELECT count(a.id) as cc FROM trips AS a WHERE a.id_a_company="'.$id_company.'" and a.visible=1 '.$sql_line.' '.$sql_line1);
+$result_scores3=mysql_time_query($link,'SELECT count(a.id) as cc FROM trips AS a WHERE a.id_a_company IN ('.$id_company.') and a.visible=1 '.$sql_line.' '.$sql_line1);
 
 		 
 $row__223= mysqli_fetch_assoc($result_scores3);		
@@ -1312,7 +1338,7 @@ if (( isset($_COOKIE["su_2s".$id_user]))and(is_numeric($_COOKIE["su_2s".$id_user
 }
 
 
-$result_scores3=mysql_time_query($link,'SELECT count(distinct a.id) as cc FROM task_status_history_new AS a,task_new as c WHERE c.id_a_company="'.$id_company.'" and c.id=a.id_task and a.action_history=5 and c.status=1 '.$sql_line.' '.$sql_line1);
+$result_scores3=mysql_time_query($link,'SELECT count(distinct a.id) as cc FROM task_status_history_new AS a,task_new as c WHERE c.id_a_group IN ('.$id_group_u.') and c.id=a.id_task and a.action_history=5 and c.status=1 '.$sql_line.' '.$sql_line1);
 		 		 
 $row__223= mysqli_fetch_assoc($result_scores3);		
 
@@ -1394,7 +1420,7 @@ if (( isset($_COOKIE["su_5s".$id_user]))and(is_numeric($_COOKIE["su_5s".$id_user
 }
 
 
-$result_scores3=mysql_time_query($link,'SELECT count(distinct a.id) as cc FROM task_new as a WHERE a.id_a_company="'.$id_company.'" and a.reminder=0 and a.status=0 '.$sql_line.' '.$sql_line1);
+$result_scores3=mysql_time_query($link,'SELECT count(distinct a.id) as cc FROM task_new as a WHERE a.id_a_group IN ('.$id_group_u.') and a.reminder=0 and a.status=0 '.$sql_line.' '.$sql_line1);
 
 
 
@@ -1534,7 +1560,7 @@ $sql_line1=' and a.date_create>="'.$date_start.'" and a.date_create<"'.$date_end
          }
          }
 
-         $result_scores3=mysql_time_query($link,'SELECT count(a.id) as cc FROM preorders AS a WHERE a.id_company="'.$id_company.'" and a.visible=1 '.$sql_line.' '.$sql_line1);
+         $result_scores3=mysql_time_query($link,'SELECT count(a.id) as cc FROM preorders AS a WHERE a.id_company IN ('.$id_company.') and a.visible=1 '.$sql_line.' '.$sql_line1);
 //echo 'SELECT count(a.id) as cc FROM preorders AS a WHERE a.id_company="'.$id_company.'" and a.visible=1 '.$sql_line.' '.$sql_line1;
 
          $row__223= mysqli_fetch_assoc($result_scores3);
@@ -1585,7 +1611,7 @@ if ((!isset($_COOKIE["su_5s".$id_user]))or(( isset($_COOKIE["su_5s".$id_user]))a
 
 
 
-         $result_status22 = mysql_time_query($link, 'SELECT sum(a.sum) as summ from users_commission_trips as a,r_user as b where a.id_users=b.id and b.id_company="' . ht($id_company) . '" and  a.id_users='.ht($id_user_2022).' and a.date>="' . ht($date_start_while) . '" and  a.date<"' . ht($date_start_while22) . '"');
+         $result_status22 = mysql_time_query($link, 'SELECT sum(a.sum) as summ from users_commission_trips as a,r_user as b where a.id_users=b.id '.$LIKE.' and  a.id_users='.ht($id_user_2022).' and a.date>="' . ht($date_start_while) . '" and  a.date<"' . ht($date_start_while22) . '"');
 
 
          $num_results_uu = $result_status22->num_rows;
@@ -1605,11 +1631,11 @@ if ((!isset($_COOKIE["su_5s".$id_user]))or(( isset($_COOKIE["su_5s".$id_user]))a
 
              $date_level_bonus='';
 
-             $result_status_b=mysql_time_query($link,'SELECT a.* from users_commission_level as a where a.id_users="'.ht($id_user_2022).'" and a.sum_start<="'.$row_uu["summ"].'" and a.sum_end>"'.$row_uu["summ"].'"  and a.dates="'.$date_start_while22.'" and a.id_company="'.ht($id_company).'"');
+             $result_status_b=mysql_time_query($link,'SELECT a.* from users_commission_level as a where a.id_users="'.ht($id_user_2022).'" and a.sum_start<="'.$row_uu["summ"].'" and a.sum_end>"'.$row_uu["summ"].'"  and a.dates="'.$date_start_while22.'" and a.id_company IN ('.ht($id_company).')');
 
              if($result_status_b->num_rows==0)
              {
-                 $result_status_b=mysql_time_query($link,'SELECT a.* from users_commission_level as a where a.id_users=0 and a.sum_start<="'.$row_uu["summ"].'" and a.sum_end>"'.$row_uu["summ"].'"  and a.dates="'.$date_start_while22.'" and a.id_company="'.ht($id_company).'"');
+                 $result_status_b=mysql_time_query($link,'SELECT a.* from users_commission_level as a where a.id_users=0 and a.sum_start<="'.$row_uu["summ"].'" and a.sum_end>"'.$row_uu["summ"].'"  and a.dates="'.$date_start_while22.'" and a.id_company IN ('.ht($id_company).')');
 
              }
 
@@ -1627,7 +1653,7 @@ if ((!isset($_COOKIE["su_5s".$id_user]))or(( isset($_COOKIE["su_5s".$id_user]))a
 
 
 
-         $result_uu = mysql_time_query($link, 'select count(id) as ss from trips where visible=1 and id_a_company="'.ht($id_company).'" and id_user="'.ht($id_user_2022).'" and datecreate>="'.$date_start_while.'" and datecreate<"'.$date_start_while22.'"');
+         $result_uu = mysql_time_query($link, 'select count(id) as ss from trips where visible=1 and id_a_company IN ('.ht($id_company).') and id_user="'.ht($id_user_2022).'" and datecreate>="'.$date_start_while.'" and datecreate<"'.$date_start_while22.'"');
          $num_results_uu = $result_uu->num_rows;
          $views=0;
          if ($num_results_uu != 0) {
@@ -1996,11 +2022,11 @@ if (( isset($_COOKIE["su_5s".$id_user]))and(is_numeric($_COOKIE["su_5s".$id_user
         $sql_line=' and a.id_user="'.$_COOKIE["su_5s".$id_user].'" ';
     }
 }
-$result_t2=mysql_time_query($link,'SELECT distinct a.id FROM trips AS a WHERE a.id_a_company="'.$id_company.'" and a.visible=1 '.$sql_line.' '.$sql_line1);
+$result_t2=mysql_time_query($link,'SELECT distinct a.id FROM trips AS a WHERE a.id_a_company IN ('.$id_company.') and a.visible=1 '.$sql_line.' '.$sql_line1);
 
 
 	  
-  $sql_count='SELECT distinct count(a.id) as kol FROM trips AS a WHERE a.id_a_company="'.$id_company.'" and a.visible=1 '.$sql_line.' '.$sql_line1;
+  $sql_count='SELECT distinct count(a.id) as kol FROM trips AS a WHERE a.id_a_company IN ('.$id_company.') and a.visible=1 '.$sql_line.' '.$sql_line1;
 			
 
 $result_t221=mysql_time_query($link,$sql_count);	  
@@ -2023,7 +2049,7 @@ echo'<div class="okss"><span class="title_book yop_booking"><i>'.$row__221["kol"
               while($row_88 = mysqli_fetch_assoc($result_t2))
               {
 
-                  $result_uuy = mysql_time_query($link, 'select A.id,A.discount,A.doc, A.id_user,A.shopper,A.id_shopper,A.id_contract,A.comment,A.number_to,A.hotel,A.id_country,A.place_name,A.date_start,A.date_end,A.number_to,A.id_contract,A.cost_client,A.id_exchange,A.cost_operator_exchange,A.cost_operator,A.cost_client_exchange,A.buy_clients,A.buy_operator,A.paid_operator,A.paid_operator_rates,A.exchange_rates,A.paid_client,A.paid_client_rates,A.date_prepaid,A.comment,A.status_admin from trips as A where A.id="' . ht($row_88['id']) . '"');
+                  $result_uuy = mysql_time_query($link, 'select A.id,A.discount,A.doc,A.id_a_company, A.id_user,A.shopper,A.id_shopper,A.id_contract,A.comment,A.number_to,A.hotel,A.id_country,A.place_name,A.date_start,A.date_end,A.number_to,A.id_contract,A.cost_client,A.id_exchange,A.cost_operator_exchange,A.cost_operator,A.cost_client_exchange,A.buy_clients,A.buy_operator,A.paid_operator,A.paid_operator_rates,A.exchange_rates,A.paid_client,A.paid_client_rates,A.date_prepaid,A.comment,A.status_admin from trips as A where A.id="' . ht($row_88['id']) . '"');
                   $num_results_uuy = $result_uuy->num_rows;
 
                   if ($num_results_uuy != 0) {
@@ -2095,11 +2121,11 @@ echo'<div class="message_search_b"><span>Бонусная история за в
 
 
 
-  $result_t2=mysql_time_query($link,'SELECT distinct a.id FROM trips AS a WHERE a.id_a_company="'.$id_company.'" and a.visible=1 '.$sql_line.' '.$sql_line1);
+  $result_t2=mysql_time_query($link,'SELECT distinct a.id FROM trips AS a WHERE a.id_a_company IN ('.$id_company.') and a.visible=1 '.$sql_line.' '.$sql_line1);
 
 
 
-  $sql_count='SELECT distinct count(a.id) as kol FROM trips AS a WHERE a.id_a_company="'.$id_company.'" and a.visible=1 '.$sql_line.' '.$sql_line1;
+  $sql_count='SELECT distinct count(a.id) as kol FROM trips AS a WHERE a.id_a_company IN ('.$id_company.') and a.visible=1 '.$sql_line.' '.$sql_line1;
 
 	 
 	 
@@ -2123,7 +2149,7 @@ echo'<div class="okss" style="margin-top:20px;"><span class="title_book yop_book
                       while($row_88 = mysqli_fetch_assoc($result_t2))
                       {
 
-                          $result_uuy = mysql_time_query($link, 'select A.id,A.discount,A.doc, A.id_user,A.shopper,A.id_shopper,A.id_contract,A.comment,A.number_to,A.hotel,A.id_country,A.place_name,A.date_start,A.date_end,A.number_to,A.id_contract,A.cost_client,A.id_exchange,A.cost_operator_exchange,A.cost_operator,A.cost_client_exchange,A.buy_clients,A.buy_operator,A.paid_operator,A.paid_operator_rates,A.exchange_rates,A.paid_client,A.paid_client_rates,A.date_prepaid,A.comment,A.status_admin from trips as A where A.id="' . ht($row_88['id']) . '"');
+                          $result_uuy = mysql_time_query($link, 'select A.id,A.discount,A.doc, A.id_a_company, A.id_user,A.shopper,A.id_shopper,A.id_contract,A.comment,A.number_to,A.hotel,A.id_country,A.place_name,A.date_start,A.date_end,A.number_to,A.id_contract,A.cost_client,A.id_exchange,A.cost_operator_exchange,A.cost_operator,A.cost_client_exchange,A.buy_clients,A.buy_operator,A.paid_operator,A.paid_operator_rates,A.exchange_rates,A.paid_client,A.paid_client_rates,A.date_prepaid,A.comment,A.status_admin from trips as A where A.id="' . ht($row_88['id']) . '"');
                           $num_results_uuy = $result_uuy->num_rows;
 
                           if ($num_results_uuy != 0) {

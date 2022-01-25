@@ -93,7 +93,7 @@ $(\'.tyyo1' . +$row_8["id"] . '\').trigger(\'keyup\');
 
 if($id_user==$row_8["id_user"]) {
 
-    $result_89 = mysql_time_query($link, 'SELECT * FROM((select A.id from  task_new as A WHERE  A.id_user_responsible="' . ht($id_user) . '" and A.visible=1 and A.id_a_company="' . ht($id_company) . '" and A.status=0 and A.action=20 and A.id_object="' . ht($row_8["id"]) . '"  
+    $result_89 = mysql_time_query($link, 'SELECT * FROM((select A.id from  task_new as A WHERE  A.id_user_responsible="' . ht($id_user) . '" and A.visible=1 and A.id_a_group IN (' . ht($id_group_u) . ') and A.status=0 and A.action=20 and A.id_object="' . ht($row_8["id"]) . '"  
   )) LL limit 1');
     $num_89 = $result_89->num_rows;
 //$pros=1;
@@ -153,7 +153,7 @@ if(($role->permission('Обращения','S'))or($sign_admin==1)) {
 }
 //статус обращения
 
-$result_uupr = mysql_time_query($link, 'select number,name from preorders_status where id_company="' . ht($id_company) . '" and number="'.ht($row_8["status"]).'"');
+$result_uupr = mysql_time_query($link, 'select number,name from preorders_status where id_company IN (' . ht( $id_group_company_list) . ') and number="'.ht($row_8["status"]).'"');
 $num_results_uupr = $result_uupr->num_rows;
 
 if ($num_results_uupr != 0) {
@@ -182,7 +182,7 @@ if ($num_results_uupr != 0) {
 */
     if(($row_uupr["number"]==6)and($row_8["id_reasons"]!=0)) {
 
-        $result_uu221 = mysql_time_query($link, 'select name from preorders_reasons where id="' . ht($row_8["id_reasons"]) . '" and id_company="'.$id_company.'" and visible=1');
+        $result_uu221 = mysql_time_query($link, 'select name from preorders_reasons where id="' . ht($row_8["id_reasons"]) . '" and id_company IN ('. $id_group_company_list.') and visible=1');
         $num_results_uu221 = $result_uu221->num_rows;
 
         if ($num_results_uu221 != 0) {

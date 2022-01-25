@@ -152,7 +152,7 @@ if((isset($_POST['number_contract']))and(trim($_POST['number_contract'])!='')) {
         array_push($stack_error, "number_contract_format");
     }
 
-    $result_uu = mysql_time_query($link, 'select a.id from trips_contract as a,trips as b where a.id=b.id_contract and b.visible=1 and  a.id_a_company="' . ht($id_company) . '" and  a.number="' . ht($stringx) . '" and a.years="' . trim($date_r1[2]) . '"');
+    $result_uu = mysql_time_query($link, 'select a.id from trips_contract as a,trips as b where a.id=b.id_contract and b.visible=1 and  a.id_a_company IN ('.ht($id_group_company_list).')  and  a.number="' . ht($stringx) . '" and a.years="' . trim($date_r1[2]) . '"');
     $num_results_uu = $result_uu->num_rows;
     $number_d = 0;
     if ($num_results_uu != 0) {
@@ -162,7 +162,7 @@ if((isset($_POST['number_contract']))and(trim($_POST['number_contract'])!='')) {
         //определяем какой следующий точно свободен в этом году по этой компании
 
 
-        $result_status2d = mysql_time_query($link, 'SELECT MAX(b.number) AS cc FROM trips_contract AS b,trips as a WHERE b.id_a_company="' . ht($id_company) . '" and a.visible=1 and a.id_contract=b.id and b.years="' . date('Y') . '"');
+        $result_status2d = mysql_time_query($link, 'SELECT MAX(b.number) AS cc FROM trips_contract AS b,trips as a WHERE b.id_a_company IN ('.ht($id_group_company_list).')  and a.visible=1 and a.id_contract=b.id and b.years="' . date('Y') . '"');
         //echo('SELECT a.* FROM r_status AS a WHERE a.numer_status="'.$row1ss["status"].'" and a.id_system=13');
         if ($result_status2d->num_rows != 0) {
             $row_status2d = mysqli_fetch_assoc($result_status2d);
@@ -413,7 +413,7 @@ $date_r1=explode("/",htmlspecialchars(trim($date_doc_[0])));
 $stringx=trim($date_r[0]);
 $stringx = preg_replace('/[^0-9]/', '', $stringx);
 $date_r[0]=$stringx;
-mysql_time_query($link,'INSERT INTO trips_contract (id_a_company,years,number,name,date_doc,datetime,id_user) VALUES ("'.ht($id_company).'","'.htmlspecialchars(trim($date_r1[2])).'","'.htmlspecialchars(trim($date_r[0])).'","'.ht(trim($_POST['number_contract'])).'","'.ht($_POST["date_sele_doc"]).'","'.date("y.m.d").' '.date("H:i:s").'","'.$id_user.'")');
+mysql_time_query($link,'INSERT INTO trips_contract (id_a_company,years,number,name,date_doc,datetime,id_user) VALUES ("'.ht($_POST["id_company"]).'","'.htmlspecialchars(trim($date_r1[2])).'","'.htmlspecialchars(trim($date_r[0])).'","'.ht(trim($_POST['number_contract'])).'","'.ht($_POST["date_sele_doc"]).'","'.date("y.m.d").' '.date("H:i:s").'","'.$id_user.'")');
 
 $IDOC=mysqli_insert_id($link); 	
 
@@ -522,7 +522,7 @@ if((trimc($_POST["avans_client"])!='')and(trimc($_POST["cost_client"])!='')and(t
 
 }
 
-$debug=trimc($_POST["avans_client"]).'=='.trimc($_POST["cost_client"]);
+//$debug=trimc($_POST["avans_client"]).'=='.trimc($_POST["cost_client"]);
 
 
 //увеличиваем страну на один для статистики и вывода популярных в которую тур регистрируется
@@ -533,7 +533,7 @@ $preorders=0;
 if(($_POST["id_preorders"]!=0)and($_POST["id_preorders"]!=''))
 {
 
-    $result_url1=mysql_time_query($link,'select A.id,A.status,A.id_user,B.name from preorders as A,preorders_status as B where B.number=A.status and B.id_company="'.$id_company.'" and A.id="'.ht($_POST["id_preorders"]).'" and A.id_company="'.$id_company.'" and A.id_user="'.$id_user.'"');
+    $result_url1=mysql_time_query($link,'select A.id,A.status,A.id_user,B.name from preorders as A,preorders_status as B where B.number=A.status and B.id_company IN ('.$id_company.') and A.id="'.ht($_POST["id_preorders"]).'" and A.id_company IN ('.$id_company.') and A.id_user="'.$id_user.'"');
     $num_results_custom_url1 = $result_url1->num_rows;
     if($num_results_custom_url1!=0) {
         $row_list222 = mysqli_fetch_assoc($result_url1);
@@ -559,6 +559,11 @@ if(($_POST["id_preorders"]!=0)and($_POST["id_preorders"]!=''))
 
     }
 }
+
+
+
+$id_company_new=ht($_POST["id_company"]);
+
 
 
 //добавление нового тура в базу
@@ -631,7 +636,7 @@ date_buy_all
 ) VALUES( 
 
 "'.ht($id_user).'",
-"'.ht($id_company).'",
+"'.ht($id_company_new).'",
 "'.ht($date_).'",
 "'.ht($_POST["id_booking_sourse"]).'",
 "'.ht($_POST["buy_type"]).'",

@@ -61,7 +61,7 @@ if ((count($_POST) != 3))
 
 
 $mas_responsible=array();
-$result_uu = mysql_time_query($link, 'select A.id,A.id_user  from preorders as A where A.id="' . ht($_POST['id']) . '" and A.id_company="'.$id_company.'"');
+$result_uu = mysql_time_query($link, 'select A.id,A.id_user  from preorders as A where A.id="' . ht($_POST['id']) . '" and A.id_company IN ('.$id_company.')');
 $num_results_uu = $result_uu->num_rows;
 
 if ($num_results_uu != 0) {

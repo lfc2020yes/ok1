@@ -14,7 +14,7 @@ select DISTINCT Z.id from(
   
   from trips as A
 
-  where  A.visible=1 AND A.id_a_company="' . $id_company . '" and A.id_shopper="'.$id.'" and A.shopper=2
+  where  A.visible=1 AND A.id_a_company IN (' . $id_company . ') and A.id_shopper="'.$id.'" and A.shopper=2
 )
 
 ) Z order by Z.date_start DESC';

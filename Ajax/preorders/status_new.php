@@ -51,7 +51,7 @@ if ((!isset($_POST["id"])))
     goto end_code;
 }
 //**************************************************
-$result_url=mysql_time_query($link,'select A.id,A.status,A.id_user,B.name from preorders as A,preorders_status as B where B.number=A.status and B.id_company="'.$id_company.'" and A.id="'.ht($id).'" and A.id_company="'.$id_company.'" and A.id_user="'.$id_user.'"');
+$result_url=mysql_time_query($link,'select A.id,A.status,A.id_user,B.name from preorders as A,preorders_status as B where B.number=A.status and B.id_company IN ('. $id_group_company_list.') and A.id="'.ht($id).'" and A.id_company IN ('.$id_company.') and A.id_user="'.$id_user.'"');
         $num_results_custom_url = $result_url->num_rows;
         if($num_results_custom_url==0)
         {
@@ -76,7 +76,7 @@ if($_POST["id_status"]==5)
 {
 
     //проверить заполнен ли такой тур и есть ли
-    $result_url=mysql_time_query($link,'select A.id from trips as A where A.id_a_company="'.$id_company.'" and A.id="'.ht($_POST["id_trips"]).'"');
+    $result_url=mysql_time_query($link,'select A.id from trips as A where A.id_a_company IN ('.$id_company.') and A.id="'.ht($_POST["id_trips"]).'"');
     $num_results_custom_url = $result_url->num_rows;
     if($num_results_custom_url==0)
     {
@@ -98,7 +98,7 @@ if($_POST["id_status"]==6)
 
 
 //может ли быть статус таким
-$result_uusa = mysql_time_query($link, 'select id,name from preorders_status where number="' . ht($_POST["id_status"]) . '" and id_company="'.$id_company.'" and visible=1');
+$result_uusa = mysql_time_query($link, 'select id,name from preorders_status where number="' . ht($_POST["id_status"]) . '" and id_company IN ('. $id_group_company_list.') and visible=1');
 $num_results_uusa = $result_uusa->num_rows;
 
 if ($num_results_uusa != 0) {
@@ -132,7 +132,7 @@ if($_POST["id_status"]==6) {
       
       id_booking="0"
       
-      where id_booking="'.ht($id).'" and id_a_company="'.$id_company.'"');
+      where id_booking="'.ht($id).'" and id_a_company IN ('.$id_company.')');
 
 if($_POST["id_status"]==5) {
 
@@ -142,7 +142,7 @@ if($_POST["id_status"]==5) {
       
       id_booking="'.ht($id).'"
       
-      where id="'.ht($_POST["id_trips"]).'" and id_a_company="'.$id_company.'"');
+      where id="'.ht($_POST["id_trips"]).'" and id_a_company IN ('.$id_company.')');
 
 }
 

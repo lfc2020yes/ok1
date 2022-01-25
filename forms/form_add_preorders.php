@@ -55,7 +55,7 @@ $token=token_access_compile('2021','bt_add_preorders',$secret);
 
 if((isset($_GET["id"]))) {
 //смотрим может ли для этого клиента добавлять задачу
-    $sql_tt = 'Select b.id,b.potential,b.fio from k_clients as b where b.id="' . ht($_GET['id']) . '" and b.visible=1 and b.id_a_company="' . ht($id_company) . '"';
+    $sql_tt = 'Select b.id,b.potential,b.fio from k_clients as b where b.id="' . ht($_GET['id']) . '" and b.visible=1 and b.id_a_company IN (' . ht($id_company) . ')';
     $result_t = mysql_time_query($link, $sql_tt);
 
 
@@ -165,7 +165,7 @@ $query_string.='<div class="left_drop list_2018 menu1_prime"><label class="">Р�
 
 
 
-$result_8 = mysql_time_query($link,'select A.* from  booking_sourse as A where A.visible=1 and A.id_a_company="'.$id_company.'" order by A.displayOrder');
+$result_8 = mysql_time_query($link,'select A.* from  booking_sourse as A where A.visible=1 and A.id_a_company IN ('.$id_group_company_list.') order by A.displayOrder');
 
 $num_8 = $result_8->num_rows;
 //$row_1 = mysqli_fetch_assoc($result2);
@@ -194,6 +194,8 @@ if($result_8)
 
 
 		$query_string.='<!--input end	-->';
+
+
 
 
 $query_string.='<!--input start	--><div style="margin-top: 30px;" class="jj-l2"><div class="input_2018"><label>Комментарий<span>&nbsp;</span></label><div class="otziv_add">';
@@ -233,7 +235,87 @@ $query_string .= '<div style="margin-top: 30px;" class="input_doc_turs js-zindex
 
 
 
-        $query_string .= '<div class="input-choice-click js-option-task-user11 js-task-user-sv11">
+
+
+if(($more_city==1)and($_COOKIE["cc_town".$id_user]==0)) {
+
+
+
+
+    ?>
+
+    <?
+
+    $os_say55 = array();
+    $os_id_say55 = array();
+    $su_say55=-1;
+
+    $query_string.='<div style="margin-top: 30px;" >	';
+
+    $query_string.='<div class="left_drop menu1_prime"><label class="">Организация<span>*</span></label><div class="select eddd zin_2019"><a class="slct" list_number="t1" data_src=""></a><ul class="drop">';
+
+
+    $result_8 = mysql_time_query($link,'Select a.name,a.id from a_company as a where a.id IN ('.$id_company_sql.')');
+
+    $num_8 = $result_8->num_rows;
+//$row_1 = mysqli_fetch_assoc($result2);
+    if($result_8)
+    {
+
+        /*
+                       $query_string.='<li class="sel_active"><a href="javascript:void(0);"  rel="'.$os_id_say55[array_search(1, $os_id_say55)].'">'.$os_say55[array_search(0, $os_id_say55)].'</a></li>';
+        */
+
+        while($row_8 = mysqli_fetch_assoc($result_8)){
+
+            if($su_say55==$row_8["id"])
+            {
+                $query_string.='<li class="sel_active"><a href="javascript:void(0);"  rel="'.$row_8["id"].'">'.$row_8["name"].'</a></li>';
+            } else
+            {
+                $query_string.='<li><a href="javascript:void(0);"  rel="'.$row_8["id"].'">'.$row_8["name"].'</a></li>';
+            }
+
+        }
+    }
+
+
+
+    $query_string.='</ul><input type="hidden" class="gloab gloab_potential gloab_turist"  name="id_org" id="pol_clients4554" value=""><div class="div_new_2018"><hr class="one"></div></div></div></div>';
+    //echo $query_string;
+
+
+    ?>
+
+    <?
+
+
+
+
+
+
+
+} else
+{
+
+    $result_uuyyt = mysql_time_query($link, 'select name from a_company where id="' . ht($id_company) . '"');
+    $num_results_uuyyt = $result_uuyyt->num_rows;
+
+    if ($num_results_uuyyt != 0) {
+        $row_uuyyt = mysqli_fetch_assoc($result_uuyyt);
+    }
+
+
+    $query_string.='<!--input start	-->	
+        <div style="margin-top: 30px;" ><div class="input_2018"><label>Организация<span>*</span></label><input name="id_company_name" value="'.$row_uuyyt["name"].'" readonly id="date_124" class="input_new_2018 required    no_upperr" autocomplete="off" type="text"><input class="gloab gloab_potential gloab_turist" name="id_org" type="hidden" value="'.$id_company.'"><div class="div_new_2018"><hr class="one"><hr class="two"><div class="oper_name"></div></div></div>
+</div>
+<!--input end	-->	';
+
+}
+
+
+
+$query_string .= '<div class="input-choice-click js-option-task-user11 js-task-user-sv11">
 <div class="choice-head">Добавить связанную задачу</div>
 <div class="choice-radio"><div class="center_vert1"><i></i><input name="" id="taskusersv11" value="0" type="hidden"></div></div></div>';
 

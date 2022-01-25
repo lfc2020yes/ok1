@@ -99,6 +99,27 @@ if((htmlspecialchars(trim($_POST['password_b']))==''))
                  $sel_role=$subi['type'][$i];
              }
          }
+
+         $org=$_POST['org'];
+         $sel_org='';
+         for ($i = 0; $i < (count($org['type'])); $i++){
+
+             if((is_numeric($org['type'][$i]))and($org['val'][$i]=='1')and($org['type'][$i]!='0'))
+             {
+                 if($sel_org=='') {
+                     $sel_org = $org['type'][$i];
+                 } else
+                 {
+                     $sel_org .=','.$org['type'][$i];
+                 }
+             }
+         }
+         if($sel_org=='')
+         {
+             $sel_org=$id_company;
+         }
+
+
          if($sel_role!=0) {
              //может ли он ставить эту роль она должна быть такой же или ниже по level
              $result_uu = mysql_time_query($link, 'select sign_level,id from r_role where id="' . ht(ht($sel_role)) . '"');
@@ -141,7 +162,7 @@ if((htmlspecialchars(trim($_POST['password_b']))==''))
             $phone_end=	$phone_base[1][1].$phone_base[1][2].$phone_base[1][3].$phone_base1[0].$phone_base1[1].$phone_base1[2];
 
 
-			 mysql_time_query($link,'INSERT INTO r_user (id_company,name_user,name_small,login,id_role,enabled,phone,noti_key,task_key) VALUES ("'.$id_company.'","'.htmlspecialchars(trim($_POST['name_b'])).'","'.htmlspecialchars(trim($_POST['name_b1x'])).'","'.htmlspecialchars(trim($_POST['login_b'])).'","'.ht($sel_role).'","'.$enabled.'","'.htmlspecialchars($phone_end).'","'.$noti_key.'","'.$noti_task.'")');
+			 mysql_time_query($link,'INSERT INTO r_user (id_company,name_user,name_small,login,id_role,enabled,phone,noti_key,task_key) VALUES ("'.$sel_org.'","'.htmlspecialchars(trim($_POST['name_b'])).'","'.htmlspecialchars(trim($_POST['name_b1x'])).'","'.htmlspecialchars(trim($_POST['login_b'])).'","'.ht($sel_role).'","'.$enabled.'","'.htmlspecialchars($phone_end).'","'.$noti_key.'","'.$noti_task.'")');
 			 
 			 $ID_N=mysqli_insert_id($link);  
 			
@@ -420,7 +441,7 @@ echo'<div id="fullpage" class="margin_60  form_532_booking">';
 
                       <!--<span class="add_bo">Добавление новой заявки</span>	-->
                       <?
-                      echo'<div class="ok-block-input-2019"><div class="ok-input-title-2019 '.iclass_("name_b",$stack_error,"error_formi_2019").'"><label>Ваше ФИО</label><span class="h_input">Ваше ФИО</span><i></i><span class="ok-i-2019"><input '.$status_edit.' name="name_b" id="name_b" placeholder="Имя пользователя в системе" class="input_new_2019 '.iclass_("name_b",$stack_error,"error_formi").'" autocomplete="off" type="text" value="'.ipost_($_POST['name_b'],'').'"><div class="div_new_2019"><hr class="one"><hr class="two"></div></span></div></div>';                                                                    ?>
+                      echo'<div class="ok-block-input-2019"><div class="ok-input-title-2019 '.iclass_("name_b",$stack_error,"error_formi_2019").'"><label>ФИО</label><span class="h_input">ФИО</span><i></i><span class="ok-i-2019"><input '.$status_edit.' name="name_b" id="name_b" placeholder="Имя пользователя в системе" class="input_new_2019 '.iclass_("name_b",$stack_error,"error_formi").'" autocomplete="off" type="text" value="'.ipost_($_POST['name_b'],'').'"><div class="div_new_2019"><hr class="one"><hr class="two"></div></span></div></div>';                                                                    ?>
 
                       <?
                       echo'<div class="ok-block-input-2019"><div class="ok-input-title-2019 '.iclass_("name_b1x",$stack_error,"error_formi_2019").'"><label>Краткое имя</label><span class="h_input">Краткое имя</span><i></i><span class="ok-i-2019"><input '.$status_edit.' name="name_b1x" id="name_b1x" placeholder="Номер для связи и уведомлений" class="input_new_2019 '.iclass_("name_b1x",$stack_error,"error_formi").'" autocomplete="off" type="text" value="'.ipost_($_POST['name_b1x'],'').'"><div class="div_new_2019"><hr class="one"><hr class="two"></div></span></div></div>';                                                                                   ?>
@@ -450,6 +471,66 @@ echo'<div id="fullpage" class="margin_60  form_532_booking">';
 
                   </div>
 
+
+<?
+$style_ruki='';
+if($more_city==1)
+{
+?>
+
+                  <div class="div_ook" style="border-bottom: 1px solid rgba(0,0,0,0.05);">
+                      <?
+                      echo'<div class="form-panel">
+	<div class="na-100" style="padding: 0px; padding-top:10px;">';
+                      echo'<span class="h4-f">Организация</span>';
+                      echo'</div></div>';
+
+                      echo'<div class="form-panel js-company-xx">';
+
+
+
+                          $result_work_zz=mysql_time_query($link,'Select a.name,a.id from a_company as a where a.id IN ('.$id_company_sql.')');
+                          $num_results_work_zz = $result_work_zz->num_rows;
+                          if($num_results_work_zz!=0)
+                          {
+
+                              for ($i=0; $i<$num_results_work_zz; $i++)
+                              {
+                                  $row_66 = mysqli_fetch_assoc($result_work_zz);
+
+                                  echo '<div class="na-50" style="padding: 0px;">';
+
+                                  echo '<div class="input-choice-click-left js-checkbox-group js-checkbox-company" style="margin-top: 0px; background-color: transparent;">
+<div class="choice-head">' . $row_66["name"] . '</div>
+<div class="choice-radio"><div class="center_vert1">';
+
+
+                                  echo '<i></i><input name="org[type][]" value="' . $row_66["id"] . '" type="hidden"><input name="org[val][]" value="0" type="hidden">';
+
+
+
+                                  echo '</div></div></div></div>';
+
+                              }
+                          }
+
+
+
+                      echo'</div>';
+                      ?>
+                  </div>
+
+
+                  <?
+    $style_ruki='display: none;';
+
+}
+                  ?>
+
+
+
+
+
                   <div class="div_ook" style="border-bottom: 1px solid rgba(0,0,0,0.05);">
                       <?
                       echo'<div class="form-panel">
@@ -457,7 +538,7 @@ echo'<div id="fullpage" class="margin_60  form_532_booking">';
                       echo'<span class="h4-f">Кем руководит</span>';
                       echo'</div></div>';
 
-                      echo'<div class="form-panel js-group-c">';
+                      echo'<div class="form-panel js-group-cc" style="'.$style_ruki.'">';
 
 
                       $mass_ei=users_hierarchy_plus_disabled($id_user,$link);

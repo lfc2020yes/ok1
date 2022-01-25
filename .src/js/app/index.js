@@ -1,12 +1,18 @@
-$(document).ready(function(){	
+$(document).ready(function(){
+
+
+	$('body').on("change keyup input click",'#city_oo',city_oo);
+
+
+
 	//измениние курса и стоимости при оформлении тура
 	$('.js-form-add-tours').on("change keyup input click",'.xexchange_rates',xexchange_rates1);
 	$('.js-form-add-tours').on("change keyup input click",'.xcost_to_1',xexchange_rates2);
 	$('.js-form-add-tours').on("change",'[name=id_exchange]',exchange_eico);
 
 	$('body').on("change keyup input click",'.js-test',test_a);
-$('body').on("change keyup input click",'.js-edit-2020-user',no_rds_user);
-$('body').on("change",'.js-status-preorder-yes',edit_status_2021);
+    $('body').on("change keyup input click",'.js-edit-2020-user',no_rds_user);
+    $('body').on("change",'.js-status-preorder-yes',edit_status_2021);
 
 	$('body').on("change keyup input click",'.js-add-status-preorder-x',edit_status_pre);
     $('body').on("change keyup input click",'.js-cancel-trips-x',cancel_trips_x);
@@ -148,11 +154,24 @@ $('.menu_jjs').on("change keyup input click",'.js-menu-jjs-b',menubuttclick);
 
 //при изменении роли в системе подружать уведомления или скрывать для конкретной роли
 $('body').on("change keyup input click",'.js-checkbox-role',RoleNotif);
-
+	$('body').on("change keyup input click",'.js-checkbox-company',RoleCom);
 	NumberBlockFile();
 
 
 });
+
+
+
+function city_oo()
+{
+
+	var iu=$('.users_rule').attr('id_hax');
+
+	$.cookie("cc_town"+iu, null, {path:'/',domain: window.is_session,secure: false});
+	CookieList("cc_town"+iu,$(this).val(),'add');
+	autoReloadHak();
+}
+
 
 //постфункция добавление нового обращения
 function after_add_preorders(data,update)
@@ -388,6 +407,38 @@ function edit_status_pre()
 	}
 }
 
+function RoleCom()
+{
+
+	var comp='';
+
+	$('.js-checkbox-company').find('i').each(function(i,elem) {
+		if($(this).is('.active_task_cb'))
+		{
+			if(comp=='') {
+				comp=$(this).next().val();
+			} else { comp=comp+','+$(this).next().val();}
+		}
+
+	});
+
+
+
+	if(comp!='')
+	{
+		$('.js-group-cc').hide().before('<div class="b_loading_small" style="position:relative; width: 40px;padding-top: 7px;top: auto;right: auto;"><div class="b_loading_circle_wrapper_small"><div class="b_loading_circle_one_small"></div><div class="b_loading_circle_one_small b_loading_circle_delayed_small"></div></div></div>');
+
+
+		var id_u=$('.js-panel-notif').attr('ipo');
+		var data ='url='+window.location.href+'&id='+comp+'&id_u='+id_u;
+		AjaxClient('users','role_company','GET',data,'AfterRoleCom',comp,0,1);
+
+	} else
+	{
+		$('.js-panel-cc').hide();
+	}
+}
+
 
 //при изменении роли в системе подружать уведомления или скрывать для конкретной роли
 function RoleNotif()
@@ -408,6 +459,16 @@ $('.js-panel-notif').hide();
 	}
 }
 
+
+function AfterRoleCom(data,update) {
+	$('.js-group-cc').prev().remove();
+
+	if (data.status == 'ok') {
+		$('.js-group-cc').empty().append(data.echo);
+		$('.js-group-cc').slideDown("slow");
+	}
+
+}
 
 function AfterRoleNotif(data,update) {
 	$('.js-panel-notif').prev().remove();
@@ -801,6 +862,7 @@ function add_users_2020()
     if($("#password_b").val() == '')  { alert_message('error','Пароль для сотрудника не заполнен'); err++;	}
     if (!$(".js-role-x i").is( ".active_task_cb" ) ) { alert_message('error','Заполните должность сотрудника');  err++; }
 
+	if (!$(".js-company-xx i").is( ".active_task_cb" ) ) { alert_message('error','Заполните Организацию для  сотрудника');  err++; }
 
     if(err!=0)
     {
@@ -7951,6 +8013,10 @@ function send_form_operator()
   
   
 	if($("#name_b").val() == '')  { $("#name_b").addClass('error_formi'); err++;	}
+
+	if (!$(".js-company-xxc i").is( ".active_task_cb" ) ) { alert_message('error','Заполните Организацию');  err++; }
+
+
 	
 	//if($("#phone_b").val() == '')  { $("#phone_b").addClass('error_formi'); err++;	}
 	
@@ -8167,60 +8233,60 @@ function UploadInvoice_old()
 
 
 $(function (){
-//изменение размера окна	
-$(window).on('resize',windowSize);	
+//изменение размера окна
+$(window).on('resize',windowSize);
 
-//Загрузчик страницы	
+//Загрузчик страницы
 $('.loader_ada').remove();
 $('.loader_ada1').remove();
 
 $('.date_picker_xe').inputmask("datetime",{
-    mask: "1.2.y", 
-    placeholder: "dd.mm.yyyy",  
-    separator: ".", 
+    mask: "1.2.y",
+    placeholder: "dd.mm.yyyy",
+    separator: ".",
     alias: "dd.mm.yyyy"
-  });	
+  });
 
-//количество ночей из двух дат	
+//количество ночей из двух дат
 $('body').on("change keyup input click",'.js-date-nait2,.js-date-nait1',date_nait);
-	
-//добавить новый тур	
+
+//добавить новый тур
 $('body').on("change keyup input click",'.js-add-tender-form',AddFormTender);
 
 //редактировать тур
 	$('body').on("change keyup input click",'.js-edit-tender-form',EditFormTender);
 
 
-//редактировать поле с выпадающим списком	
-$('body').on("change keyup input click",'.js-edit-eico',edit_eico_list);	
-$('body').on("change",'.js-list-vibor',update_edit_input_eico);	
-	
+//редактировать поле с выпадающим списком
+$('body').on("change keyup input click",'.js-edit-eico',edit_eico_list);
+$('body').on("change",'.js-list-vibor',update_edit_input_eico);
+
 //я берусь за эту задачу
 $('body').on("change keyup input click",'.js-choice-task-y',choice_task_you);
 //нажать на выполнить задачу
-$('body').on("change keyup input click",'.task__click1',YesTask1);	
-	
-//форма добавление тура - выбор паспорт какой	
+$('body').on("change keyup input click",'.task__click1',YesTask1);
+
+//форма добавление тура - выбор паспорт какой
 $('body').on("change keyup input click",'.js-password-butt',password_butt);
 
 //форма оплаты тура изменяем кому платим клиент-туроператор
 $('body').on("change keyup input click",'.js-click-mmmt',click_mmmt);
 
 
-//форма добавление тура - галка не летит только покупает	
-$('body').on("change keyup input click",'.js-loli-butt',loli_butt);	
-	
-//форма добавление тура - поиск инпут	
+//форма добавление тура - галка не летит только покупает
+$('body').on("change keyup input click",'.js-loli-butt',loli_butt);
+
+//форма добавление тура - поиск инпут
 $('body').on("change keyup input click",'.js-drop-search li',drop_search);  //нажатие на найденное
 $('body').on("change keyup input click",'.js-open-search',open_search);  //открытие списка поиска
-	
-	
-$('body').on("change keyup input click",'.js-exit-win',close_close_window);	
-	
-	
-//открыть форму по организации с определенной вкладки	
+
+
+$('body').on("change keyup input click",'.js-exit-win',close_close_window);
+
+
+//открыть форму по организации с определенной вкладки
 $('body').on("change keyup input click",'.tabsss_org',tabs_org);
-//открыть форму по клиенту с определенной вкладки		
+//открыть форму по клиенту с определенной вкладки
 $('body').on("change keyup input click",'.tabsss',tabs_client);
 
 $('body').on("change keyup input click",'.tabs_003U',{key: "003U"},tabs_task);
@@ -8230,79 +8296,79 @@ $('body').on("change keyup input click",'.tabs_003U',{key: "003U"},tabs_task);
 	$('body').on("change keyup input click",'.tabs_005U',{key: "005U"},tabs_preorders);
 
 
-//еще - показать уведомления	
-$('body').on("change keyup input click",'.js-eshe-ring',js_eshe_ring);	
-	
-	
-//все что связано с выбором клиентов form_choice_client	
+//еще - показать уведомления
+$('body').on("change keyup input click",'.js-eshe-ring',js_eshe_ring);
+
+
+//все что связано с выбором клиентов form_choice_client
 $('body').on("change keyup input click",'.tabsss_choice',tabs_client_choice);
-	
+
 //Быстрый поиск клиента на главной
-$('body').on("change keyup input click",'.js-search-global-page',js_search_global_page);	
-	
+$('body').on("change keyup input click",'.js-search-global-page',js_search_global_page);
+
 //нажать при выборе клиента на клиента
 $('body').on("change keyup input click",'.list_client_choice',click_client_choice);
 
-	
+
 $('body').on("change keyup input click",'.js-new_open_client',clients_adds);
 
-//удалить из списка выбранных при окне выбор клиента	
-$('body').on("change keyup input click",'.rrube_choice',rrube_choice);	
+//удалить из списка выбранных при окне выбор клиента
+$('body').on("change keyup input click",'.rrube_choice',rrube_choice);
 
-//нажатие на кнопку выбрать в окне выбора клиента	
+//нажатие на кнопку выбрать в окне выбора клиента
 $('body').on("change keyup input click",'.js-choice-yyy',choice_client_end);
 
-//остальные клиенты выбор клиента в туре	
-$('body').on("change keyup input click",'.js-eshe-client-x',eshe_say_client);		
+//остальные клиенты выбор клиента в туре
+$('body').on("change keyup input click",'.js-eshe-client-x',eshe_say_client);
 //ввод поиска в клиенте при выборе клиента
 
 //ввод в строке поиска туриста
-$('body').on("keyup",'.js-choice-keyup',js_choice_keyup);	
-/*	
+$('body').on("keyup",'.js-choice-keyup',js_choice_keyup);
+/*
 var search_min2_search_c = 2;  //мин количество символов для быстрого поиска
 var search_deley2_search_c=800;	//задержка между вводами символов - начало поиска телефона в базе
 var search_input2_search_c=$('.js-choice-keyup');
-	
-	
+
+
 search_input2_search_c.keyup(function() {
 	//обнуляем выбор
-				
+
     delays(function(){
-		
+
 		if((jQuery.trim(search_input2_search_c.val().length) >= search_min2_search_c)||(jQuery.trim(search_input2_search_c.val().length)==0))
 		{
-			
+
 			var val1= $('.js-tabs-menu-choiche').find('.active').attr('id');
-			
+
                 var data ='url='+window.location.href+
 					'&all='+$('.js-eshe-client-x').attr("all")+
 					'&search='+encodeURIComponent(search_input2_search_c.val())+
-				'&tabs='+val1;	
+				'&tabs='+val1;
 			$('.js-icon-load').hide().after('<div class="b_loading_small" style="margin-right:-20px; position:relative; top: 0px; right: 0px; padding-top:0px;"><div class="b_loading_circle_wrapper_small"><div class="b_loading_circle_one_small"></div><div class="b_loading_circle_one_small b_loading_circle_delayed_small"></div></div></div>');
-                AjaxClient('clients','search_client_tours','GET',data,'AfterSearchClientT',1,0);		
+                AjaxClient('clients','search_client_tours','GET',data,'AfterSearchClientT',1,0);
 		}
-		
-		
+
+
     }, search_deley2_search_c);
-});		
+});
 	*/
-	
+
 //Открыть окно задачи по нажатию на иконку
 //$('.oka_block').on("change keyup input click",'.task_clock_selection i',open_task);
 $('body').on("change keyup input click",'.task_clock_selection i',open_task);
 
 
-$('body').on("change keyup input click",'.task_block_global .ggh-e',open_task1);	
-	
-$('body').on("change keyup input click",'.js-taa',open_task_new);	
-	
-$('body').on("change keyup input click",'.task_block_global .task-b-number',open_task1);
-	
-//открыть форму по добавлению клиента или оргазации	
-$('body').on("change keyup input click",'.tabsss1',tabs_client_add);
-	
+$('body').on("change keyup input click",'.task_block_global .ggh-e',open_task1);
 
-//выбор в заявке источника обращения	
+$('body').on("change keyup input click",'.js-taa',open_task_new);
+
+$('body').on("change keyup input click",'.task_block_global .task-b-number',open_task1);
+
+//открыть форму по добавлению клиента или оргазации
+$('body').on("change keyup input click",'.tabsss1',tabs_client_add);
+
+
+//выбор в заявке источника обращения
 $('.cha_1').on("change keyup input click",'.wallet_checkbox',wallet_checkbox);
 
 //загрузить фото в настройках
@@ -8312,7 +8378,7 @@ $('.l_photo').on("change keyup input click",'.invoice_upload',UploadInvoice_old)
 $('.content').on("change",'.sc_sc_loos2',UploadReportsChange_old);
 
 
-//работа с инпутами	
+//работа с инпутами
 $('body').on("focus click",'.input_new_2019',InputFocusNew1);
 $('body').on("blur",'.input_new_2019',InputBlurNew1);
 $('body').on("change keyup input click",'.radio_checkbox',radio_checkbox);
@@ -8331,13 +8397,13 @@ $('.js-finance-operation').on("change keyup input click",'.js-buy-edit-fin',js_b
 
 
 $('body').on("change keyup input click",'.js-place-finance',plane_edit);
-	
+
 //отправка и проверка форм по нажатию кнопки
 $('.index_booking').on("change keyup input click",'.send_form_clients',send_form_clients);	 //клиенты
 $('.index_booking').on("change keyup input click",'.send_form_booking',send_form_booking);   //заявки
-$('.index_booking').on("change keyup input click",'.send_form_operator',send_form_operator); //туроператор	 
-$('.index_booking').on("change keyup input click",'.send_form_users',send_form_users);	//пользовател	
-$('.index_booking').on("change keyup input click",'.send_form_reports',send_form_reports); //отчеты		
+$('.index_booking').on("change keyup input click",'.send_form_operator',send_form_operator); //туроператор
+$('.index_booking').on("change keyup input click",'.send_form_users',send_form_users);	//пользовател
+$('.index_booking').on("change keyup input click",'.send_form_reports',send_form_reports); //отчеты
 
 
 jQuery('.scrollbar-inner').scrollbar(); //скрулл меню при малой высоте
@@ -8345,13 +8411,13 @@ ToolTip();  //подсказки при наведении
 $('.label_s').bind("change keyup input click", label_show);
 
 $('.save_button2').bind("change keyup input click", send_meee);
-	
-$('.content').on("click",'.send_mess',SendMessage);	
+
+$('.content').on("click",'.send_mess',SendMessage);
 $('.help_user').on("click",'.send_mess',SendMessage);
 
 //$('.menu_jjs').on("change keyup input click",'.menu_click',menuclick);
 //$('.menu_click').bind("change keyup input click", menuclick);
-	
+
 
 $('.div_dialog').on("click",'.dialog_a',function(e) {  if($(e.target).closest(".del_dialog").length==0)
   {
@@ -8372,7 +8438,7 @@ function UploadReportsChange_old()
 		return false;
 	}
 
-	
+
 var UploadScanS = function()
 {
 	var id_upload=$(this).attr('id_upload');
@@ -8391,7 +8457,7 @@ var UploadInvoicePhoto = function()
 	$('[name=myfilephoto'+id_upload_a1+']').trigger('click');
 }
 
-	
+
 var UploadInvoice = function()
 {
 	var id_upload=$(this).attr('id_upload');
@@ -8407,29 +8473,29 @@ function uploadS(file,id) {
       // если status == 200, то это успех, иначе ошибка
       xhr.onload = xhr.onerror = function() {
         if (this.status == 200) {
-          
+
 		  $('[id_upload='+id+']').show(); //кнопка
-		  $('.scap_load_'+id).find('.scap_load__').width(0); 
+		  $('.scap_load_'+id).find('.scap_load__').width(0);
 		  $('.scap_load_'+id).hide();
 		  UpdateImageSupply(id);
         } else {
           $('[id_upload='+id+']').show();
-		  $('.scap_load_'+id).find('.scap_load__').width(0); 
+		  $('.scap_load_'+id).find('.scap_load__').width(0);
 		  $('.scap_load_'+id).hide();
         }
       };
 
       // обработчик для закачки
       xhr.upload.onprogress = function(event) {
-		$('[id_upload='+id+']').hide();  
-		$('.scap_load_'+id).show();  
+		$('[id_upload='+id+']').hide();
+		$('.scap_load_'+id).show();
 		var widths=Math.round((event.loaded*100)/event.total);
-		$('.scap_load_'+id).find('.scap_load__').width(widths);  
+		$('.scap_load_'+id).find('.scap_load__').width(widths);
       }
 
       xhr.open("POST", "supply/upload.php", true);
       //xhr.send(file);
-	
+
 	 var formData = new FormData();
      formData.append("thefile", file);
 	 formData.append("id",id);
@@ -8445,28 +8511,28 @@ function uploadIA(file,id) {
       // если status == 200, то это успех, иначе ошибка
       xhr.onload = xhr.onerror = function() {
         if (this.status == 200) {
-          
+
 		$('[id_upload_a='+id+']').next().find('.b_loading_circle_wrapper_small').hide();
-			$('[id_upload_a='+id+']').show();  
-			
+			$('[id_upload_a='+id+']').show();
+
 		  UpdateImageInvoiceAkt(id,0);
         } else {
 		$('[id_upload_a='+id+']').next().find('.b_loading_circle_wrapper_small').hide();
-			$('[id_upload_a='+id+']').show();  
-		
+			$('[id_upload_a='+id+']').show();
+
         }
       };
 
       // обработчик для закачки
       xhr.upload.onprogress = function(event) {
-		 //скрыть кнопку показать загрузчик 
-		$('[id_upload_a='+id+']').hide();  
+		 //скрыть кнопку показать загрузчик
+		$('[id_upload_a='+id+']').hide();
 		$('[id_upload_a='+id+']').next().find('.b_loading_circle_wrapper_small').show();
       }
 
       xhr.open("POST", "invoices/upload_akt.php", true);
       //xhr.send(file);
-	
+
 	 var formData = new FormData();
      formData.append("thefile", file);
 	 formData.append("id",id);
@@ -8474,7 +8540,7 @@ function uploadIA(file,id) {
 
     }
 
-//загрузка фото брака	
+//загрузка фото брака
 function uploadIP(file,id) {
 
       var xhr = new XMLHttpRequest();
@@ -8483,34 +8549,34 @@ function uploadIP(file,id) {
       // если status == 200, то это успех, иначе ошибка
       xhr.onload = xhr.onerror = function() {
         if (this.status == 200) {
-          
+
 		$('[id_upload_a1='+id+']').next().find('.b_loading_circle_wrapper_small').hide();
-			$('[id_upload_a1='+id+']').show();  
+			$('[id_upload_a1='+id+']').show();
 		  UpdateImageInvoiceAkt(id,1);
         } else {
 		$('[id_upload_a1='+id+']').next().find('.b_loading_circle_wrapper_small').hide();
-			$('[id_upload_a1='+id+']').show();  
-		
+			$('[id_upload_a1='+id+']').show();
+
         }
       };
 
       // обработчик для закачки
       xhr.upload.onprogress = function(event) {
-		 //скрыть кнопку показать загрузчик 
-		$('[id_upload_a1='+id+']').hide();  
+		 //скрыть кнопку показать загрузчик
+		$('[id_upload_a1='+id+']').hide();
 		$('[id_upload_a1='+id+']').next().find('.b_loading_circle_wrapper_small').show();
       }
 
       xhr.open("POST", "invoices/upload_photo.php", true);
       //xhr.send(file);
-	
+
 	 var formData = new FormData();
      formData.append("thefile", file);
 	 formData.append("id",id);
      xhr.send(formData);
 
-    }	
-	
+    }
+
 function uploadI(file,id) {
 
       var xhr = new XMLHttpRequest();
@@ -8519,29 +8585,29 @@ function uploadI(file,id) {
       // если status == 200, то это успех, иначе ошибка
       xhr.onload = xhr.onerror = function() {
         if (this.status == 200) {
-          
+
 		  $('[id_upload='+id+']').show(); //кнопка
-		  $('.scap_load_'+id).find('.scap_load__').width(0); 
+		  $('.scap_load_'+id).find('.scap_load__').width(0);
 		  $('.scap_load_'+id).hide();
 		  UpdateImageInvoice(id);
         } else {
           $('[id_upload='+id+']').show();
-		  $('.scap_load_'+id).find('.scap_load__').width(0); 
+		  $('.scap_load_'+id).find('.scap_load__').width(0);
 		  $('.scap_load_'+id).hide();
         }
       };
 
       // обработчик для закачки
       xhr.upload.onprogress = function(event) {
-		$('[id_upload='+id+']').hide();  
-		$('.scap_load_'+id).show();  
+		$('[id_upload='+id+']').hide();
+		$('.scap_load_'+id).show();
 		var widths=Math.round((event.loaded*100)/event.total);
-		$('.scap_load_'+id).find('.scap_load__').width(widths);  
+		$('.scap_load_'+id).find('.scap_load__').width(widths);
       }
 
       xhr.open("POST", "booking/upload.php", true);
       //xhr.send(file);
-	
+
 	 var formData = new FormData();
      formData.append("thefile", file);
 	 formData.append("id",id);
@@ -8557,37 +8623,37 @@ function uploadRR(file,id) {
       // если status == 200, то это успех, иначе ошибка
       xhr.onload = xhr.onerror = function() {
         if (this.status == 200) {
-          
+
 		  $('[id_upload='+id+']').show(); //кнопка
-		  $('.scap_load_'+id).find('.scap_load__').width(0); 
+		  $('.scap_load_'+id).find('.scap_load__').width(0);
 		  $('.scap_load_'+id).hide();
 		  UpdateImageReports(id);
 			alert_message('ok','ваш профиль обновлен');
 			autoReloadHak();
         } else {
           $('[id_upload='+id+']').show();
-		  $('.scap_load_'+id).find('.scap_load__').width(0); 
+		  $('.scap_load_'+id).find('.scap_load__').width(0);
 		  $('.scap_load_'+id).hide();
         }
       };
 
       // обработчик для закачки
       xhr.upload.onprogress = function(event) {
-		$('[id_upload='+id+']').hide();  
-		$('.scap_load_'+id).show();  
+		$('[id_upload='+id+']').hide();
+		$('.scap_load_'+id).show();
 		var widths=Math.round((event.loaded*100)/event.total);
-		$('.scap_load_'+id).find('.scap_load__').width(widths);  
+		$('.scap_load_'+id).find('.scap_load__').width(widths);
       }
 
       xhr.open("POST", "reports/upload.php", true);
       //xhr.send(file);
-	
+
 	 var formData = new FormData();
      formData.append("thefile", file);
 	 formData.append("id",id);
      xhr.send(formData);
 
-    }	
+    }
 */
 	/*
 	function uploadRR_old(file,id) {
@@ -8641,20 +8707,20 @@ function uploadRR(file,id) {
 	file = this.files[0];
 	      if (file) {
         uploadIP(file,id);
-      } 
-      return false;	
-}		
+      }
+      return false;
+}
 
 var UploadInvoiceAktChange = function()
 {
-	
+
 	var id=$(this).parents('form').attr('id_a');
 	file = this.files[0];
 	      if (file) {
         uploadIA(file,id);
-      } 
-      return false;	
-}	
+      }
+      return false;
+}
 
 /*
 var UploadReportsChange = function()
@@ -8663,8 +8729,8 @@ var UploadReportsChange = function()
 	file = this.files[0];
 	      if (file) {
         uploadRR(file,id);
-      } 
-      return false;	
+      }
+      return false;
 }
 */
 
@@ -8674,8 +8740,8 @@ var UploadInvoiceChange = function()
 	file = this.files[0];
 	      if (file) {
         uploadI(file,id);
-      } 
-      return false;	
+      }
+      return false;
 }
 
 var UploadScanSChange = function()
@@ -8684,77 +8750,77 @@ var UploadScanSChange = function()
 	file = this.files[0];
 	      if (file) {
         uploadS(file,id);
-      } 
-      return false;	
+      }
+      return false;
 }
 
-	//делаем поля с классом только дробными и целыми числами	
+	//делаем поля с классом только дробными и целыми числами
 $('.count_mask').bind("change keyup input click", validate11);
 $('.count_mask1').bind("change keyup input click", validate12);
-	
 
-	
-	
+
+
+
 	$('.messa_form_a').on("change",'.invoice_file_photo',UploadInvoicePhotoChange);
-	$('.messa_form_a').on("change",'.invoice_file_akt',UploadInvoiceAktChange);	
-	
-	$('.invoice_block').on("click",".add_akt_defect", UploadInvoiceAkt);	
+	$('.messa_form_a').on("change",'.invoice_file_akt',UploadInvoiceAktChange);
+
+	$('.invoice_block').on("click",".add_akt_defect", UploadInvoiceAkt);
 	$('.invoice_block').on("click",".add_akt_defect1", UploadInvoicePhoto);
-	
 
 
-	
-
-	
-
-	
-	
-	
 
 
-$('.img_invoice_div').on("click",'.del_image_invoice',DellImageInvoice);	
 
-$('.img_invoice_div').on("click",'.del_image_reports',DellImageReports);	
-	
+
+
+
+
+
+
+
+$('.img_invoice_div').on("click",'.del_image_invoice',DellImageInvoice);
+
+$('.img_invoice_div').on("click",'.del_image_reports',DellImageReports);
+
 $('.img_invoice_div').on("click",'.invoice_upload',UploadInvoice);
 $('.content').on("change",'.sc_sc_loo12',UploadInvoiceChange);
 //$('.content').on("change",'.sc_sc_loos2',UploadReportsChange);
-	
+
 $('body').on("click",'.soply_upload',UploadScanS);
 $('body').on("change",'.sc_sc_loo11',UploadScanSChange);
-		
 
-//$('.booker_table').on("change keyup input click",'.booker_yes',booker_yes);	
-	
+
+//$('.booker_table').on("change keyup input click",'.booker_yes',booker_yes);
+
 $('.pay_imp').on("click",'.naryd_upload',UploadScan);
 $('.pay_imp').on("change",'.sc_sc_loo',UploadScanChange);
 
 
-jQuery(document).on("focus click",'.input_new_2018',InputFocusNew);	
+jQuery(document).on("focus click",'.input_new_2018',InputFocusNew);
 jQuery(document).on("blur",'.input_new_2018',InputBlurNew);
-jQuery(document).on("keyup",'.input_new_2018',KeyUpInput);	
+jQuery(document).on("keyup",'.input_new_2018',KeyUpInput);
 
-//фокус и потеря в окне выбора покупателя тура в поиске	
-jQuery(document).on("focus click",'.js-choice-keyup',InputFocusNewTours);	
-jQuery(document).on("blur",'.js-choice-keyup',InputBlurNewTours);		
+//фокус и потеря в окне выбора покупателя тура в поиске
+jQuery(document).on("focus click",'.js-choice-keyup',InputFocusNewTours);
+jQuery(document).on("blur",'.js-choice-keyup',InputBlurNewTours);
 
 
-$('.notif_imp').on("click",'.del_notif',DellNotif);	
+$('.notif_imp').on("click",'.del_notif',DellNotif);
 $('.notif_div_2018').on("click",'.del_notif',DellNotif);
 	$('.booking_div').on("click",'.del_booking_',DellBooking);
 
 	$('.clients_block').on("click",'.del_clients_',DellClients);
-	
-	
+
+
 		$('.clients_org').on("click",'.del_org_',DellOrg);
-	
-$('.place-wrapper').on("click",'.task__click',YesTask);	
-	
-	
+
+$('.place-wrapper').on("click",'.task__click',YesTask);
+
+
 
 
 $('.fox_search_result1').on("change keyup input click",'.string_res',string_res1);
-	
+
 
 //удаление покупателя из тура
 $('.js-buy-my-tours').on("change keyup input click",'.js-dell-buy-tours',js_dell_buy_tours);
@@ -8764,78 +8830,78 @@ $('.js-fly-my-tours').on("change keyup input click",'.js-dell-fly-tours',js_dell
 //добавить операцию в финансах
 $('body').on("change keyup input click",'.js-add-finance',js_add_finance);
 
-	
+
 //выход из системы при бездействии
 idleTimer = null;
-timerS = null;	
-timerH=null;	
+timerS = null;
+timerH=null;
 idleState = false; // состояние отсутствия
 idleWait = 30*60*1000; // время ожидания в мс. (1/1000 секунды) - 30 минут
-idTimeStampe=0;	
+idTimeStampe=0;
 ExitSystem();
 //выход из системы при бездействии
-	
 
-window.is_session='umatravel.club';	
-	
 
-//уведомления настройки	
+window.is_session='umatravel.club';
+
+
+//уведомления настройки
 idleTimerx = null;
-timerSx = null;	
+timerSx = null;
 idleStatex = false; // состояние отсутствия
-idleWait_start = 10*1000; // время обновления notification - каждые 30 секунд 
-idleWait_stop = 5*60*1000; // время простоя после которого скрипт начинает обращаться реже к обновлениям - 5 минут	
+idleWait_start = 10*1000; // время обновления notification - каждые 30 секунд
+idleWait_stop = 5*60*1000; // время простоя после которого скрипт начинает обращаться реже к обновлениям - 5 минут
 idleWait_end = 2*60*1000; // время обновления notification после простоя системы в течении 5 минут - каждые 2 минуты
-idleWait_yes=idleWait_start;	
-idTimeStampex=0;	
+idleWait_yes=idleWait_start;
+idTimeStampex=0;
 NotifSystem();
-$('<audio id="chatAudio"><source src="notify.ogg" type="audio/ogg"><source src="notify.mp3" type="audio/mpeg"><source src="notify.wav" type="audio/wav"></audio>').appendTo('body');	
-//уведомления настройки	
-	
-nprogress=0; //показывать загрузчик линию при ajax запросах	
+$('<audio id="chatAudio"><source src="notify.ogg" type="audio/ogg"><source src="notify.mp3" type="audio/mpeg"><source src="notify.wav" type="audio/wav"></audio>').appendTo('body');
+//уведомления настройки
 
-	
-setInterval(function(){ $this=inWindow(".Effectbbo");  if(inWindow(".Effectbbo").length!=0) {   setTimeout ( function () {  $this.removeClass('yes_bbs1'); }, 5000 );  }  }, 1000); // 1000 м.сек	
- 
-	
+nprogress=0; //показывать загрузчик линию при ajax запросах
+
+
+setInterval(function(){ $this=inWindow(".Effectbbo");  if(inWindow(".Effectbbo").length!=0) {   setTimeout ( function () {  $this.removeClass('yes_bbs1'); }, 5000 );  }  }, 1000); // 1000 м.сек
 
 
 
-	
-	
 
-//$('.mkr_,.smeta2').on("change",'.option_mat',option_mat);	
 
-	
-	
+
+
+
+//$('.mkr_,.smeta2').on("change",'.option_mat',option_mat);
+
+
+
 //$(".drops").find("li").bind('click', droplis);
-	
-$('.menu_top,.smeta2').on("click",'.drops li',droplis);	
+
+$('.menu_top,.smeta2').on("click",'.drops li',droplis);
 //анимация линеек
 animation_teps();
 
 
-	
 
-	
+
+
 
 //удалить диалог
-$(".del_dialog").bind('click', del_dialog);	
-	
+$(".del_dialog").bind('click', del_dialog);
+
 //открыть уведомления
-$(".view__not i").bind('click', view_notification);		
-	
-
-	
-$('#lalala_add_form').on("change keyup input click",'.error_formi', function(){ $this = $(this); setTimeout ( function () {$this.removeClass('error_formi');  }, 2000 ); });	
-	
+$(".view__not i").bind('click', view_notification);
 
 
-//закрытие поиска себестоимости при клике вне его	
-window.show_search=0;	
+
+$('#lalala_add_form').on("change keyup input click",'.error_formi', function(){ $this = $(this); setTimeout ( function () {$this.removeClass('error_formi');  }, 2000 ); });
+
+
+
+//закрытие поиска себестоимости при клике вне его
+window.show_search=0;
 //$("body").click(function(e) {
 $(document).mouseup(function (e) {
-    
+
     if(($(e.target).closest(".search_seb").length==0)&&($(e.target).closest(".icon3").length==0) ){
 		//alert(window.show_search);
 		//если вне поиска и кнопки поиск то если открыт поиск закрыть
@@ -8864,33 +8930,33 @@ $(document).mouseup(function (e) {
 
 	/*
 	if(($(e.target).closest(".loll_drop").length==0)  ){
-	       $('.loll_drop').hide();		
-	}	
+	       $('.loll_drop').hide();
+	}
 	*/
-	
+
 	var container = $(".noti_block");
 	var container1x = $(".box-modal");
-	
+
 	if ((container.has(e.target).length === 0)&&(container1x.has(e.target).length === 0)){
 	 		if( $('.noti_block').is(':visible') ) {
 	       $('.noti_block').remove();
-	       $('.view__not').hide(); $('.not_li').find('i').hide();	
+	       $('.view__not').hide(); $('.not_li').find('i').hide();
 		}
 	}
-	
+
 	/*
 	if(($(e.target).closest(".noti_block").length==0)&&($(e.target).closest(".view__not").length==0)  ){
 		if( $('.noti_block').is(':visible') ) {
 	       $('.noti_block').remove();
-	       $('.view__not').hide(); $('.not_li').find('i').hide();	
+	       $('.view__not').hide(); $('.not_li').find('i').hide();
 		}
 		}
 	*/
 });
 
 
-	
-//нажатие на кнопку искать при вводе текста в поиске	
+
+//нажатие на кнопку искать при вводе текста в поиске
 //$('.search_seb').find('i').bind('click', search_p);
 
 //нажатие на enter при вводе
@@ -8899,16 +8965,16 @@ $("#search_text").keypress(function(e){
 	     	   dosearch();
 	     	   }
 	     	 });
-	
+
 
 $("#otziv_area").keypress(function(e){
 	     	   if(e.keyCode==13){
 	     	   send_meee();
 	     	   }
-	     	 });	
-	
+	     	 });
 
-//автоматическое срабатывание поиска при задержки ввода 	
+
+//автоматическое срабатывание поиска при задержки ввода
 $('#search_text').keyup(function(){
   var d1 = new Date();
   time_keyup = d1.getTime();
@@ -8919,18 +8985,18 @@ $('#search_text').keyup(function(){
      time_search = d2.getTime();
      if (time_search-time_keyup>=keyint) // проверяем интервал между нажатиями
       dosearch(); // если все в порядке, приступаем к поиску
-    }, keyint); 
+    }, keyint);
    }
    else
-    $('.result_s').hide(); // если строка короткая, убираем текст из DIVа с результатом 
- });		
+    $('.result_s').hide(); // если строка короткая, убираем текст из DIVа с результатом
+ });
 
 
 
 
 	//открытие календаря в оформлении наряда по иконке
-$(".cal_223").bind('click', function() {  $(this).prev('.calendar_t').trigger('focus');});	
-	
+$(".cal_223").bind('click', function() {  $(this).prev('.calendar_t').trigger('focus');});
+
 //авторизация
 //авторизация
 //авторизация
@@ -8944,10 +9010,10 @@ $("#email_formi").keyup(function(){
 	} else
 	{
 		$("#email_formi").addClass('error_formi');
-	
-	}	
-	
-	
+
+	}
+
+
 });
 
 $("#password_formi,#email_formi").keypress(function(e){
@@ -8955,7 +9021,7 @@ $("#password_formi,#email_formi").keypress(function(e){
 				   $('#yes1').trigger('click');
 			   }
 });
-	
+
 $("#password_formi").keyup(function(){
 
 	if(($("#password_formi").val()=='')||($("#password_formi").val()==0))
@@ -8966,7 +9032,7 @@ $("#password_formi").keyup(function(){
 	{
 		$("#password_formi").removeClass('error_formi');
 	}
-	
+
 });
 
 $('#yes1').on( "click", function() {
@@ -8975,17 +9041,17 @@ $('#yes1').on( "click", function() {
   //смотрим заполнены ли обязательные поля
    var email = $("#email_formi").val();
    var err = [0,0];
-  
+
    $("#email_formi").removeClass('error_formi');
    $("#password_formi").removeClass('error_formi');
-  
+
     if(email != '')
     {
 		/*
     if(isValidEmailAddress(email))
-    {  
-	
-	
+    {
+
+
 	} else
 	{
 		$("#email_formi").addClass('error_formi');
@@ -8995,31 +9061,31 @@ $('#yes1').on( "click", function() {
 	} else
 	{
 		$("#email_formi").addClass('error_formi');
-		err[0]=1;		
+		err[0]=1;
 	}
 	if(($("#password_formi").val()=='')||($("#password_formi").val()==0))
 	{
 		$("#password_formi").addClass('error_formi');
 		err[1]=1;
 	}
-	
+
 	if((err[0]==0)&&(err[1]==0))
 	{
-	   $('#pod_form').submit();	
+	   $('#pod_form').submit();
 	}
-	
 
-	
+
+
 });
 //авторизация
 //авторизация
 //авторизация
-	
-	
 
 
-	
-//крестик, удалить все символы в поиске	
+
+
+
+//крестик, удалить все символы в поиске
 $('.fox_dell1').on('click',function(){
 	search_input1.val('');
 	$('.fox_dell1').hide();
@@ -9031,25 +9097,25 @@ $('.fox_dell1').on('click',function(){
 
 var search_min1 = 3;  //мин количество символов для быстрого поиска
 var search_deley1=800;	//задержка между вводами символов - начало поиска
-var search_input1=$('#fox_search_client_i1');	
-	
-//при вводе поиска в клиенте	
+var search_input1=$('#fox_search_client_i1');
+
+//при вводе поиска в клиенте
 search_input1.keyup(function() {
 	if(jQuery.trim(search_input1.val().length) >= 1)
 		{
-		  $('.fox_dell1').show();	
+		  $('.fox_dell1').show();
 		} else
 		{
 			$('.fox_dell1').hide();
 		}
     delays(function(){
-		
+
 		if(jQuery.trim(search_input1.val().length) >= search_min1)
 		{
                 var data ='url='+window.location.href+
-					'&search='+encodeURIComponent(search_input1.val());	
+					'&search='+encodeURIComponent(search_input1.val());
 			$('.fox_dell1').hide().after('<div class="b_loading_small"><div class="b_loading_circle_wrapper_small"><div class="b_loading_circle_one_small"></div><div class="b_loading_circle_one_small b_loading_circle_delayed_small"></div></div></div>');
-                AjaxClient('booking','search_client','GET',data,'AfterSearchClient1',1,0);		
+                AjaxClient('booking','search_client','GET',data,'AfterSearchClient1',1,0);
 		}
     }, search_deley1);
 });
@@ -9057,64 +9123,64 @@ search_input1.keyup(function() {
 
 
 
-	
-	
-/*	
+
+
+/*
 var search_min2 = 0;  //мин количество символов для быстрого поиска
 var search_deley2=500;	//задержка между вводами символов - начало поиска
-var search_input2=$('.js-keyup-search');			
+var search_input2=$('.js-keyup-search');
 search_input2.keyup(function() {
-	
+
 	//обнуляем выбор
 	search_input2.parents('.input_2018').find('.js-hidden-search').val(0);
-	
+
 	if(jQuery.trim(search_input2.val().length) >= 1)
 		{
-		  $('.fox_dell1').show();	
+		  $('.fox_dell1').show();
 		} else
 		{
 			$('.fox_dell1').hide();
 		}
     delays(function(){
-		
+
 		if(jQuery.trim(search_input2.val().length) >= search_min2)
 		{
                 var data ='url='+window.location.href+
-					'&search='+encodeURIComponent(search_input2.val());	
+					'&search='+encodeURIComponent(search_input2.val());
 			//$('.fox_dell1').hide().after('<div class="b_loading_small"><div class="b_loading_circle_wrapper_small"><div class="b_loading_circle_one_small"></div><div class="b_loading_circle_one_small b_loading_circle_delayed_small"></div></div></div>');
-                AjaxClient('tours','search_turoper','GET',data,'AfterSearchTuroper',1,0);		
+                AjaxClient('tours','search_turoper','GET',data,'AfterSearchTuroper',1,0);
 		}
     }, search_deley2);
-});	
-*/	
+});
+*/
 
 	//перейти в себестоимость по объекту по клику меню сверху с выбранным объектом
 $('.menu1').on('click','.menu3_prime li',  function(){ $(this).children('a')[0].click(); });
-	
+
 //свернуть развернуть левое основное меню
 $('.hide_left,.mobile').on( "click", function() {
 	var est=0;
-	if($(".iss").is(".big,.small")) 
+	if($(".iss").is(".big,.small"))
 	{
-	   est=1;	
+	   est=1;
 	}
 	if(est==0)
 	{
-		if( $('.left_menu').is(':visible') ) 
+		if( $('.left_menu').is(':visible') )
 		{
 			$(".iss").addClass('small');
 			$.cookie('iss', 's', {expires: 60,path: '/'});
-			
+
 		} else
 		{
 			//$(".iss").removeClass('small');
 			$(".iss").addClass('big');
 			$.cookie('iss', 'b', {expires: 60,path: '/'});
 		}
-				
+
 	} else
 	{
-	  if($(".iss").is(".big")) 
+	  if($(".iss").is(".big"))
 	  {
 		 $(".iss").removeClass('big');
 		 $(".iss").addClass('small');
@@ -9122,18 +9188,18 @@ $('.hide_left,.mobile').on( "click", function() {
 	  } else
 	  {
 		 $(".iss").removeClass('small');
-		 $(".iss").addClass('big');  
+		 $(".iss").addClass('big');
 		 $.cookie('iss', 'b', {expires: 60,path: '/'});
 	  }
-	  
+
 	}
 
 sl_message_width();
 });
 
 
-	
-	
+
+
 /*клик на раскрывающее меню исполнитель*/
 $(document).mouseup(function (e) {
     var container = $(".select_box");
@@ -9142,10 +9208,10 @@ $(document).mouseup(function (e) {
 	    //$(".drop_box").hide();
 		$(".drop_box").css("transform", "scaleY(0)");
 		$(".slct_box").removeClass("active");
-		
-		
-		
-		
+
+
+
+
     }
 
 
@@ -9164,7 +9230,7 @@ $(document).mouseup(function (e) {
 		to_k.removeClass('show-form-rate1');
 	}
 
-	
+
 	var container1 = $(".menu_supply");
     if (container.has(e.target).length === 0){
         //клик вне блока и включающих в него элементов
@@ -9179,7 +9245,7 @@ $(document).mouseup(function (e) {
     if (container22.has(e.target).length === 0){
         //клик вне блока и включающих в него элементов
 	   	container22.css("transform", "scaleY(0)");
-		
+
 		if($('.post_p').val()=='')
 		{
 		   $('.loll_div').addClass('required_in_2018');
@@ -9190,18 +9256,18 @@ $(document).mouseup(function (e) {
 			$(".loll_drop").empty();
 			$('.b-loading-message').hide();
 		}
-		
-		
-    }	
-	
-	
+
+
+    }
+
+
 });
-window.slctclick_box1 = function() { 
+window.slctclick_box1 = function() {
 
 
-if($(this).parents('.select_box').find('input').attr('readonly')==undefined) {  
-	
-	  if($(this).is(".active")) 
+if($(this).parents('.select_box').find('input').attr('readonly')==undefined) {
+
+	  if($(this).is(".active"))
 	  {
 		  $(this).removeClass("active");
 		 // $(this).next().hide();
@@ -9216,22 +9282,22 @@ if($(this).parents('.select_box').find('input').attr('readonly')==undefined) {
 
 
 
-var elemss_box=$(this).attr('data_src');	
+var elemss_box=$(this).attr('data_src');
 
 
-$('.slct_box').each(function(i,elem) 
+$('.slct_box').each(function(i,elem)
 {
     var att=$(this).attr('data_src');
-	if ($(this).attr('data_src')!=elemss_box) {  	
+	if ($(this).attr('data_src')!=elemss_box) {
 			$(this).removeClass("active");
 			//$(this).next().hide();
 		$(this).next().css("transform", "scaleY(0)");
-	} 
-});	
-	
+	}
+});
+
 }
-	 
-		  
+
+
 //return false;
 
 }
@@ -9241,51 +9307,51 @@ $(".slct_box").bind('click', slctclick_box1);
 
 
 
-	
-	
-window.dropli_box1 = function() { 
+
+
+window.dropli_box1 = function() {
 
 var active_old=$(this).parent().parent().find(".slct_box").attr("data_src");
 var active_new=$(this).find("a").attr("rel");
 
 			  var f=$(this).find("a").text();
 			  var e=$(this).find("a").attr("rel");
-			  
+
 			  if(active_old!=active_new)
 			  {
 			    $(this).parent().find("li").removeClass("sel_active");
 			    $(this).addClass("sel_active");
-			  
-			
-			  
+
+
+
 			 // $(this).parent().parent().find(".slct").removeClass("active").html(f);
 			   $(this).parent().parent().find(".slct_box").removeClass("active").empty().append(f);
 			   $(this).parent().parent().find(".slct_box").attr("data_src",e);
-			  
+
 			  // $(this).parent().parent().find(".drop_box").hide();
-			   $(this).parent().parent().find(".drop_box").css("transform", "scaleY(0)"); 
-				  
+			   $(this).parent().parent().find(".drop_box").css("transform", "scaleY(0)");
+
 			   $(this).parent().parent().find("input").val(e).change();
-			   savedefault($(this).parent().parent().find("input"));	  
+			   savedefault($(this).parent().parent().find("input"));
 			  } else
 			  {
 				 //$(this).parent().parent().find(".drop_box").hide();
 				  $(this).parent().parent().find(".drop_box").css("transform", "scaleY(0)");
-				 $(this).parent().parent().find(".slct_box").removeClass("active"); 
+				 $(this).parent().parent().find(".slct_box").removeClass("active");
 			  }
-		  
+
 
 }
 $(".drop_box").find("li").bind('click', dropli_box1);
-		
-	
 
-//меню выбора города-квартала и дома в себестоимости	
+
+
 //меню выбора города-квартала и дома в себестоимости
-//меню выбора города-квартала и дома в себестоимости	
+//меню выбора города-квартала и дома в себестоимости
+//меню выбора города-квартала и дома в себестоимости
 
-	
-	
+
+
 /*клик на раскрывающее меню квартал*/
 $(document).mouseup(function (e) {
     var container = $(".select");
@@ -9314,14 +9380,14 @@ $(document).mouseup(function (e) {
 		$(".drop").parents('.input-search-list').find('i').removeClass('open-search-active');
 		$(".drop-radio").parents('.input-search-list').find('i').removeClass('open-search-active');
     }
-	
-	
-});
-window.slctclick = function() { 
 
-if($(this).parents('.select').find('input').attr('readonly')==undefined) { 
-	
-	  if($(this).is(".active")) 
+
+});
+window.slctclick = function() {
+
+if($(this).parents('.select').find('input').attr('readonly')==undefined) {
+
+	  if($(this).is(".active"))
 	  {
 		  $(this).removeClass("active");
 		  //$(this).next().hide();
@@ -9336,31 +9402,31 @@ if($(this).parents('.select').find('input').attr('readonly')==undefined) {
 
 
 
-var elemss=$(this).attr('list_number');	
+var elemss=$(this).attr('list_number');
 
 
 //скрываем все списки кроме того на который нажали
-$('.slct').each(function(i,elem) 
+$('.slct').each(function(i,elem)
 {
     var att=$(this).attr('data_src');
 	//закрыть все кроме себя
-	if ($(this).attr('list_number')!=elemss) {  	
+	if ($(this).attr('list_number')!=elemss) {
 			$(this).removeClass("active");
 			//$(this).next().hide();
 		$(this).next().css("transform", "scaleY(0)");
-	} 
-});	
-	
+	}
+});
+
 //скрываем все списки по поиску
-$('.drop-search').each(function(i,elem) 
-{  	
+$('.drop-search').each(function(i,elem)
+{
 	    $(this).parents('.input-search-list').find('i').removeClass('open-search-active');
 		$(this).css("transform", "scaleY(0)");
-	
-});	
-		
-	 
-		  
+
+});
+
+
+
 return false;
 }
 
@@ -9369,98 +9435,98 @@ return false;
 $(".slct").bind('click.sys', slctclick);
 
 
-function droplis() { 
+function droplis() {
 //alert("!");
 var active_old=$(this).parent().attr("data_src");
 var active_new=$(this).find("a").attr("rel");
-		
+
 
 			 // var f=$(this).find("a").text();
 			 var e=$(this).find("a").attr("rel");
-			  
+
 	if(!$(this).parent().is(".no_active"))
 		{
-	
-	
+
+
 			  if(active_old!=active_new)
 			  {
 			    $(this).parent().find("li").removeClass("sel_active_sss");
 			    $(this).addClass("sel_active_sss");
-				$(this).parent().attr("data_src",e);  
-			  
-			
-			  
+				$(this).parent().attr("data_src",e);
+
+
+
 			   // $(this).parent().parent().find(".slct").removeClass("active").html(f);
 			   //$(this).parent().parent().find(".slct").removeClass("active").empty().append(f);
 			   // $(this).parent().parent().find(".slct").attr("data_src",e);
-			  
+
 			   //$(this).parent().parent().find(".drop").hide();
 			   //$(this).parent().parent().find(".drop").css("transform", "scaleY(0)");
-			  
+
 			   $(this).parent().parent().find("input").val(e).change();
 			  } else
 			  {
 				 //$(this).parent().parent().find(".drop").hide();
 				 //$(this).parent().parent().find(".drop").css("transform", "scaleY(0)");
-				  
-				 //$(this).parent().parent().find(".slct").removeClass("active"); 
+
+				 //$(this).parent().parent().find(".slct").removeClass("active");
 			  }
 		} else
 			{
 				$(this).parent().parent().find("input").val(e).change();
-				
+
 			}
 
-}	
+}
 
 
-	
-	
-window.dropli = function() { 
+
+
+window.dropli = function() {
 
 var active_old=$(this).parent().parent().find(".slct").attr("data_src");
 var active_new=$(this).find("a").attr("rel");
 
 			  var f=$(this).find("a").text();
 			  var e=$(this).find("a").attr("rel");
-			  
+
 			  if(active_old!=active_new)
 			  {
 				if(e!=0)
 				{
-					$(this).parents('.left_drop').find('label').addClass('active_label');	
+					$(this).parents('.left_drop').find('label').addClass('active_label');
 				} else
 					{
 $(this).parents('.left_drop').find('label').removeClass('active_label');
 					}
-				  
-				  
+
+
 			    $(this).parent().find("li").removeClass("sel_active");
 			    $(this).addClass("sel_active");
-			  
+
 			$(this).parents('.left_drop').removeClass('required_in_2018');
-			  
+
 			 // $(this).parent().parent().find(".slct").removeClass("active").html(f);
 			   $(this).parent().parent().find(".slct").removeClass("active").empty().append(f);
 			   $(this).parent().parent().find(".slct").attr("data_src",e);
-			  
+
 			   //$(this).parent().parent().find(".drop").hide();
 				  $(this).parent().parent().find(".drop").css("transform", "scaleY(0)");
-			  
+
 			   $(this).parent().parent().find("input").val(e).change();
 			  } else
 			  {
 				 //$(this).parent().parent().find(".drop").hide();
 				  $(this).parent().parent().find(".drop").css("transform", "scaleY(0)");
-				  
-				 $(this).parent().parent().find(".slct").removeClass("active"); 
+
+				 $(this).parent().parent().find(".slct").removeClass("active");
 			  }
-		  
+
 
 }
 $(".drop").find("li").bind('click', dropli);
 
-window.dropliradio = function() { 
+window.dropliradio = function() {
 
 var active_old=$(this).parent().parent().find(".slct").attr("data_src");
 var active_new=$(this).find("a").attr("rel");
@@ -9468,19 +9534,19 @@ var active_new=$(this).find("a").attr("rel");
 			  var f=$(this).find("a").text();
 			  var e=$(this).find("a").attr("rel");
 	var drop_object=$(this).parents('.drop-radio');
-			  
-	if ($(this).find('i').is(".active_task_cb")) 
+
+	if ($(this).find('i').is(".active_task_cb"))
 		{
 			$(this).find('i').removeClass("active_task_cb");
 		} else
 			{
 				$(this).find('i').addClass("active_task_cb");
 			}
-	
-	
+
+
 	          //пробежаться по всей выбранному селекту
-	 var select_li='';   
-	var select_li_text=''; 
+	 var select_li='';
+	var select_li_text='';
 	drop_object.find('li').each(function(i,elem) {
 	if ($(this).find('i').is(".active_task_cb")) {  if(select_li==''){select_li=$(this).find("a").attr("rel");
 																	 select_li_text=$(this).find("a").text();
@@ -9488,8 +9554,8 @@ var active_new=$(this).find("a").attr("rel");
 																			select_li_text=select_li_text+', '+$(this).find("a").text();
 																			}}
 });
-	
-	
+
+
 	if(drop_object.is('.js-no-nul-select'))
 	{
 		//есть класс который говорит что если убрать галки со всех то загарятся все сразу
@@ -9504,42 +9570,42 @@ var active_new=$(this).find("a").attr("rel");
 });
 				drop_object.find('i').addClass("active_task_cb");
 			}
-		
-		
+
+
 	}
-	
+
 	/*
 				if(e!=0)
 				{
-					$(this).parents('.left_drop').find('label').addClass('active_label');	
+					$(this).parents('.left_drop').find('label').addClass('active_label');
 				} else
 					{
 $(this).parents('.left_drop').find('label').removeClass('active_label');
 					}
-	*/			  
+	*/
 				  /*
 			    $(this).parent().find("li").removeClass("sel_active");
 			    $(this).addClass("sel_active");
 			  */
-			
-			  
+
+
 			 // $(this).parent().parent().find(".slct").removeClass("active").html(f);
 			   $(this).parent().parent().find(".slct").empty().append(select_li_text);
 			   $(this).parent().parent().find(".slct").attr("data_src",select_li);
-			  
+
 			   //$(this).parent().parent().find(".drop").hide();
 				 // $(this).parent().parent().find(".drop").css("transform", "scaleY(0)");
-			  
-			   $(this).parent().parent().find("input").val(select_li).change();
-			  
-		  
 
-}	
-	
+			   $(this).parent().parent().find("input").val(select_li).change();
+
+
+
+}
+
 $(".drop-radio").find("li").bind('click', dropliradio);
 
-	
-//$('#save').bind('change', changesave);	
+
+//$('#save').bind('change', changesave);
 
 	function uploadRR_old(file,id) {
 
@@ -9595,8 +9661,8 @@ $(".drop-radio").find("li").bind('click', dropliradio);
 
 
 /*клик на раскрывающее меню сортировка снабжение*/
-var changesort2 = function() {  
-$.cookie("su_2", null, {path:'/',domain: window.is_session,secure: false}); 	
+var changesort2 = function() {
+$.cookie("su_2", null, {path:'/',domain: window.is_session,secure: false});
 CookieList("su_2",$(this).val(),'add');
 $('.js-reload-top').removeClass('active-r');
 $('.js-reload-top').addClass('active-r');
@@ -9619,78 +9685,76 @@ if($(this).val()==2)
 
   });
   */
-	$("#date_table").show(); 
+	$("#date_table").show();
 	//$("#date_table").focus();
 	//alert("!");
 	//$('.bookingBox_range').show();
 }
 
 };
-$('#sort2').bind('change', changesort2);	
-	
-	
+$('#sort2').bind('change', changesort2);
+
+
 //$('[list_number=t2]').next().find('li').bind('click', list_number);
 
 
 
-var changesort1 = function() { 
+var changesort1 = function() {
 	//alert("1");
-$.cookie("su_1", null, {path:'/',domain: window.is_session,secure: false}); 	
+$.cookie("su_1", null, {path:'/',domain: window.is_session,secure: false});
 CookieList("su_1",$(this).val(),'add');
 $('.js-reload-top').removeClass('active-r');
-$('.js-reload-top').addClass('active-r');	
+$('.js-reload-top').addClass('active-r');
 
 };
-$('#sort1').bind('change', changesort1);	
+$('#sort1').bind('change', changesort1);
 
 
-	
-var changesort_stock3 = function() {  
-$.cookie("su_st_3", null, {path:'/',domain: window.is_session,secure: false}); 	
+
+var changesort_stock3 = function() {
+$.cookie("su_st_3", null, {path:'/',domain: window.is_session,secure: false});
 CookieList("su_st_3",$(this).val(),'add');
 $('.show_sort_stock').removeClass('active_supply');
-$('.show_sort_stock').addClass('active_supply');	
+$('.show_sort_stock').addClass('active_supply');
 
 };
-$('#sort_stock3').bind('change', changesort_stock3);		
-	
+$('#sort_stock3').bind('change', changesort_stock3);
 
-var changesort_stock1 = function() {  
-$.cookie("su_st_1", null, {path:'/',domain: window.is_session,secure: false}); 	
+
+var changesort_stock1 = function() {
+$.cookie("su_st_1", null, {path:'/',domain: window.is_session,secure: false});
 CookieList("su_st_1",$(this).val(),'add');
 $('.show_sort_stock').removeClass('active_supply');
-$('.show_sort_stock').addClass('active_supply');	
+$('.show_sort_stock').addClass('active_supply');
 
 };
-$('#sort_stock1').bind('change', changesort_stock1);	
-	
-var changesort_stock2__= function() {  
+$('#sort_stock1').bind('change', changesort_stock1);
+
+var changesort_stock2__= function() {
 	var iu=$('.content').attr('iu');
 	$(this).prev().val('');
-    $.cookie("su_7c"+iu, null, {path:'/',domain: window.is_session,secure: false}); 	
+    $.cookie("su_7c"+iu, null, {path:'/',domain: window.is_session,secure: false});
 	$('.js--sort').removeClass('greei_input');
 	$('.js--sort').find('input').removeAttr('readonly');
-	
+
 $('.js-reload-top').removeClass('active-r');
 $('.js-reload-top').addClass('active-r');
-	
-	$(this).hide();	
+
+	$(this).hide();
 }
 
-var changesort_stock2__o= function() {  
+var changesort_stock2__o= function() {
 	var iu=$('.content').attr('iu');
 	$(this).prev().val('');
-    $.cookie("su_7co"+iu, null, {path:'/',domain: window.is_session,secure: false}); 	
+    $.cookie("su_7co"+iu, null, {path:'/',domain: window.is_session,secure: false});
 	$('.js--sort').removeClass('greei_input');
 	$('.js--sort').find('input').removeAttr('readonly');
-	
+
 $('.js-reload-top').removeClass('active-r');
 $('.js-reload-top').addClass('active-r');
-	
-	$(this).hide();	
+
+	$(this).hide();
 }
-	
-	
 
 
 
@@ -9699,115 +9763,117 @@ $('.js-reload-top').addClass('active-r');
 
 
 
-	
 
 
-	
-var changesort3 = function() {  
-$.cookie("su_3", null, {path:'/',domain: window.is_session,secure: false}); 	
+
+
+
+
+var changesort3 = function() {
+$.cookie("su_3", null, {path:'/',domain: window.is_session,secure: false});
 CookieList("su_3",$(this).val(),'add');
 $('.js-reload-top').removeClass('active-r');
-$('.js-reload-top').addClass('active-r');	
+$('.js-reload-top').addClass('active-r');
 
 };
-$('#sort3').bind('change', changesort3);	
-	
-	
-var changesort4 = function() {  
-$.cookie("su_4", null, {path:'/',domain: window.is_session,secure: false}); 	
+$('#sort3').bind('change', changesort3);
+
+
+var changesort4 = function() {
+$.cookie("su_4", null, {path:'/',domain: window.is_session,secure: false});
 CookieList("su_4",$(this).val(),'add');
 $('.js-reload-top').removeClass('active-r');
-$('.js-reload-top').addClass('active-r');	
+$('.js-reload-top').addClass('active-r');
 
 };
-$('#sort4').bind('change', changesort4);	
-	
-var changesort5 = function() {  
-$.cookie("su_5", null, {path:'/',domain: window.is_session,secure: false}); 	
+$('#sort4').bind('change', changesort4);
+
+var changesort5 = function() {
+$.cookie("su_5", null, {path:'/',domain: window.is_session,secure: false});
 CookieList("su_5",$(this).val(),'add');
 $('.js-reload-top').removeClass('active-r');
 $('.js-reload-top').addClass('active-r');
 
 };
-$('#sort5').bind('change', changesort5);	
-	
-	
-var changesort6 = function() {  
-$.cookie("su_6", null, {path:'/',domain: window.is_session,secure: false}); 	
+$('#sort5').bind('change', changesort5);
+
+
+var changesort6 = function() {
+$.cookie("su_6", null, {path:'/',domain: window.is_session,secure: false});
 CookieList("su_6",$(this).val(),'add');
 $('.js-reload-top').removeClass('active-r');
-$('.js-reload-top').addClass('active-r');	
+$('.js-reload-top').addClass('active-r');
 
 };
-$('#sort6').bind('change', changesort6);	
+$('#sort6').bind('change', changesort6);
 
 
 //***************************************************************************************
 //***************************************************************************************
-//***************************************************************************************		
+//***************************************************************************************
 
 
 //выбор в меня поиска в клиенте
 var changesort1c = function() {
-var iu=$('.content').attr('iu');	
-	
-$.cookie("su_1c"+iu, null, {path:'/',domain: window.is_session,secure: false}); 	
+var iu=$('.content').attr('iu');
+
+$.cookie("su_1c"+iu, null, {path:'/',domain: window.is_session,secure: false});
 CookieList("su_1c"+iu,$(this).val(),'add');
 $('.js-reload-top').removeClass('active-r');
-$('.js-reload-top').addClass('active-r');		
+$('.js-reload-top').addClass('active-r');
 
 };
-$('#sort1c').bind('change', changesort1c);		
+$('#sort1c').bind('change', changesort1c);
 
-var changesort2c = function() {  
-var iu=$('.content').attr('iu');	
-	
-$.cookie("su_2c"+iu, null, {path:'/',domain: window.is_session,secure: false}); 	
+var changesort2c = function() {
+var iu=$('.content').attr('iu');
+
+$.cookie("su_2c"+iu, null, {path:'/',domain: window.is_session,secure: false});
 CookieList("su_2c"+iu,$(this).val(),'add');
 $('.js-reload-top').removeClass('active-r');
-$('.js-reload-top').addClass('active-r');		
+$('.js-reload-top').addClass('active-r');
 };
-$('#sort2c').bind('change', changesort2c);		
+$('#sort2c').bind('change', changesort2c);
 
 var changesort3c = function() {
-var iu=$('.content').attr('iu');	
-$.cookie("su_3c"+iu, null, {path:'/',domain: window.is_session,secure: false}); 	
+var iu=$('.content').attr('iu');
+$.cookie("su_3c"+iu, null, {path:'/',domain: window.is_session,secure: false});
 CookieList("su_3c"+iu,$(this).val(),'add');
 $('.js-reload-top').removeClass('active-r');
-$('.js-reload-top').addClass('active-r');	
+$('.js-reload-top').addClass('active-r');
 
 };
-$('#sort3c').bind('change', changesort3c);	
-	
-	
-var changesort4c = function() {  
-var iu=$('.content').attr('iu');	
-$.cookie("su_4c"+iu, null, {path:'/',domain: window.is_session,secure: false}); 	
+$('#sort3c').bind('change', changesort3c);
+
+
+var changesort4c = function() {
+var iu=$('.content').attr('iu');
+$.cookie("su_4c"+iu, null, {path:'/',domain: window.is_session,secure: false});
 CookieList("su_4c"+iu,$(this).val(),'add');
 $('.js-reload-top').removeClass('active-r');
-$('.js-reload-top').addClass('active-r');	
+$('.js-reload-top').addClass('active-r');
 
 };
-$('#sort4c').bind('change', changesort4c);	
-	
-var changesort5c = function() {  
-var iu=$('.content').attr('iu');	
-$.cookie("su_5c"+iu, null, {path:'/',domain: window.is_session,secure: false}); 	
+$('#sort4c').bind('change', changesort4c);
+
+var changesort5c = function() {
+var iu=$('.content').attr('iu');
+$.cookie("su_5c"+iu, null, {path:'/',domain: window.is_session,secure: false});
 CookieList("su_5c"+iu,$(this).val(),'add');
 $('.js-reload-top').removeClass('active-r');
-$('.js-reload-top').addClass('active-r');	
+$('.js-reload-top').addClass('active-r');
 };
-$('#sort5c').bind('change', changesort5c);		
+$('#sort5c').bind('change', changesort5c);
 
 
-var changesort7c = function() {  
-var iu=$('.content').attr('iu');	
-$.cookie("su_7c"+iu, null, {path:'/',domain: window.is_session,secure: false}); 	
+var changesort7c = function() {
+var iu=$('.content').attr('iu');
+$.cookie("su_7c"+iu, null, {path:'/',domain: window.is_session,secure: false});
 CookieList("su_7c"+iu,$(this).val(),'add');
-	
+
 $('.js-reload-top').removeClass('active-r');
-$('.js-reload-top').addClass('active-r');	
-	
+$('.js-reload-top').addClass('active-r');
+
 };
 
 	var changesort7ct = function() {
@@ -9836,48 +9902,48 @@ $('#name_stock_search').bind('change keyup input click', changesort7c);
 $('#name_stock_search_tours').bind('change keyup input click', changesort7ct);
 
 $('#name_stock_search_preorders').bind('change keyup input click', changesort7pr);
-	
+
 //***************************************************************************************
 //***************************************************************************************
-//***************************************************************************************		
-	
+//***************************************************************************************
+
 
 
 
 
 
 var changesort1co = function() {
-var iu=$('.content').attr('iu');	
-	
-$.cookie("su_1co"+iu, null, {path:'/',domain: window.is_session,secure: false}); 	
+var iu=$('.content').attr('iu');
+
+$.cookie("su_1co"+iu, null, {path:'/',domain: window.is_session,secure: false});
 CookieList("su_1co"+iu,$(this).val(),'add');
 $('.js-reload-top').removeClass('active-r');
-$('.js-reload-top').addClass('active-r');		
+$('.js-reload-top').addClass('active-r');
 
 };
-$('#sort1co').bind('change', changesort1co);		
+$('#sort1co').bind('change', changesort1co);
 
 
-var changesort5co = function() {  
-var iu=$('.content').attr('iu');	
-$.cookie("su_5co"+iu, null, {path:'/',domain: window.is_session,secure: false}); 	
+var changesort5co = function() {
+var iu=$('.content').attr('iu');
+$.cookie("su_5co"+iu, null, {path:'/',domain: window.is_session,secure: false});
 CookieList("su_5co"+iu,$(this).val(),'add');
 $('.js-reload-top').removeClass('active-r');
-$('.js-reload-top').addClass('active-r');	
+$('.js-reload-top').addClass('active-r');
 };
-$('#sort5co').bind('change', changesort5co);		
-		
-var changesort7co = function() {  
-var iu=$('.content').attr('iu');	
-$.cookie("su_7co"+iu, null, {path:'/',domain: window.is_session,secure: false}); 	
+$('#sort5co').bind('change', changesort5co);
+
+var changesort7co = function() {
+var iu=$('.content').attr('iu');
+$.cookie("su_7co"+iu, null, {path:'/',domain: window.is_session,secure: false});
 CookieList("su_7co"+iu,$(this).val(),'add');
-	
+
 $('.js-reload-top').removeClass('active-r');
-$('.js-reload-top').addClass('active-r');	
-	
-};	
-$('#name_stock_searcho').bind('change keyup input click', changesort7co);	
-	
+$('.js-reload-top').addClass('active-r');
+
+};
+$('#name_stock_searcho').bind('change keyup input click', changesort7co);
+
 //***************************************************************************************
 //***************************************************************************************
 	var changesort5tu = function() {
@@ -9890,6 +9956,11 @@ $('#name_stock_searcho').bind('change keyup input click', changesort7co);
 		$('.js-reload-top').addClass('active-r');
 	};
 	$('#sort5tu').bind('change', changesort5tu);
+
+
+
+
+
 	//***************************************************************************************
 	var changesort5cc = function() {
 		var iu=$('.content').attr('iu');
@@ -9957,7 +10028,7 @@ $('#name_stock_searcho').bind('change keyup input click', changesort7co);
 		$('.js-reload-top').addClass('active-r');
 	};
 	$('#sort3tu').bind('change', changesort3tu);
-//***************************************************************************************	
+//***************************************************************************************
 	var changesort2tu = function() {
 		var iu=$('.content').attr('iu');
 
@@ -10023,49 +10094,49 @@ $('#name_stock_searcho').bind('change keyup input click', changesort7co);
 
 
 
-var changesort2ta = function() {  
+var changesort2ta = function() {
 var iu=$('.content').attr('iu');
-	
-$.cookie("su_2ta"+iu, null, {path:'/',domain: window.is_session,secure: false}); 	
+
+$.cookie("su_2ta"+iu, null, {path:'/',domain: window.is_session,secure: false});
 CookieList("su_2ta"+iu,$(this).val(),'add');
-	
-$('.js-reload-top').removeClass('active-r');
-$('.js-reload-top').addClass('active-r');		
-};
-$('#sort2ta').bind('change', changesort2ta);		
 
-	
-var changesort1ta = function() {  
+$('.js-reload-top').removeClass('active-r');
+$('.js-reload-top').addClass('active-r');
+};
+$('#sort2ta').bind('change', changesort2ta);
+
+
+var changesort1ta = function() {
 var iu=$('.content').attr('iu');
-	
-$.cookie("su_1ta"+iu, null, {path:'/',domain: window.is_session,secure: false}); 	
+
+$.cookie("su_1ta"+iu, null, {path:'/',domain: window.is_session,secure: false});
 CookieList("su_1ta"+iu,$(this).val(),'add');
-	
+
 $('.js-reload-top').removeClass('active-r');
-$('.js-reload-top').addClass('active-r');		
+$('.js-reload-top').addClass('active-r');
 };
-$('#sort1ta').bind('change', changesort1ta);	
+$('#sort1ta').bind('change', changesort1ta);
 
 
-var changesort4ta = function() {  
+var changesort4ta = function() {
 var iu=$('.content').attr('iu');
-	
-$.cookie("su_4ta"+iu, null, {path:'/',domain: window.is_session,secure: false}); 	
+
+$.cookie("su_4ta"+iu, null, {path:'/',domain: window.is_session,secure: false});
 CookieList("su_4ta"+iu,$(this).val(),'add');
-	
+
 $('.js-reload-top').removeClass('active-r');
-$('.js-reload-top').addClass('active-r');		
+$('.js-reload-top').addClass('active-r');
 };
-$('#sort4ta').bind('change', changesort4ta);	
-	
-var changesort3ta = function() {  
+$('#sort4ta').bind('change', changesort4ta);
+
+var changesort3ta = function() {
 var iu=$('.content').attr('iu');
-	
-$.cookie("su_3ta"+iu, null, {path:'/',domain: window.is_session,secure: false}); 	
+
+$.cookie("su_3ta"+iu, null, {path:'/',domain: window.is_session,secure: false});
 CookieList("su_3ta"+iu,$(this).val(),'add');
-	
+
 $('.js-reload-top').removeClass('active-r');
-$('.js-reload-top').addClass('active-r');		
+$('.js-reload-top').addClass('active-r');
 };
 $('#sort3ta').bind('change', changesort3ta);
 
@@ -10083,27 +10154,27 @@ $('#sort3pr').bind('change', changesort3pr);
 		$('.js-reload-top').addClass('active-r');
 	};
 	$('#sort3pr').bind('change', changesort3pr);
-	
-	
-var changesort5ta = function() {  
+
+
+var changesort5ta = function() {
 var iu=$('.content').attr('iu');
-	
-$.cookie("su_5ta"+iu, null, {path:'/',domain: window.is_session,secure: false}); 	
+
+$.cookie("su_5ta"+iu, null, {path:'/',domain: window.is_session,secure: false});
 CookieList("su_5ta"+iu,$(this).val(),'add');
-	
+
 $('.js-reload-top').removeClass('active-r');
-$('.js-reload-top').addClass('active-r');		
+$('.js-reload-top').addClass('active-r');
 };
-$('#sort5ta').bind('change', changesort5ta);	
-	
-var changesort2s = function() {  
+$('#sort5ta').bind('change', changesort5ta);
+
+var changesort2s = function() {
 var iu=$('.content').attr('iu');
-	
-$.cookie("su_2s"+iu, null, {path:'/',domain: window.is_session,secure: false}); 	
+
+$.cookie("su_2s"+iu, null, {path:'/',domain: window.is_session,secure: false});
 CookieList("su_2s"+iu,$(this).val(),'add');
-	
+
 $('.js-reload-top').removeClass('active-r');
-$('.js-reload-top').addClass('active-r');		
+$('.js-reload-top').addClass('active-r');
 };
 $('#sort2s').bind('change', changesort2s);
 
@@ -10124,17 +10195,17 @@ $('#sort2s').bind('change', changesort2s);
 	var changesort5s = function() {
 
 var iu=$('.content').attr('iu');
-	
-$.cookie("su_5s"+iu, null, {path:'/',domain: window.is_session,secure: false}); 	
+
+$.cookie("su_5s"+iu, null, {path:'/',domain: window.is_session,secure: false});
 CookieList("su_5s"+iu,$(this).val(),'add');
 $('.js-reload-top').removeClass('active-r');
-$('.js-reload-top').addClass('active-r');	
+$('.js-reload-top').addClass('active-r');
 
 };
-$('#sort5s').bind('change', changesort5s);		
+$('#sort5s').bind('change', changesort5s);
 
-	
-	
+
+
 
 
 });

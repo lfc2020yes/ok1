@@ -103,7 +103,7 @@ mysql_time_query($link,'update selection set link="'.ht($_GET['link']).'" where 
   $bila=0;
 	//смотрим может такая задача уже была и это просто ее изменение
 		$result_8 = mysql_time_query($link,'SELECT A.id,A.ring_datetime,A.comment,id_user_responsible FROM task_new AS A WHERE A.id_user="'.ht($id_user).'" and 
-	A.id_a_company="'.ht($id_company).'" and 
+	A.id_a_group IN ('.ht($id_group_u).') and 
 	A.reminder=0 and
 	A.click="1" and
 	A.action="9" and
@@ -147,7 +147,7 @@ if((ht($_GET['task'])=='1')and($bila==0))
 //добавление новой задачи
 	//echo("2");
 	
-	mysql_time_query($link,'INSERT INTO task_new (id_a_company,id_user,id_user_responsible,ring_datetime,comment,date_create,visible,status,click,action,id_object) VALUES ("'.$id_company.'","'.$id_user.'","'.$id_user.'","'.ht($_GET['date']).' '.ht($_GET['time']).':00","'.ht($_GET['comment']).'","'.date("y.m.d").' '.date("H:i:s").'","1","0","1","9","'.ht($_GET['id']).'")');
+	mysql_time_query($link,'INSERT INTO task_new (id_a_group,id_user,id_user_responsible,ring_datetime,comment,date_create,visible,status,click,action,id_object) VALUES ("'.$id_group_u.'","'.$id_user.'","'.$id_user.'","'.ht($_GET['date']).' '.ht($_GET['time']).':00","'.ht($_GET['comment']).'","'.date("y.m.d").' '.date("H:i:s").'","1","0","1","9","'.ht($_GET['id']).'")');
 	
 	$ID_N=mysqli_insert_id($link);	
 	//добавление истории по задаче

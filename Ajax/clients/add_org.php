@@ -111,11 +111,17 @@ INSERT INTO k_clients_commun (id,id_user,id_client,comment,datetimes,id_type_com
              $today[1] = date("H:i:s"); //присвоит 1 элементу массива 17:16:17
 
 	         $date_=$today[0].' '.$today[1];
-	
+
+
+$org=$id_company;
+if(is_numeric($_POST['offers'][0]["id_company"]))
+    {
+        $org=ht($_POST['offers'][0]["id_company"]);
+    }
 
 mysql_time_query($link,'INSERT INTO k_organization (id_a_company,id_user,name,head,position,organ_face,adress_post,adress_ur,phone,email,comment,contact_face,head_contact_face,phone_contact,code_inn,code_kpp,code_ogrn,code_okpo,bank_bik,bank_name,bank_rs,bank_ks,face_address,face_seria,face_number,face_kem,face_kogda,datetimes,visible) VALUES( 
 
-"'.ht($id_company).'",
+"'.ht($org).'",
 "'.ht($id_user).'",
 "'.ht($_POST['offers'][0]["org_name"]).'",
 "'.ht($_POST['offers'][0]["org_head"]).'",

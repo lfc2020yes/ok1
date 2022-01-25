@@ -161,7 +161,7 @@ $(\'.tyyo'.+$row_8["id"].'\').trigger(\'keyup\');
 }
 
 $task_cloud_block.='</div>
-	<div class="trips-b-info"><span class="label-task-gg ">Информация о туре
+	<div class="trips-b-info" style="z-index: 11;"><span class="label-task-gg ">Информация о туре
 </span>';
 
 if($row_8["shopper"]==1) {
@@ -258,7 +258,27 @@ $num_results_uu = $result_uu->num_rows;
 if($num_results_uu!=0)
 {
     $row_uu = mysqli_fetch_assoc($result_uu);
-    $task_cloud_block.='<div class="pass_wh_trips"><label>Менеджер</label><span class="obi">'.$row_uu['name_user'].'</span></div>';
+    $task_cloud_block.='<div class="pass_wh_trips"><label>Менеджер</label><span class="obi">'.$row_uu['name_user'];
+
+    if($more_city==1)
+    {
+        //выводить к какой организации относится тур
+
+        $result_cop = mysql_time_query($link, 'select * from a_company where id="'.ht($row_8["id_a_company"]).'"');
+        $num_results_cop = $result_cop->num_rows;
+
+        if ($num_results_cop != 0) {
+            $row_cop = mysqli_fetch_assoc($result_cop);
+            $task_cloud_block.=' <div class="issue-block oo_date">('.$row_cop["name_dop"].')</div>';
+        }
+
+
+    }
+
+
+
+
+    $task_cloud_block.='</span></div>';
 
 
 }
@@ -385,7 +405,7 @@ if($endx=='0000-00-00 00:00:00') {
 </span>';
 
 //узнаем код по рублю
-$result_uu_rub = mysql_time_query($link, 'select A.code,A.small_name from booking_exchange A where A.id_a_company="' . ht($id_company) . '" and A.char="₽"');
+$result_uu_rub = mysql_time_query($link, 'select A.code,A.small_name from booking_exchange A where A.id_a_company IN (' . ht($id_company) . ') and A.char="₽" limit 1');
 $num_results_uu_rub = $result_uu_rub->num_rows;
 
 if ($num_results_uu_rub != 0) {

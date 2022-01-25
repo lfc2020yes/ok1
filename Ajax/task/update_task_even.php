@@ -100,19 +100,19 @@ if($num_results_t!=0)
 		$result_8 = mysql_time_query($link,'
 select * from( 
 (
-select A.*,0 as flag from  task_new as A WHERE A.id_user_responsible="'.ht($id_user).'" and A.visible=1 and A.id_a_company="'.ht($id_company).'" and A.status=0 and  LOWER(A.ring_datetime) LIKE "'.$date_end_plus3.' %"
+select A.*,0 as flag from  task_new as A WHERE A.id_user_responsible="'.ht($id_user).'" and A.visible=1 and A.id_a_group IN ('.ht($id_group_u).') and A.status=0 and  LOWER(A.ring_datetime) LIKE "'.$date_end_plus3.' %"
 )
 UNION
 (
-select A.*,1 as flag from  task_new as A WHERE A.id_user_responsible LIKE "'.$id_user.',%" and A.visible=1 and A.id_a_company="'.ht($id_company).'" and A.status=0 and  LOWER(A.ring_datetime) LIKE "'.$date_end_plus3.' %"
+select A.*,1 as flag from  task_new as A WHERE A.id_user_responsible LIKE "'.$id_user.',%" and A.visible=1 and A.id_a_group IN ('.ht($id_group_u).') and A.status=0 and  LOWER(A.ring_datetime) LIKE "'.$date_end_plus3.' %"
 )
 UNION
 (
-select A.*,1 as flag from  task_new as A WHERE A.id_user_responsible LIKE "%,'.$id_user.',%" and A.visible=1 and A.id_a_company="'.ht($id_company).'" and A.status=0 and  LOWER(A.ring_datetime) LIKE "'.$date_end_plus3.' %"
+select A.*,1 as flag from  task_new as A WHERE A.id_user_responsible LIKE "%,'.$id_user.',%" and A.visible=1 and A.id_a_group IN ('.ht($id_group_u).') and A.status=0 and  LOWER(A.ring_datetime) LIKE "'.$date_end_plus3.' %"
 )
 UNION
 (
-select A.*,1 as flag from  task_new as A WHERE A.id_user_responsible LIKE "%,'.$id_user.'" and A.visible=1 and A.id_a_company="'.ht($id_company).'" and A.status=0 and  LOWER(A.ring_datetime) LIKE "'.$date_end_plus3.' %"
+select A.*,1 as flag from  task_new as A WHERE A.id_user_responsible LIKE "%,'.$id_user.'" and A.visible=1 and A.id_a_group IN ('.ht($id_group_u).') and A.status=0 and  LOWER(A.ring_datetime) LIKE "'.$date_end_plus3.' %"
 )
 
 
@@ -124,19 +124,19 @@ select A.*,1 as flag from  task_new as A WHERE A.id_user_responsible LIKE "%,'.$
 					$result_8 = mysql_time_query($link,'
 select * from( 
 (
-select A.*,0 as flag from  task_new as A WHERE A.id_user_responsible="'.ht($id_user).'" and A.visible=1 and A.id_a_company="'.ht($id_company).'" and A.reminder=0 and A.status=0 and  LOWER(A.ring_datetime)<"'.date("Y-m-d").' 00:00:00"
+select A.*,0 as flag from  task_new as A WHERE A.id_user_responsible="'.ht($id_user).'" and A.visible=1 and A.id_a_group IN ('.ht($id_group_u).') and A.reminder=0 and A.status=0 and  LOWER(A.ring_datetime)<"'.date("Y-m-d").' 00:00:00"
 )
 UNION
 (
-select A.*,1 as flag from  task_new as A WHERE A.id_user_responsible LIKE "'.$id_user.',%" and A.visible=1 and A.id_a_company="'.ht($id_company).'" and A.reminder=0 and A.status=0 and  LOWER(A.ring_datetime)<"'.date("Y-m-d").' 00:00:00"
+select A.*,1 as flag from  task_new as A WHERE A.id_user_responsible LIKE "'.$id_user.',%" and A.visible=1 and A.id_a_group IN ('.ht($id_group_u).') and A.reminder=0 and A.status=0 and  LOWER(A.ring_datetime)<"'.date("Y-m-d").' 00:00:00"
 )
 UNION
 (
-select A.*,1 as flag from  task_new as A WHERE A.id_user_responsible LIKE "%,'.$id_user.',%" and A.visible=1 and A.id_a_company="'.ht($id_company).'" and A.reminder=0 and A.status=0 and  LOWER(A.ring_datetime)<"'.date("Y-m-d").' 00:00:00"
+select A.*,1 as flag from  task_new as A WHERE A.id_user_responsible LIKE "%,'.$id_user.',%" and A.visible=1 and A.id_a_group IN ('.ht($id_group_u).') and A.reminder=0 and A.status=0 and  LOWER(A.ring_datetime)<"'.date("Y-m-d").' 00:00:00"
 )
 UNION
 (
-select A.*,1 as flag from  task_new as A WHERE A.id_user_responsible LIKE "%,'.$id_user.'" and A.visible=1 and A.id_a_company="'.ht($id_company).'" and A.reminder=0 and A.status=0 and LOWER(A.ring_datetime)<"'.date("Y-m-d").' 00:00:00"
+select A.*,1 as flag from  task_new as A WHERE A.id_user_responsible LIKE "%,'.$id_user.'" and A.visible=1 and A.id_a_group IN ('.ht($id_group_u).') and A.reminder=0 and A.status=0 and LOWER(A.ring_datetime)<"'.date("Y-m-d").' 00:00:00"
 )
 
 

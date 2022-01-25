@@ -106,12 +106,12 @@ if ((!$role->permission('Финансы','U'))and($sign_admin!=1))
 }
 $date_new=date("Y-m-").'01';
 
-$result_uu = mysql_time_query($link, 'select * from finance_plane where id_a_company="' . ht($id_company) . '" and date="'.$date_new.'"');
+$result_uu = mysql_time_query($link, 'select * from finance_plane where id_a_company IN ('.ht($id_company).') and date="'.$date_new.'"');
+
 $num_results_uu = $result_uu->num_rows;
 
 if ($num_results_uu != 0) {
     $row_score = mysqli_fetch_assoc($result_uu);
-
 } else
 {
     $debug=h4a(5,$echo_r,$debug);

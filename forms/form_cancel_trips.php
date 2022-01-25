@@ -45,7 +45,7 @@ if ((!$role->permission('Туры','U'))and($sign_admin!=1))
     goto end_code;	
 }
 
-$result_t=mysql_time_query($link,'Select A.id,A.status,A.id_exchange from trips as A where A.visible=1 AND A.id="'.ht($_GET["id"]).'" and A.id_a_company="'.$id_company.'"');
+$result_t=mysql_time_query($link,'Select A.id,A.status,A.id_exchange from trips as A where A.visible=1 AND A.id="'.ht($_GET["id"]).'" and A.id_a_company IN ('.$id_company.')');
 $num_results_t = $result_t->num_rows;
 if($num_results_t==0)
 {
@@ -166,7 +166,7 @@ $os_say = array();
 $os_id_say = array();
 
 $result_work_zz=mysql_time_query($link,'Select A.* from trips_why_annulation
- as A where A.visible=1 and A.id_a_company="'.$id_company.'" order by A.displayOrder');
+ as A where A.visible=1 and A.id_a_company IN('.$id_group_company_list.') order by A.displayOrder');
 $num_results_work_zz = $result_work_zz->num_rows;
 if($num_results_work_zz!=0)
 {
@@ -235,7 +235,7 @@ $os_say = array('—');
 $os_id_say = array('0');
 
 $result_work_zz=mysql_time_query($link,'Select A.* from trips_cancel_refund
- as A where A.visible=1 and A.id_a_company="'.$id_company.'" order by A.displayOrder');
+ as A where A.visible=1 and A.id_a_company IN ('.$id_group_company_list.') order by A.displayOrder');
 $num_results_work_zz = $result_work_zz->num_rows;
 if($num_results_work_zz!=0)
 {

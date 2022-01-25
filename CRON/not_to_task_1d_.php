@@ -27,7 +27,7 @@ if ($result_uu) {
     $i = 0;
     while ($row_uu = mysqli_fetch_assoc($result_uu)) {
 
-        $result_uutt = mysql_time_query($link, 'select a.id_user,b.name_user,b.id_company from trips as a,r_user as b where b.id=a.id_user and a.id="' . ht($row_uu['id_object']) . '"');
+        $result_uutt = mysql_time_query($link, 'select a.id_user,b.name_user,a.id_a_company from trips as a,r_user as b where b.id=a.id_user and a.id="' . ht($row_uu['id_object']) . '"');
         $num_results_uutt = $result_uutt->num_rows;
 
         if ($num_results_uutt != 0) {
@@ -48,7 +48,7 @@ if ($result_uu) {
             $text_not1 = 'Просрочка по оплате '.$komy.'. <a href="/tours/.id-' . ht($row_uu['id_object']) . '">Тур №' . ht($row_uu['id_object']) . '</a>.';
 
             $user_send_new= array();
-            $user_send_new=array_merge(UserNotNumberCompany($id_number,$row_uutt["id_company"],$link));
+            $user_send_new=array_merge(UserNotNumberCompany($id_number,$row_uutt["id_a_company"],$link));
 
             rm_from_array(0,$user_send_new);
 

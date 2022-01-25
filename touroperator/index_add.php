@@ -57,7 +57,25 @@ if((isset($_POST['save_operator']))and($_POST['save_operator']==1))
 if((htmlspecialchars(trim($_POST['name_b']))==''))
 {
   array_push($stack_error, "name_b"); 
-}	
+}
+
+
+         $org=$_POST['org'];
+         $sel_org='';
+         for ($i = 0; $i < (count($org['type'])); $i++){
+
+             if((is_numeric($org['type'][$i]))and($org['val'][$i]=='1')and($org['type'][$i]!='0'))
+             {
+                     $sel_org = $org['type'][$i];
+                     break;
+             }
+         }
+         if($sel_org=='')
+         {
+             $sel_org=$id_company;
+         }
+
+
 		 /*
 	if((htmlspecialchars(trim($_POST['phone_b']))==''))
 {
@@ -75,10 +93,14 @@ if((htmlspecialchars(trim($_POST['name_b']))==''))
              $today[1] = date("H:i:s"); //присвоит 1 элементу массива 17:16:17
 
 	         $date_=$today[0].' '.$today[1];
+
+
+
+
 			
 			
-			
-			 mysql_time_query($link,'INSERT INTO booking_operator (name,url,login,password,comment,phone) VALUES ("'.htmlspecialchars(trim($_POST['name_b'])).'","'.htmlspecialchars(trim($_POST['url_b'])).'","'.htmlspecialchars(trim($_POST['login_b'])).'","'.htmlspecialchars(trim($_POST['password_b'])).'","'.htmlspecialchars(trim($_POST['comment_b'])).'","'.htmlspecialchars(trim($_POST['phone_b'])).'")');
+			 mysql_time_query($link,'INSERT INTO booking_operator (
+id_a_company,name,url,login,password,comment,phone) VALUES ("'.$sel_org.'","'.htmlspecialchars(trim($_POST['name_b'])).'","'.htmlspecialchars(trim($_POST['url_b'])).'","'.htmlspecialchars(trim($_POST['login_b'])).'","'.htmlspecialchars(trim($_POST['password_b'])).'","'.htmlspecialchars(trim($_POST['comment_b'])).'","'.htmlspecialchars(trim($_POST['phone_b'])).'")');
 			 
 			 $ID_N=mysqli_insert_id($link);  
 			
@@ -157,7 +179,11 @@ if($error_header!=404){ SEO('touroperator_add','','','',$link); } else { SEO('0'
 
 include_once $url_system.'module/config_url.php'; include $url_system.'template/head.php';
 ?>
-</head><body><div class="container">
+</head><body>
+<?
+echo'<div class="alert_wrapper"><div class="div-box"></div></div>';
+?>
+<div class="container">
 <?
 
 	
@@ -216,14 +242,55 @@ include_once $url_system.'module/config_url.php'; include $url_system.'template/
 	<div class="div_ook">
 	
 <!--<span class="add_bo">Добавление новой заявки</span>	-->
-	
-		
-		  
-		  	
-		  		
-		  			
-		  				
-		  						<div class="ok-block-input">
+
+
+
+        <div class="div_ook" style="border-bottom: 1px solid rgba(0,0,0,0.05); padding-left: 0px; padding-right: 0px;">
+            <?
+            echo'<div class="form-panel">
+	<div class="na-100" style="padding: 0px; padding-top:10px;">';
+            echo'<span class="h4-f">Организация</span>';
+            echo'</div></div>';
+
+            echo'<div class="form-panel js-group-c  js-tolko-one js-company-xxc">';
+
+
+
+            $result_work_zz=mysql_time_query($link,'Select a.name,a.id from a_company as a where a.id IN ('.$id_company_sql.')');
+            $num_results_work_zz = $result_work_zz->num_rows;
+            if($num_results_work_zz!=0)
+            {
+
+                for ($i=0; $i<$num_results_work_zz; $i++)
+                {
+                    $row_66 = mysqli_fetch_assoc($result_work_zz);
+
+                    echo '<div class="na-50" style="padding: 0px;">';
+
+                    echo '<div class="input-choice-click-left js-checkbox-group js-checkbox-companyx" style="margin-top: 0px; background-color: transparent;">
+<div class="choice-head">' . $row_66["name"] . '</div>
+<div class="choice-radio"><div class="center_vert1">';
+
+
+                    echo '<i></i><input name="org[type][]" value="' . $row_66["id"] . '" type="hidden"><input name="org[val][]" value="0" type="hidden">';
+
+
+
+                    echo '</div></div></div></div>';
+
+                }
+            }
+
+
+
+            echo'</div>';
+            ?>
+        </div>
+
+
+
+
+        <div class="ok-block-input">
 			  <div class="ok-input-title">Название туроператора<i></i></div>
 			
 			  <span class="ok-i">
@@ -232,8 +299,13 @@ include_once $url_system.'module/config_url.php'; include $url_system.'template/
         ?>
         </span>
 	        </div>
-	        
-	        
+
+
+
+
+
+
+
 	        
 	        
 				<div class="ok-block-input">

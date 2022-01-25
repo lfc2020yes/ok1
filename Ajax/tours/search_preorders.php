@@ -123,32 +123,32 @@ if($query!='')
 
 select * from(     
    (   
-SELECT a.id,a.date_create,a.id_type_clients,a.id_k_clients,a.id_country FROM preorders as a where a.id_company="'.ht($id_company).'" and a.visible=1 and a.id_user="'.ht($id_user).'" and not(a.status IN ("5","6")) and LOWER(a.id) LIKE "%'.$query.'%"   
+SELECT a.id,a.date_create,a.id_type_clients,a.id_k_clients,a.id_country FROM preorders as a where a.id_company IN ('.ht($id_company).') and a.visible=1 and a.id_user="'.ht($id_user).'" and not(a.status IN ("5","6")) and LOWER(a.id) LIKE "%'.$query.'%"   
 )
 UNION
 (
 
-SELECT a.id,a.date_create,a.id_type_clients,a.id_k_clients,a.id_country FROM preorders as a,k_clients as b where b.id=a.id_k_clients and a.id_type_clients=1 and a.id_company="'.ht($id_company).'" and a.visible=1 and a.id_user="'.ht($id_user).'" and not(a.status IN ("5","6")) and LOWER(b.fio) LIKE "%'.$query.'%"
+SELECT a.id,a.date_create,a.id_type_clients,a.id_k_clients,a.id_country FROM preorders as a,k_clients as b where b.id=a.id_k_clients and a.id_type_clients=1 and a.id_company IN ('.ht($id_company).') and a.visible=1 and a.id_user="'.ht($id_user).'" and not(a.status IN ("5","6")) and LOWER(b.fio) LIKE "%'.$query.'%"
 
 AND a.id NOT IN 
-(SELECT a.id FROM preorders as a where a.id_company="'.ht($id_company).'" and a.visible=1 and a.id_user="'.ht($id_user).'" and not(a.status IN ("5","6")) and LOWER(a.id) LIKE "%'.$query.'%")
+(SELECT a.id FROM preorders as a where a.id_company IN ('.ht($id_company).') and a.visible=1 and a.id_user="'.ht($id_user).'" and not(a.status IN ("5","6")) and LOWER(a.id) LIKE "%'.$query.'%")
 ) 
 
 UNION
 (
-SELECT a.id,a.date_create,a.id_type_clients,a.id_k_clients,a.id_country FROM preorders as a,k_organization as b where b.id=a.id_k_clients and a.id_type_clients=2 and a.id_company="'.ht($id_company).'" and a.visible=1 and a.id_user="'.ht($id_user).'" and not(a.status IN ("5","6")) and LOWER(b.name) LIKE "%'.$query.'%"
+SELECT a.id,a.date_create,a.id_type_clients,a.id_k_clients,a.id_country FROM preorders as a,k_organization as b where b.id=a.id_k_clients and a.id_type_clients=2 and a.id_company IN ('.ht($id_company).') and a.visible=1 and a.id_user="'.ht($id_user).'" and not(a.status IN ("5","6")) and LOWER(b.name) LIKE "%'.$query.'%"
 
 AND a.id NOT IN 
-(SELECT a.id FROM preorders as a where a.id_company="'.ht($id_company).'" and a.visible=1 and a.id_user="'.ht($id_user).'" and not(a.status IN ("5","6")) and LOWER(a.id) LIKE "%'.$query.'%")
+(SELECT a.id FROM preorders as a where a.id_company IN ('.ht($id_company).') and a.visible=1 and a.id_user="'.ht($id_user).'" and not(a.status IN ("5","6")) and LOWER(a.id) LIKE "%'.$query.'%")
 AND a.id NOT IN 
-(SELECT a.id FROM preorders as a,k_clients as b where b.id=a.id_k_clients and a.id_type_clients=1 and a.id_company="'.ht($id_company).'" and a.visible=1 and a.id_user="'.ht($id_user).'" and not(a.status IN ("5","6")) and LOWER(b.fio) LIKE "%'.$query.'%")
+(SELECT a.id FROM preorders as a,k_clients as b where b.id=a.id_k_clients and a.id_type_clients=1 and a.id_company IN ('.ht($id_company).') and a.visible=1 and a.id_user="'.ht($id_user).'" and not(a.status IN ("5","6")) and LOWER(b.fio) LIKE "%'.$query.'%")
 ) 
 
 ) Z order by Z.date_create desc limit 0,30';
 
 } else
 {
-	$sql='Select a.id,a.date_create,a.id_type_clients,a.id_k_clients,a.id_country from preorders as a WHERE a.id_company="'.ht($id_company).'" and a.visible=1 and a.id_user="'.ht($id_user).'" and not(a.status IN ("5","6")) ORDER BY a.date_create desc limit 0,15';
+	$sql='Select a.id,a.date_create,a.id_type_clients,a.id_k_clients,a.id_country from preorders as a WHERE a.id_company IN ('.ht($id_company).') and a.visible=1 and a.id_user="'.ht($id_user).'" and not(a.status IN ("5","6")) ORDER BY a.date_create desc limit 0,15';
 }
 
 //echo($sql);

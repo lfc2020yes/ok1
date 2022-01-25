@@ -64,7 +64,7 @@ if(!token_access_new($token,'bt_del_cancel_trips',$_GET["id"],"rema",2880))
     goto end_code;
 }
 $mas_responsible = array();
-$result_t=mysql_time_query($link,'Select A.id,A.status,A.id_exchange,A.id_user from trips as A where A.visible=1 AND A.id="'.ht($_GET["id"]).'" and A.id_a_company="'.$id_company.'"');
+$result_t=mysql_time_query($link,'Select A.id,A.status,A.id_exchange,A.id_user from trips as A where A.visible=1 AND A.id="'.ht($_GET["id"]).'" and A.id_a_company IN ('.$id_company.')');
 $num_results_t = $result_t->num_rows;
 if($num_results_t==0)
 {

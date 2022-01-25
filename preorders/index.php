@@ -59,7 +59,7 @@ if((!$role->permission('Обращения','R'))and($sign_admin!=1))
 
 if(isset($_GET["id"])) {
 //если есть id то смотрим может ли он смотеть этот тур
-    $result_t = mysql_time_query($link, 'select A.id from preorders as A where A.id_company="' . $id_company . '" and A.id="' . ht($_GET['id']) . '" and A.visible=1');
+    $result_t = mysql_time_query($link, 'select A.id from preorders as A where A.id_company IN (' . $id_company . ') and A.id="' . ht($_GET['id']) . '" and A.visible=1');
     $num_results_t = $result_t->num_rows;
     if ($num_results_t == 0) {
         header404(322, $echo_r);
@@ -767,11 +767,11 @@ setTimeout ( function () {
 if(isset($_GET["id"]))
 {
 
-    $sql_k='Select DISTINCT A.id from preorders as A where A.visible=1 AND A.id="'.ht($_GET["id"]).'" and A.id_company="'.$id_company.'" ';
+    $sql_k='Select DISTINCT A.id from preorders as A where A.visible=1 AND A.id="'.ht($_GET["id"]).'" and A.id_company IN ('.$id_company.') ';
 //echo $sql_k;
     $result_t2 = mysql_time_query($link, $sql_k);
 
-    $sql_count = 'Select count(DISTINCT A.id) as kol from preorders as A where A.visible=1 AND A.id="'.ht($_GET["id"]).'" and A.id_company="'.$id_company.'"';
+    $sql_count = 'Select count(DISTINCT A.id) as kol from preorders as A where A.visible=1 AND A.id="'.ht($_GET["id"]).'" and A.id_company IN ('.$id_company.')';
 
 
 } else {
@@ -787,7 +787,7 @@ if(isset($_GET["id"]))
         $sql_su4 = '';
         $sql_su5 = '';
         $sql_su5_search = '';
-        $sql_su7 = ' AND A.id_company="' . $id_company . '" ';
+        $sql_su7 = ' AND A.id_company IN (' . $id_company . ') ';
 
         //********************************************************************
 //********************************************************************
@@ -1179,35 +1179,35 @@ $os_id2 = array("0","6","1","5","3","2");
                 $sql_user_my = ' and A.id_user IN (' . implode(",", $mass_ei) . ')';
 
 
-                $sql_k = 'Select DISTINCT A.id from preorders as A where A.visible=1 AND A.id_company="' . $id_company . '" ' . $sql_user . ' ' . $sql_user_my . ' ' . $sql_order . ' ' . limitPage('n_st', $count_write);
+                $sql_k = 'Select DISTINCT A.id from preorders as A where A.visible=1 AND A.id_company IN (' . $id_company . ') ' . $sql_user . ' ' . $sql_user_my . ' ' . $sql_order . ' ' . limitPage('n_st', $count_write);
 
 //echo($sql_k);
 
                 $result_t2 = mysql_time_query($link, $sql_k);
 
-                $sql_count = 'Select count(DISTINCT A.id) as kol from preorders as A where A.visible=1 AND A.id_company="' . $id_company . '" ' . $sql_user_my . ' ' . $sql_user;
+                $sql_count = 'Select count(DISTINCT A.id) as kol from preorders as A where A.visible=1 AND A.id_company IN (' . $id_company . ') ' . $sql_user_my . ' ' . $sql_user;
             }
 
             //Назначенные на меня. Все обращения
             if ($row_uu["number"] == 10) {
-                $sql_k = 'Select DISTINCT A.id from preorders as A where A.visible=1 AND A.id_company="' . $id_company . '" ' . $sql_user . ' ' . $sql_user_my . ' ' . $sql_order . ' ' . limitPage('n_st', $count_write);
+                $sql_k = 'Select DISTINCT A.id from preorders as A where A.visible=1 AND A.id_company IN (' . $id_company . ') ' . $sql_user . ' ' . $sql_user_my . ' ' . $sql_order . ' ' . limitPage('n_st', $count_write);
 
 //echo($sql_k);
 
                 $result_t2 = mysql_time_query($link, $sql_k);
 
-                $sql_count = 'Select count(DISTINCT A.id) as kol from preorders as A where A.visible=1 AND A.id_company="' . $id_company . '" ' . $sql_user_my . ' ' . $sql_user;
+                $sql_count = 'Select count(DISTINCT A.id) as kol from preorders as A where A.visible=1 AND A.id_company IN (' . $id_company . ') ' . $sql_user_my . ' ' . $sql_user;
             }
 
             //Назначенные на меня. Все открытые обращения
             if ($row_uu["number"] == 1) {
-                $sql_k = 'Select DISTINCT A.id from preorders as A where A.visible=1 AND not(A.status IN("5","6"))  and A.id_company="' . $id_company . '" ' . $sql_user . ' ' . $sql_user_my . ' ' . $sql_order . ' ' . limitPage('n_st', $count_write);
+                $sql_k = 'Select DISTINCT A.id from preorders as A where A.visible=1 AND not(A.status IN("5","6"))  and A.id_company IN (' . $id_company . ') ' . $sql_user . ' ' . $sql_user_my . ' ' . $sql_order . ' ' . limitPage('n_st', $count_write);
 
                 //echo($sql_k);
 
                 $result_t2 = mysql_time_query($link, $sql_k);
 
-                $sql_count = 'Select count(DISTINCT A.id) as kol from preorders as A where A.visible=1 and not(A.status IN("5","6"))  AND A.id_company="' . $id_company . '" ' . $sql_user_my . ' ' . $sql_user;
+                $sql_count = 'Select count(DISTINCT A.id) as kol from preorders as A where A.visible=1 and not(A.status IN("5","6"))  AND A.id_company IN (' . $id_company . ') ' . $sql_user_my . ' ' . $sql_user;
             }
 
             //Все открытые обращения свои+подчиненных
@@ -1215,58 +1215,58 @@ $os_id2 = array("0","6","1","5","3","2");
 
                 $sql_user_my = ' and A.id_user IN (' . implode(",", $mass_ei) . ')';
 
-                $sql_k = 'Select DISTINCT A.id from preorders as A where A.visible=1 AND not(A.status IN("5","6"))  and A.id_company="' . $id_company . '" ' . $sql_user . ' ' . $sql_user_my . ' ' . $sql_order . ' ' . limitPage('n_st', $count_write);
+                $sql_k = 'Select DISTINCT A.id from preorders as A where A.visible=1 AND not(A.status IN("5","6"))  and A.id_company IN (' . $id_company . ') ' . $sql_user . ' ' . $sql_user_my . ' ' . $sql_order . ' ' . limitPage('n_st', $count_write);
 
                 //echo($sql_k);
 
                 $result_t2 = mysql_time_query($link, $sql_k);
 
-                $sql_count = 'Select count(DISTINCT A.id) as kol from preorders as A where A.visible=1 and not(A.status IN("5","6"))  AND A.id_company="' . $id_company . '" ' . $sql_user_my . ' ' . $sql_user;
+                $sql_count = 'Select count(DISTINCT A.id) as kol from preorders as A where A.visible=1 and not(A.status IN("5","6"))  AND A.id_company IN (' . $id_company . ') ' . $sql_user_my . ' ' . $sql_user;
             }
 
             //Назначенные на меня. Все отказы обращения
             if ($row_uu["number"] == 4) {
-                $sql_k = 'Select DISTINCT A.id from preorders as A where A.visible=1 AND A.status="6"  and A.id_company="' . $id_company . '" ' . $sql_user . ' ' . $sql_user_my . ' ' . $sql_order . ' ' . limitPage('n_st', $count_write);
+                $sql_k = 'Select DISTINCT A.id from preorders as A where A.visible=1 AND A.status="6"  and A.id_company IN (' . $id_company . ') ' . $sql_user . ' ' . $sql_user_my . ' ' . $sql_order . ' ' . limitPage('n_st', $count_write);
 
                 //echo($sql_k);
 
                 $result_t2 = mysql_time_query($link, $sql_k);
 
-                $sql_count = 'Select count(DISTINCT A.id) as kol from preorders as A where A.visible=1 and A.status="6"  AND A.id_company="' . $id_company . '" ' . $sql_user_my . ' ' . $sql_user;
+                $sql_count = 'Select count(DISTINCT A.id) as kol from preorders as A where A.visible=1 and A.status="6"  AND A.id_company IN (' . $id_company . ') ' . $sql_user_my . ' ' . $sql_user;
             }
 
             //Все отказы обращения свои+подчиненных
             if ($row_uu["number"] == 5) {
                 $sql_user_my = ' and A.id_user IN (' . implode(",", $mass_ei) . ')';
-                $sql_k = 'Select DISTINCT A.id from preorders as A where A.visible=1 AND A.status="6"  and A.id_company="' . $id_company . '" ' . $sql_user . ' ' . $sql_user_my . ' ' . $sql_order . ' ' . limitPage('n_st', $count_write);
+                $sql_k = 'Select DISTINCT A.id from preorders as A where A.visible=1 AND A.status="6"  and A.id_company IN (' . $id_company . ') ' . $sql_user . ' ' . $sql_user_my . ' ' . $sql_order . ' ' . limitPage('n_st', $count_write);
 
                 //echo($sql_k);
 
                 $result_t2 = mysql_time_query($link, $sql_k);
 
-                $sql_count = 'Select count(DISTINCT A.id) as kol from preorders as A where A.visible=1 and A.status="6"  AND A.id_company="' . $id_company . '" ' . $sql_user_my . ' ' . $sql_user;
+                $sql_count = 'Select count(DISTINCT A.id) as kol from preorders as A where A.visible=1 and A.status="6"  AND A.id_company IN (' . $id_company . ') ' . $sql_user_my . ' ' . $sql_user;
             }
 
             //Назначенные на меня. Все в архиве обращения
             if ($row_uu["number"] == 7) {
-                $sql_k = 'Select DISTINCT A.id from preorders as A where A.visible=1 AND A.status="5"  and A.id_company="' . $id_company . '" ' . $sql_user . ' ' . $sql_user_my . ' ' . $sql_order . ' ' . limitPage('n_st', $count_write);
+                $sql_k = 'Select DISTINCT A.id from preorders as A where A.visible=1 AND A.status="5"  and A.id_company IN (' . $id_company . ') ' . $sql_user . ' ' . $sql_user_my . ' ' . $sql_order . ' ' . limitPage('n_st', $count_write);
 
                 //echo($sql_k);
 
                 $result_t2 = mysql_time_query($link, $sql_k);
 
-                $sql_count = 'Select count(DISTINCT A.id) as kol from preorders as A where A.visible=1 and A.status="5"  AND A.id_company="' . $id_company . '" ' . $sql_user_my . ' ' . $sql_user;
+                $sql_count = 'Select count(DISTINCT A.id) as kol from preorders as A where A.visible=1 and A.status="5"  AND A.id_company IN (' . $id_company . ') ' . $sql_user_my . ' ' . $sql_user;
             }
 //Все в архиве обращения свои+подчиненных
             if ($row_uu["number"] == 8) {
                 $sql_user_my = ' and A.id_user IN (' . implode(",", $mass_ei) . ')';
-                $sql_k = 'Select DISTINCT A.id from preorders as A where A.visible=1 AND A.status="5"  and A.id_company="' . $id_company . '" ' . $sql_user . ' ' . $sql_user_my . ' ' . $sql_order . ' ' . limitPage('n_st', $count_write);
+                $sql_k = 'Select DISTINCT A.id from preorders as A where A.visible=1 AND A.status="5"  and A.id_company IN (' . $id_company . ') ' . $sql_user . ' ' . $sql_user_my . ' ' . $sql_order . ' ' . limitPage('n_st', $count_write);
 
                 //echo($sql_k);
 
                 $result_t2 = mysql_time_query($link, $sql_k);
 
-                $sql_count = 'Select count(DISTINCT A.id) as kol from preorders as A where A.visible=1 and A.status="5"  AND A.id_company="' . $id_company . '" ' . $sql_user_my . ' ' . $sql_user;
+                $sql_count = 'Select count(DISTINCT A.id) as kol from preorders as A where A.visible=1 and A.status="5"  AND A.id_company IN (' . $id_company . ') ' . $sql_user_my . ' ' . $sql_user;
             }
 
             //Все сегодня обращения
@@ -1277,13 +1277,13 @@ if(count($mass_ei)>1)
 }
                 $sql_user = " and A.date_create LIKE '" . date("Y-m-d") . "%' ";
 
-                $sql_k = 'Select DISTINCT A.id from preorders as A where A.visible=1 AND A.id_company="' . $id_company . '" ' . $sql_user . ' ' . $sql_user_my . ' ' . $sql_order . ' ' . limitPage('n_st', $count_write);
+                $sql_k = 'Select DISTINCT A.id from preorders as A where A.visible=1 AND A.id_company IN (' . $id_company . ') ' . $sql_user . ' ' . $sql_user_my . ' ' . $sql_order . ' ' . limitPage('n_st', $count_write);
 
                 //echo($sql_k);
 
                 $result_t2 = mysql_time_query($link, $sql_k);
 
-                $sql_count = 'Select count(DISTINCT A.id) as kol from preorders as A where A.visible=1  AND A.id_company="' . $id_company . '" ' . $sql_user_my . ' ' . $sql_user;
+                $sql_count = 'Select count(DISTINCT A.id) as kol from preorders as A where A.visible=1  AND A.id_company IN (' . $id_company . ') ' . $sql_user_my . ' ' . $sql_user;
             }
 //Все вчера обращения
             if ($row_uu["number"] == 6) {
@@ -1295,13 +1295,13 @@ if(count($mass_ei)>1)
                 $sql_user = " and A.date_create LIKE '" . $date_sql_start . "%' ";
 
 
-                $sql_k = 'Select DISTINCT A.id from preorders as A where A.visible=1 AND A.id_company="' . $id_company . '" ' . $sql_user . ' ' . $sql_user_my . ' ' . $sql_order . ' ' . limitPage('n_st', $count_write);
+                $sql_k = 'Select DISTINCT A.id from preorders as A where A.visible=1 AND A.id_company IN (' . $id_company . ') ' . $sql_user . ' ' . $sql_user_my . ' ' . $sql_order . ' ' . limitPage('n_st', $count_write);
 
                 //echo($sql_k);
 
                 $result_t2 = mysql_time_query($link, $sql_k);
 
-                $sql_count = 'Select count(DISTINCT A.id) as kol from preorders as A where A.visible=1  AND A.id_company="' . $id_company . '" ' . $sql_user_my . ' ' . $sql_user;
+                $sql_count = 'Select count(DISTINCT A.id) as kol from preorders as A where A.visible=1  AND A.id_company IN (' . $id_company . ') ' . $sql_user_my . ' ' . $sql_user;
             }
 
             //Все за 30 дней обращения
@@ -1315,13 +1315,13 @@ if(count($mass_ei)>1)
 
                 $sql_user = " and A.date_create>'" . $date_sql_start . "' and A.date_create<'" . $date_sql_end . "'";
 
-                $sql_k = 'Select DISTINCT A.id from preorders as A where A.visible=1 AND A.id_company="' . $id_company . '" ' . $sql_user . ' ' . $sql_user_my . ' ' . $sql_order . ' ' . limitPage('n_st', $count_write);
+                $sql_k = 'Select DISTINCT A.id from preorders as A where A.visible=1 AND A.id_company IN (' . $id_company . ') ' . $sql_user . ' ' . $sql_user_my . ' ' . $sql_order . ' ' . limitPage('n_st', $count_write);
 
                 //echo($sql_k);
 
                 $result_t2 = mysql_time_query($link, $sql_k);
 
-                $sql_count = 'Select count(DISTINCT A.id) as kol from preorders as A where A.visible=1  AND A.id_company="' . $id_company . '" ' . $sql_user_my . ' ' . $sql_user;
+                $sql_count = 'Select count(DISTINCT A.id) as kol from preorders as A where A.visible=1  AND A.id_company IN (' . $id_company . ') ' . $sql_user_my . ' ' . $sql_user;
             }
 
 
@@ -1336,13 +1336,13 @@ if(count($mass_ei)>1)
 
                 $sql_user = " and A.date_create>'" . $date_sql_start . "' and A.date_create<'" . $date_sql_end . "'";
 
-                $sql_k = 'Select DISTINCT A.id from preorders as A where A.visible=1 AND A.id_company="' . $id_company . '" ' . $sql_user . ' ' . $sql_user_my . ' ' . $sql_order . ' ' . limitPage('n_st', $count_write);
+                $sql_k = 'Select DISTINCT A.id from preorders as A where A.visible=1 AND A.id_company IN (' . $id_company . ') ' . $sql_user . ' ' . $sql_user_my . ' ' . $sql_order . ' ' . limitPage('n_st', $count_write);
 
                 //echo($sql_k);
 
                 $result_t2 = mysql_time_query($link, $sql_k);
 
-                $sql_count = 'Select count(DISTINCT A.id) as kol from preorders as A where A.visible=1  AND A.id_company="' . $id_company . '" ' . $sql_user_my . ' ' . $sql_user;
+                $sql_count = 'Select count(DISTINCT A.id) as kol from preorders as A where A.visible=1  AND A.id_company IN (' . $id_company . ') ' . $sql_user_my . ' ' . $sql_user;
             }
 
 

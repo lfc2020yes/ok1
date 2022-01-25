@@ -73,22 +73,22 @@ if ((isset($_POST['task']["client_type"]))and(is_numeric($_POST['task']["id_clie
               {
 		 case "1":{ 
 			 //частное лицо
-			 $sql_tt='Select b.id from k_clients as b where b.id="'.ht($_POST['task']['id_client']).'" and b.potential=0 and b.visible=1 and b.id_a_company="'.ht($id_company).'"';
+			 $sql_tt='Select b.id from k_clients as b where b.id="'.ht($_POST['task']['id_client']).'" and b.potential=0 and b.visible=1 and b.id_a_company IN ('.ht($id_company).')';
 			 break; 
                   }	
 		case "2":{ 
 			 //организация
-			 $sql_tt='Select b.id from k_organization as b where b.id="'.ht($_POST['task']['id_client']).'" and  b.visible=1 and b.id_a_company="'.ht($id_company).'"';
+			 $sql_tt='Select b.id from k_organization as b where b.id="'.ht($_POST['task']['id_client']).'" and  b.visible=1 and b.id_a_company IN ('.ht($id_company).')';
 			 break; 
                   }		
 		 case "3":{ 
 			 //потенциальный
-			 $sql_tt='Select b.id from k_clients as b where b.id="'.ht($_POST['task']['id_client']).'" and b.potential=1 and b.visible=1 and b.id_a_company="'.ht($id_company).'"';
+			 $sql_tt='Select b.id from k_clients as b where b.id="'.ht($_POST['task']['id_client']).'" and b.potential=1 and b.visible=1 and b.id_a_company IN('.ht($id_company).')';
 			 break; 
                   }
             case "10":{
                 //обращение
-                $sql_tt='Select b.id from preorders as b where b.id="'.ht($_POST['task']['id_client']).'" and b.id_user="'.$id_user.'" and b.visible=1 and b.id_company="'.ht($id_company).'"';
+                $sql_tt='Select b.id from preorders as b where b.id="'.ht($_POST['task']['id_client']).'" and b.id_user="'.$id_user.'" and b.visible=1 and b.id_company IN ('.ht($id_company).')';
                 break;
             }
         }
@@ -191,10 +191,10 @@ if((($_POST['task']['komy']=="all")or($_POST['task']['komy']=="all_subor")))
 		//общая задача для нескольких
 		$id_user_responsible=implode(',', $mass_ei);
 
-mysql_time_query($link,'INSERT INTO task_new (id_a_company,id_user,id_user_responsible,ring_datetime,comment,date_create,visible,status,click,action,id_object) VALUES ("'.$id_company.'","'.$id_user.'","'.ht($id_user_responsible).'","'.ht($_POST['task']['date']).' '.ht($_POST['task']['time']).':00","'.ht($_POST['task']['comment']).'","'.date("y.m.d").' '.date("H:i:s").'","1","0","1","'.$action.'","'.ht($_POST['task']['id_client']).'")');
+mysql_time_query($link,'INSERT INTO task_new (id_a_group,id_user,id_user_responsible,ring_datetime,comment,date_create,visible,status,click,action,id_object) VALUES ("'.$id_group_u.'","'.$id_user.'","'.ht($id_user_responsible).'","'.ht($_POST['task']['date']).' '.ht($_POST['task']['time']).':00","'.ht($_POST['task']['comment']).'","'.date("y.m.d").' '.date("H:i:s").'","1","0","1","'.$action.'","'.ht($_POST['task']['id_client']).'")');
 		
 	$ID_N=mysqli_insert_id($link);
-		array_push($new,$ID_N); 
+	array_push($new,$ID_N);
 	//добавление истории по задаче
 AddHistoryTask('7',$id_user,$ID_N,'','','','','','','',$link,'');
 
@@ -245,7 +245,7 @@ notification_send($text_not,$user_send_new,$id_user,$link);
 		
 		foreach ( $mass_ei as $value ) {
  
-	mysql_time_query($link,'INSERT INTO task_new (id_a_company,id_user,id_user_responsible,ring_datetime,comment,date_create,visible,status,click,action,id_object) VALUES ("'.$id_company.'","'.$id_user.'","'.ht($value).'","'.ht($_POST['task']['date']).' '.ht($_POST['task']['time']).':00","'.ht($_POST['task']['comment']).'","'.date("y.m.d").' '.date("H:i:s").'","1","0","1","'.$action.'","'.ht($_POST['task']['id_client']).'")');
+	mysql_time_query($link,'INSERT INTO task_new (id_a_group,id_user,id_user_responsible,ring_datetime,comment,date_create,visible,status,click,action,id_object) VALUES ("'.$id_group_u.'","'.$id_user.'","'.ht($value).'","'.ht($_POST['task']['date']).' '.ht($_POST['task']['time']).':00","'.ht($_POST['task']['comment']).'","'.date("y.m.d").' '.date("H:i:s").'","1","0","1","'.$action.'","'.ht($_POST['task']['id_client']).'")');
 	$ID_N=mysqli_insert_id($link);	
 	array_push($new,$ID_N);
 	//добавление истории по задаче
@@ -294,7 +294,7 @@ notification_send($text_not,$user_send_new,$id_user,$link);
 {
 //задача конкретно кому то
 
-mysql_time_query($link,'INSERT INTO task_new (id_a_company,id_user,id_user_responsible,ring_datetime,comment,date_create,visible,status,click,action,id_object) VALUES ("'.$id_company.'","'.$id_user.'","'.ht($_POST['task']['komy']).'","'.ht($_POST['task']['date']).' '.ht($_POST['task']['time']).':00","'.ht($_POST['task']['comment']).'","'.date("y.m.d").' '.date("H:i:s").'","1","0","1","'.$action.'","'.ht($_POST['task']['id_client']).'")');
+mysql_time_query($link,'INSERT INTO task_new (id_a_group,id_user,id_user_responsible,ring_datetime,comment,date_create,visible,status,click,action,id_object) VALUES ("'.$id_group_u.'","'.$id_user.'","'.ht($_POST['task']['komy']).'","'.ht($_POST['task']['date']).' '.ht($_POST['task']['time']).':00","'.ht($_POST['task']['comment']).'","'.date("y.m.d").' '.date("H:i:s").'","1","0","1","'.$action.'","'.ht($_POST['task']['id_client']).'")');
 $ID_N=mysqli_insert_id($link);
 	array_push($new,$ID_N); 
 //добавление истории по задаче

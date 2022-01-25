@@ -181,7 +181,7 @@ $edit=0;
 $comment='Тур аннулирован. ';
 
 
-$result_uu = mysql_time_query($link, 'select a.why from trips_why_annulation as a where a.id="' . ht($_POST['id_why']) . '" and a.visible=1 and a.id_a_company="'.$id_company.'"');
+$result_uu = mysql_time_query($link, 'select a.why from trips_why_annulation as a where a.id="' . ht($_POST['id_why']) . '" and a.visible=1 and a.id_a_company IN ('.$id_group_company_list.')');
 $num_results_uu = $result_uu->num_rows;
 
 if ($num_results_uu != 0) {
@@ -235,7 +235,7 @@ if(($_POST["com_rub"]!='')and($_POST["com_rub"]!=0))
 if(($_POST["id_refund"]!='')and($_POST["id_refund"]!=0))
 {
 
-    $result_uu = mysql_time_query($link, 'select a.name from trips_cancel_refund as a where a.id="' . ht($_POST['id_refund']) . '" and a.visible=1 and a.id_a_company="'.$id_company.'"');
+    $result_uu = mysql_time_query($link, 'select a.name from trips_cancel_refund as a where a.id="' . ht($_POST['id_refund']) . '" and a.visible=1 and a.id_a_company IN ('.$id_group_company_list.')');
     $num_results_uu = $result_uu->num_rows;
 
     if ($num_results_uu != 0) {

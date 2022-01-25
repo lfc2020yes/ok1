@@ -56,7 +56,7 @@ if(!isset($_SESSION["user_id"]))
 
     if (is_numeric($_GET['id'])) {
         //нужна одна карточка по клиенту
-        $result_t=mysql_time_query($link,'Select DISTINCT A.id,A.discount,A.doc, A.id_user,A.shopper,A.id_shopper,A.id_contract,A.comment,A.number_to,A.hotel,A.id_country,A.place_name,A.date_start,A.date_end,A.number_to,A.id_contract,A.cost_client,A.id_exchange,A.cost_operator_exchange,A.cost_operator,A.cost_client_exchange,A.buy_clients,A.buy_operator,A.paid_operator,A.paid_operator_rates,A.exchange_rates,A.paid_client,A.paid_client_rates,A.comment,A.date_prepaid,A.status_admin from trips as A where A.visible=1 AND A.id="'.ht($_GET['id']).'" and A.id_a_company="'.$id_company.'"');
+        $result_t=mysql_time_query($link,'Select DISTINCT A.id,A.discount,A.doc,A.id_a_company, A.id_user,A.shopper,A.id_shopper,A.id_contract,A.comment,A.number_to,A.hotel,A.id_country,A.place_name,A.date_start,A.date_end,A.number_to,A.id_contract,A.cost_client,A.id_exchange,A.cost_operator_exchange,A.cost_operator,A.cost_client_exchange,A.buy_clients,A.buy_operator,A.paid_operator,A.paid_operator_rates,A.exchange_rates,A.paid_client,A.paid_client_rates,A.comment,A.date_prepaid,A.status_admin from trips as A where A.visible=1 AND A.id="'.ht($_GET['id']).'" and A.id_a_company IN ('.$id_company.')');
 
 //echo('Select b.*,r.id_company from k_clients as b,r_user as r where b.id="'.ht($_GET['id']).'" and b.visible=1 and b.id_user=r.id');
         $num_results_t = $result_t->num_rows;
@@ -448,7 +448,7 @@ $task_cloud_block.='</span></div></div><div class="trips-b-user js-trips-comm"><
 </span>';
 
 //узнаем код по рублю
-$result_uu_rub = mysql_time_query($link, 'select A.code,A.small_name from booking_exchange A where A.id_a_company="' . ht($id_company) . '" and A.char="₽"');
+$result_uu_rub = mysql_time_query($link, 'select A.code,A.small_name from booking_exchange A where A.id_a_company IN (' . ht($id_group_company_list) . ') and A.char="₽"');
 $num_results_uu_rub = $result_uu_rub->num_rows;
 
 if ($num_results_uu_rub != 0) {

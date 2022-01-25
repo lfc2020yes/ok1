@@ -99,7 +99,7 @@ $phone_end=	$phone_base[1][1].$phone_base[1][2].$phone_base[1][3].$phone_base1[0
 
   $sql='
 
-select A.id FROM k_clients AS A where A.visible=1 AND A.id_a_company="'.$id_company.'" and A.phone="'.$phone_end.'"   
+select A.id FROM k_clients AS A where A.visible=1 AND A.id_a_company IN ('.$id_company.') and A.phone="'.$phone_end.'"   
 ';  
 
 

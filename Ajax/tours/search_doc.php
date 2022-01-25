@@ -119,11 +119,11 @@ return $endText;
 
 if($query!='')
 {
-    $sql='Select a.*,b.name,b.date_doc,a.id,a.shopper,a.id_shopper from trips as a,trips_contract as b WHERE a.visible=1 and a.id_booking=0 and a.id_a_company="'.$id_company.'" AND LOWER(b.name) LIKE "%'.$query.'%" and a.id_contract=b.id ORDER BY a.datecreate DESC limit 0,30';
+    $sql='Select a.*,b.name,b.date_doc,a.id,a.shopper,a.id_shopper from trips as a,trips_contract as b WHERE a.visible=1 and a.id_booking=0 and a.id_a_company IN ('.$id_company.') AND LOWER(b.name) LIKE "%'.$query.'%" and a.id_contract=b.id ORDER BY a.datecreate DESC limit 0,30';
 
 } else
 {
-	$sql='Select a.*,b.name,b.date_doc,a.id,a.shopper,a.id_shopper from trips as a,trips_contract as b WHERE a.visible=1 and a.id_booking=0 and a.id_a_company="'.$id_company.'" and a.id_contract=b.id ORDER BY a.datecreate DESC limit 0,30';
+	$sql='Select a.*,b.name,b.date_doc,a.id,a.shopper,a.id_shopper from trips as a,trips_contract as b WHERE a.visible=1 and a.id_booking=0 and a.id_a_company IN ('.$id_company.') and a.id_contract=b.id ORDER BY a.datecreate DESC limit 0,30';
 }
 
 //echo($sql);

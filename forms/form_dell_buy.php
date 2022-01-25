@@ -41,7 +41,7 @@ if ((count($_GET) != 2)or(!isset($_GET["id"]))or((!is_numeric($_GET["id"]))))
 
 
 $status_admin=0;
-$result_t=mysql_time_query($link,'Select A.id,A.status_admin from trips as A where A.visible=1 AND A.id="'.ht($_GET["id"]).'" and A.id_a_company="'.$id_company.'"');
+$result_t=mysql_time_query($link,'Select A.id,A.status_admin from trips as A where A.visible=1 AND A.id="'.ht($_GET["id"]).'" and A.id_a_company IN ('.$id_company.')');
 $num_results_t = $result_t->num_rows;
 if($num_results_t==0)
 {	

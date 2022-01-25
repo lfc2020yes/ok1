@@ -76,8 +76,9 @@ if ($result_uu_cs) {
 
         $ball=array();
 
+       $LIKE=' and ((A.id_company LIKE "'.ht($row_uu_cs["id"]).',%")or(A.id_company LIKE "%,'.ht($row_uu_cs["id"]).',%")or(A.id_company LIKE "%,'.ht($row_uu_cs["id"]).'")or(A.id_company="'.ht($row_uu_cs["id"]).'")) ';
 
-$result_8 = mysql_time_query($link,'SELECT A.id FROM r_user AS A where A.enabled="1" and A.id_company="'.$row_uu_cs["id"].'"  AND A.id_role IN(2,3)');
+$result_8 = mysql_time_query($link,'SELECT A.id FROM r_user AS A where A.enabled="1"  AND A.id_role IN(2,3) '.$LIKE);
 $num_8 = $result_8->num_rows;
 if($result_8) {
     $n=0;
@@ -89,7 +90,7 @@ if($result_8) {
 
         $ball[$n]['id_users']=$row_8["id"];
 
-        $result_status21 = mysql_time_query($link, 'SELECT sum(a.commission) as comm FROM trips AS a WHERE  a.status=1 and a.visible=1 and a.id_user="' . $row_8["id"] . '" and a.date_buy_all>="' . $date_start . '" and a.date_buy_all<="' . $date_end . '"');
+        $result_status21 = mysql_time_query($link, 'SELECT sum(a.commission) as comm FROM trips AS a WHERE a.id_a_company="'.$row_uu_cs["id"].'" and  a.status=1 and a.visible=1 and a.id_user="' . $row_8["id"] . '" and a.date_buy_all>="' . $date_start . '" and a.date_buy_all<="' . $date_end . '"');
 
         if ($result_status21->num_rows != 0) {
             $row_status21 = mysqli_fetch_assoc($result_status21);
@@ -105,10 +106,10 @@ if($result_8) {
         //$ball['comission'][]=$row_status21["comm"];
         //array_push($ball['comission'], $row_status21["comm"]);
         $ball[$n]['comission']=$row_status21["comm"];
-
+        $ball[$n]['id_company']=$row_uu_cs["id"];
 
         //узнаем сколько всего оформленных туров в этом месяце
-        $result_uu = mysql_time_query($link, 'select count(A.id) as kol from trips as A where A.visible=1 and A.id_user="' . $row_8["id"] . '" and A.datecreate like "' . $month_s . '%"');
+        $result_uu = mysql_time_query($link, 'select count(A.id) as kol from trips as A where  A.id_a_company="'.$row_uu_cs["id"].'" and A.visible=1 and A.id_user="' . $row_8["id"] . '" and A.datecreate like "' . $month_s . '%"');
 
         $num_results_uu = $result_uu->num_rows;
         if ($num_results_uu != 0) {
@@ -171,9 +172,9 @@ usort($ball, "cmp");
 
         foreach ($ball as $key => $value) {
 
-    //узнаем какое место было до этого позавчера
+    //узнаем какое место было до этого позавчера по конкретной компании
     $date_end=date_step_sql('Y-m-d','-2d');
-    $result_uu = mysql_time_query($link, 'select A.numbers from users_rating as A where A.number_rating="'.$number_ra.'" and A.id_users="' . ht($value["id_users"]) . '" and A.date="'.$date_end.'"');
+    $result_uu = mysql_time_query($link, 'select A.numbers from users_rating as A where A.id_a_company="'.$value["id_company"].'" and A.number_rating="'.$number_ra.'" and A.id_users="' . ht($value["id_users"]) . '" and A.date="'.$date_end.'"');
     $num_results_uu = $result_uu->num_rows;
 
     $number_old=0;
@@ -352,10 +353,10 @@ if ($result_uu_cs) {
                 //array_push($ball['id_users'], $row_8["id"]);
 
                 $ball[$n]['id_users']=$row_8["id"];
+                $ball[$n]['id_company']=$row_uu_cs["id"];
 
 
-
-                $result_status21 = mysql_time_query($link, 'SELECT MIN(A.commission*100/A.cost_client) AS mi FROM trips AS A WHERE A.visible=1 AND A.id_user="' . $row_8["id"] . '" AND A.date_buy_all LIKE "'.$month_s.'%"');
+                $result_status21 = mysql_time_query($link, 'SELECT MIN(A.commission*100/A.cost_client) AS mi FROM trips AS A WHERE A.id_a_company="'.$row_uu_cs["id"].'" and A.visible=1 AND A.id_user="' . $row_8["id"] . '" AND A.date_buy_all LIKE "'.$month_s.'%"');
 
                 if ($result_status21->num_rows != 0) {
                     $row_status21 = mysqli_fetch_assoc($result_status21);
@@ -390,7 +391,7 @@ $nn=1;
             if ($value["proc"] > 0) {
                 //узнаем какое место было до этого позавчера
                 $date_end = date_step_sql('Y-m-d', '-2d');
-                $result_uu = mysql_time_query($link, 'select A.numbers from users_rating as A where A.number_rating="' . $number_ra . '" and A.id_users="' . ht($value["id_users"]) . '" and A.date="' . $date_end . '"');
+                $result_uu = mysql_time_query($link, 'select A.numbers from users_rating as A where A.number_rating="' . $number_ra . '" and A.id_a_company="'.$value["id_company"].'" and A.id_users="' . ht($value["id_users"]) . '" and A.date="' . $date_end . '"');
                 $num_results_uu = $result_uu->num_rows;
 
                 $number_old = 0;
@@ -514,10 +515,10 @@ if ($result_uu_cs) {
 
                 array_push($id_users, $row_8["id"]);
                 $ball[$n]['id_users']=$row_8["id"];
+                $ball[$n]['id_company']=$row_uu_cs["id"];
 
 
-
-$result_status21 = mysql_time_query($link, 'SELECT count(A.id) as mi FROM trips AS A WHERE A.visible=1 AND A.id_user="' . $row_8["id"] . '" and (SELECT yy.end_fly FROM trips_fly_history AS yy WHERE yy.id_trips=A.id ORDER BY yy.datetime DESC LIMIT 0,1)>="' . $date_start . ' 00:00:00" and (SELECT yy.end_fly FROM trips_fly_history AS yy WHERE yy.id_trips=A.id ORDER BY yy.datetime DESC LIMIT 0,1)<"' . $date_end . ' 00:00:00"');
+$result_status21 = mysql_time_query($link, 'SELECT count(A.id) as mi FROM trips AS A WHERE A.id_a_company="'.$row_uu_cs["id"].'" and A.visible=1 AND A.id_user="' . $row_8["id"] . '" and (SELECT yy.end_fly FROM trips_fly_history AS yy WHERE yy.id_trips=A.id ORDER BY yy.datetime DESC LIMIT 0,1)>="' . $date_start . ' 00:00:00" and (SELECT yy.end_fly FROM trips_fly_history AS yy WHERE yy.id_trips=A.id ORDER BY yy.datetime DESC LIMIT 0,1)<"' . $date_end . ' 00:00:00"');
 
                 if ($result_status21->num_rows != 0) {
                     $row_status21 = mysqli_fetch_assoc($result_status21);
@@ -538,7 +539,7 @@ $result_status21 = mysql_time_query($link, 'SELECT count(A.id) as mi FROM trips 
 //******************************
 //******************************
 
-$result_status21 = mysql_time_query($link, 'SELECT A.comment FROM trips AS A WHERE A.visible=1 AND A.id_user="' . $row_8["id"] . '" and (SELECT yy.end_fly FROM trips_fly_history AS yy WHERE yy.id_trips=A.id ORDER BY yy.datetime DESC LIMIT 0,1)>="' . $date_start . ' 00:00:00" and (SELECT yy.end_fly FROM trips_fly_history AS yy WHERE yy.id_trips=A.id ORDER BY yy.datetime DESC LIMIT 0,1)<"' . $date_end . ' 00:00:00" and not(A.comment="")');
+$result_status21 = mysql_time_query($link, 'SELECT A.comment FROM trips AS A WHERE A.id_a_company="'.$row_uu_cs["id"].'" and A.visible=1 AND A.id_user="' . $row_8["id"] . '" and (SELECT yy.end_fly FROM trips_fly_history AS yy WHERE yy.id_trips=A.id ORDER BY yy.datetime DESC LIMIT 0,1)>="' . $date_start . ' 00:00:00" and (SELECT yy.end_fly FROM trips_fly_history AS yy WHERE yy.id_trips=A.id ORDER BY yy.datetime DESC LIMIT 0,1)<"' . $date_end . ' 00:00:00" and not(A.comment="")');
 
                 $count_len=0;
                 $count_mi=0;
@@ -637,7 +638,7 @@ if($count_mi!=0) {
 
                 //узнаем какое место было до этого позавчера
                 $date_end = date_step_sql('Y-m-d', '-2d');
-                $result_uu = mysql_time_query($link, 'select A.numbers from users_rating as A where A.number_rating="' . $number_ra . '" and A.id_users="' . ht($value["id_users"]) . '" and A.date="' . $date_end . '"');
+                $result_uu = mysql_time_query($link, 'select A.numbers from users_rating as A where A.id_a_company="'.ht($value["id_company"]).'" and A.number_rating="' . $number_ra . '" and A.id_users="' . ht($value["id_users"]) . '" and A.date="' . $date_end . '"');
                 $num_results_uu = $result_uu->num_rows;
 
                 $number_old = 0;

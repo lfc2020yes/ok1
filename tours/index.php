@@ -59,7 +59,7 @@ if((!$role->permission('Туры','R'))and($sign_admin!=1))
 
 if(isset($_GET["id"])) {
 //если есть id то смотрим может ли он смотеть этот тур
-    $result_t = mysql_time_query($link, 'select A.id from trips as A where A.id_a_company="' . $id_company . '" and A.id="' . ht($_GET['id']) . '" and A.visible=1');
+    $result_t = mysql_time_query($link, 'select A.id from trips as A where A.id_a_company  IN (' . $id_company . ') and A.id="' . ht($_GET['id']) . '" and A.visible=1');
     $num_results_t = $result_t->num_rows;
     if ($num_results_t == 0) {
         header404(322, $echo_r);
@@ -747,11 +747,11 @@ setTimeout ( function () {
 if(isset($_GET["id"]))
 {
 
-    $sql_k='Select DISTINCT A.id from trips as A where A.visible=1 AND A.id="'.ht($_GET["id"]).'" and A.id_a_company="'.$id_company.'" ';
+    $sql_k='Select DISTINCT A.id from trips as A where A.visible=1 AND A.id="'.ht($_GET["id"]).'" and A.id_a_company IN ('.$id_company.') ';
 //echo $sql_k;
     $result_t2 = mysql_time_query($link, $sql_k);
 
-    $sql_count = 'Select count(DISTINCT A.id) as kol from trips as A where A.visible=1 AND A.id="'.ht($_GET["id"]).'" and A.id_a_company="'.$id_company.'"';
+    $sql_count = 'Select count(DISTINCT A.id) as kol from trips as A where A.visible=1 AND A.id="'.ht($_GET["id"]).'" and A.id_a_company IN ('.$id_company.')';
 
 
 } else {
@@ -765,7 +765,7 @@ if(isset($_GET["id"]))
         $sql_su4 = '';
         $sql_su5 = '';
         $sql_su5_search = '';
-        $sql_su7 = ' AND A.id_a_company="' . $id_company . '" ';
+        $sql_su7 = ' AND A.id_a_company  IN (' . $id_company . ') ';
 
         //********************************************************************
 //********************************************************************
@@ -1237,13 +1237,13 @@ if(isset($_GET["id"]))
             //Все туры
             if ($row_uu["number"] == 1) {
                 //Все туры
-                $sql_k = 'Select DISTINCT A.id from trips as A where A.visible=1 AND A.id_a_company="' . $id_company . '" ' . $sql_user . ' ' . $sql_user_my . ' ' . $sql_order . ' ' . limitPage('n_st', $count_write);
+                $sql_k = 'Select DISTINCT A.id from trips as A where A.visible=1 AND A.id_a_company IN (' . $id_company . ') ' . $sql_user . ' ' . $sql_user_my . ' ' . $sql_order . ' ' . limitPage('n_st', $count_write);
 
 //echo($sql_k);	
 
                 $result_t2 = mysql_time_query($link, $sql_k);
 
-                $sql_count = 'Select count(DISTINCT A.id) as kol from trips as A where A.visible=1 AND A.id_a_company="' . $id_company . '" ' . $sql_user_my . ' ' . $sql_user;
+                $sql_count = 'Select count(DISTINCT A.id) as kol from trips as A where A.visible=1 AND A.id_a_company IN (' . $id_company . ') ' . $sql_user_my . ' ' . $sql_user;
             }
 
             //туры оформленные сегодня
@@ -1252,13 +1252,13 @@ if(isset($_GET["id"]))
 
                 $sql_user = " and A.datecreate LIKE '" . date("Y-m-d") . "%' ";
 
-                $sql_k = 'Select DISTINCT A.id from trips as A where A.visible=1 AND A.id_a_company="' . $id_company . '" ' . $sql_user . ' ' . $sql_user_my . ' ' . $sql_order . '  ' . limitPage('n_st', $count_write);
+                $sql_k = 'Select DISTINCT A.id from trips as A where A.visible=1 AND A.id_a_company IN (' . $id_company . ') ' . $sql_user . ' ' . $sql_user_my . ' ' . $sql_order . '  ' . limitPage('n_st', $count_write);
 
 //echo($sql_k);
 
                 $result_t2 = mysql_time_query($link, $sql_k);
 
-                $sql_count = 'Select count(DISTINCT A.id) as kol from trips as A where A.visible=1 AND A.id_a_company="' . $id_company . '" ' . $sql_user_my . '  ' . $sql_user;
+                $sql_count = 'Select count(DISTINCT A.id) as kol from trips as A where A.visible=1 AND A.id_a_company IN (' . $id_company . ') ' . $sql_user_my . '  ' . $sql_user;
 
 
             }
@@ -1269,13 +1269,13 @@ if(isset($_GET["id"]))
 
                 $sql_order = " order by B.date ";
 
-                $sql_k = 'Select DISTINCT A.id from trips as A,trips_payment_term as B where B.id_trips=A.id and B.visible=1 and B.yes=0 and B.type=0 and A.visible=1 and B.date>="' . date("Y-m-d") . '" AND A.id_a_company="' . $id_company . '" ' . $sql_user . ' ' . $sql_user_my . ' ' . $sql_order . ' ' . limitPage('n_st', $count_write);
+                $sql_k = 'Select DISTINCT A.id from trips as A,trips_payment_term as B where B.id_trips=A.id and B.visible=1 and B.yes=0 and B.type=0 and A.visible=1 and B.date>="' . date("Y-m-d") . '" AND A.id_a_company IN (' . $id_company . ') ' . $sql_user . ' ' . $sql_user_my . ' ' . $sql_order . ' ' . limitPage('n_st', $count_write);
 
 //echo($sql_k);
 
                 $result_t2 = mysql_time_query($link, $sql_k);
 
-                $sql_count = 'Select count(DISTINCT A.id) as kol from trips as A,trips_payment_term as B where B.id_trips=A.id and B.visible=1 and B.yes=0 and B.type=0 and B.date>="' . date("Y-m-d") . '" and A.visible=1 AND A.id_a_company="' . $id_company . '" ' . $sql_user_my . ' ' . $sql_user;
+                $sql_count = 'Select count(DISTINCT A.id) as kol from trips as A,trips_payment_term as B where B.id_trips=A.id and B.visible=1 and B.yes=0 and B.type=0 and B.date>="' . date("Y-m-d") . '" and A.visible=1 AND A.id_a_company IN (' . $id_company . ') ' . $sql_user_my . ' ' . $sql_user;
 
 
             }
@@ -1295,7 +1295,7 @@ select DISTINCT Z.id from(
   
   from trips as A,trips_fly_history as xx
 
-  where xx.id_trips=A.id and A.visible=1 AND A.id_a_company="' . $id_company . '" ' . $sql_user . ' ' . $sql_user_my . '  and (SELECT yy.start_fly FROM trips_fly_history AS yy WHERE yy.id_trips=A.id ORDER BY yy.datetime DESC LIMIT 0,1)>="' . date("Y-m-d") . ' 00:00:00"
+  where xx.id_trips=A.id and A.visible=1 AND A.id_a_company IN (' . $id_company . ') ' . $sql_user . ' ' . $sql_user_my . '  and (SELECT yy.start_fly FROM trips_fly_history AS yy WHERE yy.id_trips=A.id ORDER BY yy.datetime DESC LIMIT 0,1)>="' . date("Y-m-d") . ' 00:00:00"
 )
 
   UNION
@@ -1308,7 +1308,7 @@ select DISTINCT Z.id from(
   
   from trips as A,trips_fly_history as xx
 
-  where xx.id_trips=A.id and A.visible=1 AND A.id_a_company="' . $id_company . '" ' . $sql_user . ' ' . $sql_user_my . '  and (SELECT yy.end_fly FROM trips_fly_history AS yy WHERE yy.id_trips=A.id ORDER BY yy.datetime DESC LIMIT 0,1)>="' . date("Y-m-d") . ' 00:00:00"
+  where xx.id_trips=A.id and A.visible=1 AND A.id_a_company IN (' . $id_company . ') ' . $sql_user . ' ' . $sql_user_my . '  and (SELECT yy.end_fly FROM trips_fly_history AS yy WHERE yy.id_trips=A.id ORDER BY yy.datetime DESC LIMIT 0,1)>="' . date("Y-m-d") . ' 00:00:00"
 
 )
 
@@ -1330,7 +1330,7 @@ select count(DISTINCT Z.id) as kol from(
   
   from trips as A,trips_fly_history as xx
 
-  where xx.id_trips=A.id and A.visible=1 AND A.id_a_company="' . $id_company . '" ' . $sql_user . ' ' . $sql_user_my . '  and (SELECT yy.start_fly FROM trips_fly_history AS yy WHERE yy.id_trips=A.id ORDER BY yy.datetime DESC LIMIT 0,1)>="' . date("Y-m-d") . ' 00:00:00"
+  where xx.id_trips=A.id and A.visible=1 AND A.id_a_company IN (' . $id_company . ') ' . $sql_user . ' ' . $sql_user_my . '  and (SELECT yy.start_fly FROM trips_fly_history AS yy WHERE yy.id_trips=A.id ORDER BY yy.datetime DESC LIMIT 0,1)>="' . date("Y-m-d") . ' 00:00:00"
 )
 
   UNION
@@ -1343,7 +1343,7 @@ select count(DISTINCT Z.id) as kol from(
   
   from trips as A,trips_fly_history as xx
 
-  where xx.id_trips=A.id and A.visible=1 AND A.id_a_company="' . $id_company . '" ' . $sql_user . ' ' . $sql_user_my . '  and (SELECT yy.end_fly FROM trips_fly_history AS yy WHERE yy.id_trips=A.id ORDER BY yy.datetime DESC LIMIT 0,1)>="' . date("Y-m-d") . ' 00:00:00"
+  where xx.id_trips=A.id and A.visible=1 AND A.id_a_company IN (' . $id_company . ') ' . $sql_user . ' ' . $sql_user_my . '  and (SELECT yy.end_fly FROM trips_fly_history AS yy WHERE yy.id_trips=A.id ORDER BY yy.datetime DESC LIMIT 0,1)>="' . date("Y-m-d") . ' 00:00:00"
 
 )
 
@@ -1360,13 +1360,13 @@ select count(DISTINCT Z.id) as kol from(
 
                 $sql_user = " and A.datecreate>'" . $date_sql_start . "' and A.datecreate<'" . $date_sql_end . "'";
 
-                $sql_k = 'Select DISTINCT A.id from trips as A where A.visible=1 AND A.id_a_company="' . $id_company . '" ' . $sql_user . ' ' . $sql_user_my . ' ' . $sql_order . '  ' . limitPage('n_st', $count_write);
+                $sql_k = 'Select DISTINCT A.id from trips as A where A.visible=1 AND A.id_a_company IN (' . $id_company . ') ' . $sql_user . ' ' . $sql_user_my . ' ' . $sql_order . '  ' . limitPage('n_st', $count_write);
 
 //echo($sql_k);
 
                 $result_t2 = mysql_time_query($link, $sql_k);
 
-                $sql_count = 'Select count(DISTINCT A.id) as kol from trips as A where A.visible=1 AND A.id_a_company="' . $id_company . '" ' . $sql_user_my . '  ' . $sql_user;
+                $sql_count = 'Select count(DISTINCT A.id) as kol from trips as A where A.visible=1 AND A.id_a_company IN (' . $id_company . ') ' . $sql_user_my . '  ' . $sql_user;
 
 
             }
@@ -1374,18 +1374,15 @@ select count(DISTINCT Z.id) as kol from(
             //Ближайшие оплаты туроператорам
             if ($row_uu["number"] == 6) {
                 //Ближайшие оплаты туроператорам
-
                 $sql_order = " order by B.date ";
 
-                $sql_k = 'Select DISTINCT A.id from trips as A,trips_payment_term as B where B.id_trips=A.id and B.visible=1 and B.yes=0 and B.type=1 and A.visible=1 and B.date>="' . date("Y-m-d") . '" AND A.id_a_company="' . $id_company . '" ' . $sql_user . ' ' . $sql_user_my . ' ' . $sql_order . ' ' . limitPage('n_st', $count_write);
+                $sql_k = 'Select DISTINCT A.id from trips as A,trips_payment_term as B where B.id_trips=A.id and B.visible=1 and B.yes=0 and B.type=1 and A.visible=1 and B.date>="' . date("Y-m-d") . '" AND A.id_a_company IN (' . $id_company . ') ' . $sql_user . ' ' . $sql_user_my . ' ' . $sql_order . ' ' . limitPage('n_st', $count_write);
 
 //echo($sql_k);
 
                 $result_t2 = mysql_time_query($link, $sql_k);
 
-                $sql_count = 'Select count(DISTINCT A.id) as kol from trips as A,trips_payment_term as B where B.id_trips=A.id and B.visible=1 and B.yes=0 and B.type=1 and B.date>="' . date("Y-m-d") . '" and A.visible=1 AND A.id_a_company="' . $id_company . '" ' . $sql_user_my . ' ' . $sql_user;
-
-
+                $sql_count = 'Select count(DISTINCT A.id) as kol from trips as A,trips_payment_term as B where B.id_trips=A.id and B.visible=1 and B.yes=0 and B.type=1 and B.date>="' . date("Y-m-d") . '" and A.visible=1 AND A.id_a_company IN (' . $id_company . ') ' . $sql_user_my . ' ' . $sql_user;
             }
 
             //Ближайшие оплаченные
@@ -1403,7 +1400,7 @@ select DISTINCT Z.id from(
   
   from trips as A,trips_fly_history as xx
 
-  where xx.id_trips=A.id and A.visible=1 AND A.id_a_company="' . $id_company . '" ' . $sql_user . ' ' . $sql_user_my . '  and xx.start_fly>="' . date("Y-m-d") . ' 00:00:00"
+  where xx.id_trips=A.id and A.visible=1 AND A.id_a_company IN (' . $id_company . ') ' . $sql_user . ' ' . $sql_user_my . '  and xx.start_fly>="' . date("Y-m-d") . ' 00:00:00"
 )
 
   UNION
@@ -1416,7 +1413,7 @@ select DISTINCT Z.id from(
   
   from trips as A,trips_fly_history as xx
 
-  where xx.id_trips=A.id and A.visible=1 AND A.id_a_company="' . $id_company . '" ' . $sql_user . ' ' . $sql_user_my . '  and xx.end_fly>="' . date("Y-m-d") . ' 00:00:00"
+  where xx.id_trips=A.id and A.visible=1 AND A.id_a_company IN (' . $id_company . ') ' . $sql_user . ' ' . $sql_user_my . '  and xx.end_fly>="' . date("Y-m-d") . ' 00:00:00"
 
 )
 
@@ -1438,7 +1435,7 @@ select count(DISTINCT Z.id) as kol from(
   
   from trips as A,trips_fly_history as xx
 
-  where xx.id_trips=A.id and A.visible=1 AND A.id_a_company="' . $id_company . '" ' . $sql_user . ' ' . $sql_user_my . '  and xx.start_fly>="' . date("Y-m-d") . ' 00:00:00"
+  where xx.id_trips=A.id and A.visible=1 AND A.id_a_company IN (' . $id_company . ') ' . $sql_user . ' ' . $sql_user_my . '  and xx.start_fly>="' . date("Y-m-d") . ' 00:00:00"
 )
 
   UNION
@@ -1451,7 +1448,7 @@ select count(DISTINCT Z.id) as kol from(
   
   from trips as A,trips_fly_history as xx
 
-  where xx.id_trips=A.id and A.visible=1 AND A.id_a_company="' . $id_company . '" ' . $sql_user . ' ' . $sql_user_my . '  and xx.end_fly>="' . date("Y-m-d") . ' 00:00:00"
+  where xx.id_trips=A.id and A.visible=1 AND A.id_a_company IN (' . $id_company . ') ' . $sql_user . ' ' . $sql_user_my . '  and xx.end_fly>="' . date("Y-m-d") . ' 00:00:00"
 
 )
 
@@ -1467,13 +1464,13 @@ select count(DISTINCT Z.id) as kol from(
 
                 $sql_user = " and A.datecreate LIKE '" . date("Y-m-") . "%' ";
 
-                $sql_k = 'Select DISTINCT A.id from trips as A where A.visible=1 AND A.id_a_company="' . $id_company . '" ' . $sql_user . ' ' . $sql_user_my . ' ' . $sql_order . '  ' . limitPage('n_st', $count_write);
+                $sql_k = 'Select DISTINCT A.id from trips as A where A.visible=1 AND A.id_a_company IN (' . $id_company . ') ' . $sql_user . ' ' . $sql_user_my . ' ' . $sql_order . '  ' . limitPage('n_st', $count_write);
 
 //echo($sql_k);
 
                 $result_t2 = mysql_time_query($link, $sql_k);
 
-                $sql_count = 'Select count(DISTINCT A.id) as kol from trips as A where A.visible=1 AND A.id_a_company="' . $id_company . '" ' . $sql_user_my . '  ' . $sql_user;
+                $sql_count = 'Select count(DISTINCT A.id) as kol from trips as A where A.visible=1 AND A.id_a_company IN (' . $id_company . ') ' . $sql_user_my . '  ' . $sql_user;
 
             }
 
@@ -1482,13 +1479,13 @@ select count(DISTINCT Z.id) as kol from(
 
                 $sql_order = " order by B.date ";
 
-                $sql_k = 'Select DISTINCT A.id from trips as A,trips_payment_term as B where B.id_trips=A.id and B.visible=1 and B.yes=0 and B.type=0 and A.visible=1 and B.date<"' . date("Y-m-d") . '" AND A.id_a_company="' . $id_company . '" ' . $sql_user . ' ' . $sql_user_my . ' ' . $sql_order . ' ' . limitPage('n_st', $count_write);
+                $sql_k = 'Select DISTINCT A.id from trips as A,trips_payment_term as B where B.id_trips=A.id and B.visible=1 and B.yes=0 and B.type=0 and A.visible=1 and B.date<"' . date("Y-m-d") . '" AND A.id_a_company IN (' . $id_company . ') ' . $sql_user . ' ' . $sql_user_my . ' ' . $sql_order . ' ' . limitPage('n_st', $count_write);
 
 //echo($sql_k);
 
                 $result_t2 = mysql_time_query($link, $sql_k);
 
-                $sql_count = 'Select count(DISTINCT A.id) as kol from trips as A,trips_payment_term as B where B.id_trips=A.id and B.visible=1 and B.yes=0 and B.type=0 and B.date<"' . date("Y-m-d") . '" and A.visible=1 AND A.id_a_company="' . $id_company . '" ' . $sql_user_my . ' ' . $sql_user;
+                $sql_count = 'Select count(DISTINCT A.id) as kol from trips as A,trips_payment_term as B where B.id_trips=A.id and B.visible=1 and B.yes=0 and B.type=0 and B.date<"' . date("Y-m-d") . '" and A.visible=1 AND A.id_a_company IN (' . $id_company . ') ' . $sql_user_my . ' ' . $sql_user;
 
             }
 
@@ -1509,7 +1506,7 @@ select DISTINCT Z.id from(
   
   from trips as A,trips_fly_history as xx
 
-  where xx.id_trips=A.id and A.visible=1 AND A.id_a_company="' . $id_company . '" ' . $sql_user . ' ' . $sql_user_my . '  and xx.start_fly>="' . date("Y-m-d") . ' 00:00:00"
+  where xx.id_trips=A.id and A.visible=1 AND A.id_a_company IN (' . $id_company . ') ' . $sql_user . ' ' . $sql_user_my . '  and xx.start_fly>="' . date("Y-m-d") . ' 00:00:00"
 )
 
   UNION
@@ -1522,7 +1519,7 @@ select DISTINCT Z.id from(
   
   from trips as A,trips_fly_history as xx
 
-  where xx.id_trips=A.id and A.visible=1 AND A.id_a_company="' . $id_company . '" ' . $sql_user . ' ' . $sql_user_my . '  and xx.end_fly>="' . date("Y-m-d") . ' 00:00:00"
+  where xx.id_trips=A.id and A.visible=1 AND A.id_a_company IN (' . $id_company . ') ' . $sql_user . ' ' . $sql_user_my . '  and xx.end_fly>="' . date("Y-m-d") . ' 00:00:00"
 
 )
 
@@ -1544,7 +1541,7 @@ select count(DISTINCT Z.id) as kol from(
   
   from trips as A,trips_fly_history as xx
 
-  where xx.id_trips=A.id and A.visible=1 AND A.id_a_company="' . $id_company . '" ' . $sql_user . ' ' . $sql_user_my . '  and xx.start_fly>="' . date("Y-m-d") . ' 00:00:00"
+  where xx.id_trips=A.id and A.visible=1 AND A.id_a_company IN (' . $id_company . ') ' . $sql_user . ' ' . $sql_user_my . '  and xx.start_fly>="' . date("Y-m-d") . ' 00:00:00"
 )
 
   UNION
@@ -1557,7 +1554,7 @@ select count(DISTINCT Z.id) as kol from(
   
   from trips as A,trips_fly_history as xx
 
-  where xx.id_trips=A.id and A.visible=1 AND A.id_a_company="' . $id_company . '" ' . $sql_user . ' ' . $sql_user_my . '  and xx.end_fly>="' . date("Y-m-d") . ' 00:00:00"
+  where xx.id_trips=A.id and A.visible=1 AND A.id_a_company IN (' . $id_company . ') ' . $sql_user . ' ' . $sql_user_my . '  and xx.end_fly>="' . date("Y-m-d") . ' 00:00:00"
 
 )
 
@@ -1577,13 +1574,13 @@ select count(DISTINCT Z.id) as kol from(
 
                 $sql_user = " and A.datecreate>'" . $date_sql_start . "' and A.datecreate<'" . $date_sql_end . "'";
 
-                $sql_k = 'Select DISTINCT A.id from trips as A where A.visible=1 AND A.id_a_company="' . $id_company . '" ' . $sql_user . ' ' . $sql_user_my . ' ' . $sql_order . '  ' . limitPage('n_st', $count_write);
+                $sql_k = 'Select DISTINCT A.id from trips as A where A.visible=1 AND A.id_a_company IN (' . $id_company . ') ' . $sql_user . ' ' . $sql_user_my . ' ' . $sql_order . '  ' . limitPage('n_st', $count_write);
 
 //echo($sql_k);
 
                 $result_t2 = mysql_time_query($link, $sql_k);
 
-                $sql_count = 'Select count(DISTINCT A.id) as kol from trips as A where A.visible=1 AND A.id_a_company="' . $id_company . '" ' . $sql_user_my . '  ' . $sql_user;
+                $sql_count = 'Select count(DISTINCT A.id) as kol from trips as A where A.visible=1 AND A.id_a_company IN (' . $id_company . ') ' . $sql_user_my . '  ' . $sql_user;
 
 
             }
@@ -1594,13 +1591,13 @@ select count(DISTINCT Z.id) as kol from(
 
                 $sql_order = " order by B.date ";
 
-                $sql_k = 'Select DISTINCT A.id from trips as A,trips_payment_term as B where B.id_trips=A.id and B.visible=1 and B.yes=0 and B.type=1 and A.visible=1 and B.date<"' . date("Y-m-d") . '" AND A.id_a_company="' . $id_company . '" ' . $sql_user . ' ' . $sql_user_my . ' ' . $sql_order . ' ' . limitPage('n_st', $count_write);
+                $sql_k = 'Select DISTINCT A.id from trips as A,trips_payment_term as B where B.id_trips=A.id and B.visible=1 and B.yes=0 and B.type=1 and A.visible=1 and B.date<"' . date("Y-m-d") . '" AND A.id_a_company IN (' . $id_company . ') ' . $sql_user . ' ' . $sql_user_my . ' ' . $sql_order . ' ' . limitPage('n_st', $count_write);
 
 //echo($sql_k);
 
                 $result_t2 = mysql_time_query($link, $sql_k);
 
-                $sql_count = 'Select count(DISTINCT A.id) as kol from trips as A,trips_payment_term as B where B.id_trips=A.id and B.visible=1 and B.yes=0 and B.type=1 and B.date<"' . date("Y-m-d") . '" and A.visible=1 AND A.id_a_company="' . $id_company . '" ' . $sql_user_my . ' ' . $sql_user;
+                $sql_count = 'Select count(DISTINCT A.id) as kol from trips as A,trips_payment_term as B where B.id_trips=A.id and B.visible=1 and B.yes=0 and B.type=1 and B.date<"' . date("Y-m-d") . '" and A.visible=1 AND A.id_a_company IN (' . $id_company . ') ' . $sql_user_my . ' ' . $sql_user;
             }
 
 
@@ -1610,13 +1607,13 @@ select count(DISTINCT Z.id) as kol from(
                 $sql_user = " and A.status=4 ";
 
 
-                $sql_k = 'Select DISTINCT A.id from trips as A where A.visible=1 AND A.id_a_company="' . $id_company . '" ' . $sql_user . ' ' . $sql_user_my . ' ' . $sql_order . ' ' . limitPage('n_st', $count_write);
+                $sql_k = 'Select DISTINCT A.id from trips as A where A.visible=1 AND A.id_a_company IN (' . $id_company . ') ' . $sql_user . ' ' . $sql_user_my . ' ' . $sql_order . ' ' . limitPage('n_st', $count_write);
 
 //echo($sql_k);
 
                 $result_t2 = mysql_time_query($link, $sql_k);
 
-                $sql_count = 'Select count(DISTINCT A.id) as kol from trips as A where A.visible=1 AND A.id_a_company="' . $id_company . '" ' . $sql_user_my . ' ' . $sql_user;
+                $sql_count = 'Select count(DISTINCT A.id) as kol from trips as A where A.visible=1 AND A.id_a_company IN (' . $id_company . ') ' . $sql_user_my . ' ' . $sql_user;
             }
 
             //Документы не выданы
@@ -1625,13 +1622,13 @@ select count(DISTINCT Z.id) as kol from(
                 $sql_user = " and (A.doc='0000-00-00')or(A.doc='') ";
 
 
-                $sql_k = 'Select DISTINCT A.id from trips as A where A.visible=1 AND A.id_a_company="' . $id_company . '" ' . $sql_user . ' ' . $sql_user_my . ' ' . $sql_order . ' ' . limitPage('n_st', $count_write);
+                $sql_k = 'Select DISTINCT A.id from trips as A where A.visible=1 AND A.id_a_company IN (' . $id_company . ') ' . $sql_user . ' ' . $sql_user_my . ' ' . $sql_order . ' ' . limitPage('n_st', $count_write);
 
 //echo($sql_k);
 
                 $result_t2 = mysql_time_query($link, $sql_k);
 
-                $sql_count = 'Select count(DISTINCT A.id) as kol from trips as A where A.visible=1 AND A.id_a_company="' . $id_company . '" ' . $sql_user_my . ' ' . $sql_user;
+                $sql_count = 'Select count(DISTINCT A.id) as kol from trips as A where A.visible=1 AND A.id_a_company IN (' . $id_company . ') ' . $sql_user_my . ' ' . $sql_user;
             }
 
             //Время вылетов не заполнено
@@ -1643,7 +1640,7 @@ select count(DISTINCT Z.id) as kol from(
 
 Select DISTINCT A.id
   
-  from trips as A where A.visible=1 AND A.id_a_company="' . $id_company . '" ' . $sql_user . ' ' . $sql_user_my . '  and (((SELECT yy.start_fly FROM trips_fly_history AS yy WHERE yy.id_trips=A.id ORDER BY yy.datetime DESC LIMIT 0,1)="0000-00-00 00:00:00")or((SELECT yy.end_fly FROM trips_fly_history AS yy WHERE yy.id_trips=A.id ORDER BY yy.datetime DESC LIMIT 0,1)="0000-00-00 00:00:00")) order by A.datecreate DESC
+  from trips as A where A.visible=1 AND A.id_a_company IN (' . $id_company . ') ' . $sql_user . ' ' . $sql_user_my . '  and (((SELECT yy.start_fly FROM trips_fly_history AS yy WHERE yy.id_trips=A.id ORDER BY yy.datetime DESC LIMIT 0,1)="0000-00-00 00:00:00")or((SELECT yy.end_fly FROM trips_fly_history AS yy WHERE yy.id_trips=A.id ORDER BY yy.datetime DESC LIMIT 0,1)="0000-00-00 00:00:00")) order by A.datecreate DESC
  ' . limitPage('n_st', $count_write);
 
 
@@ -1654,7 +1651,7 @@ Select DISTINCT A.id
                 $sql_count = '
 Select count(DISTINCT A.id) as kol
   
-  from trips as A where A.visible=1 AND A.id_a_company="' . $id_company . '" ' . $sql_user . ' ' . $sql_user_my . '  and (((SELECT yy.start_fly FROM trips_fly_history AS yy WHERE yy.id_trips=A.id ORDER BY yy.datetime DESC LIMIT 0,1)="0000-00-00 00:00:00")or((SELECT yy.end_fly FROM trips_fly_history AS yy WHERE yy.id_trips=A.id ORDER BY yy.datetime DESC LIMIT 0,1)="0000-00-00 00:00:00"))';
+  from trips as A where A.visible=1 AND A.id_a_company IN (' . $id_company . ') ' . $sql_user . ' ' . $sql_user_my . '  and (((SELECT yy.start_fly FROM trips_fly_history AS yy WHERE yy.id_trips=A.id ORDER BY yy.datetime DESC LIMIT 0,1)="0000-00-00 00:00:00")or((SELECT yy.end_fly FROM trips_fly_history AS yy WHERE yy.id_trips=A.id ORDER BY yy.datetime DESC LIMIT 0,1)="0000-00-00 00:00:00"))';
             }
 
         }
@@ -1696,7 +1693,7 @@ $new_class_block='';
 
 					$row_88= mysqli_fetch_assoc($result_t2);
 
-                    $result_uuy = mysql_time_query($link, 'select A.id,A.discount,A.doc, A.id_user,A.shopper,A.id_shopper,A.id_contract,A.comment,A.number_to,A.hotel,A.id_country,A.place_name,A.date_start,A.date_end,A.number_to,A.id_contract,A.cost_client,A.id_exchange,A.cost_operator_exchange,A.cost_operator,A.cost_client_exchange,A.buy_clients,A.buy_operator,A.paid_operator,A.paid_operator_rates,A.exchange_rates,A.paid_client,A.paid_client_rates,A.date_prepaid,A.comment,A.status_admin from trips as A where A.id="' . ht($row_88['id']) . '"');
+                    $result_uuy = mysql_time_query($link, 'select A.id,A.discount,A.doc,A.id_a_company, A.id_user,A.shopper,A.id_shopper,A.id_contract,A.comment,A.number_to,A.hotel,A.id_country,A.place_name,A.date_start,A.date_end,A.number_to,A.id_contract,A.cost_client,A.id_exchange,A.cost_operator_exchange,A.cost_operator,A.cost_client_exchange,A.buy_clients,A.buy_operator,A.paid_operator,A.paid_operator_rates,A.exchange_rates,A.paid_client,A.paid_client_rates,A.date_prepaid,A.comment,A.status_admin from trips as A where A.id="' . ht($row_88['id']) . '"');
                     $num_results_uuy = $result_uuy->num_rows;
 
                     if ($num_results_uuy != 0) {

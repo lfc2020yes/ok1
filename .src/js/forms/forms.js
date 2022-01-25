@@ -6525,6 +6525,14 @@ function AfterTabsInfoAdd(data,update)
 		
 		input_2018();
 
+
+		//табсы обновить
+		$(".slct").unbind('click.sys');
+		$(".slct").bind('click.sys', slctclick);
+		$(".drop").find("li").unbind('click');
+		$(".drop").find("li").bind('click', dropli);
+
+
 	}
 }
 

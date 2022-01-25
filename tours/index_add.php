@@ -199,7 +199,7 @@ $(function (){ setTimeout ( function () { $('.js-hide-div').slideUp("slow");	}, 
 		
 		//номер договора в компании umatravel
 $number_doc='';
-	$result_status2d=mysql_time_query($link,'SELECT MAX(b.number) AS cc FROM trips_contract AS b,trips as a WHERE b.id_a_company="'.ht($id_company).'" and a.visible=1 and a.id_contract=b.id and b.years="'.date('Y').'"');
+	$result_status2d=mysql_time_query($link,'SELECT MAX(b.number) AS cc FROM trips_contract AS b,trips as a WHERE b.id_a_company IN ('.ht($id_group_company_list).') and a.visible=1 and a.id_contract=b.id and b.years="'.date('Y').'"');
 					 //echo('SELECT a.* FROM r_status AS a WHERE a.numer_status="'.$row1ss["status"].'" and a.id_system=13');
                 if($result_status2d->num_rows!=0)
                 {  
@@ -248,7 +248,13 @@ echo($query_string);
 			
 			<ul class="drop drop-search js-drop-search" style="transform: scaleY(0);">
 			<?
-		$result_work_zz=mysql_time_query($link,'Select a.* from booking_operator as a WHERE a.id_a_company="'.ht($id_company).'" and a.visible=1 ORDER BY a.eye DESC,a.id limit 0,15');				 
+
+            //если у пользователя много организаций то выводить все туроператоры по всем организациям
+            //а если это москва но нужны туроператоры общего филиала
+
+
+
+		$result_work_zz=mysql_time_query($link,'Select a.* from booking_operator as a WHERE a.id_a_company IN ('.ht($id_group_company_list).') and a.visible=1 ORDER BY a.eye DESC,a.id limit 0,15');
         $num_results_work_zz = $result_work_zz->num_rows;
 	    if($num_results_work_zz!=0)
 	    {
@@ -283,7 +289,7 @@ echo($query_string);
 
 			<ul class="drop drop-search js-drop-search" style="transform: scaleY(0);">
 			<?
-            $result_work_zz=mysql_time_query($link,'Select a.id,a.date_create,a.id_type_clients,a.id_k_clients,a.id_country from preorders as a WHERE a.id_company="'.ht($id_company).'" and a.visible=1 and a.id_user="'.ht($id_user).'" and not(a.status IN ("5","6")) ORDER BY a.date_create desc limit 0,15');
+            $result_work_zz=mysql_time_query($link,'Select a.id,a.date_create,a.id_type_clients,a.id_k_clients,a.id_country from preorders as a WHERE a.id_company IN ('.ht($id_company).') and a.visible=1 and a.id_user="'.ht($id_user).'" and not(a.status IN ("5","6")) ORDER BY a.date_create desc limit 0,15');
             $num_results_work_zz = $result_work_zz->num_rows;
             if($num_results_work_zz!=0)
             {
@@ -346,7 +352,7 @@ $query_string='<div style="margin-top: 30px;" class="input_doc_turs js-zindex">	
 $query_string.='<div class="left_drop list_2018 menu1_prime"><label class="">Рекламный источник<span>*</span></label><div class="select eddd zin_2019"><a class="slct" list_number="t1" data_src=""></a><ul class="drop">';
 
 	
-$result_8 = mysql_time_query($link,'select A.* from  booking_sourse as A where A.id_a_company="'.ht($id_company).'" and A.visible=1 order by A.displayOrder');
+$result_8 = mysql_time_query($link,'select A.* from  booking_sourse as A where A.id_a_company IN('.ht($id_group_company_list).') and A.visible=1 order by A.displayOrder');
 		
 $num_8 = $result_8->num_rows;	
 //$row_1 = mysqli_fetch_assoc($result2);
@@ -439,10 +445,85 @@ echo'<input type="hidden" class="tot_buy_id"  name="buy_id" value="'.ipost_($_PO
 	<div class="block-add-tours">	
 		<div class="block-h1">Данные по договору</div>
 		
-		<!--input start	-->		
-	<div style="margin-top: 30px;" ><div class="input_2018"><label>Город Офиса</label><input name="city" value="Ульяновск" id="date_124" class="input_new_2018 required    no_upperr" autocomplete="off" type="text"><div class="div_new_2018"><hr class="one"><hr class="two"><div class="oper_name"></div></div></div>
+
+	<?
+            if(($more_city==1)and($_COOKIE["cc_town".$id_user]==0)) {
+
+
+
+
+        ?>
+               <!--input start	-->
+<?
+
+ $os_say55 = array();
+ $os_id_say55 = array();
+	$su_say55=-1;
+
+$query_string='<div style="margin-top: 30px;" class="input_doc_turs js-zindex">	';
+
+$query_string.='<div class="left_drop list_2018 menu1_prime"><label class="">Организация<span>*</span></label><div class="select eddd zin_2019"><a class="slct" list_number="t1" data_src=""></a><ul class="drop">';
+
+
+$result_8 = mysql_time_query($link,'Select a.name,a.id from a_company as a where a.id IN ('.$id_company_sql.')');
+
+$num_8 = $result_8->num_rows;
+//$row_1 = mysqli_fetch_assoc($result2);
+if($result_8)
+{
+
+	/*
+				   $query_string.='<li class="sel_active"><a href="javascript:void(0);"  rel="'.$os_id_say55[array_search(1, $os_id_say55)].'">'.$os_say55[array_search(0, $os_id_say55)].'</a></li>';
+	*/
+
+  			  while($row_8 = mysqli_fetch_assoc($result_8)){
+
+				 if($su_say55==$row_8["id"])
+			   {
+				   $query_string.='<li class="sel_active"><a href="javascript:void(0);"  rel="'.$row_8["id"].'">'.$row_8["name"].'</a></li>';
+			   } else
+			   {
+				  $query_string.='<li><a href="javascript:void(0);"  rel="'.$row_8["id"].'">'.$row_8["name"].'</a></li>';
+			   }
+
+			 }
+}
+
+
+
+		   $query_string.='</ul><input type="hidden" class="gloab"  name="id_company" id="pol_clients4554" value=""><div class="div_new_2018"><hr class="one"></div></div></div></div>';
+		echo $query_string;
+
+
+	?>
+		<!--input end	-->
+        <?
+
+
+
+
+
+
+
+            } else
+            {
+
+                $result_uuyyt = mysql_time_query($link, 'select name from a_company where id="' . ht($id_company) . '"');
+                $num_results_uuyyt = $result_uuyyt->num_rows;
+
+                if ($num_results_uuyyt != 0) {
+                    $row_uuyyt = mysqli_fetch_assoc($result_uuyyt);
+                }
+
+
+                echo'<!--input start	-->	
+        <div style="margin-top: 30px;" ><div class="input_2018"><label>Организация</label><input name="id_company_name" value="'.$row_uuyyt["name"].'" readonly id="date_124" class="input_new_2018 required    no_upperr" autocomplete="off" type="text"><input name="id_company" type="hidden" value="'.$id_company.'"><div class="div_new_2018"><hr class="one"><hr class="two"><div class="oper_name"></div></div></div>
 </div>
-<!--input end	-->		
+<!--input end	-->	';
+
+            }
+      ?>
+
 		<!--input start	-->		
 		<?
 	echo'<div style="margin-top: 30px;" ><div class="input_2018"><label>Менеджер</label><input name="manager" value="'.$name_user.'" id="date_124" class="input_new_2018 required  no_upperr" autocomplete="off" type="text"><div class="div_new_2018"><hr class="one"><hr class="two"><div class="oper_name"></div></div></div>
@@ -742,7 +823,7 @@ echo'<div class="left_drop menu1_prime"><label class="active_label">
 
 		
 		<div class="block-add-tours-plus">	
-		<div class="block-h1-plus tuda-p">туда</div>
+		<div class="block-h1-plus tuda-p">↓ туда</div>
 			<!--input start	-->		
 	<div style="margin-top: 30px;" ><div class="input_2018"><label>Маршрут перелета туда<span>*</span></label><input name="flight_there_route" value="" id="date_124" class="input_new_2018 required   gloab no_upperr" autocomplete="off" type="text"><div class="div_new_2018"><hr class="one"><hr class="two"><div class="oper_name"></div></div></div>
 </div>
@@ -902,7 +983,7 @@ echo'<div class="left_drop menu1_prime"><label class="active_label">
 		</div>
 		
 			<div class="block-add-tours-plus">	
-		<div class="block-h1-plus obr-p">обратно</div>
+		<div class="block-h1-plus obr-p">↓ обратно</div>
 		
 		
 			<!--input start	-->		
@@ -1067,7 +1148,7 @@ echo'<div class="left_drop menu1_prime"><label class="active_label">
 </div></div>
 		
 		<div class="block-add-tours-plus">	
-		<div class="block-h1-plus">трансфер</div>
+		<div class="block-h1-plus">↓ трансфер</div>
 			
 						<!--input start	-->		
 	<div style="margin-top: 30px;" ><div class="input_2018"><label>Маршрут трансфера<span>*</span></label><input name="transfer_route" value="AIRPORT-HOTEL-AIRPORT" id="date_124" class="input_new_2018 required   gloab" autocomplete="off" type="text"><div class="div_new_2018"><hr class="one"><hr class="two"><div class="oper_name"></div></div></div>
@@ -1118,7 +1199,7 @@ echo'<div class="left_drop menu1_prime"><label class="active_label">
 		
 		
 	<div class="block-add-tours-plus">	
-		<div class="block-h1-plus">стоимость</div>
+		<div class="block-h1-plus">↓ стоимость</div>
 		
 	<!--input start	-->		
 <?
@@ -1127,7 +1208,7 @@ echo'<div class="left_drop menu1_prime"><label class="active_label">
 	   $os_id4 = array();	
 		$os_id_char4 = array();	
 		
-	 $result_work_zz=mysql_time_query($link,'Select a.* from booking_exchange as a where a.id_a_company="'.ht($id_company).'"');				 
+	 $result_work_zz=mysql_time_query($link,'Select a.* from booking_exchange as a where a.id_a_company IN ('.ht($id_group_company_list).')');
         $num_results_work_zz = $result_work_zz->num_rows;
 	    if($num_results_work_zz!=0)
 	    {
