@@ -468,7 +468,36 @@ if($more_mon==0)
     $bonus=0;
     //$result_status223=mysql_time_query($link,'SELECT a.* from users_commission_trips as a,r_user as b where a.id_users=b.id and b.id_company="'.$id_company.'" and a.date="'.$date_start.'"');
 
-    $result_status223=mysql_time_query($link,'SELECT a.* from users_commission_trips as a,r_user as b where a.id_users=b.id and b.id_company="'.$id_company.'" and a.date="'.$date_start_bonus_last.'"');
+
+    $LIKEX='';
+    if(is_numeric($id_company))
+    {
+        $LIKEX=' and ((b.id_company LIKE "'.ht($id_company).',%")or(b.id_company LIKE "%,'.ht($id_company).',%")or(b.id_company LIKE "%,'.ht($id_company).'")or(b.id_company="'.ht($id_company).'")) ';
+    } else
+    {
+        $date_new_ada = explode(",", ht($id_company));
+        for ($ada = 0; $ada < count($date_new_ada); $ada++) {
+
+            if($LIKEX=='')
+            {
+                $LIKEX=' and ( ((b.id_company LIKE "'.ht($date_new_ada[$ada]).',%")or(b.id_company LIKE "%,'.ht($date_new_ada[$ada]).',%")or(b.id_company LIKE "%,'.ht($date_new_ada[$ada]).'")or(b.id_company="'.ht($date_new_ada[$ada]).'")) ';
+            } else
+            {
+                $LIKEX.='or ((b.id_company LIKE "'.ht($date_new_ada[$ada]).',%")or(b.id_company LIKE "%,'.ht($date_new_ada[$ada]).',%")or(b.id_company LIKE "%,'.ht($date_new_ada[$ada]).'")or(b.id_company="'.ht($date_new_ada[$ada]).'")) ';
+            }
+
+        }
+        if($LIKEX!='')
+        {
+            $LIKEX.=') ';
+        }
+
+
+    }
+
+
+
+    $result_status223=mysql_time_query($link,'SELECT a.* from users_commission_trips as a,r_user as b where a.id_users=b.id '.$LIKEX.' and a.date="'.$date_start_bonus_last.'"');
 
 
 
@@ -483,14 +512,14 @@ if($more_mon==0)
 
            // $result_status_b=mysql_time_query($link,'SELECT a.* from users_commission_level as a where a.id_users="'.$row223["id_users"].'" and a.sum_start<="'.$row223["sum"].'" and a.sum_end>"'.$row223["sum"].'" and a.dates="'.$date_start.'" and a.id_company="'.ht($id_company).'"');
 
-            $result_status_b=mysql_time_query($link,'SELECT a.* from users_commission_level as a where a.id_users="'.$row223["id_users"].'" and a.sum_start<="'.$row223["sum"].'" and a.sum_end>"'.$row223["sum"].'" and a.dates="'.$date_start_bonus_last.'" and a.id_company="'.ht($id_company).'"');
+            $result_status_b=mysql_time_query($link,'SELECT a.* from users_commission_level as a where a.id_users="'.$row223["id_users"].'" and a.sum_start<="'.$row223["sum"].'" and a.sum_end>"'.$row223["sum"].'" and a.dates="'.$date_start_bonus_last.'" and a.id_company IN ('.ht($id_company).')');
 
 
             if($result_status_b->num_rows==0)
             {
                // $result_status_b=mysql_time_query($link,'SELECT a.* from users_commission_level as a where a.id_users=0 and a.sum_start<="'.$row223["sum"].'" and a.sum_end>"'.$row223["sum"].'" and a.dates="'.$date_start.'" and a.id_company="'.ht($id_company).'"');
 
-                $result_status_b=mysql_time_query($link,'SELECT a.* from users_commission_level as a where a.id_users=0 and a.sum_start<="'.$row223["sum"].'" and a.sum_end>"'.$row223["sum"].'" and a.dates="'.$date_start_bonus_last.'" and a.id_company="'.ht($id_company).'"');
+                $result_status_b=mysql_time_query($link,'SELECT a.* from users_commission_level as a where a.id_users=0 and a.sum_start<="'.$row223["sum"].'" and a.sum_end>"'.$row223["sum"].'" and a.dates="'.$date_start_bonus_last.'" and a.id_company IN ('.ht($id_company).')');
             }
 
 
@@ -519,7 +548,34 @@ if($more_mon==0)
 
         //$result_status223=mysql_time_query($link,'SELECT a.* from users_commission_trips as a,r_user as b where a.id_users=b.id and b.id_company="'.$id_company.'" and a.date="'.$date_start_while.'"');
 
-        $result_status223=mysql_time_query($link,'SELECT a.* from users_commission_trips as a,r_user as b where a.id_users=b.id and b.id_company="'.$id_company.'" and a.date="'.$date_start_while_bonus_last.'"');
+        $LIKEX='';
+        if(is_numeric($id_company))
+        {
+            $LIKEX=' and ((b.id_company LIKE "'.ht($id_company).',%")or(b.id_company LIKE "%,'.ht($id_company).',%")or(b.id_company LIKE "%,'.ht($id_company).'")or(b.id_company="'.ht($id_company).'")) ';
+        } else
+        {
+            $date_new_ada = explode(",", ht($id_company));
+            for ($ada = 0; $ada < count($date_new_ada); $ada++) {
+
+                if($LIKEX=='')
+                {
+                    $LIKEX=' and ( ((b.id_company LIKE "'.ht($date_new_ada[$ada]).',%")or(b.id_company LIKE "%,'.ht($date_new_ada[$ada]).',%")or(b.id_company LIKE "%,'.ht($date_new_ada[$ada]).'")or(b.id_company="'.ht($date_new_ada[$ada]).'")) ';
+                } else
+                {
+                    $LIKEX.='or ((b.id_company LIKE "'.ht($date_new_ada[$ada]).',%")or(b.id_company LIKE "%,'.ht($date_new_ada[$ada]).',%")or(b.id_company LIKE "%,'.ht($date_new_ada[$ada]).'")or(b.id_company="'.ht($date_new_ada[$ada]).'")) ';
+                }
+
+            }
+            if($LIKEX!='')
+            {
+                $LIKEX.=') ';
+            }
+
+
+        }
+
+
+        $result_status223=mysql_time_query($link,'SELECT a.* from users_commission_trips as a,r_user as b where a.id_users=b.id '.$LIKEX.' and a.date="'.$date_start_while_bonus_last.'"');
 
         $num223 = $result_status223->num_rows;
         if($result_status223->num_rows!=0)
@@ -528,7 +584,7 @@ if($more_mon==0)
             {
                 $row223 = mysqli_fetch_assoc($result_status223);
 
-                $result_status_b=mysql_time_query($link,'SELECT a.* from users_commission_level as a where a.id_users="'.$row223["id_users"].'" and a.sum_start<="'.$row223["sum"].'" and a.sum_end>"'.$row223["sum"].'" and a.dates="'.$date_start_while_bonus_last.'" and a.id_company="'.ht($id_company).'"');
+                $result_status_b=mysql_time_query($link,'SELECT a.* from users_commission_level as a where a.id_users="'.$row223["id_users"].'" and a.sum_start<="'.$row223["sum"].'" and a.sum_end>"'.$row223["sum"].'" and a.dates="'.$date_start_while_bonus_last.'" and a.id_company IN ('.ht($id_company).')');
 
                 //$result_status_b=mysql_time_query($link,'SELECT a.* from users_commission_level as a where a.id_users="'.$row223["id_users"].'" and a.sum_start<="'.$row223["sum"].'" and a.sum_end>"'.$row223["sum"].'" and a.dates="'.$date_start_while.'" and a.id_company="'.ht($id_company).'"');
 
@@ -536,7 +592,7 @@ if($more_mon==0)
 
                     //$result_status_b = mysql_time_query($link, 'SELECT a.* from users_commission_level as a where a.id_users=0 and a.sum_start<="' . $row223["sum"] . '" and a.sum_end>"' . $row223["sum"] . '" and a.dates="' . $date_start_while . '" and a.id_company="' . ht($id_company) . '"');
 
-                    $result_status_b = mysql_time_query($link, 'SELECT a.* from users_commission_level as a where a.id_users=0 and a.sum_start<="' . $row223["sum"] . '" and a.sum_end>"' . $row223["sum"] . '" and a.dates="' . $date_start_while_bonus_last . '" and a.id_company="' . ht($id_company) . '"');
+                    $result_status_b = mysql_time_query($link, 'SELECT a.* from users_commission_level as a where a.id_users=0 and a.sum_start<="' . $row223["sum"] . '" and a.sum_end>"' . $row223["sum"] . '" and a.dates="' . $date_start_while_bonus_last . '" and a.id_company IN (' . ht($id_company) . ')');
 
 
                 }
@@ -568,6 +624,10 @@ if($more_mon==0)
 
   //доходы
 
+
+
+
+
   $doxod_array=array();
 
   $dox=0;
@@ -581,9 +641,37 @@ if($more_mon==0)
       }
   }
 
+
+
+  $LIKEX='';
+  if(is_numeric($id_company))
+  {
+      $LIKEX=' and ((b.id_company LIKE "'.ht($id_company).',%")or(b.id_company LIKE "%,'.ht($id_company).',%")or(b.id_company LIKE "%,'.ht($id_company).'")or(b.id_company="'.ht($id_company).'")) ';
+  } else
+  {
+      $date_new_ada = explode(",", ht($id_company));
+      for ($ada = 0; $ada < count($date_new_ada); $ada++) {
+
+          if($LIKEX=='')
+          {
+              $LIKEX=' and ( ((b.id_company LIKE "'.ht($date_new_ada[$ada]).',%")or(b.id_company LIKE "%,'.ht($date_new_ada[$ada]).',%")or(b.id_company LIKE "%,'.ht($date_new_ada[$ada]).'")or(b.id_company="'.ht($date_new_ada[$ada]).'")) ';
+          } else
+          {
+              $LIKEX.='or ((b.id_company LIKE "'.ht($date_new_ada[$ada]).',%")or(b.id_company LIKE "%,'.ht($date_new_ada[$ada]).',%")or(b.id_company LIKE "%,'.ht($date_new_ada[$ada]).'")or(b.id_company="'.ht($date_new_ada[$ada]).'")) ';
+          }
+
+      }
+      if($LIKEX!='')
+      {
+          $LIKEX.=') ';
+      }
+
+
+  }
+
   //доходы с бонусов
   $dox_bonus =0;
-  $result_status22=mysql_time_query($link,'SELECT sum(a.sum) as summ from users_commission_trips as a,r_user as b where a.id_users=b.id and b.id_company="'.ht($id_company).'" and  not(a.id_users=0) and a.date>="' . ht($date_start) . '" and  a.date<"' . ht($date_end) . '"');
+  $result_status22=mysql_time_query($link,'SELECT sum(a.sum) as summ from users_commission_trips as a,r_user as b where a.id_users=b.id '.$LIKEX.' and  not(a.id_users=0) and a.date>="' . ht($date_start) . '" and  a.date<"' . ht($date_end) . '"');
 
   $num_results_22 = $result_status22->num_rows;
 
@@ -772,7 +860,35 @@ echo'</div>
       //какой то период выбран значит по нему и выводим
       $date_start_while22=date_step_sql_more($date_start_while,'+1m');
 
-      $result_status22 = mysql_time_query($link, 'SELECT sum(a.sum) as summ from users_commission_trips as a,r_user as b where a.id_users=b.id and b.id_company="' . ht($id_company) . '" and  not(a.id_users=0) and a.date>="' . ht($date_start_while) . '" and  a.date<"' . ht($date_start_while22) . '"');
+      $LIKEX='';
+      if(is_numeric($id_company))
+      {
+          $LIKEX=' and ((b.id_company LIKE "'.ht($id_company).',%")or(b.id_company LIKE "%,'.ht($id_company).',%")or(b.id_company LIKE "%,'.ht($id_company).'")or(b.id_company="'.ht($id_company).'")) ';
+      } else
+      {
+          $date_new_ada = explode(",", ht($id_company));
+          for ($ada = 0; $ada < count($date_new_ada); $ada++) {
+
+              if($LIKEX=='')
+              {
+                  $LIKEX=' and ( ((b.id_company LIKE "'.ht($date_new_ada[$ada]).',%")or(b.id_company LIKE "%,'.ht($date_new_ada[$ada]).',%")or(b.id_company LIKE "%,'.ht($date_new_ada[$ada]).'")or(b.id_company="'.ht($date_new_ada[$ada]).'")) ';
+              } else
+              {
+                  $LIKEX.='or ((b.id_company LIKE "'.ht($date_new_ada[$ada]).',%")or(b.id_company LIKE "%,'.ht($date_new_ada[$ada]).',%")or(b.id_company LIKE "%,'.ht($date_new_ada[$ada]).'")or(b.id_company="'.ht($date_new_ada[$ada]).'")) ';
+              }
+
+          }
+          if($LIKEX!='')
+          {
+              $LIKEX.=') ';
+          }
+
+
+      }
+
+
+
+      $result_status22 = mysql_time_query($link, 'SELECT sum(a.sum) as summ from users_commission_trips as a,r_user as b where a.id_users=b.id '.$LIKEX.' and  not(a.id_users=0) and a.date>="' . ht($date_start_while) . '" and  a.date<"' . ht($date_start_while22) . '"');
 
 
       $num_results_uu = $result_status22->num_rows;
@@ -811,7 +927,34 @@ $views=0;
           //какой то период выбран значит по нему и выводим
           $date_start_while22=date_step_sql_more($date_start_while,'+1m');
 
-          $result_status22 = mysql_time_query($link, 'SELECT sum(a.sum) as summ from users_commission_trips as a,r_user as b where a.id_users=b.id and b.id_company="' . ht($id_company) . '" and  not(a.id_users=0) and a.date>="' . ht($date_start_while) . '" and  a.date<"' . ht($date_start_while22) . '"');
+          $LIKEX='';
+          if(is_numeric($id_company))
+          {
+              $LIKEX=' and ((b.id_company LIKE "'.ht($id_company).',%")or(b.id_company LIKE "%,'.ht($id_company).',%")or(b.id_company LIKE "%,'.ht($id_company).'")or(b.id_company="'.ht($id_company).'")) ';
+          } else
+          {
+              $date_new_ada = explode(",", ht($id_company));
+              for ($ada = 0; $ada < count($date_new_ada); $ada++) {
+
+                  if($LIKEX=='')
+                  {
+                      $LIKEX=' and ( ((b.id_company LIKE "'.ht($date_new_ada[$ada]).',%")or(b.id_company LIKE "%,'.ht($date_new_ada[$ada]).',%")or(b.id_company LIKE "%,'.ht($date_new_ada[$ada]).'")or(b.id_company="'.ht($date_new_ada[$ada]).'")) ';
+                  } else
+                  {
+                      $LIKEX.='or ((b.id_company LIKE "'.ht($date_new_ada[$ada]).',%")or(b.id_company LIKE "%,'.ht($date_new_ada[$ada]).',%")or(b.id_company LIKE "%,'.ht($date_new_ada[$ada]).'")or(b.id_company="'.ht($date_new_ada[$ada]).'")) ';
+                  }
+
+              }
+              if($LIKEX!='')
+              {
+                  $LIKEX.=') ';
+              }
+
+
+          }
+
+
+          $result_status22 = mysql_time_query($link, 'SELECT sum(a.sum) as summ from users_commission_trips as a,r_user as b where a.id_users=b.id '.$LIKEX.' and  not(a.id_users=0) and a.date>="' . ht($date_start_while) . '" and  a.date<"' . ht($date_start_while22) . '"');
 
 
           $num_results_uu = $result_status22->num_rows;
