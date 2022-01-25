@@ -594,7 +594,7 @@ echo'</div>';
 
     $sql_user_buy = " and A.datecreate>'" . $date_sql_start . "' and A.datecreate<'" . $date_sql_end . "'";
 
-    $result_uuh = mysql_time_query($link, 'select Z.* from (select DISTINCT A.id,A.comment,A.id_user,A.id_country,A.place_name,A.hotel from trips as A where A.id_a_company IN ('.ht($id_company).') '.$sql_user_buy.') Z order by rand() limit 6');
+    $result_uuh = mysql_time_query($link, 'select Z.* from (select DISTINCT A.id,A.comment,A.id_user,A.id_country,A.place_name,A.hotel from trips as A where A.id_a_company IN ('.ht($id_group_company_list).') '.$sql_user_buy.') Z order by rand() limit 6');
     $num_results_uuh = $result_uuh->num_rows;
 
 
