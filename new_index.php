@@ -438,7 +438,7 @@ if(count($mass_ei)!=0)
 }
 
 
-$result_scores=mysql_time_query($link,'Select count(A.id) as cc from trips as A where A.visible=1 '.$sql_su5_search.' and A.datecreate LIKE "'.date('Y-m-').'%" ');
+$result_scores=mysql_time_query($link,'Select count(A.id) as cc from trips as A where A.visible=1 '.$sql_su5_search.' and A.id_a_company IN ('.$id_company.') and A.datecreate LIKE "'.date('Y-m-').'%" ');
 
 
 
