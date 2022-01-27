@@ -524,7 +524,7 @@ if($sred!=0)
 
 echo'<div class="gr-50">
     <div class="circle-container"  style="margin-top: -15px;">
-        <div class="circlestat" data-dimension="80" data-text="'.$procc.'%" data-width="1" data-fontsize="27" data-percent="'.$procc.'" data-fgcolor="#24c32d" data-bgcolor="rgba(0,0,0,0)" data-fill="#f5f5f6"></div>
+        <div class="circlestat" data-dimension="80" data-text="'.$procc.'" data-text-pr="%" data-width="1" data-fontsize="27" data-percent="'.$procc.'" data-fgcolor="#24c32d" data-bgcolor="rgba(0,0,0,0)" data-fill="#f5f5f6"></div>
     </div>';
 if($sred!=0) {
 
@@ -600,7 +600,7 @@ echo'</div>';
 
     if ($result_uuh) {
 
-        echo'<strong class="str_f">Сейчас покупают</strong><div class="oka_fact chat-index buy-nay-index">';
+        echo'<strong class="str_f"><a data-tooltip="Узнать больше" class="mybooking" href="/mybooking/">Сейчас покупают</a> →</strong><div class="oka_fact chat-index buy-nay-index">';
 
         $i = 0;
         while ($row_uuh = mysqli_fetch_assoc($result_uuh)) {
