@@ -332,7 +332,7 @@ echo'jopacalendar(st,st1,st2);';
 
     $result_uuh = mysql_time_query($link, 'select Z.* from (select DISTINCT A.id,A.comment,A.flight_there_route,A.id_user,A.place_name,A.hotel,A.datecreate,A.id_country,A.count_day from trips as A where A.id_a_company IN ('.ht($id_group_company_list).') '.$sql_user_buy.') Z order by Z.id_country,Z.datecreate desc');
 
-    echo 'select Z.* from (select DISTINCT A.id,A.comment,A.flight_there_route,A.id_user,A.place_name,A.hotel,A.datecreate,A.id_country,A.count_day from trips as A where A.id_a_company IN ('.ht($id_group_company_list).') '.$sql_user_buy.') Z order by Z.id_country,Z.datecreate desc';
+   // echo 'select Z.* from (select DISTINCT A.id,A.comment,A.flight_there_route,A.id_user,A.place_name,A.hotel,A.datecreate,A.id_country,A.count_day from trips as A where A.id_a_company IN ('.ht($id_group_company_list).') '.$sql_user_buy.') Z order by Z.id_country,Z.datecreate desc';
 
     $num_results_uuh = $result_uuh->num_rows;
 
