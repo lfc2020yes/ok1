@@ -148,8 +148,8 @@ echo'<div class="alert_wrapper"><div class="div-box"></div></div>';
     <div class="model-1">
 
     <?
-    $date_sql_start = date_step_sql('Y-m-d', '-7') . ' 00:00:00';
-    $date_sql_end = date_step_sql('Y-m-d', '+1') . ' 00:00:00';
+    $date_sql_start = date_step_sql('Y-m-d', '-7d') . ' 00:00:00';
+    $date_sql_end = date_step_sql('Y-m-d', '+1d') . ' 00:00:00';
     $sql_user_buy = " and A.datecreate>'" . $date_sql_start . "' and A.datecreate<'" . $date_sql_end . "'";
     $name_hh='Покупали на этой неделе';
 
@@ -303,8 +303,8 @@ echo'jopacalendar(st,st1,st2);';
     //неделя
     if(!isset($_GET["period"])) {
 
-        $date_sql_start = date_step_sql('Y-m-d', '-7') . ' 00:00:00';
-        $date_sql_end = date_step_sql('Y-m-d', '+1') . ' 00:00:00';
+        $date_sql_start = date_step_sql('Y-m-d', '-7d') . ' 00:00:00';
+        $date_sql_end = date_step_sql('Y-m-d', '+1d') . ' 00:00:00';
         $sql_user_buy = " and A.datecreate>'" . $date_sql_start . "' and A.datecreate<'" . $date_sql_end . "'";
         $name_hh='Покупали на этой неделе';
     }
@@ -316,16 +316,14 @@ echo'jopacalendar(st,st1,st2);';
     //месяц
     if((isset($_GET["period"]))and($_GET["period"]=='mon')) {
 
-        $date_sql_start = date_step_sql('Y-m-d', '-7') . ' 00:00:00';
-        $date_sql_end = date_step_sql('Y-m-d', '+1') . ' 00:00:00';
+        $date_sql_start = date_step_sql('Y-m-d', '-1m') . ' 00:00:00';
+        $date_sql_end = date_step_sql('Y-m-d', '+1d') . ' 00:00:00';
         $sql_user_buy = " and A.datecreate>'" . $date_sql_start . "' and A.datecreate<'" . $date_sql_end . "'";
         $name_hh='Бронировали в этом месяце';
     }
     //календарный год
     if((isset($_GET["period"]))and($_GET["period"]=='year')) {
 
-        $date_sql_start = date_step_sql('Y-m-d', '-7') . ' 00:00:00';
-        $date_sql_end = date_step_sql('Y-m-d', '+1') . ' 00:00:00';
         $sql_user_buy = " and A.datecreate>'" . date('Y-') . "01-01 00:00:00'";
         $name_hh='Бронировали в '.date('Y').' году';
     }
