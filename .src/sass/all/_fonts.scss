@@ -108,6 +108,10 @@ $fontFuR:'fugue_regular-webfont';
 @include font-face("LabGrotesque-Regular", $src-domain + "fonts/LabGrotesque-Regular/LabGrotesque-Regular", "normal", "normal");
 @include font-face("LabGrotesque-Light", $src-domain + "fonts/LabGrotesque-Light/LabGrotesque-Light", "normal", "normal");
 
+@include font-face("ProximaNova-Bold", $src-domain + "fonts/ProximaNova-Bold/ProximaNova-Bold", "normal", "normal");
+
+
+
 @include font-face("icon1", $src-domain + "fonts/icon1/icon1", "normal", "normal");
 @include font-face("icon2", $src-domain + "fonts/icon2/icon2", "normal", "normal");
 @include font-face("lg", $src-domain + "fonts/lg/lg", "normal", "normal");

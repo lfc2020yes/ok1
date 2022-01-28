@@ -2,6 +2,8 @@ $(document).ready(function(){
 
 
 	$('body').on("change keyup input click",'#city_oo',city_oo);
+	$('body').on("change keyup input click",'.js-list-country-c',clinkS);
+	$('body').on("change keyup input click",'.js-more-cal-22',visibleCal);
 
 
 
@@ -1236,6 +1238,12 @@ function srok_my()
 
 
 
+function clinkS()
+{
+
+	var ty=$(this).attr('link');
+	jQuery.scrollTo('#'+ty+'-bb',1000, {offset:-80});
+}
 
 
 
@@ -1889,6 +1897,16 @@ function ok_rate_form_chat_left_pr11(event)
 		event.stopPropagation();
 
 }
+
+function visibleCal()
+{
+	$("#date_table").show();
+	//$("#date_table").focus();
+	$('.bookingBox_range').css({
+		display:'block'
+	});
+}
+
 
 /**
  * туры - ок после ввода Впечатления по туру
