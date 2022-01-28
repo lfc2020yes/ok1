@@ -452,7 +452,7 @@ if(($row_uu_rate["char"] != "₽")and($row_8["buy_clients"]!=1)) {
 }
 
 $yes_s='';
-$proc_text=round($procr).'%';
+$proc_text=round($procr).'';
 if(($procr>100)or($procr==100))
 {
     $procr=100;
@@ -463,7 +463,7 @@ $task_cloud_block.='<div class="gr-50" proccs="'.$procr.'">
     <div class="circle-container-trips" >';
 if($procr<100) {
 
-    $task_cloud_block .= '<div class="circlestat" data-dimension="80" data-text="' . $proc_text . '" data-width="2" data-fontsize="16" data-percent="' . $procr . '" data-fgcolor="#25ae88" data-bgcolor="#e8eaed" data-fill="rgba(0,0,0,0)">' . $yes_s . '</div>';
+    $task_cloud_block .= '<div class="circlestat" data-dimension="80" data-text="' . $proc_text . '" data-text-pr="%" data-width="2" data-fontsize="16" data-percent="' . $procr . '" data-fgcolor="#25ae88" data-bgcolor="#e8eaed" data-fill="rgba(0,0,0,0)">' . $yes_s . '</div>';
 } else
 {
     $task_cloud_block .= '<div class="circlestat_yes_vse"></div>';
@@ -670,7 +670,7 @@ if(($row_uu_rate["char"] != "₽")and($row_8["buy_operator"]!=1)) {
 }
 
 $yes_s='';
-$proc_text=round($procr).'%';
+$proc_text=round($procr).'';
 if(($procr>100)or($procr==100))
 {
     $procr=100;
@@ -682,7 +682,7 @@ $task_cloud_block.='<div class="gr-50" proccs="'.$procr.'">
 
 if($procr<100) {
 
-    $task_cloud_block .= '<div class="circlestat" data-dimension="80" data-text="' . $proc_text . '" data-width="2" data-fontsize="16" data-percent="' . $procr . '" data-fgcolor="#25ae88" data-bgcolor="#e8eaed" data-fill="rgba(0,0,0,0)">' . $yes_s . '</div>';
+    $task_cloud_block .= '<div class="circlestat" data-dimension="80" data-text="' . $proc_text . '" data-text-pr="%" data-width="2" data-fontsize="16" data-percent="' . $procr . '" data-fgcolor="#25ae88" data-bgcolor="#e8eaed" data-fill="rgba(0,0,0,0)">' . $yes_s . '</div>';
 } else
 {
     $task_cloud_block .= '<div class="circlestat_yes_vse"></div>';
