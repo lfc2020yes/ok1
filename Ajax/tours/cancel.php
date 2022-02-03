@@ -177,6 +177,13 @@ status="2"
 where id = "' . ht($_POST['id']) . '"');
 
 
+//Удаляем задачи которые были поставлены по оплате туроператору и от клиенту по этому туру
+
+mysql_time_query($link,'delete FROM task_new where id_object="' . ht($_POST['id']) . '" and status=0 and action in (19,18)');
+
+
+
+
 $edit=0;
 $comment='Тур аннулирован. ';
 
