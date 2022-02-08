@@ -445,7 +445,7 @@ $zindex--;
   
   from trips as A'.$sql_table.'
   
-  where A.visible=1 '.$sql_svyz_table.' ' . $sql_su2 . ' ' . $sql_su1 . ' ' . $sql_su3 . ' ' . $sql_su4 . ' ' . $sql_su5 . ' ' . $sql_su7 . ' ' . $sql_order . ' ' . limitPage('n_st', $count_write);
+  where A.visible=1 '.$sql_svyz_table.' ' . $sql_su2 . ' ' . $sql_su1 . ' ' . $sql_su3 . ' ' . $sql_su4 . ' ' . $sql_su5 . ' ' . $sql_su7 . ' ' . $sql_order . ' ';
 
 //echo($sql_k);
 
