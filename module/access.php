@@ -13,13 +13,14 @@
      
      include_once $url_system.'ilib/lib_interstroi.php'; 
 	 $id_user=id_key_crypt_encrypt(htmlspecialchars(trim($_SESSION['user_id'])));
-		$auth_key_query = mysql_time_query($link,"SELECT id,name_user,id_company,id_role FROM r_user WHERE id='".safe_var($id_user)."'");
+		$auth_key_query = mysql_time_query($link,"SELECT id,name_user,id_company,id_role,id_office FROM r_user WHERE id='".safe_var($id_user)."'");
 		$num_results = $auth_key_query->num_rows;
         if($num_results!=0)
         {	       
 $row_town_user = mysqli_fetch_assoc($auth_key_query);
 $name_user=$row_town_user['name_user'];
             $id_company_sql = $row_town_user['id_company'];
+            $id_office_sql=$row_town_user['id_office'];
 
 $more_city=0;
             if (is_numeric(trim($row_town_user['id_company']))) {
@@ -67,8 +68,18 @@ $more_city=0;
 
 
             }
+
+           // echo($id_company_sql);
             //определяем к какой группе копманий относится пользователь
             //определяем к какой группе копманий относится пользователь
+
+            //определяем возможные для него офисы работы
+            if (is_numeric(trim($row_town_user['id_office']))) {
+                $mass_office[0]=$row_town_user['id_office'];
+            } else {
+                $mass_office = explode(",", ht($row_town_user['id_office']));
+            }
+            //определяем возможные для него офисы работы
 
 
 $id_role=$row_town_user['id_role'];

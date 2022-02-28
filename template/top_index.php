@@ -5,6 +5,14 @@
  <div class="menu-09-right js-09">
 <?
 include_once $url_system.'module/notification.php';
+
+
+if (($role->permission('Касса','A'))or($sign_admin==1))
+{
+    echo'<a href="cash/" class="search_client_fast"><span>Касса</span></a>';
+}
+
+
  if (($role->permission('Клиенты','R'))or($sign_admin==1))
 {	 
 	 echo'<div class="search_client_fast js-search-global-page"><span>Поиск клиента</span></div>';

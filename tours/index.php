@@ -27,7 +27,6 @@ $role->GetPermission();
 //правам к просмотру к действиям
 
 
-
 $active_menu='tours';  // в каком меню
 
 

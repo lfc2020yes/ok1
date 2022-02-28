@@ -114,7 +114,14 @@ $fontFuR:'fugue_regular-webfont';
 
 @include font-face("icon1", $src-domain + "fonts/icon1/icon1", "normal", "normal");
 @include font-face("icon2", $src-domain + "fonts/icon2/icon2", "normal", "normal");
-@include font-face("lg", $src-domain + "fonts/lg/lg", "normal", "normal");
+
+
+@include font-face("Circe", $src-domain + "fonts/Circe-Bold/Circe-Bold", 700, "normal");
+@include font-face("Circe", $src-domain + "fonts/Circe-ExtraLight/Circe-ExtraLight", 100, "normal");
+@include font-face("Circe", $src-domain + "fonts/Circe-Regular/Circe-Regular", 400, "normal");
+
+@include font-face("PTSerif", $src-domain + "fonts/PTSerif-Italic/PTSerif-Italic", 400, "italic");
+@include font-face("PTSerif", $src-domain + "fonts/PTSerif-BoldItalic/PTSerif-BoldItalic", 700, "italic");
 
 //@include font-include('opensans-regular-webfont','normal','normal'); 
 

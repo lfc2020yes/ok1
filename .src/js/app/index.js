@@ -1,11 +1,13 @@
 $(document).ready(function(){
 
-
+	$('body').on("change keyup input click",'#office_oo',office_oo);
 	$('body').on("change keyup input click",'#city_oo',city_oo);
 	$('body').on("change keyup input click",'.js-list-country-c',clinkS);
 	$('body').on("change keyup input click",'.js-more-cal-22',visibleCal);
 
+	$('body').on("change keyup input click",'.js-close-cash-day',close_cash_day);
 
+	$('body').on("change keyup input click",'.js-status-cash-more',status_cash_check);
 
 	//измениние курса и стоимости при оформлении тура
 	$('.js-form-add-tours').on("change keyup input click",'.xexchange_rates',xexchange_rates1);
@@ -89,6 +91,9 @@ $(document).ready(function(){
 	$('body').on("change keyup input click",'.js-com-preorders-del',del_comm_preorders);
 
 
+    $('body').on("change",'.js-cash-where',cash_where_moo);
+
+
 	//сроки оплат
 	$('.trips_block_global').on("change keyup input click",'.js-srok-my',srok_my);
 
@@ -162,6 +167,69 @@ $('body').on("change keyup input click",'.js-checkbox-role',RoleNotif);
 
 });
 
+
+function cash_where_moo()
+{
+    var iuoo=$(this).val();
+    if(iuoo==4)
+	{
+		$('.js-sh').show();
+	} else
+	{
+		$('.js-sh').hide();
+	}
+}
+
+
+function office_oo()
+{
+
+	var iu=$('.users_rule').attr('id_hax');
+
+	$.cookie("cc_office"+iu, null, {path:'/',domain: window.is_session,secure: false});
+	CookieList("cc_office"+iu,$(this).val(),'add');
+	autoReloadHak();
+}
+
+
+function close_cash_day()
+{
+	$.arcticmodal({
+		type: 'ajax',
+		url: 'forms/form_close_cash_day.php',
+		beforeOpen: function(data, el) {
+			$('.loader_ada_forms').show();
+			$('.loader_ada1_forms').addClass('select_ada');
+
+		},
+		afterOpen: function(data, el) {
+			$('.loader_ada_forms').hide();
+			$('.loader_ada1_forms').removeClass('select_ada');
+			ToolTip();
+		},
+		afterClose: function(data, el) { // после закрытия окна ArcticModal
+			clearInterval(timerId);
+		}
+
+	});
+}
+
+
+function number_animate()
+{
+	$('.js-animate-number').each(function () {
+		$(this).prop('Counter',parseFloat(ctrim($(this).attr('old_number'))).toFixed(2)).animate({
+			Counter: $(this).text()
+		}, {
+			duration: Number($(this).attr("data-duration")),
+			easing: 'easeOutExpo',
+			step: function (now) {
+				//$(this).text(Math.ceil(now));
+				$(this).text($.number(now.toFixed(2), 2, '.', ' '));
+			}
+		});
+	});
+}
 
 
 function city_oo()
@@ -408,6 +476,49 @@ function edit_status_pre()
 
 	}
 }
+
+
+function status_cash_check()
+{
+
+
+	var i_c=$(this).find('i');
+	var cb_h=$(this).find('input').val();
+
+
+	var id_task=$(this).parents('.buy_block_global').attr('id_buy');
+
+
+
+		if((cb_h==0)&&(!i_c.is('.active_task_cb')))
+		{
+			$(this).find('input').val(1);
+			$(this).find('i').addClass('active_task_cb');
+			//$(this).find('.choice-head').empty().append('Вы взялись за выполнение');
+
+
+			//отправляем на сервер
+			var data ='url='+window.location.href+'&id='+id_task+'&choice=1';
+			AjaxClient('cash','check','GET',data,'AfterCheckCash',id_task,0,1);
+
+
+
+		} else
+		{
+			$(this).find('input').val(0);
+			$(this).find('i').removeClass('active_task_cb');
+
+			//отправляем на сервер
+			var data ='url='+window.location.href+'&id='+id_task+'&choice=0';
+			AjaxClient('cash','check','GET',data,'AfterCheckCash',id_task,0,1);
+			//$(this).find('.choice-head').empty().append('Забрать задачу на себя');
+
+		}
+
+
+
+}
+
 
 function RoleCom()
 {
@@ -1654,6 +1765,30 @@ function js_buy_del_fin()
 
 
 /**
+ * удалить операцию в кассе
+ */
+function js_buy_del_cash()
+{
+	var id_buy= $(this).parents('.buy_block_global').attr('id_buy');
+
+	$.arcticmodal({
+		type: 'ajax',
+		url: 'forms/form_dell_buy_cash.php?id_buy='+id_buy,
+		afterLoading: function(data, el) {
+			//alert('afterLoading');
+		},
+		afterLoadingOnShow: function(data, el) {
+			//alert('afterLoadingOnShow');
+		},
+		afterClose: function(data, el) { // после закрытия окна ArcticModal
+			clearInterval(timerId);
+		}
+
+	});
+
+}
+
+/**
  * удалить платеж в турах
  */
 function js_buy_del()
@@ -1717,6 +1852,62 @@ function changesort_stock2() {
 		$('.js--sort').find('input').removeAttr('readonly');
 
 	}
+}
+
+
+function js_add_cash_form()
+{
+	var box_active = $(this).closest('.box-modal');
+
+	box_active.find('.js-add-cash-form').removeClass('select-cash-form');
+	$(this).addClass('select-cash-form');
+
+   var foo=$(this).attr('foo');
+
+   var ff_xx=foo.split( "." );
+   if(ff_xx[2]!=0)
+   {
+	   box_active.find('.js-sh').show();
+   } else
+   {
+	   box_active.find('.js-sh').hide();
+   }
+	box_active.find('.js-ot .js-visible-mt-x a[rel='+ff_xx[0]+']').parents('li').trigger('click');
+	box_active.find('.js-ky .js-visible-mt-x a[rel='+ff_xx[1]+']').parents('li').trigger('click');
+
+	//alert(ff_xx[0]+'.'+ff_xx[1]);
+}
+
+
+function js_add_cash()
+{
+    var str='';
+    if($(this).is('[temp]'))
+    {
+        var str='?id='+$(this).attr('temp');
+    }
+
+
+
+
+	$.arcticmodal({
+		type: 'ajax',
+		url: 'forms/form_add_cash.php'+str,
+		beforeOpen: function(data, el) {
+			$('.loader_ada_forms').show();
+			$('.loader_ada1_forms').addClass('select_ada');
+
+		},
+		afterOpen: function(data, el) {
+			$('.loader_ada_forms').hide();
+			$('.loader_ada1_forms').removeClass('select_ada');
+			ToolTip();
+		},
+		afterClose: function(data, el) { // после закрытия окна ArcticModal
+			clearInterval(timerId);
+		}
+
+	});
 }
 
 /**
@@ -4169,7 +4360,11 @@ function UpdateFinance(arr)
 	AjaxClient('finance','update','GET',data,'AfterUpdateFinance',arr,0,1);
 }
 
-
+function UpdateCash()
+{
+	var data ='url='+window.location.href;
+	AjaxClient('cash','update','GET',data,'AfterUpdateCash','',0,1);
+}
 
 //Название организации
 //директор
@@ -8408,6 +8603,9 @@ $('body').on("change keyup input click",'.radio_checkbox_no_yes',radio_checkbox_
 	$('.js-finance-operation').on("change keyup input click",'.js-choice-buy-y',choice_buy_you);
 
 	$('.js-finance-operation').on("change keyup input click",'.js-buy-del-fin',js_buy_del_fin);
+
+	$('.js-cash-cloud').on("change keyup input click",'.js-buy-del-cash',js_buy_del_cash);
+
 //редактировать платеж в турах
 $('.js-finance-operation').on("change keyup input click",'.js-buy-edit-fin',js_buy_edit_fin);
 
@@ -8847,6 +9045,9 @@ $('.js-fly-my-tours').on("change keyup input click",'.js-dell-fly-tours',js_dell
 
 //добавить операцию в финансах
 $('body').on("change keyup input click",'.js-add-finance',js_add_finance);
+
+	$('body').on("change keyup input click",'.js-add-cash',js_add_cash);
+	$('body').on("change keyup input click",'.js-add-cash-form',js_add_cash_form);
 
 
 //выход из системы при бездействии
@@ -10093,6 +10294,43 @@ $('#name_stock_searcho').bind('change keyup input click', changesort7co);
 	};
 	$('#sort2bc').bind('change', changesort2bc);
 
+
+	var changesort2bccash = function() {
+		var iu=$('.content').attr('iu');
+
+		$.cookie("su_2cash"+iu, null, {path:'/',domain: window.is_session,secure: false});
+		CookieList("su_2cash"+iu,$(this).val(),'add');
+
+		$('.js-reload-top').removeClass('active-r');
+		$('.js-reload-top').addClass('active-r');
+	};
+	$('#sort2bccash').bind('change', changesort2bccash);
+
+
+	var changesort4bccash = function() {
+		var iu=$('.content').attr('iu');
+
+		$.cookie("su_4bccash"+iu, null, {path:'/',domain: window.is_session,secure: false});
+		CookieList("su_4bccash"+iu,$(this).val(),'add');
+
+		$('.js-reload-top').removeClass('active-r');
+		$('.js-reload-top').addClass('active-r');
+	};
+	$('#sort4bccash').bind('change', changesort4bccash);
+
+
+	var changesort5bccash = function() {
+		var iu=$('.content').attr('iu');
+
+		$.cookie("su_5bccash"+iu, null, {path:'/',domain: window.is_session,secure: false});
+		CookieList("su_5bccash"+iu,$(this).val(),'add');
+
+		$('.js-reload-top').removeClass('active-r');
+		$('.js-reload-top').addClass('active-r');
+	};
+	$('#sort5bccash').bind('change', changesort5bccash);
+
+
 //***************************************************************************************
 	var changesort1tu = function() {
 		var iu=$('.content').attr('iu');
@@ -10778,6 +11016,35 @@ function click_mmmt ()
 	nall_buy_tips();
 }
 
+
+//постфункция получения новой инфы по кассе
+function AfterUpdateCash(data,update)
+{
+	if ( data.status=='reg' )
+	{
+		WindowLogin();
+	}
+
+	if ( data.status=='ok' )
+	{
+		$('.sdat-cash').remove();
+		$('.js-kuda-dd').prepend(data.echo);
+
+
+$('.money-summ span').attr('old_number',ctrim($('.money-summ span').text()));
+$('.money-summ span').empty().append(data.cash);
+
+		$('.js-number-minus').attr('old_number',ctrim($('.js-number-minus').text()));
+		$('.js-number-minus').empty().append(data.minus);
+
+		$('.js-number-plus').attr('old_number',ctrim($('.js-number-plus').text()));
+		$('.js-number-plus').empty().append(data.plus);
+		number_animate();
+		ToolTip();
+	}
+}
+
+
 //постфункция получения новой инфы по Финансам
 function AfterUpdateFinance(data,update)
 {
@@ -11004,6 +11271,41 @@ function AfterMyTask(data,update)
 }
 	}
 }
+
+
+function AfterCheckCash(data,update)
+{
+	if ( data.status=='reg' )
+	{
+		WindowLogin();
+	}
+
+	if ( data.status=='error' )
+	{
+		//почему то не прошло изменение
+		var taski=$('.buy_block_global[id_buy="'+update+'"]').find('.js-status-cash-more');
+		var i_c=taski.find('i')
+		var cb_h=taski.find('input').val();
+
+		if(i_c.is(':visible'))
+		{
+
+			if((cb_h==0)&&(!i_c.is('.active_task_cb')))
+			{
+				taski.find('input').val(1);
+				taski.find('.choice-radio i').addClass('active_task_cb');
+				//taski.find('.choice-head').empty().append('Вы взялись за выполнение');
+			} else
+			{
+				taski.find('input').val(0);
+				taski.find('.choice-radio i').removeClass('active_task_cb');
+			}
+		}
+
+		alert_message('error','Ошибка!');
+	}
+}
+
 
 //постфункция для ежемесячного платежа
 function AfterConstBuy(data,update)

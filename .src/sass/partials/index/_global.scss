@@ -9549,7 +9549,7 @@ transition: all 1s ease 0s;
 color: rgba(255,255,255,1);
 font-family: "GEInspiraBold";
 text-transform: uppercase;
-font-size: 13px;
+font-size: 12px;
 font-weight: normal;		
 		line-height: 60px;
 display: inline-block;
@@ -20687,4 +20687,417 @@ strong {font-weight:normal; }
 .all-rating-22 {
 	a {
 	display: block; text-decoration: none;}
+}
+
+.cash-content {
+	width: 100% !important; margin-top: 30px;
+	@include flexbox();
+
+
+	label {
+		color: rgba(255, 255, 255, 1);
+		font-family: GEInspiraRegular;
+		margin: 0px 5px;
+		text-transform: uppercase;
+		display: block;
+		font-size: 11px;
+	}
+
+	.cash-plus {
+		width: 30%; /*margin-right: 10px;*/ padding: 20px; background-color: rgba(255, 255, 255, 1); border-radius: 10px;
+		@include sw('tablet-small') {
+
+			display: none;
+		}
+
+		/*
+	@include flexbox();
+		@include justify-content(center);
+		@include align-items(center);
+*/
+		.plus_cash { padding: 20px; border-radius: 10px; background-color: #fff; position: relative;
+			@include transition(all 1s cubic-bezier(.42,.01,.23,1));
+			&::after {
+				position: absolute;
+
+				content: "+";
+				color: rgba(0, 0, 0, 0.5);
+				font-family: arial;
+				font-size: 14px;
+				font-style: normal;
+
+				font-size: 25px;
+				left: calc(50% - 7px);
+				top: calc(50% - 11px);
+			}
+
+		}
+
+		&:hover .plus_cash { width: 100%; height: 100%;}
+	}
+	.cash-money {
+		width: 70%;
+		margin-right: 10px; padding: 20px; background-color: #7e52ba; border-radius: 10px;
+		position: relative;
+		@include bg('bg_cash.png');
+		color:#fff;
+		background-position: right top; /* Положение фона */
+		background-repeat: no-repeat; /* Отменяем повторение фона */
+		@include sw('tablet-small') {
+			width: 100%;margin-right: 0px;
+		}
+
+
+		.money-summ { font-family: "GEInspiraRegular"; padding-top: 5px;
+			font-size: 29px;  display: inline-block;  span {color:rgba(255, 255, 255, 0.5)}}
+		.fin-na-100 {
+			@include flexbox();
+			width: 100%;
+			@include align-items(center);
+			margin: 10px 0px;
+			margin-top: 20px;
+			max-width: 400px;
+			@include sw('tablet-small') {
+				@include flex-wrap(wrap);
+			}
+
+			.fin-50{ width: 50%;
+
+				@include sw('tablet-small') {
+					//width:100%; margin-top: 15px;
+				}
+
+			}
+
+
+		}
+		.cost_circle {
+
+			white-space: nowrap;
+			margin-left: 5px;
+			position: relative;
+
+			white-space: nowrap;
+			@include flexbox();
+			font-size: 16px;
+			font-family: "GEInspiraBold";
+			div  {padding-left: 7px; @include flexbox();@include align-items(center);
+
+position: relative;
+				&::after {
+					position: absolute;
+					top: 0px;
+					left: -14px;
+					content: "₽";
+					color: rgba(0, 0, 0, 0.3);
+					font-family: arial;
+					font-size: 14px;
+					font-style: normal;
+					top: 4px;
+					right: -14px;
+					font-size: 15px;
+					left: auto;
+					color: rgba(255, 255, 255,0.5);
+				}
+			}
+
+
+			i {height: 30px;
+				width: 30px;
+				background-color: rgba(255, 255, 255, 0.1);
+				border-radius: 50%;
+				display: block;
+
+				&:before {
+
+					font-size: 18px;
+					left: 6px;
+					top: 3px;
+					position: absolute;
+					text-transform: lowercase;
+					@include transition(all 0s ease 0s, all 0.3s ease 0s);
+					content: "y";
+					font-family: "icon2";
+					color: #fd8080;
+
+					@include transform(rotate(45deg));
+
+				}
+
+			}
+			.grennvod {&:before {color: #35deb8; @include transform(rotate(-45deg));}}
+
+			&::after {display: none !important;}
+		}
+
+		.cost_circle i {
+			font-style: normal;
+			font-style: normal;
+			font-family: GEInspiraRegular;
+			font-size: 26px;
+			display: inline-block;
+			padding-right: 3px;
+		}
+
+
+		.h1-fin {  text-decoration: none;
+
+			color: rgba(255, 255, 255, 1);
+			font-family: GEInspiraRegular; font-size: 11px; text-transform: uppercase; }
+	}
+
+}
+
+.cash-office
+{
+
+		padding: 10px;
+		display: inline-block;
+		padding-bottom: 0px;
+		/* position: absolute; */
+		right: 0px;
+		background-color: transparent;
+		border-bottom: 0px;
+		/* top: 35px; */
+		padding-top: 18px;
+		margin-left: 20px;
+	.select {width: auto !important;}
+
+	@include sw('tablet-small') {
+
+		position: absolute;
+		right: 0px;
+		.book_menu_sel {min-width: 100px !important; max-width: 100px !important;}
+	}
+
+}
+
+.book_menu_sel_2 { padding-right: 30px !important;
+	@include sw('tablet-small') { padding-right: 0px !important;
+	} }
+
+
+.kuda-i {
+
+	font-style: normal;
+	font-family: GEInspiraRegular;
+	font-size: 26px;
+	display: inline-block;
+	padding-right: 3px;height: 30px;
+	width: 30px;
+	background-color: rgba(0,0,0,0.06);
+	border-radius: 50%;
+	display: block;
+	line-height: 22px;
+	position: relative;
+
+	&:before {
+		font-size: 18px;
+		left: 6px;
+		top: 3px;
+		position: absolute;
+		text-transform: lowercase;
+		@include transition(all 0s ease 0s, all 0.3s ease 0s);
+		content: "y";
+		font-family: "icon2";
+		color: #fd8080;
+		@include transform(rotate(45deg));
+	}
+}
+.grennvodx {&:before {color: #35deb8; @include transform(rotate(-45deg));}}
+
+
+.cash-buy-block {
+
+	.buy-b-number { @include align-self(center); margin-top: 0px; }
+	.buy-b-stt { width: 60px; @include align-self(center);
+		@include sw('tablet-small') {padding-left: 10px;
+		} }
+	.buy-b-summ { @include align-self(center); width: 150px !important;
+		@include sw('tablet-small') {
+
+			width: calc((100% - 60px) / 2)  !important;
+
+		} }
+	.buy-b-date { @include align-self(center); width: calc((100% - 120px - 300px) / 2)  !important; @include sw('tablet-small') {
+
+		width: calc((100% - 60px) / 2)  !important;
+
+	} }
+	.buy-b-comment { @include align-self(center); @include sw('tablet-small') {
+		width: calc(50% - 60px);} }
+	.buy-b-user-check { width: 60px; @include align-self(center); }
+	.buy-b-user {
+
+		@include sw('tablet-small') {
+			width: calc(50% - 60px);
+			background-color: transparent;
+			.label-task-gg,.titi-kem {display:none;}
+
+		}
+
+
+	}
+
+	.com_type_fin {margin-top:0px;}
+	&:hover {.kuda-i { background-color: #fff;
+	}}
+
+
+	.choice-radio {
+
+		width: 24px;
+		@include flexbox();
+		@include justify-content(center);
+
+		.center_vert1 {
+			@include align-self(center);
+
+			i {font-style:normal; height: 24px; width: 24px; line-height: 24px; border-radius: 4px; background-color: rgba(0, 0, 0, 0.05);  @include transition(all .4s cubic-bezier(.42,.01,.23,1)); position: relative; display: block; text-align: center; }
+
+			i::before {    position:absolute;
+				content: "\E001";
+				left:5px;
+				color:rgba(0,0,0,0.7);
+				font-family: $i;
+				font-size: 14px;
+				@include transition(all .4s cubic-bezier(.42,.01,.23,1));
+				@include transform(scale3d(0,0,1));
+
+			}
+
+			i.active_task_cb { background-color: #ffec57; }
+
+			i.active_task_cb::before { @include transform(scale3d(1,1,1)); }
+
+		}
+	}
+}
+.buy-cash-22 {text-transform: uppercase;
+	font-size: 10px;
+	//line-height: 0px;
+	color: rgba(0, 0, 0, 0.6);
+	font-family: "GEInspiraRegular";
+	border-radius: 8px;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	padding: 5px 15px;
+	display: inline-block;
+	margin-bottom: 10px;
+  margin-right: 10px;
+//	text-overflow: ellipsis;
+//	white-space: nowrap;
+	overflow: hidden;
+	 cursor:pointer;
+
+	&:hover { border: 1px solid rgba(0, 0, 0, 0);   background-color: #7e52ba; color:#fff;}
+}
+
+
+.add_cash {background-color: #00aeef;}
+
+.sdat-cash {color: rgba(255, 255, 255, 0.8);
+	font-family: "GEInspiraRegular";
+	text-transform: none;
+	font-size: 12px;
+	font-style: italic; display: inline-block; margin-right: 10px; }
+
+.close-cash-day {display: inline-block;
+	cursor: pointer;
+	display: inline-block;
+	padding: 10px;
+	background-color: #35deb8;
+	font-weight: normal;
+	text-transform: uppercase;
+	font-size: 10px;
+	line-height: 0px;
+	color: rgba(0, 0, 0, 0.7);
+	font-family: "GEInspiraRegular" ; color:#fff; background-color: #fd8080 !important;
+	margin-right: 5px;
+
+}
+
+.money-summ-white{
+
+
+	background-color: #fff;
+	border-radius: 10px;
+	display: inline-block;
+	color: rgba(0,0,0,0.9);
+	padding: 10px;
+	@include box-shadow(0px 10px 30px -10px rgba(0, 0, 0, 0.2));
+span {color: rgba(0,0, 0, 0.5);}
+
+	
+	
+}
+
+.money-cash-rub {
+	position: relative;
+	padding-right: 10px;
+
+	&::after {
+		position: absolute;
+		top: 0px;
+		left: -14px;
+		content: "₽";
+		color: rgba(0, 0, 0, 0.3);
+		font-size: 14px;
+		font-style: normal;
+		top: 5px;
+		right: -14px;
+		font-size: 26px;
+		left: auto;
+		color: rgba(255,255,255,1);
+		font-weight: 400;
+		font-family: arial;
+	}
+	
+}
+
+.tolko_50_cash { padding-right: 10px;
+	@include sw('tablet-small') {
+padding: 0px;	}}
+.tolko_50_cash:nth-child(2n) { padding-right: 0px; padding-left: 10px; @include sw('tablet-small') {
+	padding: 0px;	}}
+
+
+.flexx-cash-2022 {
+
+	@include sw('tablet-small') {
+		width: 100%; @include flex-wrap(wrap);
+
+		.tolko_50 { width: 100%; }
+	}
+
+
+}
+
+
+
+.temp_form_cash {  padding: 25px;line-height: 20px;
+	padding-bottom: 10px;
+	padding-top: 15px; }
+
+.select-cash-form {border: 1px solid transparent;
+	background-color: #7e52ba;
+	color: #fff;}
+
+
+.cash-all-operation-search {
+	font-weight: normal;
+	text-transform: uppercase;
+	font-size: 10px;
+	line-height: 21px;
+	color: rgba(0, 0, 0, 0.7);
+	background-color: rgba(0, 0, 0, 0.05);
+	border-radius: 4px;
+	padding: 10px 10px;
+	font-family: "GEInspiraRegular";
+	text-align: center;
+	display: inline-block;
+	padding: 15px 10px;
+	text-decoration: none;
+  margin-top: 10px;
+  border-radius: 10px;
+
 }
