@@ -9,7 +9,7 @@ include_once $url_system.'module/notification.php';
 
 if (($role->permission('Касса','A'))or($sign_admin==1))
 {
-    echo'<a href="cash/" class="search_client_fast"><span>Касса</span></a>';
+    echo'<a href="cash/" class="search_client_fast" style="margin-left: 0px;"><span>Касса</span></a>';
 }
 
 

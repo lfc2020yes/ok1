@@ -2283,6 +2283,7 @@ active_operator_x .answer_ {
   margin-top: 13px;
   cursor: pointer;
   margin-right: 15px;
+  margin-right: 10px;
 }
 
 .icon1 i::before {

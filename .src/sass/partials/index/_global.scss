@@ -1250,7 +1250,7 @@ position: relative;
 
 
 
-.icon1 { display: inline-block;  vertical-align: top; height:40px; width:40px; position:relative; margin-top: 13px; cursor:pointer; margin-right:15px;}
+.icon1 { display: inline-block;  vertical-align: top; height:40px; width:40px; position:relative; margin-top: 13px; cursor:pointer; margin-right:15px; margin-right: 10px;}
 	.icon1 i::before { font-family: $i; font-size: 16px; color:$color; font-style:normal; content:"0";  left: 10px;position: absolute; top: 7px;}
 	.icon2 i::before { content:"s"; font-size: 19px; top:5px;}
 	.close_all_r i::before { content:"7"; font-size: 19px; top:5px;} 
