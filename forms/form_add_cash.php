@@ -323,7 +323,7 @@ $query_string.='<!--input start	-->
 
 
 $query_string.='<!--input start	-->		
-	<div style="margin-top: 30px;" class="jj-l2"><div class="input_2018"><label>Сумма (рубли)<span>*</span></label><input name="summ" value="" id="date_124" class="input_new_2018 required gloab gloab1 money_mask1" autocomplete="off" type="text"><div class="div_new_2018"><hr class="one"><hr class="two"><hr class="tree"><div class="oper_name" joi=""></div></div></div>
+	<div style="margin-top: 30px;" class="jj-l2"><div class="input_2018"><label>Сумма (рубли)<span>*</span></label><input name="summ" value="" id="date_124" class="input_new_2018 required gloab gloab1 money_mask1" autocomplete="off" inputmode="numeric" type="text"><div class="div_new_2018"><hr class="one"><hr class="two"><hr class="tree"><div class="oper_name" joi=""></div></div></div>
 </div>
 <!--input end	-->';
 
