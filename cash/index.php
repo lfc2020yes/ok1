@@ -294,6 +294,50 @@ if($echo_help!=0)
 
                  <div class="close-cash-day js-close-cash-day" style="background-color: #fd8080 !important; margin-right:5px;">Закрыть смену</div>
 
+
+<?
+                 if(($role->permission('Касса','S'))or($sign_admin==1)) {
+echo'<div class="js-kuda-dd1">';
+
+
+                     $echo_tt = '~';
+                     $date_start = '';
+                     $name_start = '';
+                     $toolt_xx = '';
+                     $result_cl = mysql_time_query($link, 'select * from cash_spot_history where id_office="' . ht($su_5) . '" and check_global=1 order by date desc limit 1');
+                     $num_results_cl = $result_cl->num_rows;
+
+                     if ($num_results_cl != 0) {
+                         $row_cl = mysqli_fetch_assoc($result_cl);
+
+                         $date_massx = explode(" ", ht($row_cl['date']));
+                         $date_mass = explode("-", ht($date_massx[0]));
+                         $date_start = $date_mass[2] . '.' . $date_mass[1] . '.' . $date_mass[0];
+
+                         $toolt_xx = 'подтвержденная сумма - ' . $row_cl["summ"] . ' ₽';
+
+                         $result_uuy = mysql_time_query($link, 'select name_user from r_user where id="' . ht($row_cl["check_user"]) . '"');
+                         $num_results_uuy = $result_uuy->num_rows;
+
+                         if ($num_results_uuy != 0) {
+                             $row_uuy = mysqli_fetch_assoc($result_uuy);
+                             $name_start = $row_uuy["name_user"];
+                         }
+
+
+                         $echo_tt = $date_start . ' - ' . $name_start;
+
+                     }
+
+                     echo '<div class="sdat-cash1">Последняя проверка <span data-tooltip="' . $toolt_xx . '">(' . $echo_tt . ')</span> </div>';
+
+
+                     echo'<div class="close-cash-day js-yes-cash-time" style = "background-color: #35deb8 !important; margin-right:5px;" > Проверено</div>';
+
+echo'</div>';
+                 }
+                 ?>
+
              </div>
          </div><div class="cash-plus">
                  <?

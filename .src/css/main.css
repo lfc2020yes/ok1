@@ -29090,7 +29090,7 @@ position: absolute;}  }
   background-color: #00aeef;
 }
 
-.sdat-cash {
+.sdat-cash, .sdat-cash1 {
   color: rgba(255, 255, 255, 0.8);
   font-family: "GEInspiraRegular";
   text-transform: none;

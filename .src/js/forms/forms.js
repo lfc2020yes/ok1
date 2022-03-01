@@ -765,6 +765,23 @@ function add_buy_cash_close()
 
 }
 
+
+//нажатие на кнопку добавить оплату в форме добавление операций в финансах
+function add_buy_cash_time()
+{
+
+
+
+	//изменить кнопку на загрузчик
+	$('.js-add-buy-cash-time-x').hide();
+
+	$('.js-add-buy-cash-time-x').hide().after('<div class="b_loading_small" style="position:relative; width: 40px;padding-top: 7px;top: auto;right: auto;left: auto; margin: 0 auto;"><div class="b_loading_circle_wrapper_small"><div class="b_loading_circle_one_small"></div><div class="b_loading_circle_one_small b_loading_circle_delayed_small"></div></div></div>');
+
+	AjaxClient('cash','time','POST',0,'after_add_buy_cash_time',0,'vino_xd_cash_pay');
+
+
+}
+
 //нажатие на кнопку добавить оплату в форме добавление операций в финансах
 function add_preorders_yes()
 {
@@ -2309,6 +2326,9 @@ $('.box-modal').on("change keyup input click",'.js-add-task-but-x',add_task_yes)
 	$('.box-modal').on("change keyup input click",'.js-add-buy-cash-but-x',add_buy_cash_yes); //добавление оплаты по туру с проверкой
 
 		$('.box-modal').on("change keyup input click",'.js-add-buy-cash-close-x',add_buy_cash_close); //добавление оплаты по туру с проверкой
+
+	$('.box-modal').on("change keyup input click",'.js-add-buy-cash-time-x',add_buy_cash_time); //добавление оплаты по туру с проверкой
+
 
 	$('.box-modal').on("change keyup input click",'.js-add-buy-finance-but-x',add_buy_finance_yes); //добавление оплаты по туру с проверкой
 
@@ -7304,6 +7324,73 @@ function after_add_buy_cash_close(data,update)
 		});
 	}
 }
+
+
+function after_add_buy_cash_time(data,update)
+{
+	if (data.status=='ok')
+	{
+		// $('.js-form-tender-new').remove();
+
+		alert_message('ok','Сумма подтверждена');
+		UpdateCash();
+		//$('.js-next-step').submit();
+
+		//UpdateTripsA(data.for_id,'buy');
+		//перезагрузить страницу с возможностью потом вывести сообщение что оплата добавлена
+
+		//$('#js-form-add-fin').attr('action','finance/?a=add');
+		//$('#js-form-add-fin').submit();
+
+		//добавить эту операцию в нужный раздел с пометкой другого цвета
+
+		//увеличить общее количество операций в этом разделе
+
+
+		clearInterval(timerId);
+		$.arcticmodal('close');
+
+		//setTimeout ( function () { $('#js-form-add-fin').submit();  }, 1000 );
+
+	} else
+	{
+		$('.js-add-buy-cash-time-x').show();
+		$('.js-form-pay-cash .b_loading_small').remove();
+
+		//alert_message('error','Ошибка! Заполните все поля');
+
+		//$('.js-form-tender-new .message-form').empty().append('Заполните все поля').show();
+
+		//проходимя по массиву ошибок
+		$.each(data.error, function(index, value){
+
+
+			var err = ['sum','method','buy_date'];
+
+			var err_name = ['некорректно заполнено - Сумма','некорректно заполнено - тип операции','некорректно заполнено - Дата операции'];
+
+
+
+			numbers=$.inArray(value, err);
+			//alert(numbers);
+			if(numbers!=-1)
+			{
+				/*
+                var ins=number[numbers];
+                $('.js-form-tender-new .js-in'+ins).parents('.input_2018').addClass('required_in_2018');
+    $('.js-form-tender-new .js-in'+ins).parents('.input_2018').find('.div_new_2018').append('<div class="error-message">некорректно заполнено поле</div>');
+    */
+				alert_message('error',err_name[numbers]);
+			} else
+			{
+				//$('.js-form-register .message-form').empty().append('Ошибка! ');
+				alert_message('error','Ошибка!');
+			}
+			//jQuery.scrollTo('.required_in_2018:first', 1000, {offset:-70});
+		});
+	}
+}
+
 
 //постфункция операция по кассе
 function after_add_buy_cash_yes(data,update)

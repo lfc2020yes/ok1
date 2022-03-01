@@ -6,6 +6,7 @@ $(document).ready(function(){
 	$('body').on("change keyup input click",'.js-more-cal-22',visibleCal);
 
 	$('body').on("change keyup input click",'.js-close-cash-day',close_cash_day);
+	$('body').on("change keyup input click",'.js-yes-cash-time',yes_cash_time);
 
 	$('body').on("change keyup input click",'.js-status-cash-more',status_cash_check);
 
@@ -214,6 +215,28 @@ function close_cash_day()
 	});
 }
 
+
+function yes_cash_time()
+{
+	$.arcticmodal({
+		type: 'ajax',
+		url: 'forms/form_yes_cash_time.php',
+		beforeOpen: function(data, el) {
+			$('.loader_ada_forms').show();
+			$('.loader_ada1_forms').addClass('select_ada');
+
+		},
+		afterOpen: function(data, el) {
+			$('.loader_ada_forms').hide();
+			$('.loader_ada1_forms').removeClass('select_ada');
+			ToolTip();
+		},
+		afterClose: function(data, el) { // после закрытия окна ArcticModal
+			clearInterval(timerId);
+		}
+
+	});
+}
 
 function number_animate()
 {
@@ -11029,6 +11052,13 @@ function AfterUpdateCash(data,update)
 	{
 		$('.sdat-cash').remove();
 		$('.js-kuda-dd').prepend(data.echo);
+
+		if(('.js-kuda-dd1').length!=0) {
+			$('.sdat-cash1').remove();
+			$('.js-kuda-dd1').prepend(data.echo1);
+		}
+
+
 
 
 $('.money-summ span').attr('old_number',ctrim($('.money-summ span').text()));
