@@ -319,7 +319,7 @@ defaultDate:null,
 beforeShowDay: disableAllTheseDays,
 dateFormat: "d MM yy", 
 firstDay: 1,
-minDate: "-2m", maxDate: "0d",
+minDate: "-5m", maxDate: "0d",
 onSelect: function(dateText) {
     	// extensionRange - объект расширения
 	//alert(dateText);
