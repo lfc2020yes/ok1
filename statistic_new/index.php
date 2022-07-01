@@ -1058,10 +1058,13 @@ $month_rus1=date("m");
 //для конкретного пользователя
                   $result_uu_xo = mysql_time_query($link, 'SELECT a.* from users_commission_level as a where a.id_users="'.$row_8["id"].'" and a.dates="'.$date_level_bonus.'" and a.id_company IN (' . ht($id_company) . ') order by a.level');
 
+                     echo('SELECT a.* from users_commission_level as a where a.id_users="'.$row_8["id"].'" and a.dates="'.$date_level_bonus.'" and a.id_company IN (' . ht($id_company) . ') order by a.level');
+
                   if($result_uu_xo->num_rows==0) {
 //общее если нет конкретики по уровням
                       $result_uu_xo = mysql_time_query($link, 'SELECT a.* from users_commission_level as a where a.id_users=0 and a.dates="' . $date_level_bonus . '" and a.id_company IN (' . ht($id_company) . ') order by a.level');
 
+                      echo('SELECT a.* from users_commission_level as a where a.id_users=0 and a.dates="' . $date_level_bonus . '" and a.id_company IN (' . ht($id_company) . ') order by a.level');
 
                   }
 
