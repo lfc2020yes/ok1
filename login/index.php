@@ -8,7 +8,7 @@ include_once $url_system.'login/function_users.php';
 initiate($link);   //авторизация - проверка взлома и сохранение сессии
 
 
-//echo(password_crypt_(9,'123','dasha'));
+//echo(password_crypt_(5,'qweqaz22','Evgenia'));
 
 if(isset($_GET['n']))
 {
