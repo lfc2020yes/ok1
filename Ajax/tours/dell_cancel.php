@@ -64,7 +64,7 @@ if(!token_access_new($token,'bt_del_cancel_trips',$_GET["id"],"rema",2880))
     goto end_code;
 }
 $mas_responsible = array();
-$result_t=mysql_time_query($link,'Select A.id,A.status,A.id_exchange,A.id_user from trips as A where A.visible=1 AND A.id="'.ht($_GET["id"]).'" and A.id_a_company IN ('.$id_company.')');
+$result_t=mysql_time_query($link,'Select A.id,A.status,A.id_exchange,A.id_user,id_affiliates,buy_clients,buy_operator from trips as A where A.visible=1 AND A.id="'.ht($_GET["id"]).'" and A.id_a_company IN ('.$id_company.')');
 $num_results_t = $result_t->num_rows;
 if($num_results_t==0)
 {
@@ -74,6 +74,7 @@ if($num_results_t==0)
 {
     $row_score = mysqli_fetch_assoc($result_t);
     array_push($mas_responsible,$row_score["id_user"]);
+    $array_param_new = array(($row_score["buy_clients"]), $row_score["buy_operator"]);
 }
 
 if($row_score["status"]!=2)
@@ -181,6 +182,31 @@ $end_mass=exception_role($user_send_new,$mass_ei);
 
 notification_send( $text_not,$end_mass,$id_user,$link);
 
+
+
+//есле отмена аннулции проверяем все ли у него оплачено по туру
+//является ли он партнерским
+if(($array_param_new[0] == 1) and ($array_param_new[1] == 1)) {
+    if ($row_score["id_affiliates"] != 0) {
+
+        $comiss_ship=0;
+        $comiss_ship = comiss_end_ship($row_score['id'], $link);
+
+        commission_add_ship($row_score['id'],$comiss_ship, $link);
+
+
+
+
+
+        $text_not = 'По Туру №' . ht($_POST["id"]) . ' аннуляция была отменена. +'.$comiss_ship.' RUB';
+        $user_send_new= array();
+        array_push($user_send_new, $row_score["id_affiliates"]);
+        notification_send( $text_not,$user_send_new,$id_user,$link);
+
+
+
+    }
+}
 
 
 

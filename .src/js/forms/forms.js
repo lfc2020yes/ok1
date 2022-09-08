@@ -688,6 +688,47 @@ function add_buy_finance_yes()
 	}
 }
 
+//нажатие на кнопку добавить выплату в форме добавление выплат по партнеру
+function add_buy_affiliates_yes()
+{
+
+	var err = 0;
+
+		$('.js-form-pay-affiliates .gloab1').each(function (i, elem) {
+
+			if (($(this).val() == '') || ($(this).val() == 0)) {
+				$(this).parents('.input_2018').addClass('error_2018');
+				$(this).parents('.list_2018').addClass('required_in_2018');
+				$(this).parents('.js-prs').addClass('error_textarea_2018');
+				err++;
+			} else {
+				$(this).parents('.input_2018').removeClass('error_2018');
+				$(this).parents('.list_2018').removeClass('required_in_2018');
+				$(this).parents('.js-prs').removeClass('error_textarea_2018');
+
+			}
+		});
+
+
+	if(err==0)
+	{
+
+		//изменить кнопку на загрузчик
+		$('.js-add-buy-affiliates-but-x').hide();
+
+		$('.js-add-buy-affiliates-but-x').hide().after('<div class="b_loading_small" style="position:relative; width: 40px;padding-top: 7px;top: auto;right: auto;left: auto; margin: 0 auto;"><div class="b_loading_circle_wrapper_small"><div class="b_loading_circle_one_small"></div><div class="b_loading_circle_one_small b_loading_circle_delayed_small"></div></div></div>');
+
+		AjaxClient('affiliates','add','POST',0,'after_add_buy_affiliates_yes',0,'vino_xd_affiliates_pay');
+
+
+	}else
+	{
+
+		alert_message('error','Ошибка. Не все поля заполнены!');
+
+	}
+}
+
 
 function add_buy_cash_yes()
 {
@@ -2331,6 +2372,8 @@ $('.box-modal').on("change keyup input click",'.js-add-task-but-x',add_task_yes)
 
 
 	$('.box-modal').on("change keyup input click",'.js-add-buy-finance-but-x',add_buy_finance_yes); //добавление оплаты по туру с проверкой
+
+	$('.box-modal').on("change keyup input click",'.js-add-buy-affiliates-but-x',add_buy_affiliates_yes); //добавление оплаты по туру с проверкой
 
 		$('.box-modal').on("change keyup input click",'.js-add-preorder-x',add_preorders_yes); //добавление оплаты по туру с проверкой
 	$('.box-modal').on("change keyup input click",'.js-update-preorder-x',update_preorders_yes); //добавление оплаты по туру с проверкой
@@ -7469,6 +7512,39 @@ function after_add_buy_cash_yes(data,update)
 	}
 }
 
+
+//постфункция оплата партнеру
+function after_add_buy_affiliates_yes(data,update)
+{
+	if (data.status=='ok')
+	{
+		// $('.js-form-tender-new').remove();
+
+		alert_message('ok','Операция добавлена');
+		//$('.js-next-step').submit();
+
+
+		$('.affiliates_block[op_rel='+data.id+']').find('.js-buy-affiliates').empty().append($.number(data.dolg.toFixed(2), 2, '.', ' '));
+
+		//var curs = ;
+
+		clearInterval(timerId);
+		$.arcticmodal('close');
+
+		//setTimeout ( function () { $('#js-form-add-fin').submit();  }, 1000 );
+
+	} else
+	{
+		$('.js-add-buy-affiliates-but-x').show();
+		$('.js-form-pay-affiliates .b_loading_small').remove();
+
+		//alert_message('error','Ошибка! Заполните все поля');
+
+				//$('.js-form-register .message-form').empty().append('Ошибка! ');
+				alert_message('error','Ошибка!');
+
+	}
+}
 
 //постфункция оплата по финансам
 function after_add_buy_finance_yes(data,update)

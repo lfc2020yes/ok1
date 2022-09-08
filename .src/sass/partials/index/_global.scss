@@ -21101,3 +21101,51 @@ padding: 0px;	}}
   border-radius: 10px;
 
 }
+
+.center-com-part {@include align-self(center); width: 130px;
+
+.cost_all_trips {margin-top:0px;}
+}
+
+.affiliates_block {
+	.name-user-57 {width: calc(100% - 50px - 230px - 220px - 230px)  !important;}
+
+}
+
+.forms_dop_pa {
+	font-family: "GEInspiraRegular";
+	font-size: 11px;
+	color: #fff;
+	line-height: 14px;
+	text-transform: uppercase;
+	display: block;
+}
+
+
+.promo-trips { margin-top:10px; span {padding: 5px;
+	font-family: GEInspiraBold;
+	color: #fff;
+	text-transform: uppercase;
+
+	border-radius: 6px;
+	background-color: #ef4084;
+	background-image: -o-linear-gradient(to right,#f29d15,#d44dc3);
+	background-image: -webkit-gradient(linear,left top,right top,from(#f29d15),to(#d44dc3));
+	background-image: -o-linear-gradient(left,#f29d15,#d44dc3);
+	background-image: linear-gradient(to right,#f29d15,#d44dc3);} }
+
+.da-partner {border-radius: 6px;
+	background-color: #ef4084;
+	background-image: -o-linear-gradient(to right,#f29d15,#d44dc3);
+	background-image: -webkit-gradient(linear,left top,right top,from(#f29d15),to(#d44dc3));
+	background-image: -o-linear-gradient(left,#f29d15,#d44dc3);
+	background-image: linear-gradient(to right,#f29d15,#d44dc3);
+	color: #fff !important;
+	padding: 2px 5px;}
+
+.skoko_ship {
+
+	margin-left: 15px !important;
+	color: #ef4084 !important;
+
+}

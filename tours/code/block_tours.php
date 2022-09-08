@@ -906,17 +906,37 @@ if ($row_uu_rate["char"] == "₽") {
     }
 }
 
+//партнерская комиссия если есть
+$ppro=0;
+$proc_ship=partners_trips($row_8["id"],$id_company,$link);
+//echo($proc_ship);
 
+
+//дополнительные потери с комиссии
 $result_poteri = mysql_time_query($link, 'select sum(A.commission) as vse from trips_payment as A where A.id_trips="' . ht($row_8["id"]) . '" and A.visible=1');
 $num_results_poteri = $result_poteri->num_rows;
 
 if ($num_results_poteri != 0) {
     $row_poteri = mysqli_fetch_assoc($result_poteri);
     $comm_rub=$comm_rub-$row_poteri["vse"];
-    if($row_8["cost_client"]!=0) {
-        $proc_ii = round(($comm_rub * 100) / $row_8["cost_client"], 1);
-    }
+
 }
+
+
+if($proc_ship!=0)
+{
+    //потери которые еще состоялись
+    $ppro=round((($comm_rub*$proc_ship)/100),2);
+    //$comm_rub=$comm_rub-$ppro;
+
+
+}
+
+if($row_8["cost_client"]!=0) {
+    $proc_ii = round((($comm_rub - $ppro) * 100) / $row_8["cost_client"], 1);
+}
+
+
 
 $style_procc='green-trips';
 if($proc_ii<5)
@@ -931,7 +951,17 @@ if(($proc_ii>=5)and($proc_ii<10))
 
 $task_cloud_block.='<div><span class="cost_circle cost_circle_proc '.$style_procc.'">'.$proc_ii.'</span></div>
 
-<div class="cost_all_trips"><span class="cost_circle">'.number_format(((int)$comm_rub), 0, '.', ' ').'</span></div>
+<div class="cost_all_trips"><span class="cost_circle">'.number_format(((int)$comm_rub), 0, '.', ' ').'</span>';
+
+
+if($ppro!=0)
+{
+    $task_cloud_block.='<span data-tooltip="Из них партнеру '.number_format(((int)$ppro), 0, '.', ' ').' ₽ = '.$proc_ship.'%" class="cost_circle skoko_ship">→ '.number_format(((int)$ppro), 0, '.', ' ').'</span>';
+}
+
+
+
+$task_cloud_block.='</div>
 </div>
 <div class="commi-tips skidka-tips">
 <span class="name-trips-opi">Скидка</span>';
@@ -975,7 +1005,38 @@ $end_discound=round((float)$proc_rassi,1);
 
 $task_cloud_block.='<div><span class="cost_circle cost_circle_proc '.$style_discound.'">'.$char_skidka.$end_discound.'</span></div>
 
-<div class="cost_all_trips"><span class="cost_circle">'.number_format(((float)$row_8["discount"]), 2, '.', ' ').'</span></div>
+<div class="cost_all_trips"><span class="cost_circle">'.number_format(((float)$row_8["discount"]), 2, '.', ' ').'</span>';
+
+
+$result_uu_promo1 = mysql_time_query($link, 'select id_promo from trips where id="' . ht($row_8['id']) . '"');
+$num_results_uu_promo1 = $result_uu_promo1->num_rows;
+
+if ($num_results_uu_promo1 != 0) {
+    $row_uu_promo1 = mysqli_fetch_assoc($result_uu_promo1);
+
+
+    if ($row_uu_promo1["id_promo"] != 0) {
+
+        $result_uu_promo = mysql_time_query($link, 'select a.name as nnn,a.bonus from affiliates_promo_code as a where a.id="'.ht($row_uu_promo1["id_promo"]).'"');
+
+        $num_results_uu_promo = $result_uu_promo->num_rows;
+        if ($num_results_uu_promo != 0) {
+
+            $row_uu_promo = mysqli_fetch_assoc($result_uu_promo);
+
+           // echo($row_uu_promo["nnn"]);
+
+            $task_cloud_block .= '<div class="promo-trips"><span data-tooltip="ПРОМОКОД - ' . $row_uu_promo["bonus"] . '">'.$row_uu_promo["nnn"].'</span></div>';
+
+        }
+
+
+    }
+}
+
+
+
+$task_cloud_block.='</div>
 </div>';
     //определяем может ли он выполнить эту задачу
     //определяем может ли он выполнить эту задачу

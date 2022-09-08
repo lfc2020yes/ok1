@@ -339,7 +339,6 @@ if(($_POST["kto_komy"]==1)and($_POST["operation"]==1)) {
 
 
 }
-
 if(($_POST["kto_komy"]==1)and($_POST["operation"]==2)) {
     //вдруг было все оплачено и теперь при возврате часть он стал нам должен
     if($style_kurs==1) {
@@ -487,13 +486,19 @@ if ($num_results_uu_new != 0) {
 
 if(($array_param_new[0] == 1) and ($array_param_new[1] == 1)) {
     //если все оплачено но мы тут то возможно что-то изменилось в комиссии или просто это конченая оплата
-    $comiss_vip = 0;
-    $comiss_vip = comiss_end_call($row_uu_new['id'], $link);
 
+    $comiss_vip = 0;
+    $comiss_ship=0;
+    $comiss_vip = comiss_end_call($row_uu_new['id'], $link);
+    $comiss_ship = comiss_end_ship($row_uu_new['id'], $link);
     mysql_time_query($link, 'update trips set
     
-    commission="' . $comiss_vip . '"
+    commission="' . $comiss_vip . '",
+    comission_partnership="'.$comiss_ship.'"
     where id = "' . ht($row_uu_new['id']) . '"');
+
+    commission_add_ship($row_uu_new['id'],$comiss_ship, $link);
+
 
 }
 
@@ -521,8 +526,13 @@ if(($array_param_new[0] == 1) and ($array_param_new[1] == 1)) {
         //из состояния не оплачено во все оплачено
         mysql_time_query($link, 'update trips set
     
-    date_buy_all="0000-00-00 00:00:00",commission=0
+    date_buy_all="0000-00-00 00:00:00",commission=0,comission_partnership=0
     where id = "' . ht($row_uu_new['id']) . '"');
+
+
+        mysql_time_query($link, 'delete FROM affiliates_history_trips where id_trips="' . ht($row_uu_new['id']) . '"');
+
+
     }
 }
 

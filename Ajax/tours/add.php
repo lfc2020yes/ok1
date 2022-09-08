@@ -386,8 +386,79 @@ if($err_flyy!=0)
 		array_push($stack_error, "no_all_password_fly"); 	
 }
 
+$ship_ship=0;
+
+
+//если покупатель уже связан с партнером заранее без промокода
+if($_POST["buy_type"]==1)
+{
+    $result_ss = mysql_time_query($link, 'select id_affiliates from k_clients where id="' . ht($_POST["buy_id"]) . '"');
+    $num_results_ss = $result_ss->num_rows;
+
+    if ($num_results_ss != 0) {
+        $row_ss = mysqli_fetch_assoc($result_ss);
+        if($row_ss["id_affiliates"]!=0)
+        {
+            //смотрим не заблокирован ли этот партнер
+            $result_uuppp = mysql_time_query($link, 'select id from r_user where id="' . ht($row_ss["id_affiliates"]) . '" and enabled=1 and id_role=7');
+            $num_results_uuppp = $result_uuppp->num_rows;
+
+            if ($num_results_uuppp != 0) {
+                $ship_ship=$row_ss["id_affiliates"];
+            }
+        }
+    }
+}
+
+$promo=0;
+$id_partnership=0;
+if((isset($_POST["id_affiliates"]))and($_POST["id_affiliates"]!=0)and(is_numeric(trimc($_POST["id_affiliates"])))) {
+
+    //проверим может ли он применить этот промокод
+    $result_work_zzu = mysql_time_query($link, 'Select a.id_users,a.id from affiliates_promo_code as a,affiliates as b WHERE a.id_users=b.id_users and b.
+id_a_group="' . $id_group_u . '" and a.visible=1 and a.date_end>="' . date("Y-m-d") . '" and a.id="' . ht($_POST["id_affiliates"]) . '"');
+
+    $num_results_work_zzu = $result_work_zzu->num_rows;
+    if ($num_results_work_zzu != 0) {
+        $row_work_zzu = mysqli_fetch_assoc($result_work_zzu);
+        $promo = $row_work_zzu["id"];   //id промокода
+        $id_partnership = $row_work_zzu["id_users"];
+
+
+
+//смотрим покупатель не партнер ли еще
+    if ($_POST["buy_type"] == 1) {
+        $date_old = date_step_sql('Y-m-d', '-1m');
+        $result_sh = mysql_time_query($link, 'select id_affiliates,datetime from k_clients where id="' . ht($_POST["buy_id"]) . '" and datetime>="' . $date_old . ' 00:00:00"');
+        $num_results_sh = $result_sh->num_rows;
+//echo("23");
+        if ($num_results_sh != 0) {
+            $row_sh = mysqli_fetch_assoc($result_sh);
+            if ($row_sh["id_affiliates"] != 0) {
+                //он является уже партнером
+                //промокод уже использовался до этого
+                array_push($stack_error, "no_promo");
+            } else
+            {
+                $ship_ship=$id_partnership;
+            }
+
+        } else {
+            //он не новый клиент
+            array_push($stack_error, "no_new_klient_promo");
+        }
+    }
+} else
+    {
+        //промокод отменен или просрочен
+        array_push($stack_error, "promo_out");
+    }
+}
+
+
 
 //print_r ($stack_error);
+//array_push($stack_error, "promo_out1");
 if(count($stack_error)!=0)
 {
   goto end_code;
@@ -397,7 +468,7 @@ $status_ee='ok';
 
 
 
- $date_=date("y.m.d").' '.date("H:i:s");
+$date_=date("y.m.d").' '.date("H:i:s");
 
 
 //добавление номера договора umatravel
@@ -566,6 +637,8 @@ $id_company_new=ht($_POST["id_company"]);
 
 
 
+
+
 //добавление нового тура в базу
 mysql_time_query($link,'INSERT INTO trips (
                           
@@ -631,7 +704,9 @@ visible,
 date_prepaid,
 buy_clients,
 buy_operator,
-date_buy_all
+date_buy_all,
+id_promo,
+id_affiliates
                                                                                 
 ) VALUES( 
 
@@ -693,9 +768,16 @@ date_buy_all
 "'.ht($_POST["flight_class_transfer_type"]).'",
 "'.ht($_POST["flight_class_id_flight_type"]).'",
 "'.ht($_POST["flight_class_flight_type"]).'",
-"1","0000-00-00","'.$buy_client.'","0","0000-00-00 00:00:00")');
+"1","0000-00-00","'.$buy_client.'","0","0000-00-00 00:00:00","'.$promo.'","'.$ship_ship.'")');
 
 $new_id_trips=mysqli_insert_id($link);
+
+
+
+//если есть промокод и все хорошо кто покупает сделаем связь с партнером
+if(($promo!=0)and(ht($_POST["buy_type"])==1)) {
+    mysql_time_query($link, 'update k_clients set id_affiliates="' . ht($id_partnership) . '" where id = "' . ht($_POST["buy_id"]) . '"');
+}
 
 
 if($preorders!=0)
@@ -741,6 +823,23 @@ if ( $_POST[ "fly_count" ] != 0 ) {
 
     mysql_time_query( $link, 'INSERT INTO trips_clients_fly(id_trips,id_k_clients) VALUES( 
 "' . ht( $new_id_trips ) . '","' . ht( $value ) . '")' );
+
+
+      //если есть промокод и все хорошо всех и кто летит с ними сделаем связь с партнером
+      //если он тоже новый и еще не связан с партнером
+      //
+if($promo!=0) {
+
+    $date_old = date_step_sql('Y-m-d', '-1m');
+    $result_sh = mysql_time_query($link, 'select id_affiliates,datetime from k_clients where id="' . ht($value) . '" and datetime>"' . $date_old . ' 00:00:00" and id_affiliates=0');
+    $num_results_sh = $result_sh->num_rows;
+
+    if ($num_results_sh != 0) {
+        mysql_time_query($link, 'update k_clients set id_affiliates="' . ht($id_partnership) . '" where id = "' . ht($value) . '"');
+    }
+
+}
+
 
 $sql_fly='';
 if((isset($_POST['password']))and($_POST['password']==1))	  

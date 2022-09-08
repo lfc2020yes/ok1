@@ -445,7 +445,18 @@ $query_string.='<div class="pass_wh"><label>Особенности</label><span>
 $query_string.='</span></div>';		
 			  }
 
-$query_string.='<div class="pass_wh"><label>Комментарий</label><span>'.rooo($row_score["comment"],'','—').'</span></div>';	
+
+$promo='нет';
+
+    if($row_score["id_affiliates"]!=0)
+    {
+        $promo='<span class="da-partner">Да</span>';
+    }
+
+
+$query_string.='<div class="pass_wh"><label>Клиент партнера</label><span>'.$promo.'</span></div>';
+
+$query_string.='<div class="pass_wh"><label>Комментарий</label><span>'.rooo($row_score["comment"],'','—').'</span></div>';
 	
 $query_string.='</div></div>';
 

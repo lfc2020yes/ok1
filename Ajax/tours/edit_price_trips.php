@@ -374,12 +374,16 @@ if ($num_results_ss_new != 0) {
     if(($array_param_new_ss[0] == 1) and ($array_param_new_ss[1] == 1)) {
         //если все оплачено но мы тут то возможно что-то изменилось в комиссии или просто это конченая оплата
         $comiss_vip = 0;
+        $comiss_ship=0;
         $comiss_vip = comiss_end_call($_POST["id"], $link);
-
+        $comiss_ship = comiss_end_ship($_POST["id"], $link);
         mysql_time_query($link, 'update trips set
     
-    commission="' . $comiss_vip . '"
+    commission="' . $comiss_vip . '",
+    comission_partnership="'.$comiss_ship.'"
     where id = "' . ht($_POST["id"]) . '"');
+
+        commission_add_ship($_POST["id"],$comiss_ship, $link);
 
     }
 
@@ -408,8 +412,10 @@ if ($num_results_ss_new != 0) {
         //из состояния все оплачено в состояние что-то не оплачено до конца
         mysql_time_query($link, 'update trips set
     
-    date_buy_all="0000-00-00 00:00:00",commission=0
+    date_buy_all="0000-00-00 00:00:00",commission=0,comission_partnership=0
     where id = "' . ht($row_ss_new['id']) . '"');
+
+        mysql_time_query($link, 'delete FROM affiliates_history_trips where id_trips="' . ht($row_ss_new['id']) . '"');
     }
 }
 

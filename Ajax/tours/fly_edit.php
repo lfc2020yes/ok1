@@ -57,14 +57,14 @@ if ((!isset($_POST["id"])))
    goto end_code;	
 }
 //**************************************************
-$result_t=mysql_time_query($link,'Select A.id from trips as A where A.visible=1 AND A.id="'.ht($_POST["id"]).'" and A.id_a_company IN ('.$id_company.')');
+$result_t=mysql_time_query($link,'Select A.id,A.id_affiliates,buy_clients,buy_operator from trips as A where A.visible=1 AND A.id="'.ht($_POST["id"]).'" and A.id_a_company IN ('.$id_company.')');
 
            $num_results_t = $result_t->num_rows;
 	       if($num_results_t!=0)
 	       {	
 			 
 			 $row_t = mysqli_fetch_assoc($result_t);
-			   
+               $array_param_new = array(($row_t["buy_clients"]), $row_t["buy_operator"]);
 		   } else
 		   {
 			      $debug=h4a(6,$echo_r,$debug);
@@ -108,6 +108,15 @@ $endx=$date_end1[2].'-'.$date_end1[1].'-'.$date_end1[0].' '.$date_end[1].':00';
 
 
 mysql_time_query($link,'INSERT INTO trips_fly_history (id_trips,start_fly,end_fly,datetime,id_user) VALUES ("'.htmlspecialchars(trim($_POST['id'])).'","'.htmlspecialchars(trim($startx)).'","'.htmlspecialchars(trim($endx)).'","'.date("y.m.d").' '.date("H:i:s").'","'.$id_user.'")');
+
+//помечаем этот тур к проверки по партнерки если изменяются вылеты. вдруг изменилось на такое что было
+//что он уже прилетел на то что он еще не летал.
+if(($array_param_new[0] == 1) and ($array_param_new[1] == 1)) {
+    if ($row_t["id_affiliates"] != 0) {
+        mysql_time_query($link, 'INSERT INTO affiliates_trips_check(id_trips) VALUES( 
+    "' . ht($_POST['id']) . '")');
+    }
+}
 
 
 

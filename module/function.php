@@ -87,6 +87,280 @@ function info_trips($id,$link)
 }
 
 
+/**
+ * проверка покупателя на процент 10% или 15%
+ *
+ */
+
+
+/**
+ * узнать по партнерки тур или нет и сколько считать процент 10% или 15%
+ *
+ */
+function partners_trips($id_trips,$id_company,$link)
+{
+    $proc_promo=0;
+    $result_uu = mysql_time_query($link, 'select a.shopper,a.id_shopper,b.id_affiliates from trips as a,k_clients as b where a.id="' . ht($id_trips) . '" and a.shopper=1 and a.id_shopper=b.id');
+    $num_results_uu = $result_uu->num_rows;
+
+    if ($num_results_uu != 0) {
+        $row_uu = mysqli_fetch_assoc($result_uu);
+        if($row_uu["id_affiliates"]!=0)
+        {
+
+            $result_promo = mysql_time_query($link, 'select id from r_user where id="' . ht( $row_uu["id_affiliates"]) . '" and id_role="7" and enabled="1"');
+
+            $num_results_promo = $result_promo->num_rows;
+
+            if ($num_results_promo != 0) {
+                //покупатель связан с партнеркой + партнер действующий
+                //покупал ли этот покупатель уже туры которые состоялись
+                $sql_k = '
+select DISTINCT Z.id from(
+   (
+  Select
+
+  DISTINCT A.id,
+   A.date_start
+  
+  from trips as A
+
+  where A.status=1 AND  A.visible=1 AND A.id_a_company IN (' . $id_company . ') and A.id_affiliates="'.$row_uu["id_affiliates"].'" and not(a.id="'.ht($id_trips).'")
+)
+
+) Z order by Z.date_start DESC';
+
+                //echo  $sql_k;
+
+                $result_88 = mysql_time_query($link,$sql_k );
+                $num_88 = $result_88->num_rows;
+if($num_88!=0)
+{
+    //а вдруг это первый по времени тур
+    $sql_k22 = '
+select DISTINCT Z.id from(
+   (
+  Select
+
+  DISTINCT A.id,
+   A.datecreate
+  
+  from trips as A
+
+  where A.status=1 AND  A.visible=1 AND A.id_a_company IN (' . $id_company . ') and A.id_affiliates="'.$row_uu["id_affiliates"].'"
+)
+
+) Z order by Z.datecreate limit 1';
+
+
+    $result_perv = mysql_time_query($link,$sql_k22 );
+    $num_perv = $result_perv->num_rows;
+    if($num_perv!=0)
+    {
+        $row_perv = mysqli_fetch_assoc($result_perv);
+        if($row_perv["id"]==$id_trips)
+        {
+            $proc_promo=15;
+        } else
+        {
+            $proc_promo=10;
+        }
+    }
+
+
+
+} else
+{
+    //Он еще не покупал и не летал никуда
+    $proc_promo=15;
+}
+            }
+        }
+    }
+
+    return $proc_promo;
+}
+
+/**
+ * добавление комиссии  партнеру после полной оплаты
+ *
+ */
+function commission_add_ship($id_trips,$comm,$link)
+{
+    global $url_system;
+
+    if($comm!=0) {
+        $result_tr = mysql_time_query($link, 'Select 
+  
+  DISTINCT b.id_affiliates,
+    (SELECT yy.start_fly FROM trips_fly_history AS yy WHERE yy.id_trips=b.id ORDER BY yy.datetime DESC LIMIT 0,1) AS fly_start,(SELECT yy.end_fly FROM trips_fly_history AS yy WHERE yy.id_trips=b.id ORDER BY yy.datetime DESC LIMIT 0,1) AS fly_end
+  
+  from trips as b where b.id="' . ht($id_trips) . '" and not(b.id_affiliates=0)');
+        $num_results_tr = $result_tr->num_rows;
+
+        if ($num_results_tr != 0) {
+            $row_tr = mysqli_fetch_assoc($result_tr);
+
+            $block=1; //по умолчанию деньги в блокировки
+            //если он прилетел, то разблокируем деньги
+
+    if(($row_tr["fly_start"]!='')and($row_tr["fly_start"]!='0000-00-00 00:00:00')and($row_tr["fly_end"]!='')and($row_tr["fly_end"]!='0000-00-00 00:00:00'))
+    {
+        if((date_end_today($row_tr["fly_start"]))and(date_end_today($row_tr["fly_end"])))
+        {
+            //по датам он прилетел деньги можно разблокировать сразу
+            $block=0;
+        }
+    }
+
+
+
+
+            $result_uu = mysql_time_query($link, 'select id from affiliates_history_trips where id_trips="' . ht($id_trips) . '"');
+            $num_results_uu = $result_uu->num_rows;
+
+            if ($num_results_uu == 0) {
+                $date_ = date("y.m.d") . ' ' . date("H:i:s");
+
+                mysql_time_query($link, 'INSERT INTO affiliates_history_trips(id_users,id_trips,comission,block,datetimes) VALUES( 
+        "' . ht($row_tr["id_affiliates"]) . '","' . ht($id_trips) . '","'.$comm.'","'.$block.'","' . $date_ . '")');
+                //уведомление партнеру
+
+                $text_not = 'Тур №' . ht($id_trips) . ' был забронирован и оплачен. +'.$comm.' RUB';
+                $user_send_new= array();
+                array_push($user_send_new, $row_tr["id_affiliates"]);
+                notification_send( $text_not,$user_send_new,$id_user,$link);
+
+
+
+
+                //sms партнеру
+//отправляем sms уведомления
+                include_once $url_system.'module/config_sms.php';
+                $sms_phone=SearchSmsUser($link,$row_tr["id_affiliates"]);
+                if($sms_phone)
+                {
+//	79021296867
+//отправляем смс мне на телефон что пришла свободная заявка
+//$sms='Вам поступила новая задача №'.$ID_N.' на исполнение. Подробности: www.ok.i-s.group/task/'.$ID_N.'/';
+
+//
+                    $sms='Вам бонус +'.$comm.' RUB https://ok.umatravel.club/';
+//$sms='Новая задача «'.mb_strimwidth(trim($_POST['comment_b']), 0, smscount($sms), "",'utf-8').'...» www.ok.i-s.group/task/'.$ID_N.'/';
+
+
+
+                    $ksms=send_sms("api.smsfeedback.ru", 80,$smsfeedbackname, $smsfeedbackpasswd,$sms_phone, $sms, $smspodpis);
+                    $ksms1=explode(';',$ksms);
+                    $key_sms=$ksms1[0];
+
+//заносим в базу что такая смс отправлена или нет
+                    $send=0;
+                    if($ksms1[0]=='accepted')
+                    {
+                        $send=1;
+                    }
+
+                    mysql_time_query($link,'INSERT INTO sms (id_user,text,datetimes,phone,send,response) VALUES ("'.$row_tr["id_affiliates"].'","'.htmlspecialchars(trim($sms)).'","'.date("y.m.d").' '.date("H:i:s").'","'.$sms_phone.'","'.$send.'","'.htmlspecialchars(trim($ksms)).'")');
+
+                }
+
+            }
+        }
+    }
+}
+
+//проверяем включены ли у него смс уведомления
+//0 - нет или не заполнен телефон или неправильный формат
+//если все ок - возвращает номер телефона в нужном формате для отправки смс
+function SearchSmsUser($link,$id)
+{
+    $er=0;
+    $result_tx=mysql_time_query($link,'Select a.phone from r_user as a where a.id="'.htmlspecialchars(trim($id)).'"');
+    $rowx = mysqli_fetch_assoc($result_tx);
+    if(trim($rowx["phone"])!='')
+    {
+        //смотрим соответствует ли формат номера нужному нам
+        //+7 (000) 000-00-00
+        $phoneNumber = preg_replace('/\s|\+|-|—|\(|\)/','', $rowx["phone"]); // удалим пробелы, и прочие не нужные знаки
+        //echo($phoneNumber);
+        if((is_numeric($phoneNumber))and(strlen($phoneNumber) == 10))
+        {
+
+                $er='7'.$phoneNumber;
+
+
+        }
+
+
+    }
+    return $er;
+}
+
+/**
+ * рассчитать конечную комиссию  партнера по туру с учетом всех потерь и комиссий перечислений
+ *
+ */
+
+function comiss_end_ship($id_trips,$link)
+{
+    global $id_company;
+    $comm_rub=0;
+    $ppro=0;
+    $result_uu = mysql_time_query($link, 'select id_exchange,paid_client,paid_operator,id,id_promo from trips  where id="' . ht($id_trips) . '"');
+    $num_results_uu = $result_uu->num_rows;
+
+    if ($num_results_uu != 0) {
+        $row_8 = mysqli_fetch_assoc($result_uu);
+
+
+        $result_uu_rate = mysql_time_query($link, 'select a.char,a.small_name,a.code from booking_exchange as a  where a.id="' . ht($row_8["id_exchange"]) . '"');
+        $num_results_uu_rate = $result_uu_rate->num_rows;
+
+        if ($num_results_uu_rate != 0) {
+            $row_uu_rate = mysqli_fetch_assoc($result_uu_rate);
+        }
+
+
+        if ($row_uu_rate["char"] == "₽") {
+            //только рублевый тур
+            //все оплатили
+            $comm_rub=$row_8["paid_client"]-$row_8["paid_operator"];
+        } else
+        {
+            //валютный тур
+            $comm_rub=$row_8["paid_client"]-$row_8["paid_operator"];
+        }
+
+
+        //еще есть потери от комиссий
+
+        $result_poteri = mysql_time_query($link, 'select sum(A.commission) as vse from trips_payment as A where A.id_trips="' . ht($row_8["id"]) . '" and A.visible=1');
+        $num_results_poteri = $result_poteri->num_rows;
+
+        if ($num_results_poteri != 0) {
+            $row_poteri = mysqli_fetch_assoc($result_poteri);
+            $comm_rub=$comm_rub-$row_poteri["vse"];
+        }
+
+        //еще есть потери от партнерки если связано
+        //партнерская комиссия если есть
+
+        $proc_ship=partners_trips($row_8["id"],$id_company,$link);
+//echo($proc_ship);
+        if($proc_ship!=0)
+        {
+            //потери которые еще состоялись
+            $ppro=round((($comm_rub*$proc_ship)/100),2);
+            //$comm_rub=$comm_rub-$ppro;
+
+
+        }
+
+    }
+    return  $ppro;
+}
+
 
 /**
  * рассчитать конечную комиссию по туру с учетом всех потерь и комиссий перечислений
@@ -95,8 +369,9 @@ function info_trips($id,$link)
 
 function comiss_end_call($id_trips,$link)
 {
+    global $id_company;
     $comm_rub=0;
-    $result_uu = mysql_time_query($link, 'select id_exchange,paid_client,paid_operator,id from trips  where id="' . ht($id_trips) . '"');
+    $result_uu = mysql_time_query($link, 'select id_exchange,paid_client,paid_operator,id,id_promo from trips  where id="' . ht($id_trips) . '"');
     $num_results_uu = $result_uu->num_rows;
 
     if ($num_results_uu != 0) {
@@ -122,6 +397,8 @@ function comiss_end_call($id_trips,$link)
         }
 
 
+        //еще есть потери от комиссий
+
         $result_poteri = mysql_time_query($link, 'select sum(A.commission) as vse from trips_payment as A where A.id_trips="' . ht($row_8["id"]) . '" and A.visible=1');
         $num_results_poteri = $result_poteri->num_rows;
 
@@ -129,6 +406,21 @@ function comiss_end_call($id_trips,$link)
             $row_poteri = mysqli_fetch_assoc($result_poteri);
             $comm_rub=$comm_rub-$row_poteri["vse"];
         }
+
+        //еще есть потери от партнерки если связано
+        //партнерская комиссия если есть
+        $ppro=0;
+        $proc_ship=partners_trips($row_8["id"],$id_company,$link);
+//echo($proc_ship);
+        if($proc_ship!=0)
+        {
+            //потери которые еще состоялись
+            $ppro=round((($comm_rub*$proc_ship)/100),2);
+            //$comm_rub=$comm_rub-$ppro;
+            $comm_rub=$comm_rub - $ppro;
+
+        }
+
     }
     return  $comm_rub;
 }
@@ -3935,6 +4227,30 @@ if($date_elements2[0]==date("Y"))
 }
 
 } 
+
+//проверка прошла или нет дата
+function date_end_today($date_time)
+{
+    $date_elements  = explode(" ",$date_time);
+    $date_elements1  = explode(":",$date_elements[1]);
+    $date_elements2  = explode("-",$date_elements[0]);
+
+
+    $session_time=mktime($date_elements1[0], $date_elements1[1], $date_elements1[2], $date_elements2[1], $date_elements2[2], $date_elements2[0]);
+    $time_difference = time() - $session_time;
+
+
+
+    if($time_difference>0)
+    {
+
+        return 1; //прошло уже
+    } else
+    {
+
+        return 0; //еще будет или идет
+    }
+}
 
 //приведение даты к виду 5,10,15,20,25 минут назад и так далее
 function time_stamp($date_time) 

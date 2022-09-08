@@ -1286,6 +1286,53 @@ $query_string.='<div class="left_drop menu1_prime"><label class="active_label">�
 		
 				
 </div>
+
+    <div class="block-add-tours-plus">
+        <div class="block-h1-plus">↓ ПРОМОКОД</div>
+
+
+        <!--input start	-->
+        <?
+        echo'<div style="margin-top: 30px; " class="input_doc_turs js-zindex">';
+        ?>
+        <div class="input_2018 input-search-list" list_number="s1">
+            <i class="js-open-search"></i><span class="click-search-name"></span>
+            <label>Промокод</label>
+
+            <input name="promo" value="" id="date_124" sopen="search_promokod" class="input_new_2018 required  js-keyup-search js-in3" autocomplete="off" type="text">
+
+            <input type="hidden" value="0" class="js-hidden-search" name="id_affiliates">
+
+            <ul class="drop drop-search js-drop-search" style="transform: scaleY(0);">
+                <?
+
+                //если у пользователя много организаций то выводить все туроператоры по всем организациям
+                //а если это москва но нужны туроператоры общего филиала
+
+                echo '<li><a href="javascript:void(0);" rel="0">Нет</a></li>';
+
+                $result_work_zz=mysql_time_query($link,'Select a.* from affiliates_promo_code as a,affiliates as b WHERE a.id_users=b.id_users and b.
+id_a_group="'.$id_group_u.'" and a.visible=1 and a.date_end>="'.date("Y-m-d").'" order by a.name');
+                $num_results_work_zz = $result_work_zz->num_rows;
+                if($num_results_work_zz!=0)
+                {
+                    for ($i=0; $i<$num_results_work_zz; $i++)
+                    {
+                        $row_work_zz = mysqli_fetch_assoc($result_work_zz);
+                        echo '<li><a href="javascript:void(0);" rel="'.$row_work_zz["id"].'">'.$row_work_zz["name"].'</a></li>';
+                    }
+                }
+                ?>
+            </ul>
+
+            <div class="div_new_2018"><hr class="one"><hr class="two"><div class="oper_name"></div></div></div>
+    </div>
+    <!--input end	-->
+
+
+    </div>
+
+
 		
 <div class="margin-input"><div class="js-add-tender-form button-window">Оформить тур</div></div>		
 

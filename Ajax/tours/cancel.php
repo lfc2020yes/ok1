@@ -69,7 +69,7 @@ if(((!isset($_POST['tk1']))or(trim($_POST['tk1'])!='dsQ23RStsd2re')))
 
 
 $mas_responsible=array();
-$result_uu11 = mysql_time_query($link, 'select A.id,A.status,A.id_exchange,id_user  from trips as A where A.id="' . ht($_POST['id']) . '" and A.visible=1');
+$result_uu11 = mysql_time_query($link, 'select A.id,A.status,A.id_exchange,id_user,id_affiliates  from trips as A where A.id="' . ht($_POST['id']) . '" and A.visible=1');
 $num_results_uu11 = $result_uu11->num_rows;
 
 if ($num_results_uu11 != 0) {
@@ -175,6 +175,29 @@ mysql_time_query($link, 'update trips set
 status="2"
 
 where id = "' . ht($_POST['id']) . '"');
+
+
+
+//есле есть тур у партнера удаляем запись. потому что в аннулированных не выплачиваем партнерам
+mysql_time_query($link, 'delete FROM affiliates_history_trips where id_trips="' . ht($_POST['id']) . '"');
+//возможно уведомление партнеру о том что отказались от тура
+
+
+
+
+$text_not = 'Тур №' . ht($_POST["id"]) . ' был аннулирован. Данные по аннуляции можно получить у менеджеров. Все комиссии возвращены клиенту';
+$user_send_new= array();
+array_push($user_send_new, $row_uu11["id_affiliates"]);
+notification_send( $text_not,$user_send_new,$id_user,$link);
+
+
+
+
+
+
+
+
+
 
 
 //Удаляем задачи которые были поставлены по оплате туроператору и от клиенту по этому туру

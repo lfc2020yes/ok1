@@ -104,6 +104,9 @@ $(document).ready(function(){
 	//внести оплату нажать кнопку открытия формы
 	$('.trips_block_global').on("change keyup input click",'.js-menu-buybuy',js_menu_buybuy);
 
+
+	$('.affiliates_block').on("change keyup input click",'.js-buy-affiliates',js_buy_affilites);
+
 	//аннулировать тур
 	$('.trips_block_global').on("change keyup input click",'.edit-trips-all1',edit_trips_all1);
 
@@ -130,6 +133,10 @@ $(document).ready(function(){
 //появление кнопки добавить когда что-то изменяем при добавлении нового сотрудника
     $('.form_532_booking').on("change keyup input click","#name_b,#name_b1,#name_b1x,#password_b,#login_b,.radio_1,.js-checkbox-group",function(){   $('.js-add-users').show();    });
 
+//появление кнопки добавить когда что-то изменяем при добавлении нового сотрудника
+	$('.form_532_affiliates').on("change keyup input click","#name_b,#name_b1,#name_b1x,#sfera_b1,#telega_b1,#password_b,#login_b,.js-checkbox-group",function(){   $('.js-add-affiliates').show();    });
+
+
 //нажатие на отдельные chtckbox залки в определенной группе
 	$('body').on("change keyup input click",'.js-checkbox-group',CheckboxGroup);
 
@@ -141,7 +148,7 @@ $(document).ready(function(){
 
     //нажатие на кнопку сохранить изменения по пользователю / добавить нового
     $('.menu-09').on("change keyup input click",".js-add-users", add_users_2020);
-
+	$('.menu-09').on("change keyup input click",".js-add-affiliates", add_affiliates_2020);
 //заблокировать сотрудника
 $('body').on("change keyup input click",'.js-users-block',UsersBlock);
 
@@ -974,6 +981,44 @@ function AfterUsersBlock(data,update)
     {
         alert_message('error','Ошибка!');
     }
+}
+
+function add_affiliates_2020()
+{
+
+	$(this).find('span').hide();
+	$(this).find('span').before('<div class="b_loading_small" style="position:relative; width: 40px;padding-top: 7px;top: auto;right: auto;left: calc(50% - 20px);"><div class="b_loading_circle_wrapper_small"><div class="b_loading_circle_one_small"></div><div class="b_loading_circle_one_small b_loading_circle_delayed_small"></div></div></div>');
+
+	var err = 0;
+	$("#name_b,#name_b1,#login_b,#password_b").removeClass('error_formi');
+	$("#name_b").parents('.ok-input-title-2019').removeClass('error_formi_2019');
+	$("#name_b1").parents('.ok-input-title-2019').removeClass('error_formi_2019');
+	$("#login_b").parents('.ok-input-title-2019').removeClass('error_formi_2019');
+	$("#password_b").parents('.ok-input-title-2019').removeClass('error_formi_2019');
+
+
+	if($("#name_b").val() == '')  {alert_message('error','Заполните ФИО'); err++;	}
+	if($("#name_b1x").val() == '')  { alert_message('error','Заполните краткое имя'); err++;	}
+	if($("#name_b1").val() == '')  { alert_message('error','Телефон для связи не заполнен'); err++;	}
+	if($("#login_b").val() == '')  { alert_message('error','Логин сотрудника не заполнен'); err++;	}
+	if($("#password_b").val() == '')  { alert_message('error','Пароль для сотрудника не заполнен'); err++;	}
+
+	if (!$(".js-company-xx i").is( ".active_task_cb" ) ) { alert_message('error','Заполните Организацию для  сотрудника');  err++; }
+
+	if(err!=0)
+	{
+		$(this).find('span').show();
+		$(this).find('.b_loading_small').remove();
+		//alert_message('error','Не все поля заполнены');
+		/*
+    $('.error_text_add-09').empty().append('Не все поля заполнены').show();
+    setTimeout ( function () { $('.error_text_add-09').hide(); }, 7000 );
+        */
+
+	} else
+	{
+		$('#lalala_add_form').submit();
+	}
 }
 
 //нажать на кнопку добавить нового пользователя
@@ -2012,6 +2057,36 @@ function edit_trips_all2()
 	});
 }
 
+
+/**
+ отдать комиссию партнеру
+ **/
+function js_buy_affilites()
+{
+	var id_task= $(this).parents('.affiliates_block').attr('op_rel');
+
+	$.arcticmodal({
+		type: 'ajax',
+		url: 'forms/form_add_buy_affiliates.php?id='+id_task,
+		beforeOpen: function(data, el) {
+			$('.loader_ada_forms').show();
+			$('.loader_ada1_forms').addClass('select_ada');
+
+		},
+		afterOpen: function(data, el) {
+			$('.loader_ada_forms').hide();
+			$('.loader_ada1_forms').removeClass('select_ada');
+			ToolTip();
+		},
+		afterClose: function(data, el) { // после закрытия окна ArcticModal
+			clearInterval(timerId);
+		}
+
+	});
+}
+
+
+
 /**
 внести оплату нажать кнопку открытия формы
  **/
@@ -2971,9 +3046,9 @@ function AfterAddFormTender(data,update)
 		$.each(data.error, function(index, value){	
 			
 			
-	var err = ['number_contract','id_operator','id_exchange','date_sele_doc','buy_id','count_clients','id_country','date_start','date_end','count_day','hotel','flight_there_route','flight_there_class','flight_there_number','flight_back_route','flight_back_class','flight_back_number','transfer_route','transfer_type','cost_client','no_all_password_buy','no_all_password_fly','no_phone_tell_buy','no_all_password_x','no_all_info_org','no_all_info_rf_org','number_contract_busy','exchange_rates','number_contract_format'];
+	var err = ['number_contract','id_operator','id_exchange','date_sele_doc','buy_id','count_clients','id_country','date_start','date_end','count_day','hotel','flight_there_route','flight_there_class','flight_there_number','flight_back_route','flight_back_class','flight_back_number','transfer_route','transfer_type','cost_client','no_all_password_buy','no_all_password_fly','no_phone_tell_buy','no_all_password_x','no_all_info_org','no_all_info_rf_org','number_contract_busy','exchange_rates','number_contract_format','no_new_klient_promo','no_promo','promo_out'];
 	
-	var err_name = ['Номер договора','Туроператор','Валюта','Дата договора','Покупатель тура','Кол-во человек','Страна','Дата начала тура','Дата окончания тура','Кол-во дней','Отель','Маршрут туда','Класс туда','Номер рейса туда','Маршрут обратно','Класс обратно','Номер рейса обратно','Маршрут трансфера','Тип трансфера','Стоимость тура','Паспортные данные покупателя','Паспортные данные туристов','Телефон, адрес покупателя','паспорт РФ покупателя','данные по организации','паспортные данные руководителя','','Курс валюты (ТО)','Номер договора'];
+	var err_name = ['Номер договора','Туроператор','Валюта','Дата договора','Покупатель тура','Кол-во человек','Страна','Дата начала тура','Дата окончания тура','Кол-во дней','Отель','Маршрут туда','Класс туда','Номер рейса туда','Маршрут обратно','Класс обратно','Номер рейса обратно','Маршрут трансфера','Тип трансфера','Стоимость тура','Паспортные данные покупателя','Паспортные данные туристов','Телефон, адрес покупателя','паспорт РФ покупателя','данные по организации','паспортные данные руководителя','','Курс валюты (ТО)','Номер договора','Покупатель тура не новый клиент, промокод нельзя применить','Покупатель с пометкой партнер, промокод нельзя применить','указан недействительный промокод'];
 			
 	//var number = [2,1,4,5,3,6,7,8,11,12,13,22,14,15,18,19,16,17,20,21];			
 					
