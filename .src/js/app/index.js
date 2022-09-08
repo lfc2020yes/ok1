@@ -3052,7 +3052,7 @@ function AfterAddFormTender(data,update)
 			
 	//var number = [2,1,4,5,3,6,7,8,11,12,13,22,14,15,18,19,16,17,20,21];			
 					
-				
+
 				numbers=$.inArray(value, err);
 				//alert(numbers);
 				if(numbers!=-1)
