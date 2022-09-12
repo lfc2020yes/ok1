@@ -135,7 +135,7 @@ if((htmlspecialchars(trim($_POST['password_b']))==''))
             $phone_end=	$phone_base[1][1].$phone_base[1][2].$phone_base[1][3].$phone_base1[0].$phone_base1[1].$phone_base1[2];
 
 
-			 mysql_time_query($link,'INSERT INTO r_user (id_company,name_user,name_small,login,id_role,enabled,phone,noti_key,task_key) VALUES ("'.$sel_org.'","'.htmlspecialchars(trim($_POST['name_b'])).'","'.htmlspecialchars(trim($_POST['name_b1x'])).'","'.htmlspecialchars(trim($_POST['login_b'])).'","6","'.$enabled.'","'.htmlspecialchars($phone_end).'","'.$noti_key.'","'.$noti_task.'")');
+			 mysql_time_query($link,'INSERT INTO r_user (id_company,name_user,name_small,login,id_role,enabled,phone,noti_key,task_key) VALUES ("'.$sel_org.'","'.htmlspecialchars(trim($_POST['name_b'])).'","'.htmlspecialchars(trim($_POST['name_b1x'])).'","'.htmlspecialchars(trim($_POST['login_b'])).'","7","'.$enabled.'","'.htmlspecialchars($phone_end).'","'.$noti_key.'","'.$noti_task.'")');
 			 
 			 $ID_N=mysqli_insert_id($link);
 
