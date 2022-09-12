@@ -191,8 +191,9 @@ if(($array_param_new[0] == 1) and ($array_param_new[1] == 1)) {
 
         $comiss_ship=0;
         $comiss_ship = comiss_end_ship($row_score['id'], $link);
+        $proc_ship=partners_trips($row_score['id'],$id_company,$link);
 
-        commission_add_ship($row_score['id'],$comiss_ship, $link);
+        commission_add_ship($row_score['id'],$comiss_ship,$proc_ship, $link);
 
 
 

@@ -330,7 +330,7 @@ if($row_8["timelast"]!='')
 
 echo'</div>';
 					
-		$result_status22=mysql_time_query($link,'SELECT a.all_comission,a.paid_comission FROM affiliates AS a WHERE a.id_users="'.htmlspecialchars(trim($row_8["id"])).'"');
+		$result_status22=mysql_time_query($link,'SELECT a.all_comission,a.paid_comission,a.block_comission FROM affiliates AS a WHERE a.id_users="'.htmlspecialchars(trim($row_8["id"])).'"');
                 if($result_status22->num_rows!=0)
                 {  
                    $row_status22 = mysqli_fetch_assoc($result_status22);
@@ -342,7 +342,9 @@ echo'</div>';
                    $row_status23 = mysqli_fetch_assoc($result_status22);
                }
 
-               echo'<div class="center-com-part"><div data-tooltip="Всего комиссия" class=" calc-balance cost_circle rate_yyy">'.number_format(((float)$row_status22["all_comission"]), 2, '.', ' ').'</div><div class="cost_all_trips">к выплате<span style="" class="cost_circle rate_yyy cacl-rrate js-buy-affiliates">'.number_format(((float)($row_status22["all_comission"]-$row_status22["paid_comission"])), 2, '.', ' ').'</span></div></div>';
+               echo'<div class="center-com-part"><div data-tooltip="Всего комиссия" class=" calc-balance cost_circle rate_yyy">'.number_format((((float)$row_status22["all_comission"]-(float)$row_status22["paid_comission"])), 2, '.', ' ').'</div><div class="cost_all_trips">к выплате<span style="" class="cost_circle rate_yyy cacl-rrate js-buy-affiliates k-vip-affiliates">'.number_format(((float)((float)$row_status22["all_comission"]-(float)$row_status22["paid_comission"]-(float)$row_status22["block_comission"])), 2, '.', ' ').'</span></div>
+<div style="" class="cost_all_trips">скоро<span style="" class="cost_circle rate_yyy cacl-rrate">'.number_format(((float)((float)$row_status22["block_comission"])), 2, '.', ' ').'</span></div>
+</div>';
 
 
               // echo'<div class="yop_count" data-tooltip="Кол-во туров"><i></i>'.$row_status22["cc"].'</div>';
@@ -359,10 +361,10 @@ echo'<div class="tender-date" data-tooltip="Телефон">'.$phone_format.'<sp
                echo'<div class="tender-but">';
                 if($row_8["enabled"]==1)
 	  {
-			   echo'<div id-bdata="'.$row_8["id"].'"  class="yes-tender party-options js-users-block"><span>Заблокировать</span><i>Открыть доступ</i></div>';
+			   echo'<div id-bdata="'.$row_8["id"].'"  class="yes-tender party-options js-partner-block"><span>Заблокировать</span><i>Открыть доступ</i></div>';
 			  } else
 			  {
-			   echo'<div id-bdata="'.$row_8["id"].'"  class="yes-tender party-options block-party js-users-block"><span>Заблокировать</span><i>Открыть доступ</i></div>';
+			   echo'<div id-bdata="'.$row_8["id"].'"  class="yes-tender party-options block-party js-partner-block"><span>Заблокировать</span><i>Открыть доступ</i></div>';
 			  }
 
 echo'</div>';

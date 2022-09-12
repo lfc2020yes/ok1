@@ -139,7 +139,8 @@ if((htmlspecialchars(trim($_POST['password_b']))==''))
 			 
 			 $ID_N=mysqli_insert_id($link);
 
-            mysql_time_query($link,'INSERT INTO affiliates (id_users,sfera,telegram) VALUES ("'.$ID_N.'","'.htmlspecialchars(trim($_POST['sfera_b1'])).'","'.htmlspecialchars(trim($_POST['telega_b1'])).'")');
+            mysql_time_query($link,'INSERT INTO affiliates (id_users,
+id_a_group,sfera,telegram,date_create) VALUES ("'.$ID_N.'","'.$id_group_u.'","'.htmlspecialchars(trim($_POST['sfera_b1'])).'","'.htmlspecialchars(trim($_POST['telega_b1'])).'","'.$date_.'")');
 
 			 $password=password_crypt_x($ID_N,htmlspecialchars(trim($_POST['password_b'])),htmlspecialchars(trim($_POST['login_b'])));
 			 mysql_time_query($link,'update r_user set password="'.$password.'" where id = "'.$ID_N.'"');
@@ -170,6 +171,35 @@ if((htmlspecialchars(trim($_POST['password_b']))==''))
             notification_send_admin( $text_not,$end_mass,0,$link);
 
 
+
+            //отправляем данные партнеру по смс с его личным входом в партнерку
+            //sms партнеру
+//отправляем sms уведомления
+            include_once $url_system.'module/config_sms.php';
+            $sms_phone=SearchSmsUser($link,$ID_N);
+            if($sms_phone) {
+//	79021296867
+//отправляем смс мне на телефон что пришла свободная заявка
+//$sms='Вам поступила новая задача №'.$ID_N.' на исполнение. Подробности: www.ok.i-s.group/task/'.$ID_N.'/';
+
+//
+                $sms = 'Добро пожаловать в партнерскую программу UMATRAVEL. Ваши данные для входа \n Логин:'.trim($_POST['login_b']).' \n Пароль:'.trim($_POST['password_b']).' \n https://ok.umatravel.club/';
+
+
+
+                $ksms = send_sms("api.smsfeedback.ru", 80, $smsfeedbackname, $smsfeedbackpasswd, $sms_phone, $sms, $smspodpis);
+                $ksms1 = explode(';', $ksms);
+                $key_sms = $ksms1[0];
+
+//заносим в базу что такая смс отправлена или нет
+                $send = 0;
+                if ($ksms1[0] == 'accepted') {
+                    $send = 1;
+                }
+
+                mysql_time_query($link, 'INSERT INTO sms (id_user,text,datetimes,phone,send,response) VALUES ("' . $ID_N . '","' . htmlspecialchars(trim($sms)) . '","' . date("y.m.d") . ' ' . date("H:i:s") . '","' . $sms_phone . '","' . $send . '","' . htmlspecialchars(trim($ksms)) . '")');
+
+            }
 
             header("Location:".$base_usr."/affiliates/?a=add");
 			 die();

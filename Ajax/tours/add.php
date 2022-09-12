@@ -416,7 +416,7 @@ if((isset($_POST["id_affiliates"]))and($_POST["id_affiliates"]!=0)and(is_numeric
 
     //проверим может ли он применить этот промокод
     $result_work_zzu = mysql_time_query($link, 'Select a.id_users,a.id from affiliates_promo_code as a,affiliates as b WHERE a.id_users=b.id_users and b.
-id_a_group="' . $id_group_u . '" and a.visible=1 and a.date_end>="' . date("Y-m-d") . '" and a.id="' . ht($_POST["id_affiliates"]) . '"');
+id_a_group="' . $id_group_u . '" and a.visible=1 and a.status=2 and a.date_end>="' . date("Y-m-d") . '" and a.id="' . ht($_POST["id_affiliates"]) . '"');
 
     $num_results_work_zzu = $result_work_zzu->num_rows;
     if ($num_results_work_zzu != 0) {

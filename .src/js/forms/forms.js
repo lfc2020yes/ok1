@@ -688,6 +688,134 @@ function add_buy_finance_yes()
 	}
 }
 
+
+//согласовать промокод
+function sogn_promo_yes()
+{
+
+	var err = 0;
+
+	var hwo=$('.js-form-promo-sogl').find('[name=hwohwo]').val();
+
+
+	if(parseInt(hwo)==1) {
+//alert($('.js-form-promo-sogl.gloab1').length);
+		$('.js-form-promo-sogl .gloab1').each(function (i, elem) {
+			if (($(this).val() == '') || ($(this).val() == 0)) {
+				$(this).parents('.input_2018').addClass('error_2018');
+				$(this).parents('.list_2018').addClass('required_in_2018');
+				$(this).parents('.js-prs').addClass('error_textarea_2018');
+				err++;
+			} else {
+				$(this).parents('.input_2018').removeClass('error_2018');
+				$(this).parents('.list_2018').removeClass('required_in_2018');
+				$(this).parents('.js-prs').removeClass('error_textarea_2018');
+
+			}
+		});
+	}
+
+	if(err==0)
+	{
+
+		//изменить кнопку на загрузчик
+		$('.js-add-buy-promo-sogn-x').hide();
+
+		$('.js-add-buy-promo-sogn-x').hide().after('<div class="b_loading_small" style="position:relative; width: 40px;padding-top: 7px;top: auto;right: auto;left: auto; margin: 0 auto;"><div class="b_loading_circle_wrapper_small"><div class="b_loading_circle_one_small"></div><div class="b_loading_circle_one_small b_loading_circle_delayed_small"></div></div></div>');
+
+		AjaxClient('affiliates','sogn_add','POST',0,'after_sogn_promo_yes',0,'vino_xd_promo_sogl');
+
+
+	}else
+	{
+
+		alert_message('error','Ошибка. Не все поля заполнены!');
+
+	}
+}
+
+//согласовать промокод
+function add_promo_yes()
+{
+
+	var err = 0;
+
+	$('.js-form-promo-add.gloab1').each(function (i, elem) {
+
+		if (($(this).val() == '') || ($(this).val() == 0)) {
+			$(this).parents('.input_2018').addClass('error_2018');
+			$(this).parents('.list_2018').addClass('required_in_2018');
+			$(this).parents('.js-prs').addClass('error_textarea_2018');
+			err++;
+		} else {
+			$(this).parents('.input_2018').removeClass('error_2018');
+			$(this).parents('.list_2018').removeClass('required_in_2018');
+			$(this).parents('.js-prs').removeClass('error_textarea_2018');
+
+		}
+	});
+
+
+	if(err==0)
+	{
+
+		//изменить кнопку на загрузчик
+		$('.js-add-buy-promo-add-x').hide();
+
+		$('.js-add-buy-promo-add-x').hide().after('<div class="b_loading_small" style="position:relative; width: 40px;padding-top: 7px;top: auto;right: auto;left: auto; margin: 0 auto;"><div class="b_loading_circle_wrapper_small"><div class="b_loading_circle_one_small"></div><div class="b_loading_circle_one_small b_loading_circle_delayed_small"></div></div></div>');
+
+		AjaxClient('affiliates','promo_add','POST',0,'after_add_promo_yes',0,'vino_xd_promo_add');
+
+
+	}else
+	{
+
+		alert_message('error','Ошибка. Не все поля заполнены!');
+
+	}
+}
+
+//нажатие на кнопку запросить деньги на вывод партнера
+function add_buy_money_yes()
+{
+
+	var err = 0;
+
+	$('.js-form-pay-money.gloab1').each(function (i, elem) {
+
+		if (($(this).val() == '') || ($(this).val() == 0)) {
+			$(this).parents('.input_2018').addClass('error_2018');
+			$(this).parents('.list_2018').addClass('required_in_2018');
+			$(this).parents('.js-prs').addClass('error_textarea_2018');
+			err++;
+		} else {
+			$(this).parents('.input_2018').removeClass('error_2018');
+			$(this).parents('.list_2018').removeClass('required_in_2018');
+			$(this).parents('.js-prs').removeClass('error_textarea_2018');
+
+		}
+	});
+
+
+	if(err==0)
+	{
+
+		//изменить кнопку на загрузчик
+		$('.js-add-buy-money-but-x').hide();
+
+		$('.js-add-buy-money-but-x').hide().after('<div class="b_loading_small" style="position:relative; width: 40px;padding-top: 7px;top: auto;right: auto;left: auto; margin: 0 auto;"><div class="b_loading_circle_wrapper_small"><div class="b_loading_circle_one_small"></div><div class="b_loading_circle_one_small b_loading_circle_delayed_small"></div></div></div>');
+
+		AjaxClient('affiliates','money','POST',0,'after_add_buy_money_yes',0,'vino_xd_affiliates_money');
+
+
+	}else
+	{
+
+		alert_message('error','Ошибка. Не все поля заполнены!');
+
+	}
+}
+
 //нажатие на кнопку добавить выплату в форме добавление выплат по партнеру
 function add_buy_affiliates_yes()
 {
@@ -2374,6 +2502,13 @@ $('.box-modal').on("change keyup input click",'.js-add-task-but-x',add_task_yes)
 	$('.box-modal').on("change keyup input click",'.js-add-buy-finance-but-x',add_buy_finance_yes); //добавление оплаты по туру с проверкой
 
 	$('.box-modal').on("change keyup input click",'.js-add-buy-affiliates-but-x',add_buy_affiliates_yes); //добавление оплаты по туру с проверкой
+
+
+	$('.box-modal').on("change keyup input click",'.js-add-buy-promo-add-x',add_promo_yes);
+
+	$('.box-modal').on("change keyup input click",'.js-add-buy-promo-sogn-x',sogn_promo_yes);
+
+	$('.box-modal').on("change keyup input click",'.js-add-buy-money-but-x',add_buy_money_yes); //добавление оплаты по туру с проверкой
 
 		$('.box-modal').on("change keyup input click",'.js-add-preorder-x',add_preorders_yes); //добавление оплаты по туру с проверкой
 	$('.box-modal').on("change keyup input click",'.js-update-preorder-x',update_preorders_yes); //добавление оплаты по туру с проверкой
@@ -7512,6 +7647,111 @@ function after_add_buy_cash_yes(data,update)
 	}
 }
 
+//постфункция запросить деньги партнерка
+function after_add_buy_money_yes(data,update)
+{
+	if (data.status=='ok')
+	{
+		// $('.js-form-tender-new').remove();
+
+		alert_message('ok','Запрос отправлен');
+		//$('.js-next-step').submit();
+
+		//var curs = ;
+
+		clearInterval(timerId);
+		$.arcticmodal('close');
+
+		//setTimeout ( function () { $('#js-form-add-fin').submit();  }, 1000 );
+
+	} else
+	{
+		$('.js-add-buy-money-but-x').show();
+		$('.js-form-pay-money .b_loading_small').remove();
+
+		//alert_message('error','Ошибка! Заполните все поля');
+
+		//$('.js-form-register .message-form').empty().append('Ошибка! ');
+		alert_message('error','Ошибка!');
+
+	}
+}
+
+//постфункция согласовать промокод
+function after_sogn_promo_yes(data,update)
+{
+	if (data.status=='ok')
+	{
+		// $('.js-form-tender-new').remove();
+
+		//alert_message('ok',data.echo);
+		//$('.js-next-step').submit();
+
+if(data.st==1)
+{
+	//согласована
+	$('.js-promo-list[promo='+data.id+']').removeClass('red-party');
+	$('.js-promo-list[promo='+data.id+']').find('.lider-status').empty().append('Согласован');
+	alert_message('ok','Промокод согласован');
+} else
+{
+	//отклонена
+
+	$('.js-promo-list[promo='+data.id+']').addClass('red-party');
+	$('.js-promo-list[promo='+data.id+']').find('.lider-status').empty().append('Отклонен');
+	alert_message('ok','Промокод отклонен');
+}
+
+		clearInterval(timerId);
+		$.arcticmodal('close');
+
+		//setTimeout ( function () { $('#js-form-add-fin').submit();  }, 1000 );
+
+	} else
+	{
+		$('.js-add-buy-promo-sogn-x').show();
+		$('.js-form-promo-sogn .b_loading_small').remove();
+
+		//alert_message('error','Ошибка! Заполните все поля');
+
+		//$('.js-form-register .message-form').empty().append('Ошибка! ');
+		alert_message('error','Ошибка!');
+
+	}
+}
+
+
+//постфункция согласовать промокод
+function after_add_promo_yes(data,update)
+{
+	if (data.status=='ok')
+	{
+		// $('.js-form-tender-new').remove();
+
+		alert_message('ok','Промокод отправлен на согласование');
+		//$('.js-next-step').submit();
+
+		//var curs = ;
+		$('.leaderbord-promo').prepend(data.promo);
+
+
+		clearInterval(timerId);
+		$.arcticmodal('close');
+
+		//setTimeout ( function () { $('#js-form-add-fin').submit();  }, 1000 );
+
+	} else
+	{
+		$('.js-add-buy-promo-add-x').show();
+		$('.js-form-promo-add .b_loading_small').remove();
+
+		//alert_message('error','Ошибка! Заполните все поля');
+
+		//$('.js-form-register .message-form').empty().append('Ошибка! ');
+		alert_message('error','Ошибка!');
+
+	}
+}
 
 //постфункция оплата партнеру
 function after_add_buy_affiliates_yes(data,update)

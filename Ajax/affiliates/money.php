@@ -32,7 +32,7 @@ $debug='';
 
 //**************************************************
 //2 дня
-if(!token_access_new($token,'bt_affiliates_buy',$id,"rema",2880))
+if(!token_access_new($token,'bt_affiliates_money',$id,"rema",2880))
 {
     $debug=h4a(100,$echo_r,$debug);
     goto end_code;
@@ -49,7 +49,7 @@ goto end_code;
 }
 */
 //**************************************************
-if ((!$role->permission('Партнеры','A'))and($sign_admin!=1))
+if ((!$role->permission('Партнеры','M'))and($sign_admin!=1))
 {
     $debug=h4a(2,$echo_r,$debug);
     goto end_code;
@@ -78,8 +78,10 @@ if ($num_results_uu != 0) {
     $dolg = round(((float)trimc($row_uu['all_comission']) - (float)trimc($row_uu['paid_comission'])- (float)trimc($row_uu['block_comission'])),2);
 
 }
+
 if($dolg<round(((float)trimc($_POST['summ']))))
 {
+    $debug=h4a(737,$echo_r,$debug);
     goto end_code;
 }
 
@@ -105,12 +107,6 @@ if ((!isset($_POST['summ'])) or (trim($_POST['summ']) == '')or(!is_numeric(trimc
 }
 
 
-$date_valid=0;
-if(!validateDate($_POST['buy_date'],'Y-m-d'))
-{
-    array_push($stack_error, "buy_date");
-    $date_valid=1;
-}
 //**************************************************
 //**************************************************
 
@@ -125,40 +121,52 @@ if(count($stack_error)!=0)
 $status_ee='ok';
 
 
-
-$date_=date("Y-m-d").' '.date("H:i:s");
-
-//добавить оплату в базу
-mysql_time_query($link,'INSERT INTO affiliates_history_paid (
-                                                                                       
-id_users,                                           
-id_affiliates,                           
-sum,                                                        
-date,                                       
-date_create,
-comment,                                                                 
-visible                                                                               
-) VALUES( 
-"'.ht($id_user).'",
-"'.ht($_POST["id"]).'",
-"'.ht(trimc($_POST["summ"])).'",
-"'.ht($_POST["buy_date"]).'",
-"'.$date_.'",
-"'.ht($_POST["comment"]).'",
-"1")');
-
-$new_id_payment=mysqli_insert_id($link);
+//все ок, отправляем уведомления
+include $url_system.'module/config_mail.php';
+// отправка письма на почту
+$text="<HTML>\r\n";
+$text.="<HEAD>\r\n";
+$text.="<META http-equiv=Content-Type content='html; charset=windows-1251'>\r\n";
+$text.="</HEAD>\r\n";
+$text.="<BODY>\r\n";
 
 
-//добавить в выплачено общую сумму
-$paid= round(((float)trimc($row_uu['paid_comission'])+(float)trimc($_POST['summ'])),2);
-mysql_time_query($link, 'update affiliates set
-paid_comission="'.$paid.'"
-where id_users = "' . ht($_POST['id']) . '"');
+$text.="<br><span style=\"color: #66757f; font-family: 'Helvetica Neue Light',Helvetica,Arial,sans-serif; font-size: 16px; font-weight: 300;\">Заявка на получение денежных средств</span><br><br>";
 
-//осталось оплатить
-$dolg = round(((float)trimc($row_uu['all_comission']) - (float)$paid),2);
 
+$text.='<div style=" width:100%; height:1px; border-top:1px solid #e1e8ed;"></div>';
+
+$text.="<br><span style=\" color: #292f33; font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; font-size: 24px; font-weight: 300; line-height: 30px; margin: 0; padding: 0; text-align: left;\">При заполнении формы были указаны следующие данные</span><br><br>
+<span style=\"color: #292f33;
+    font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 22px;
+    margin: 0;
+    padding: 0;
+    text-align: left;\">
+Имя: ".$name_user."<br>
+Сумма: ".ht($_POST['summ'])."<br>
+Сообщение: ".ht($_POST['comment'])."
+</span><br><br>
+<span style=\"color: #292f33;
+    font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 22px;
+    margin: 0;
+    padding: 0;
+    text-align: left;\">Данные были отправлены с формы заявок по адресу <a style=\"color:#292f33; border-bottom: 1px solid #4bcaff; text-decoration: none;\" href=\"https://www.ok.umatravel.club\">www.ok.umatravel.club</a></span>\r\n";
+
+
+
+$text.="</BODY>\r\n";
+$text.="</HTML>";
+
+//mail($_POST["login"],"www.ulmenu.ru: Подтверждение регистрации",$text,$header);
+// /отправка письма на почту
+
+SMTP_MAIL($mail_ulmenu,'password',"Я новая заявка на вывод средств с umatravel.club",$text,$mail_admin);
 
 
 

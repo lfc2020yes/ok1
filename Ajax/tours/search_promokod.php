@@ -127,23 +127,23 @@ if($query!='')
 select * from(     
    (   
 SELECT A.id,A.name FROM affiliates_promo_code AS A,affiliates as B where A.id_users=B.id_users and A.date_end>="'.date("Y-m-d").'" and B.
-id_a_group='.ht($id_group_u).' and A.date_end>="'.date("Y-m-d").'" AND  A.visible=1 AND LOWER(A.name) LIKE "'.$query.'%"   
+id_a_group='.ht($id_group_u).' and A.status=2 and A.date_end>="'.date("Y-m-d").'" AND  A.visible=1 AND LOWER(A.name) LIKE "'.$query.'%"   
 )
 UNION
 (
 
 SELECT A.id,A.name FROM affiliates_promo_code AS A,affiliates as B where  A.id_users=B.id_users and B.
-id_a_group='.ht($id_group_u).' and A.date_end>="'.date("Y-m-d").'" AND A.visible=1 AND LOWER(A.name_search) LIKE "%'.$query.'%"
+id_a_group='.ht($id_group_u).' and A.status=2 and A.date_end>="'.date("Y-m-d").'" AND A.visible=1 AND LOWER(A.name_search) LIKE "%'.$query.'%"
 AND A.id NOT IN 
 (SELECT A.id FROM affiliates_promo_code A,affiliates as B WHERE  A.id_users=B.id_users and B.
-id_a_group='.ht($id_group_u).' and A.date_end>="'.date("Y-m-d").'" AND A.visible=1 AND LOWER(A.name) LIKE "'.$query.'%")
+id_a_group='.ht($id_group_u).' and A.status=2 and A.date_end>="'.date("Y-m-d").'" AND A.visible=1 AND LOWER(A.name) LIKE "'.$query.'%")
 ) 
 
 ) Z order by Z.name limit 0,15';  
 } else
 {
 	$sql='Select a.* from affiliates_promo_code as a,affiliates as b WHERE a.id_users=b.id_users and b.
-id_a_group="'.$id_group_u.'" and a.visible=1 and a.date_end>="'.date("Y-m-d").'" order by a.name limit 0,15';
+id_a_group="'.$id_group_u.'" and a.status=2 and a.visible=1 and a.date_end>="'.date("Y-m-d").'" order by a.name limit 0,15';
 }
 
 //echo($sql);

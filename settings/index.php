@@ -212,15 +212,15 @@ phone="'.$phone_end.'",login="'.htmlspecialchars(trim($_POST['login_b'])).'" '.$
 			//проверяем уведомления
 			mysql_time_query($link,'delete FROM a_notification_user_option where id_user="'.ht($id_user).'"');
 //к каким категориям относится
-$subi=$_POST['notis'];
-for ($i = 0; $i < (count($subi['type'])); $i++){
-	
-	if((is_numeric($subi['type'][$i]))and($subi['val'][$i]=='1')and($subi['type'][$i]!='0'))
-	{
-       mysql_time_query($link,'INSERT INTO a_notification_user_option (id_user,number_type,val) VALUES ("'.ht($id_user).'","'.ht($subi['type'][$i]).'","1")');
-	}
-}
-			
+            if(isset($_POST['notis'])) {
+                $subi = $_POST['notis'];
+                for ($i = 0; $i < (count($subi['type'])); $i++) {
+
+                    if ((is_numeric($subi['type'][$i])) and ($subi['val'][$i] == '1') and ($subi['type'][$i] != '0')) {
+                        mysql_time_query($link, 'INSERT INTO a_notification_user_option (id_user,number_type,val) VALUES ("' . ht($id_user) . '","' . ht($subi['type'][$i]) . '","1")');
+                    }
+                }
+            }
 			
 		
 			

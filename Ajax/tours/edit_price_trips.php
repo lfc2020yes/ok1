@@ -377,13 +377,15 @@ if ($num_results_ss_new != 0) {
         $comiss_ship=0;
         $comiss_vip = comiss_end_call($_POST["id"], $link);
         $comiss_ship = comiss_end_ship($_POST["id"], $link);
+        $proc_ship=partners_trips($_POST["id"],$id_company,$link);
+
         mysql_time_query($link, 'update trips set
     
     commission="' . $comiss_vip . '",
     comission_partnership="'.$comiss_ship.'"
     where id = "' . ht($_POST["id"]) . '"');
 
-        commission_add_ship($_POST["id"],$comiss_ship, $link);
+        commission_add_ship($_POST["id"],$comiss_ship,$proc_ship, $link);
 
     }
 

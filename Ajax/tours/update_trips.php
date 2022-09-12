@@ -944,14 +944,7 @@ if ($row_uu_rate["char"] == "₽") {
 $ppro=0;
 $proc_ship=partners_trips($row_8["id"],$id_company,$link);
 //echo($proc_ship);
-if($proc_ship!=0)
-{
-    //потери которые еще состоялись
-    $ppro=round((($comm_rub*$proc_ship)/100),2);
-    //$comm_rub=$comm_rub-$ppro;
 
-
-}
 
 
 $result_poteri = mysql_time_query($link, 'select sum(A.commission) as vse from trips_payment as A where A.id_trips="' . ht($row_8["id"]) . '" and A.visible=1');
@@ -960,11 +953,23 @@ $num_results_poteri = $result_poteri->num_rows;
 if ($num_results_poteri != 0) {
     $row_poteri = mysqli_fetch_assoc($result_poteri);
     $comm_rub=$comm_rub-$row_poteri["vse"];
+    /*
     if($row_8["paid_client"]!=0) {
         $proc_ii = round((($comm_rub - $ppro) * 100) / $row_8["paid_client"], 1);
     }
+    */
 }
+if($proc_ship!=0)
+{
+    //потери которые еще состоялись
+    $ppro=round((($comm_rub*$proc_ship)/100),2);
+    //$comm_rub=$comm_rub-$ppro;
 
+
+}
+if($row_8["cost_client"]!=0) {
+    $proc_ii = round((($comm_rub - $ppro) * 100) / $row_8["cost_client"], 1);
+}
 
 
 

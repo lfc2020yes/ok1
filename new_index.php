@@ -231,11 +231,20 @@ $result_txs=mysql_time_query($link,'Select a.name_user,a.timelast,a.id from r_us
 		          $rowxs = mysqli_fetch_assoc($result_txs);
 					
 				}
-	echo'<h2 class="hello">Добро пожаловать в систему задач, '.$rowxs["name_user"].'!</h2>';
-		
-					echo'<div class="help_div da_book1"><div class="not_boolingh"></div><span class="h5"><span>Не забудьте посмотреть все созданные задачи на сегодня, заявки по которым необходимо перезвонить, оформить документы. Все необходимое можно найти в ваших уведомлениях.</span></span></div>';	
+if($id_role!=7) {
+    echo '<h2 class="hello">Добро пожаловать в систему задач, ' . $rowxs["name_user"] . '!</h2>';
+
+    echo '<div class="help_div da_book1"><div class="not_boolingh"></div><span class="h5"><span>Не забудьте посмотреть все созданные задачи на сегодня, заявки по которым необходимо перезвонить, оформить документы. Все необходимое можно найти в ваших уведомлениях.</span></span></div>';
+} else
+{
+    echo '<h2 class="hello">Добро пожаловать в партнерскую программу, ' . $rowxs["name_user"] . '!</h2>';
+
+    echo '<div class="help_div da_book1"><div class="not_boolingh"></div><span class="h5"><span>Получайте стабильные выплаты до 15% от нашей комиссии за каждого подключенного клиента.</span></span></div>';
+}
 	} else
 	{
+        if($id_role!=7)
+        {
 		$num_7=$num_7 ?? '';
 			if($num_7!=0)
 	        {	
@@ -247,7 +256,248 @@ $result_txs=mysql_time_query($link,'Select a.name_user,a.timelast,a.id from r_us
 			{
 								echo'<div class="help_div da_book1"><div class="not_boolingh"></div><span class="h5"><span>Добавляйте новые заявки, следите за вашей комиссией и бонусами. Ищите ваших клиентов по множеству параметров, отслеживайте время вылетов и много другое.</span></span></div>';
 			}
+			}
 	}
+
+
+	if($id_role==7)
+    {
+
+        $result_uu_s = mysql_time_query($link, 'select * from affiliates where id_users="' . ht($id_user) . '"');
+        $num_results_uu_s = $result_uu_s->num_rows;
+
+        if ($num_results_uu_s != 0) {
+            $row_uu_s = mysqli_fetch_assoc($result_uu_s);
+        }
+
+        $d_day=dateDiff_1(date("y-m-d").' '.date("H:i:s"),$row_uu_s["date_create"]);
+
+        $prodaj=0;
+        $result_uu_s1 = mysql_time_query($link, 'select count(a.id) as cc from affiliates_history_trips as a where id_users="' . ht($id_user) . '"');
+        $num_results_uu_s1 = $result_uu_s1->num_rows;
+
+        if ($num_results_uu_s1 != 0) {
+            $row_uu_s1 = mysqli_fetch_assoc($result_uu_s1);
+            if($row_uu_s1["cc"]!='')
+            {
+                $prodaj=$row_uu_s1["cc"];
+            }
+        }
+
+        $kli=0;
+        $result_uu_s2 = mysql_time_query($link, 'select count(a.id) as cc from k_clients as a where id_affiliates="' . ht($id_user) . '"');
+        $num_results_uu_s2 = $result_uu_s2->num_rows;
+
+        if ($num_results_uu_s2 != 0) {
+            $row_uu_s2 = mysqli_fetch_assoc($result_uu_s2);
+            if($row_uu_s2["cc"]!='')
+            {
+                $kli=$row_uu_s2["cc"];
+            }
+        }
+
+        echo'<div class="liderbord_2020">
+
+<span class="title">Ваши достижения</span>
+            <div class="liderbord">
+
+                <div class="rating-ship">
+
+
+                    <span class="name-border">Всего продаж</span><div><span class="cost_border ">'.$prodaj.'</span></div>
+
+                </div>
+
+
+                <div class="rating-ship">
+
+
+                    <span class="name-border">Кол-во клиентов</span><div><span  class="cost_border">'.$kli.'</span></div>
+
+                </div>
+
+                <div class="rating-ship">
+
+
+                    <span class="name-border">Доход всего</span><div><span class="cost_border leaderborder-rub">'.rtrim(rtrim(number_format(($row_uu_s["all_comission"]), 2, '.', ' '),'0'),'.').'</span></div>
+
+                </div>
+                <div class="rating-ship">
+
+
+                    <span class="name-border">Комиссия</span><div><span class="cost_border leaderborder-rub">'.rtrim(rtrim(number_format(($row_uu_s["all_comission"]-$row_uu_s["paid_comission"]), 2, '.', ' '),'0'),'.').'</span></div>
+
+                </div>
+                <div class="rating-ship">
+
+
+                    <span class="name-border">К получению</span><div><span class="cost_border leaderborder-rub">'.rtrim(rtrim(number_format(($row_uu_s["all_comission"]-$row_uu_s["paid_comission"]-$row_uu_s["block_comission"]), 2, '.', ' '),'0'),'.').'</span>';
+                    if(($row_uu_s["all_comission"]-$row_uu_s["paid_comission"]-$row_uu_s["block_comission"])>0) {
+
+                        echo'<div data-tooltip = "Подать заявку на вывод" class="drop_affiliates js-drop-aff" ></div >';
+                    }
+
+                    echo'</div>
+
+                </div>
+                <div class="rating-ship">
+
+
+                    <span class="name-border">Выплачено</span><div><span class="cost_border leaderborder-rub">'.rtrim(rtrim(number_format(($row_uu_s["paid_comission"]), 2, '.', ' '),'0'),'.').'</span></div>
+
+                </div>
+                <div class="rating-day">
+<span>Дней в программе: '.$d_day.'</span>
+                </div>
+            </div></div>';
+        ?>
+
+
+    <div class="liderbord_2021">
+        <span class="title">Текущие комиссии</span>
+        <div class="lider-box lider_header">
+            <div class="lider-date">Дата</div>
+            <div class="lider-country">Страна</div>
+            <div class="lider-comm">Комиссия</div>
+            <div class="lider-promo">Промокод</div>
+            <div class="lider-status">Статус</div>
+        </div>
+
+
+        <?
+
+        $result_te = mysql_time_query($link, 'select *,c.name,b.id_promo from affiliates_history_trips as a,trips as b,trips_country as c where a.id_trips=b.id and b.id_country=c.id and a.id_users="' . ht($id_user) . '" order by a.datetimes desc limit 10');
+
+        if ($result_te) {
+
+            $i = 0;
+            while ($row_te = mysqli_fetch_assoc($result_te)) {
+$status_a='Блок';
+if($row_te["block"]==0)
+{
+    $status_a='Доступна';
+}
+
+$promo='—';
+    $promo_tooltip='';
+if($row_te["id_promo"]!=0)
+{
+    $result_ty = mysql_time_query($link, 'select * from affiliates_promo_code where id="' . ht($row_te["id_promo"]) . '"');
+    $num_results_ty = $result_ty->num_rows;
+
+    if ($num_results_ty != 0) {
+        $row_ty = mysqli_fetch_assoc($result_ty);
+        $promo=$row_ty["name"];
+        $promo_tooltip='data-tooltip="ПРОМОКОД - '.$row_ty["bonus"].'"';
+    }
+}
+
+
+echo'        <div class="lider-box lider_more">
+            <div class="lider-date"><span class="aff_mo">Дата</span>'.time_stamp_mess($row_te["datetimes"]).'</div>
+            <div class="lider-country"><span class="aff_mo">Страна</span>'.$row_te["name"].'</div>
+            <div class="lider-comm"><span>+'.rtrim(rtrim(number_format(($row_te["comission"]), 2, '.', ' '),'0'),'.').' RUB</span><div>'.$row_te["proc"].'%</div></div>
+            <div class="lider-promo">';
+if($promo!='—') {
+    echo'<span class="pro-promo" '.$promo_tooltip.' > '.$promo.'</span>';
+} else
+{
+    echo($promo);
+}
+echo'</div>
+            <div class="lider-status"><span class="aff_mo">Статус</span>'.$status_a.'</div>
+        </div>';
+
+            }
+        }
+
+        ?>
+
+
+
+
+    </div>
+
+
+
+        <?
+
+
+        $result_de = mysql_time_query($link, 'select * from affiliates_promo_code where visible=1 and id_users="' . ht($id_user) . '" and date_end>"'.date('Y-m-d H:i:s').'" and status=2 order by date_end');
+        $num_results_de = $result_de->num_rows;
+
+        if($num_results_de!=0)
+        {
+
+        ?>
+
+
+    <div class="liderbord_2020">
+
+        <span class="title">Действующие промокоды</span>
+
+        <div class="leaderbord-promo">
+
+            <?
+            while ($row_de = mysqli_fetch_assoc($result_de)) {
+
+                $date_mass = explode(" ", ht($row_de['date_end']));
+                $date_mass1 = explode("-", ht($date_mass[0]));
+                $date_start = $date_mass1[2] . '.' . $date_mass1[1] . '.' . $date_mass1[0];
+
+                echo'<div class="promo-block">
+                <div class="promo-white">
+
+                    <div class="promo-60">
+                        <div class="title-60"><span></span></div>
+                        <div class="promo-img"><div class="title-p">'.$row_de["name"].'</div></div>
+                    </div>
+                    <div class="promo-40">
+                        <span>'.$row_de["bonus"].'</span>
+                        <div class="promo-d">Действует до '.$date_start.'</div>
+
+                        <div class="rating-ship-x">';
+
+                $count_promi=0;
+                $result_uuvv = mysql_time_query($link, 'select count(id) as cc from trips where id_promo="' . ht($row_de["id"]) . '"');
+                $num_results_uuvv = $result_uuvv->num_rows;
+
+                if ($num_results_uuvv != 0) {
+                    $row_uuvv = mysqli_fetch_assoc($result_uuvv);
+                    if($row_uuvv["cc"]!='')
+                    {
+                        $count_promi=$row_uuvv["cc"];
+                    }
+                }
+
+                           echo'<span class="name-border">Использовали</span><div><span class="cost_border ">'.$count_promi.'</span></div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>';
+
+            }
+
+            ?>
+
+
+
+        </div>
+
+
+
+
+    </div>
+
+<?
+                }
+    }
+else
+{
 
 //вывод рейтинг менеджеров и других работников
 //|
@@ -788,7 +1038,7 @@ echo'<div style="display:none;" class="ring_block ring-block-line js-ring-3">';
 echo'</div>';
 echo'</div>';	
 	
-	
+}
 	
 ?>
 	
@@ -822,6 +1072,10 @@ echo'</div>';
 </div>
 </div>
  </div>
+<?
+if($id_role!=7)
+{
+?>
  <div class="section" id="section1">
  <div class="oka_block_1">
 <div class="oka1_1">
@@ -915,7 +1169,13 @@ if($num_results_t2!=0) {
 </div>
  </div>
  </div>
-</div></div></div><?
+</div>
+    <?
+}
+
+    ?>
+
+</div></div><?
 include_once $url_system.'template/left.php';
 ?>
 </div></div><!--<script src="Js/rem.js" type="text/javascript"></script>--><div id="nprogress"><div class="bar" role="bar" ><div class="peg"></div></div></div>

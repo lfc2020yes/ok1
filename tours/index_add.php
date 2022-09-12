@@ -1312,7 +1312,7 @@ $query_string.='<div class="left_drop menu1_prime"><label class="active_label">�
                 echo '<li><a href="javascript:void(0);" rel="0">Нет</a></li>';
 
                 $result_work_zz=mysql_time_query($link,'Select a.* from affiliates_promo_code as a,affiliates as b WHERE a.id_users=b.id_users and b.
-id_a_group="'.$id_group_u.'" and a.visible=1 and a.date_end>="'.date("Y-m-d").'" order by a.name');
+id_a_group="'.$id_group_u.'" and a.visible=1 and a.status=2 and  a.date_end>="'.date("Y-m-d").'" order by a.name');
                 $num_results_work_zz = $result_work_zz->num_rows;
                 if($num_results_work_zz!=0)
                 {

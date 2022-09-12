@@ -8,7 +8,15 @@ $(document).ready(function(){
 	$('body').on("change keyup input click",'.js-close-cash-day',close_cash_day);
 	$('body').on("change keyup input click",'.js-yes-cash-time',yes_cash_time);
 
+	$('body').on("change keyup input click",'.js-dell-promo',dell_promo);
+
 	$('body').on("change keyup input click",'.js-status-cash-more',status_cash_check);
+
+    $('body').on("change keyup input click",'.js-drop-aff',drop_aff);
+
+	$('body').on("change keyup input click",'.js-add-promocod',add_promocod);
+
+	$('body').on("change keyup input click",'.js-sogl-block',sogl_promocod);
 
 	//измениние курса и стоимости при оформлении тура
 	$('.js-form-add-tours').on("change keyup input click",'.xexchange_rates',xexchange_rates1);
@@ -151,6 +159,8 @@ $(document).ready(function(){
 	$('.menu-09').on("change keyup input click",".js-add-affiliates", add_affiliates_2020);
 //заблокировать сотрудника
 $('body').on("change keyup input click",'.js-users-block',UsersBlock);
+
+	$('body').on("change keyup input click",'.js-partner-block',PartnerBlock);
 
 //изменить статус тура по проверки оплате
 $('.trips_block_global').on("change keyup input click",'.js-status-trips',StatusTrips);
@@ -929,6 +939,21 @@ function AfterStatusTrips(data,update)
 	}
 }
 
+//заблокировать партнера
+function PartnerBlock()
+{
+
+	var id= $(this).attr('id-bdata');
+
+
+	$(this).hide().before('<div class="b_loading_small" style="position:relative; width: 40px;padding-top: 7px;top: auto;right: auto;left: calc(50% - 20px);"><div class="b_loading_circle_wrapper_small"><div class="b_loading_circle_one_small"></div><div class="b_loading_circle_one_small b_loading_circle_delayed_small"></div></div></div>');
+
+
+	var data ='url='+window.location.href+'&id='+id;
+	AjaxClient('affiliates','ban','GET',data,'AfterPartnerBlock',id,0,1);
+
+}
+
 //заблокировать сотрудника
 function UsersBlock()
 {
@@ -942,6 +967,45 @@ function UsersBlock()
     var data ='url='+window.location.href+'&id='+id;
     AjaxClient('users','ban','GET',data,'AfterUsersBlock',id,0,1);
 
+}
+
+
+function AfterPartnerBlock(data,update)
+{
+	var butt=$('.js-partner-block[id-bdata='+update+']');
+	butt.parents('.users_block_2020').find('.b_loading_small').remove();
+	butt.show();
+
+
+	if (data.status=='ok')
+	{
+
+
+		if(butt.parents('.users_block_2020').length!=0)
+		{
+
+			//butt.parents('.users_block_2020').find('.js-party-status').empty().append(data.st);
+			if(data.party=='1')
+			{
+
+				butt.parents('.users_block_2020').removeClass('red-party');
+				butt.removeClass('block-party');
+				alert_message('ok','Доступ открыт');
+			} else
+			{
+				butt.parents('.users_block_2020').addClass('red-party');
+				butt.addClass('block-party');
+				alert_message('ok','Партнер заблокирован');
+			}
+		} else
+		{
+			autoReloadHak();
+		}
+
+	} else
+	{
+		alert_message('error','Ошибка!');
+	}
 }
 
 
@@ -1455,6 +1519,26 @@ function del_comm_preorders(event)
 
 }
 
+
+/**
+ * удалить промокод
+ */
+function dell_promo(event)
+{
+
+	var del_id=$(this).parents('.promo-block').attr('promo');
+
+	var data ='url='+window.location.href+
+		'&sel='+del_id;
+
+	$('.promo-block[promo='+del_id+']').slideUp("slow");
+
+	AjaxClient('affiliates','dell_promo','GET',data,'AfterDellPromo',del_id,0,1);
+
+	//alert_message('ok','Промокод Удален');
+
+}
+
 /**
  * удалить из истории что-то в турах
  */
@@ -1580,8 +1664,17 @@ var id_trips=$(this).parents('.trips_block_global').attr('id_trips');
 
 	}
 }
+function AfterDellPromo(data,update) {
+	if ( data.status=='ok' ) {
+		alert_message('ok','Промокод Удален');
 
+	} else
+	{
+		alert_message('error','Ошибка');
 
+		$('.promo-block[promo='+update+']').slideDown("slow");
+	}
+}
 /**
  *
  * Постфункция добавить комментарий в журнале о туре
@@ -6035,6 +6128,103 @@ function add_preorders_plus()
 
 
 }
+
+//согласовать промокод
+function sogl_promocod()
+{
+	if(typeof timerId !== "undefined")
+	{
+		clearInterval(timerId);
+		$.arcticmodal('close');
+	}
+	var id_ccl= $(this).attr('id-bdata');
+
+	$.arcticmodal({
+		type: 'ajax',
+		url: 'forms/form_sogl_promocod.php?id='+id_ccl,
+		beforeOpen: function(data, el) {
+			$('.loader_ada_forms').show();
+			$('.loader_ada1_forms').addClass('select_ada');
+
+		},
+		afterOpen: function(data, el) {
+			$('.loader_ada_forms').hide();
+			$('.loader_ada1_forms').removeClass('select_ada');
+			ToolTip();
+		},
+		afterClose: function(data, el) { // после закрытия окна ArcticModal
+			clearInterval(timerId);
+		}
+
+	});
+
+
+}
+
+//создать новый промокод
+function add_promocod()
+{
+	if(typeof timerId !== "undefined")
+	{
+		clearInterval(timerId);
+		$.arcticmodal('close');
+	}
+
+
+	$.arcticmodal({
+		type: 'ajax',
+		url: 'forms/form_add_promocod.php',
+		beforeOpen: function(data, el) {
+			$('.loader_ada_forms').show();
+			$('.loader_ada1_forms').addClass('select_ada');
+
+		},
+		afterOpen: function(data, el) {
+			$('.loader_ada_forms').hide();
+			$('.loader_ada1_forms').removeClass('select_ada');
+			ToolTip();
+		},
+		afterClose: function(data, el) { // после закрытия окна ArcticModal
+			clearInterval(timerId);
+		}
+
+	});
+
+
+}
+
+//подать заявку на вывод средств
+function drop_aff()
+{
+    if(typeof timerId !== "undefined")
+    {
+        clearInterval(timerId);
+        $.arcticmodal('close');
+    }
+
+
+    $.arcticmodal({
+        type: 'ajax',
+        url: 'forms/form_drop_money.php',
+        beforeOpen: function(data, el) {
+            $('.loader_ada_forms').show();
+            $('.loader_ada1_forms').addClass('select_ada');
+
+        },
+        afterOpen: function(data, el) {
+            $('.loader_ada_forms').hide();
+            $('.loader_ada1_forms').removeClass('select_ada');
+            ToolTip();
+        },
+        afterClose: function(data, el) { // после закрытия окна ArcticModal
+            clearInterval(timerId);
+        }
+
+    });
+
+
+}
+
 
 //добавление задачи сразу со связанным клиентом
 function add_task_plus()

@@ -110,6 +110,7 @@ $fontFuR:'fugue_regular-webfont';
 
 @include font-face("ProximaNova-Bold", $src-domain + "fonts/ProximaNova-Bold/ProximaNova-Bold", "normal", "normal");
 
+@include font-face("Mono", $src-domain + "fonts/Monologue/monologue_rounded_demo-webfont", "normal", "normal");
 
 
 @include font-face("icon1", $src-domain + "fonts/icon1/icon1", "normal", "normal");

@@ -66,10 +66,10 @@ $nav_url_a=array("","","","","tours/add/","","","","","","","","");
 */
 
 
-$nav_text=array("Задачи","Финансы","Обращения","Туры","Клиенты","Туроператоры","Сотрудники","Отчеты","Бухгалтерия","Договора","Статистика","Партнеры","Настройки");
-$nav_url=array("task","finance","preorders","tours","clients","touroperator","users","reports","accounting","contracts","statistic_new","affiliates","settings");
-$nav_plus=array("1","0","1","2","1","0","0","0","0","0","0","0","0");
-$nav_url_a=array("","","","tours/add/","","","","","","","","","");
+$nav_text=array("Задачи","Финансы","Обращения","Туры","Клиенты","Туроператоры","Сотрудники","Отчеты","Бухгалтерия","Договора","Статистика","Партнеры","Комиссии","Промокоды","Настройки");
+$nav_url=array("task","finance","preorders","tours","clients","touroperator","users","reports","accounting","contracts","statistic_new","affiliates","commission","promo","settings");
+$nav_plus=array("1","0","1","2","1","0","0","0","0","0","0","0","0","0","0");
+$nav_url_a=array("","","","tours/add/","","","","","","","","","","","");
 
 
 /*
@@ -90,10 +90,10 @@ $found = array_search($active_menu,$nav_url);
 <li class="line" style="padding-top: 0px;"><div></div></li>
 
     <?
-    if($more_city==1)
+    if(($more_city==1)and($row_uu["id_role"]!=7))
     {
     ?>
-    <li class="not_li_sel" style="overflow: visible;">
+    <li class="not_li_sel" style="overflow: visible; padding: 0px 15px;">
         <?
 
         $su_5=0;
@@ -153,10 +153,66 @@ color: rgba(0,0,0,0.7);" class="slct" list_number="t6" data_src="'.$su_5.'">'.$o
 
 <?
     }
+
+/*
+    //выводим кошелек для партнеров
+    if(($row_uu["id_role"]==7))
+    {
+
+        $result_uu_aff = mysql_time_query($link, 'select all_comission,paid_comission,block_comission from affiliates where id_users="' . ht($row_uu["id"]) . '"');
+        $num_results_uu_aff = $result_uu_aff->num_rows;
+
+        if ($num_results_uu_aff != 0) {
+            $row_uu_aff = mysqli_fetch_assoc($result_uu_aff);
+        }
+
+        ?>
+
+    <li class="not_li_sel">
+        <a class="a_wwal a11">
+            <div class=" bill_wallet bill_wallet_affiliates">
+                <div class=" cell_small">
+                    <?
+
+                        echo'<div class="text_wallet1 padd" ><span class="bill_str1" > →</span >Бонусы</div >';
+
+
+
+
+                    echo'<span class="pay_summ_bill1 '.$class_modey.'">'.rtrim(rtrim(number_format(($row_uu_aff["all_comission"]-$row_uu_aff["paid_comission"]), 2, '.', ' '),'0'),'.').'</span>';
+                    ?>
+
+                </div>
+                <div class=" cell_big cell_big_affiliates">
+                    <?
+
+                        echo'<div class="text_wallet1 padd"><span class="bill_str1">→</span>К выплате</div>';
+
+
+                    echo'<span class="pay_summ_bill1 '.$class_modey.'">'.rtrim(rtrim(number_format(($row_uu_aff["all_comission"]-$row_uu_aff["paid_comission"]-$row_uu_aff["block_comission"]), 2, '.', ' '),'0'),'.');
+
+                    echo'</span>';
+
+
+
+
+
+                    ?>
+                </div></div>
+        </a>
+    </li>
+
+    <li class="line"><div></div></li>
+    <!--<li><a href="/">Главная</a></li>-->
+<?
+
+    }
+*/
+
 //выводим кошелек только для менеджеров	для новых туров
 //|
 //V
-if($active_menu!='statistic_new')
+if(($active_menu!='statistic_new')and($row_uu["id_role"]!=7))
 {
 
 
@@ -343,7 +399,7 @@ if($active_menu!='statistic_new')
 
     ?>
 
-    <li class="not_li_sel">
+    <li class="not_li_sel" style="padding-left:15px;padding-right:15px;">
         <a href="statistic_new/" data-tooltip="Посмотреть статистику" class="a_wwal a11">
             <div class=" bill_wallet">
                 <div class=" cell_small">

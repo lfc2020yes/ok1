@@ -491,13 +491,16 @@ if(($array_param_new[0] == 1) and ($array_param_new[1] == 1)) {
     $comiss_ship=0;
     $comiss_vip = comiss_end_call($row_uu_new['id'], $link);
     $comiss_ship = comiss_end_ship($row_uu_new['id'], $link);
+
+    $proc_ship=partners_trips($row_uu_new['id'],$id_company,$link);
+
     mysql_time_query($link, 'update trips set
     
     commission="' . $comiss_vip . '",
     comission_partnership="'.$comiss_ship.'"
     where id = "' . ht($row_uu_new['id']) . '"');
 
-    commission_add_ship($row_uu_new['id'],$comiss_ship, $link);
+    commission_add_ship($row_uu_new['id'],$comiss_ship,$proc_ship, $link);
 
 
 }

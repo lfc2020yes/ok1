@@ -37,38 +37,31 @@ if (count($_GET) != 1)
 }
 $status_admin=0;
 
-//проверить есть ли переменная id и можно ли этому пользователю это делать
-if (count($_GET) != 1)
-{
-    goto end_code;
-}
-$status_admin=0;
-$result_uu = mysql_time_query($link, 'select a.all_comission,a.paid_comission,b.name_user,a.block_comission from affiliates as a,r_user as b where b.id=a.id_users and a.id_users="'.ht($_GET["id"]).'" ');
+
+
+
+$result_uu = mysql_time_query($link, 'select a.*,b.name_user from affiliates_promo_code as a,r_user as b where a.id_users=b.id and a.id="'.ht($_GET["id"]).'" and a.visible=1 and a.status=1 ');
 $num_results_uu = $result_uu->num_rows;
 
 if ($num_results_uu != 0) {
     $row_uu = mysqli_fetch_assoc($result_uu);
-    $status_admin=$row_uu['status_admin'];
-    //проверяем должны ли ему что то
-    $dolg=$row_uu['all_comission']-$row_uu['paid_comission']-$row_uu['block_comission'];
-    if($dolg<=0)
-    {
-        goto end_code;
-    }
 } else
 {
     goto end_code;
 }
 
 
-if ((!$role->permission('Партнеры','A'))and($sign_admin!=1))
+
+
+
+if ((!$role->permission('Промокоды','S'))and($sign_admin!=1))
 {
     goto end_code;
 }
 //составление секретного ключа формы
 //составление секретного ключа формы
 //соль для данного действия
-$token=token_access_compile($_GET['id'],'bt_affiliates_buy',$secret);
+$token=token_access_compile($_GET["id"],'bt_promo_sogl',$secret);
 //составление секретного ключа формы
 //составление секретного ключа формы
 //составление секретного ключа формы
@@ -91,10 +84,8 @@ $status=1;
 
             <div class="box-modal_close arcticmodal-close"></div>
             <?
-            echo'<h1 class="h111" mor="'.$token.'" for="'.htmlspecialchars(trim($_GET['id'])).'"><span>Выплата партнеру</span>
-
+            echo'<h1 class="h111" mor="'.$token.'" for="'.htmlspecialchars(trim($_GET["id"])).'"><span>Согласовать промокод</span>
 <span class="forms_dop_pa">'.$row_uu['name_user'].'</span>
-
 </h1>';
             ?>
 
@@ -103,8 +94,8 @@ $status=1;
         </div>
         <div class="center_modal">
             <?
-            echo'<form class="js-form-pay-affiliates" id="vino_xd_affiliates_pay" style=" padding:0; margin:0;" method="post" enctype="multipart/form-data">';
-            echo'<input type="hidden" value="'.htmlspecialchars(trim($_GET['id'])).'" name="id">';
+            echo'<form class="js-form-promo-sogl" id="vino_xd_promo_sogl" style=" padding:0; margin:0;" method="post" enctype="multipart/form-data">';
+            echo'<input type="hidden" value="'.htmlspecialchars(trim($_GET["id"])).'" name="id">';
             echo'<input type="hidden" value="'.$token.'" name="tk">';
             echo'<input name="tk1" value="dsQ23RStsd2re" type="hidden">';
             //форма добавления задачи
@@ -207,113 +198,42 @@ $status=1;
 */
 
 
+            $query_string.='<!--input start	-->		
+<div class="password_turs">
+<div id="1" class="input-choice-click-pass js-password-butt js-click-mmmt active_pass">
+<div class="choice-head">Согласовать</div>
+<div class="choice-radio"><div class="center_vert1"><i class="active_task_cb"></i></div></div>
+</div>	
 
+<div id="2" class="input-choice-click-pass js-password-butt js-click-mmmt">
+<div class="choice-head">Отклонить</div>
+<div class="choice-radio"><div class="center_vert1"><i></i></div></div>
+</div>
+<input name="hwohwo" class="komy_trips" value="1" type="hidden">	
+</div>		
+<!--input end -->';
 
 
 
 
             $query_string.='<!--input start	-->		
-	<div style="margin-top: 30px;" class="jj-l2"><div class="input_2018"><label>Сумма (рубли)<span>*</span></label><input name="summ" value="" id="date_124" class="input_new_2018 required gloab gloab1 money_mask1 js-upload-kurs js-upload-kurs1" autocomplete="off" type="text"><div class="div_new_2018"><hr class="one"><hr class="two"><hr class="tree"><div class="oper_name" joi=""></div></div></div>
+	<div style="margin-top: 30px;" class="jj-l2"><div class="input_2018"><label>Название<span>*</span></label><input name="summ" value="'.$row_uu["name"].'" id="date_124" class="input_new_2018 required gloab gloab1  " autocomplete="off" type="text"><div class="div_new_2018"><hr class="one"><hr class="two"><div class="oper_name" joi=""></div></div></div>
+</div>
+<!--input end	-->';
+            $query_string.='<!--input start	-->		
+	<div style="margin-top: 30px;" class="jj-l2"><div class="input_2018"><label>Доп. Названия</label><input name="summ1" value="" id="date_124" class="input_new_2018 required  " autocomplete="off" type="text"><div class="div_new_2018"><hr class="one"><hr class="two"><div class="oper_name" joi=""></div></div></div>
+</div>
+<!--input end	-->';
+
+            $query_string.='<!--input start	-->		
+	<div style="margin-top: 30px;" class="jj-l2"><div class="input_2018"><label>Бонус<span>*</span></label><input name="bonus" value="" id="date_124" class="input_new_2018 required gloab gloab1  " autocomplete="off" type="text"><div class="div_new_2018"><hr class="one"><hr class="two"><div class="oper_name" joi=""></div></div></div>
 </div>
 <!--input end	-->';
 
             //$query_string.='<div class="add_say_two">';
 
 
-
-
-
-
-            $query_string.='<div style="margin-top: 30px;">
-<div class="input_2018"><label>Дата оплаты<span>*</span></label>
-
-<div class="help_selection js-vibor-date"><span class="date_help_sele" tabi="'.date("Y").'-'.
-                date("m").'-'.
-                date("d").'">Сегодня</span><span class="date_help_sele" tabi="'.date("Y", mktime(date("G"), date("i"), date("s"), date("n"),(date("j")-1), date("Y"))).'-'.
-                date("m", mktime(date("G"), date("i"), date("s"), date("n"),(date("j")-1), date("Y"))).'-'.
-                date("d", mktime(date("G"), date("i"), date("s"), date("n"),(date("j")-1), date("Y"))).'">Вчера</span><span class="date_help_sele" tabi="'.date("Y", mktime(date("G"), date("i"), date("s"), date("n"),(date("j")-2), date("Y"))).'-'.
-                date("m", mktime(date("G"), date("i"), date("s"), date("n"),(date("j")-2), date("Y"))).'-'.
-                date("d", mktime(date("G"), date("i"), date("s"), date("n"),(date("j")-2), date("Y"))).'">Позавчера</span></div>
-
-<input readonly="true" name="task[task_date]" value="" id="date_table_gr22" class="input_new_2018 required gloab gloab1" autocomplete="off" type="text"><div class="div_new_2018"><hr class="one"><hr class="two"></div></div>
-</div> 
-
-<input id="date_hidden_table_gr3300"  name="buy_date" value="" type="hidden">';
-
-
-            //$query_string.='<div class="pad10" style="padding: 0;"><span class="bookingBox_gr22"></span></div>';
-            $query_string.='
-	<!--<script type="text/javascript" src="Js/jquery-ui-1.9.2.custom.min.js"></script>
-	<script type="text/javascript" src="Js/jquery.datepicker.extension.range.min.js"></script>	-->	            
- <script type="text/javascript">var disabledDays = [];
- $(document).ready(function(){        
- $(\'.time_input\').inputmask("hh:mm", {placeholder: "HH:MM", insertMode: false, showMaskOnHover: false});
- 
-            $("#date_table_gr22").datepicker({ 
-altField:\'#date_hidden_table_gr3300\',
-onClose : function(dateText, inst){
-	    //date_graf();
-        //alert(dateText); // Âûáðàííàÿ äàòà 
-		
-    },
-altFormat:\'yy-mm-dd\',
-defaultDate:null,
-beforeShowDay: disableAllTheseDays,
-dateFormat: "d MM yy", 
-firstDay: 1,
-minDate: "-2m", maxDate: "0d",
-onSelect: function(dateText) {
-    	// extensionRange - объект расширения
-	//alert(dateText);
-				//	var theDate = $(inst).datepicker.formatDate(\'DD, MM d, yy\', $(inst).datepicker.(\'getDate\'));
-$("#date_table_gr22").parents(\'.input_2018\').addClass(\'active_in_2018\');
-	},
-beforeShow:function(textbox, instance){
-	//alert(\'before\');
-	
-	setTimeout(function () {
-            instance.dpDiv.css({
-                position: \'fixed\',
-				top: 0,
-                left: 0,
-                right:0,
-                margin:\'auto\',
-                width: \'60%\',
-                \'box-shadow\': \'0 10px 100px #c6c6c6\',
-                \'z-index\': 10001
-       
-                
-            });
-		
 /*
-		var html = $(\'.ui-datepicker:last\'); 
-		//$(\'.ui-datepicker\').remove();
-		$(\'.bookingBox_gr22\').append(html);
-		*/
- 
-        }, 10);
-	
- 
-} });
- });
-	 
-function resizeDatepicker() {
-    setTimeout(function() { $(\'.bookingBox_gr22 > .ui-datepicker\').width(\'100%\'); }, 10);
-}	 
-
-function jopacalendar(queryDate,queryDate1,date_all) 
-	{
-	
-if(date_all!=\'\')
-	{
-var dateParts = queryDate.match(/(\d+)/g), realDate = new Date(dateParts[0], dateParts[1] -1, dateParts[2]); 
-var dateParts1 = queryDate1.match(/(\d+)/g), realDate1 = new Date(dateParts1[0], dateParts1[1] -1, dateParts1[2]); 	 	 
-	}
-	}	 
-	 
-</script>';
-
-
 
             $query_string.='<div style="margin-top: 30px;">';
 
@@ -335,13 +255,13 @@ $(\'.tyyo\').trigger(\'keyup\');
 	</script>
 	</div>';
 
-
+*/
             $query_string.='</div>';
 
             //форма задачи
             if($status_admin==0)
             {
-                $query_string.='<div class="center_vert right_task_ccb" style="width: 100%; margin-top:20px;"><div class="add_cff_fin js-add-buy-affiliates-but-x">Провести</div>';
+                $query_string.='<div class="center_vert right_task_ccb" style="width: 100%; margin-top:20px;"><div class="add_cff_fin js-add-buy-promo-sogn-x">Далее</div>';
             }
 
 

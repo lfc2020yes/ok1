@@ -515,13 +515,15 @@ if ($num_results_ss_new != 0) {
         $comiss_ship=0;
         $comiss_vip = comiss_end_call($row_uu11['id_trips'], $link);
         $comiss_ship = comiss_end_ship($row_uu11['id_trips'], $link);
+
+        $proc_ship=partners_trips($row_uu11['id_trips'],$id_company,$link);
         mysql_time_query($link, 'update trips set
     
     commission="' . $comiss_vip . '",
     comission_partnership="'.$comiss_ship.'"
     where id = "' . ht($row_uu11['id_trips']) . '"');
 
-        commission_add_ship($row_uu11['id_trips'],$comiss_ship, $link);
+        commission_add_ship($row_uu11['id_trips'],$comiss_ship,$proc_ship, $link);
 
     }
 

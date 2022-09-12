@@ -125,7 +125,7 @@ select DISTINCT Z.id from(
   
   from trips as A
 
-  where A.status=1 AND  A.visible=1 AND A.id_a_company IN (' . $id_company . ') and A.id_affiliates="'.$row_uu["id_affiliates"].'" and not(a.id="'.ht($id_trips).'")
+  where A.status=1 AND  A.visible=1 AND A.id_a_company IN (' . $id_company . ') and A.id_affiliates="'.$row_uu["id_affiliates"].'" and not(A.id="'.ht($id_trips).'") and A.shopper=1 and A.id_shopper="'.$row_uu["id_shopper"].'"
 )
 
 ) Z order by Z.date_start DESC';
@@ -147,7 +147,7 @@ select DISTINCT Z.id from(
   
   from trips as A
 
-  where A.status=1 AND  A.visible=1 AND A.id_a_company IN (' . $id_company . ') and A.id_affiliates="'.$row_uu["id_affiliates"].'"
+  where A.status=1 AND  A.visible=1 AND A.id_a_company IN (' . $id_company . ') and A.id_affiliates="'.$row_uu["id_affiliates"].'"  and A.shopper=1 and A.id_shopper="'.$row_uu["id_shopper"].'"
 )
 
 ) Z order by Z.datecreate limit 1';
@@ -185,9 +185,10 @@ select DISTINCT Z.id from(
  * добавление комиссии  партнеру после полной оплаты
  *
  */
-function commission_add_ship($id_trips,$comm,$link)
+function commission_add_ship($id_trips,$comm,$proc,$link)
 {
     global $url_system;
+    global $id_user;
 
     if($comm!=0) {
         $result_tr = mysql_time_query($link, 'Select 
@@ -222,8 +223,8 @@ function commission_add_ship($id_trips,$comm,$link)
             if ($num_results_uu == 0) {
                 $date_ = date("y.m.d") . ' ' . date("H:i:s");
 
-                mysql_time_query($link, 'INSERT INTO affiliates_history_trips(id_users,id_trips,comission,block,datetimes) VALUES( 
-        "' . ht($row_tr["id_affiliates"]) . '","' . ht($id_trips) . '","'.$comm.'","'.$block.'","' . $date_ . '")');
+                mysql_time_query($link, 'INSERT INTO affiliates_history_trips(id_users,id_trips,comission,proc,block,datetimes) VALUES( 
+        "' . ht($row_tr["id_affiliates"]) . '","' . ht($id_trips) . '","'.$comm.'","'.$proc.'","'.$block.'","' . $date_ . '")');
                 //уведомление партнеру
 
                 $text_not = 'Тур №' . ht($id_trips) . ' был забронирован и оплачен. +'.$comm.' RUB';
