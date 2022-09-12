@@ -183,7 +183,7 @@ id_a_group,sfera,telegram,date_create) VALUES ("'.$ID_N.'","'.$id_group_u.'","'.
 //$sms='Вам поступила новая задача №'.$ID_N.' на исполнение. Подробности: www.ok.i-s.group/task/'.$ID_N.'/';
 
 //
-                $sms = 'Добро пожаловать в партнерскую программу UMATRAVEL. Ваши данные для входа \n Логин:'.trim($_POST['login_b']).' \n Пароль:'.trim($_POST['password_b']).' \n https://ok.umatravel.club/';
+                $sms = 'Добро пожаловать в партнерскую программу UMATRAVEL. Ваши данные для входа. Логин:'.trim($_POST['login_b']).' Пароль:'.trim($_POST['password_b']).' https://ok.umatravel.club/';
 
 
 
