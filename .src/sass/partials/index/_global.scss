@@ -10320,7 +10320,7 @@ margin-left: 15px;}
 .option_inv::before {right:15px;}
 
 
-.name_stock_search_input { 
+.name_stock_search_input,.name_stock_search_inputi {
 display: block;
 width: 100%;
 overflow: hidden;
@@ -10344,7 +10344,7 @@ background-repeat: no-repeat;
 background: none;
 }
 
-.dell_stock_search,.dell_stock_searcho,.dell_stock_search_tours,.dell_stock_search_preorders
+.dell_stock_search,.dell_stock_searcho,.dell_stock_search_toursi,.dell_stock_search_tours,.dell_stock_search_preorders
 {
 	color: #e0e0e0;
 	display: none;
@@ -21887,4 +21887,15 @@ margin-top: 40px;
 
 
 	.lider_more:nth-child(2n) {background-color: rgba(0,0,0,0.025)}
+}
+
+.you_you {
+	background-color: rgba(0, 0, 0, 0.05);
+	font-family: "GEInspiraBold";
+	color: rgba(0, 0, 0, 0.4);
+	font-size: 12px;
+	line-height: 16px;
+	position: relative;
+	text-transform: uppercase;
+	padding: 10px 20px;
 }

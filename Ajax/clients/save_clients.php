@@ -98,11 +98,14 @@ $date_cl=$date_end1[2].'-'.$date_end1[1].'-'.$date_end1[0];
 
 
 //+7 (902) 129-68-34
-$phone_base=explode(" ",htmlspecialchars(trim($_POST['offers'][0]["client_phone"])));	
-$phone_base1=explode("-",$phone_base[2]);	
+$phone_end='';
 
-$phone_end=	$phone_base[1][1].$phone_base[1][2].$phone_base[1][3].$phone_base1[0].$phone_base1[1].$phone_base1[2];
+if(trim($_POST['offers'][0]["client_phone"])!='') {
+    $phone_base = explode(" ", htmlspecialchars(trim($_POST['offers'][0]["client_phone"])));
+    $phone_base1 = explode("-", $phone_base[2]);
 
+    $phone_end = $phone_base[1][1] . $phone_base[1][2] . $phone_base[1][3] . $phone_base1[0] . $phone_base1[1] . $phone_base1[2];
+}
 /*
 $date_end2=explode(".",htmlspecialchars(trim($_POST['offers'][0]["client_z_kogda"])));	
 $date_cl1=$date_end2[2].'-'.$date_end2[1].'-'.$date_end2[0];
@@ -240,7 +243,7 @@ adress="",
 fio="' . htmlspecialchars(trim($_POST['offers'][0]["client_fio"])) . '",
 email="",
 comment="' . htmlspecialchars(trim($_POST['offers'][0]["client_comment"])) . '",
-phone="",
+phone="' . $phone_end . '",
 date_birthday="'.$date_cl.'",
 pol="'.htmlspecialchars(trim($_POST['offers'][0]["pol"])).'",
 
@@ -266,7 +269,7 @@ where id = "' . htmlspecialchars($_POST['id']) . '"');
 
 end_code:
 
-$aRes = array("debug"=>$debug,"status"   => $status_ee,"status_echo"   => $status_echo,"count" => $dom,"for_id"=>$id,"id" => htmlspecialchars($id));
+$aRes = array("debug" => $debug,"status"   => $status_ee,"status_echo"   => $status_echo,"count" => $dom,"for_id"=>$id,"id" => htmlspecialchars($id));
 /*require_once $url_system.'Ajax/lib/Services_JSON.php';
 $oJson = new Services_JSON();
 //функция работает только с кодировкой UTF-8

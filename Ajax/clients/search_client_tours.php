@@ -74,28 +74,6 @@ if ((!isset($_GET['search'])))
    $debug=h4a(4,$echo_r,$debug);
    goto end_code;	
 }
-/*
-if(($_GET['search']=='')or(strlen($_GET['search'])<'2'))
-{
-	   $debug=h4a(224,$echo_r,$debug);
-   goto end_code;	
-}
-*/
-//**************************************************
-/*
-$result_t=mysql_time_query($link,'Select b.id_user,b.status,b.ready,b.id_object from booking as b where b.id="'.htmlspecialchars(trim($_GET['id'])).'"');
-           $num_results_t = $result_t->num_rows;
-	       if($num_results_t!=0)
-	       {	
-			 
-			 $row_t = mysqli_fetch_assoc($result_t);
-			   
-		   } else
-		   {
-			      $debug=h4a(6,$echo_r,$debug);
-   goto end_code;	
-		   }
-*/
 
 //**************************************************
 //**************************************************

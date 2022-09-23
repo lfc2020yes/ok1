@@ -83,11 +83,14 @@ $id_user=id_key_crypt_encrypt($_SESSION["user_id"]);
 
 	
 //+7 (902) 129-68-34
-$phone_base=explode(" ",htmlspecialchars(trim($_POST['offers'][0]["client_phone"])));	
-$phone_base1=explode("-",$phone_base[2]);	
+$phone_end='';
+if(trim($_POST['offers'][0]["client_phone"])!='') {
 
-$phone_end=	$phone_base[1][1].$phone_base[1][2].$phone_base[1][3].$phone_base1[0].$phone_base1[1].$phone_base1[2];
+    $phone_base = explode(" ", htmlspecialchars(trim($_POST['offers'][0]["client_phone"])));
+    $phone_base1 = explode("-", $phone_base[2]);
 
+    $phone_end = $phone_base[1][1] . $phone_base[1][2] . $phone_base[1][3] . $phone_base1[0] . $phone_base1[1] . $phone_base1[2];
+}
 
 
 	if(validateDate($_POST['offers'][0]["client_z_kogda"],'d.m.Y'))    
@@ -233,7 +236,7 @@ if($_POST['radio_potential']==2)
 "","0",
 "'.ht($id_user).'",
 "'.ht($_POST['offers'][0]["client_fio"]).'",
-"",
+"'.$phone_end.'",
 "",
 "'.$date_cl.'",
 "'.$date_.'",

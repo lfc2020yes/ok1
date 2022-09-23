@@ -48,7 +48,7 @@ $(document).ready(function(){
 
     //набор текста в поиске
 	$('.js-plus-filter').on("change keyup input click",'.js-text-search-x',changesort_stock2);
-
+	$('.js-plus-filter').on("change keyup input click",'.js-text-search-xi',changesort_stock2i);
 	//туры - показать в РУБ
 	$('.trips_block_global').on("change keyup input click",'.js-exc-cost',exc_cost);
 
@@ -1995,6 +1995,33 @@ function js_new_doc()
 }
 
 
+function changesort_stock2i() {
+	//alert("1");
+	if($(this).val()!='')
+	{
+		$(this).next().show();
+		//скрыть другие элементы поиска
+
+
+	}else
+	{
+		$(this).next().hide();
+		//показать другие элементы поиска
+
+	}
+
+	var sss1=$('#name_stock_search_tours').val();
+	var sss2=$('#name_stock_search_toursi').val();
+	if((sss1!='')||(sss2!='')) {
+		$('.js--sort').addClass('greei_input');
+		$('.js--sort').find('input').prop('readonly',true);
+	} else
+	{
+		$('.js--sort').removeClass('greei_input');
+		$('.js--sort').find('input').removeAttr('readonly');
+	}
+}
+
 
 function changesort_stock2() {
 	//alert("1");
@@ -2002,17 +2029,27 @@ function changesort_stock2() {
 	{
 		$(this).next().show();
 		//скрыть другие элементы поиска
-		$('.js--sort').addClass('greei_input');
-		$('.js--sort').find('input').prop('readonly',true);
 
 	}else
 	{
 		$(this).next().hide();
 		//показать другие элементы поиска
-		$('.js--sort').removeClass('greei_input');
-		$('.js--sort').find('input').removeAttr('readonly');
+
 
 	}
+
+	var sss1=$('#name_stock_search_tours').val();
+	var sss2=$('#name_stock_search_toursi').val();
+	if((sss1!='')||(sss2!='')) {
+		$('.js--sort').addClass('greei_input');
+		$('.js--sort').find('input').prop('readonly',true);
+	} else
+	{
+		$('.js--sort').removeClass('greei_input');
+		$('.js--sort').find('input').removeAttr('readonly');
+	}
+
+
 }
 
 
@@ -5066,6 +5103,7 @@ $('.js-form-add-tours').on("change keyup input click",".js-fly-turs-client",js_f
 $('.dell_stock_search').bind('change keyup input click', changesort_stock2__);	
 $('.dell_stock_searcho').bind('change keyup input click', changesort_stock2__o);
 $('.dell_stock_search_tours').bind('change keyup input click', changesort_stock2_tours);
+	$('.dell_stock_search_toursi').bind('change keyup input click', changesort_stock2_toursi);
 	$('.dell_stock_search_preorders').bind('change keyup input click', changesort_stock2_preorders);
 
 	$('.menu_x').on("change keyup input click",".js-preorders-add0", preorders_adds);
@@ -5208,15 +5246,47 @@ var changesort_stock2_preorders= function() {
 //крестик при поиске в клиентах частные лица
 var changesort_stock2_tours= function() {
 	var iu=$('.content').attr('iu');
-	$(this).prev().val('');
-	$.cookie("su_7cu"+iu, null, {path:'/',domain: window.is_session,secure: false});
-	$('.js--sort').removeClass('greei_input');
-	$('.js--sort').find('input').removeAttr('readonly');
 
-	$('.js-reload-top').removeClass('active-r');
-	$('.js-reload-top').addClass('active-r');
-
+	//$(this).prev().val('');
+	$('.js-text-search-x').val('');
 	$(this).hide();
+	$.cookie("su_7cu"+iu, null, {path:'/',domain: window.is_session,secure: false});
+
+
+	var sss1=$('#name_stock_search_tours').val();
+	var sss2=$('#name_stock_search_toursi').val();
+	if((sss1=='')&&(sss2=='')) {
+		$('.js--sort').removeClass('greei_input');
+		$('.js--sort').find('input').removeAttr('readonly');
+		$('.js-reload-top').removeClass('active-r');
+		$('.js-reload-top').addClass('active-r');
+	}
+
+
+
+
+
+
+}
+
+var changesort_stock2_toursi= function() {
+	var iu=$('.content').attr('iu');
+
+	$('.js-text-search-xi').val('');
+	$.cookie("su_7xcu"+iu, null, {path:'/',domain: window.is_session,secure: false});
+	$(this).hide();
+
+
+	var sss1=$('#name_stock_search_tours').val();
+	var sss2=$('#name_stock_search_toursi').val();
+
+	if((sss1=='')&&(sss2=='')) {
+		$('.js--sort').removeClass('greei_input');
+		$('.js--sort').find('input').removeAttr('readonly');
+		$('.js-reload-top').removeClass('active-r');
+		$('.js-reload-top').addClass('active-r');
+	}
+
 }
 
 //крестик при поиске в клиентах частные лица
@@ -10393,6 +10463,16 @@ $('.js-reload-top').addClass('active-r');
 
 	};
 
+	var changesort7cti = function() {
+		var iu=$('.content').attr('iu');
+		$.cookie("su_7xcu"+iu, null, {path:'/',domain: window.is_session,secure: false});
+		CookieList("su_7xcu"+iu,$(this).val(),'add');
+
+		$('.js-reload-top').removeClass('active-r');
+		$('.js-reload-top').addClass('active-r');
+
+	};
+
 
 	var changesort7pr = function() {
 		var iu=$('.content').attr('iu');
@@ -10407,7 +10487,7 @@ $('.js-reload-top').addClass('active-r');
 
 $('#name_stock_search').bind('change keyup input click', changesort7c);
 $('#name_stock_search_tours').bind('change keyup input click', changesort7ct);
-
+	$('#name_stock_search_toursi').bind('change keyup input click', changesort7cti);
 $('#name_stock_search_preorders').bind('change keyup input click', changesort7pr);
 
 //***************************************************************************************

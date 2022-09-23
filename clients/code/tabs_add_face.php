@@ -46,11 +46,12 @@ $query_string.='<div style="margin-top: 30px;"><div class="input_2018"><label>Ф
   $query_string.='<div style="margin-top: 30px;" class="js-potential-hide"><div class="input_2018"><label>ФИО Латинскими</label><input name="offers[0][client_latin]" value="" id="date_124" class="input_new_2018 required  latin_end" autocomplete="off" type="text"><div class="div_new_2018"><hr class="one"><hr class="two"><div class="oper_name"></div></div></div>
 </div>';	
 
-  $query_string.='<div style="margin-top: 30px;" class="js-turist-hide"><div class="input_2018 input-phone-list"><i class="js-open-phone">уже есть в базе</i><label>Телефон<span>*</span></label><input name="offers[0][client_phone]" value="" id="date_124" class="input_new_2018 required  gloab gloab_potential phone_us1 js-true-phone" autocomplete="off" type="text">
+  $query_string.='<div style="margin-top: 30px;" class="js-turist-hidex"><div class="input_2018 input-phone-list"><i class="js-open-phone">уже есть в базе</i><label>Телефон<span class="hide-letit-nado">*</span></label><input name="offers[0][client_phone]" value="" id="date_124" class="input_new_2018 required  gloab gloab_potential phone_us1 js-true-phone" autocomplete="off" type="text">
   <input type="hidden" class="js-true-search-phone"  name="phone_true"  value="0">
-  
   <div class="div_new_2018"><hr class="one"><hr class="two"><div class="oper_name"></div></div></div>
 </div>';
+
+
 
 
   $query_string.='<div style="margin-top: 30px;" class="js-potential-hide"><div class="input_2018"><label>Дата рождения<span>*</span></label><input name="offers[0][client_date]" class="input_new_2018 required  gloab date_picker_x gloab_turist" value="" id="date_124" autocomplete="off" type="text"><div class="div_new_2018"><hr class="one"><hr class="two"><div class="oper_name"></div></div></div>

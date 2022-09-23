@@ -368,6 +368,14 @@ $.arcticmodal({
 
 function potential_users()
 {
+	$('.hide-letit-nado').show();
+
+	$('.js-turist-hidex').find('input').removeClass('gloab');
+	$('.js-turist-hidex').find('input').addClass('gloab');
+
+	$('.hide-letit-nado').show();
+	$('.js-turist-hidex').find('input').removeClass('gloab');
+	$('.js-turist-hidex').find('input').addClass('gloab');
 
 	var cb_h=$(this).parents('.password_turs').find('input');
 	if(cb_h.val()!=$(this).attr('id'))
@@ -398,15 +406,22 @@ function potential_users()
 
 			  $('.js-turist-hide').slideDown( "slow" );
 			  $('.js-potential-hide').slideUp( "slow" );
+			//$('.js-turist-hidex').slideUp("slow");
 		}
 
 	if(cb_h==2)
 	{
 		// $(this).find('input').val(1);
 		//$(this).find('.choice-radio i').addClass('active_task_cb');
+		$('.hide-letit-nado').hide();
+		$('.js-turist-hidex').find('input').removeClass('gloab');
+
 
 		$('.js-potential-hide').slideDown( "slow" );
 		$('.js-turist-hide').slideUp( "slow" );
+		$('.js-turist-hidex').slideDown("slow");
+		$('.hide-letit-nado').hide();
+		$('.js-turist-hidex').find('input').removeClass('gloab');
 	}
 
 	if(cb_h==0)
@@ -415,6 +430,7 @@ function potential_users()
 			 // $(this).find('.choice-radio i').removeClass('active_task_cb');
 			  $('.js-turist-hide').slideDown( "slow" );
 			  $('.js-potential-hide').slideDown( "slow" );
+				$('.js-turist-hidex').slideDown("slow");
 			}
 }
 
@@ -3201,7 +3217,8 @@ function  upload_kurs() {
 function add_info_client()
 {
 	var err = 0;
-	
+	$('.hide-letit-nado').show();
+
 	//проверяем добавлять потенциального или нет
 	if($('[name=radio_potential]').val()==0)
 		{

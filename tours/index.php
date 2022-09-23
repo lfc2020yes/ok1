@@ -212,7 +212,7 @@ echo'</h1>';
 
 $class_js_search='';
 $class_js_readonly='';
-if(( isset($_COOKIE["su_7cu".$id_user]))and($_COOKIE["su_7cu".$id_user]!=''))
+if((( isset($_COOKIE["su_7cu".$id_user]))and($_COOKIE["su_7cu".$id_user]!=''))or(( isset($_COOKIE["su_7xcu".$id_user]))and($_COOKIE["su_7xcu".$id_user]!='')))
 {
     $class_js_search='greei_input';
     $class_js_readonly='readonly=""';
@@ -448,6 +448,26 @@ echo'</div></div>';
 
 
 
+
+
+
+
+
+echo'<div class="left_drop menu1_prime book_menu_sel gop_io" style="z-index:'.$zindex.'"><label>Номер заявки у ТО</label><div class="select eddd">
+		   
+		   <input name="sort_stock2" id="name_stock_search_toursi" class="name_stock_search_inputi js-text-search-xi" autocomplete="off" value="'.ipost_(($_COOKIE["su_7xcu".$id_user] ?? ''),'').'" type="text">';
+$zindex--;
+
+if (( isset($_COOKIE["su_7xcu".$id_user]))and($_COOKIE["su_7xcu".$id_user]!=''))
+{
+    echo'<div style="display:block;" class="dell_stock_search_toursi" data-tooltip="Удалить"><span>x</span></div>';
+} else
+{
+    echo'<div  class="dell_stock_search_toursi" data-tooltip="Удалить"><span>x</span></div>';
+}
+
+
+echo'</div></div>';
 
 
 
@@ -873,29 +893,40 @@ if(isset($_GET["id"]))
         //поиск по id/ номеру договора
         //45          D45
         //если поиск по названию то остальные критерии поиска не работают
-        if(( isset($_COOKIE["su_7cu".$id_user]))and($_COOKIE["su_7cu".$id_user]!=''))
+        if((( isset($_COOKIE["su_7cu".$id_user]))and($_COOKIE["su_7cu".$id_user]!=''))or(( isset($_COOKIE["su_7xcu".$id_user]))and($_COOKIE["su_7xcu".$id_user]!='')))
         {
 
             $query=trimc(mb_convert_case(htmlspecialchars($_COOKIE["su_7cu".$id_user]), MB_CASE_LOWER, "UTF-8"));
 
-            if($query[0]=='d')
+            $query1=trimc(mb_convert_case(htmlspecialchars($_COOKIE["su_7xcu".$id_user]), MB_CASE_LOWER, "UTF-8"));
+
+
+            if(trim($query1)!='')
             {
-                //поиск по номеру договора
-                mb_internal_encoding("UTF-8");
-                $query = mb_substr( $query, 1);
+                //поиск по номеру заявки ТО
+                $sql_k = 'select A.id from trips as A where  A.visible=1 ' . $sql_su5_search . ' ' . $sql_su7 . ' and A.number_to="' . $query1 . '"';
 
-                $sql_k='select A.id from trips as A,trips_contract as J where A.id_contract=J.id and A.visible=1 '.$sql_su5_search.' '.$sql_su7.' and J.number="'.$query.'"';
+                $sql_count = 'select count(A.id) as kol from trips as A where  A.visible=1 ' . $sql_su5_search . ' ' . $sql_su7 . ' and A.number_to="' . $query1 . '"';
 
-                $sql_count = 'select count(A.id) as kol from trips as A,trips_contract as J where A.id_contract=J.id and A.visible=1 '.$sql_su5_search.' '.$sql_su7.' and J.number="'.$query.'"';
+            } else {
 
-            } else
-            {
-                 //поиск по id
+                if ($query[0] == 'd') {
+                    //поиск по номеру договора
+                    mb_internal_encoding("UTF-8");
+                    $query = mb_substr($query, 1);
 
-                $sql_k='select A.id from trips as A where  A.visible=1 '.$sql_su5_search.' '.$sql_su7.' and A.id="'.$query.'"';
+                    $sql_k = 'select A.id from trips as A,trips_contract as J where A.id_contract=J.id and A.visible=1 ' . $sql_su5_search . ' ' . $sql_su7 . ' and J.number="' . $query . '"';
 
-                $sql_count = 'select count(A.id) as kol from trips as A where  A.visible=1 '.$sql_su5_search.' '.$sql_su7.' and A.id="'.$query.'"';
+                    $sql_count = 'select count(A.id) as kol from trips as A,trips_contract as J where A.id_contract=J.id and A.visible=1 ' . $sql_su5_search . ' ' . $sql_su7 . ' and J.number="' . $query . '"';
 
+                } else {
+                    //поиск по id
+
+                    $sql_k = 'select A.id from trips as A where  A.visible=1 ' . $sql_su5_search . ' ' . $sql_su7 . ' and A.id="' . $query . '"';
+
+                    $sql_count = 'select count(A.id) as kol from trips as A where  A.visible=1 ' . $sql_su5_search . ' ' . $sql_su7 . ' and A.id="' . $query . '"';
+
+                }
             }
 
 //echo($sql_k);

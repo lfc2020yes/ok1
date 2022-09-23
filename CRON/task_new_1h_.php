@@ -161,7 +161,7 @@ if($result_8)
 	  $commission=0;
 	  
 	  			  	   $result_status21=mysql_time_query($link,'SELECT sum(a.commission) as comm FROM trips AS a WHERE  a.status=1 and a.visible=1 and a.id_user="'.$row_8["id"].'" and a.date_buy_all>="'.$date_start.'" and a.date_buy_all<"'.$date_end.'"');
-		
+
        if($result_status21->num_rows!=0)
        {  
            $row_status21 = mysqli_fetch_assoc($result_status21);		   
@@ -223,7 +223,7 @@ if($result_8)
 
             } else
             {
-                mysql_time_query($link,'INSERT INTO users_commission (id,id_users,date,sum) VALUES ("","'.$row_8["id"].'","'.$month_s.'","'.$row_status21["comm"].'")');
+                mysql_time_query($link,'INSERT INTO users_commission (id_users,date,sum) VALUES ("'.$row_8["id"].'","'.$month_s.'","'.$row_status21["comm"].'")');
             }
 
 
@@ -491,4 +491,4 @@ if ($result_8) {
 //********************************************************************
 //********************************************************************
 $cron_message='Выполнено';
-mysql_time_query($link,'INSERT INTO cron_history (id,datetimes,script,message) VALUES ("","'.date("y.m.d").' '.date("H:i:s").'","task_new_1h_.php","'.ht($cron_message).'")');
+mysql_time_query($link,'INSERT INTO cron_history (datetimes,script,message) VALUES ("'.date("Y-m-d").' '.date("H:i:s").'","task_new_1h_.php","'.ht($cron_message).'")');

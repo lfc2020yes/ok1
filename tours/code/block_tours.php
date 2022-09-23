@@ -1,4 +1,21 @@
 <?
+$task_cloud_block.=$query2;
+$query = $query ?? '';
+$query1 = $query1 ?? '';
+$vse=1;
+
+$mass_ei=users_hierarchy($id_user,$link);
+rm_from_array($id_user,$mass_ei);
+$mass_ei= array_unique($mass_ei);
+
+
+
+if(((trim($query)!='')or(trim($query1)!=''))and($row_8['id_user']!=$id_user)and(!in_array($row_8['id_user'], $mass_ei)))
+{
+    $vse=0;
+}
+
+
 //вывод туров в разделе оформленные туры
 $task_cloud_block='';
 $new_sayx='';
@@ -625,6 +642,8 @@ A.id_trips="' . ht($row_8["id"]) . '" and A.type=0 and A.visible=1 order by A.da
 $task_cloud_block.='</div><div class="trips-b-operator js-trips-comm" style="'.$act_.'"><span class="label-task-gg ">Расчеты с туроператором
 </span>';
 
+if($vse==1)
+{
 /*расчеты с туроператором
 //расчеты с туроператором
 //расчеты с туроператором
@@ -865,7 +884,15 @@ if(cookie_work('eye_t_'.$id_user.'_2','1','.',60,'0')) {
     $act_='display:none;';
 }
 
+
+} else
+{
+    $task_cloud_block.='<span class="you_you">информация скрыта</span>';
+}
+
 $task_cloud_block.='</div><div class="trips-b-comission" style="'.$act_.'">';
+if($vse==1)
+{
 
 
 $task_cloud_block.='<div class="commi-tips">';
@@ -1045,7 +1072,10 @@ if($tabs_menu_x_visible[2]=="1")
 {
 	$task_cloud_block.='<div class="vip-ds"><div rel_taskk="'.$row_8["id"].'" data-tooltip="Отметить как выполнена" class="task__click1"></div></div>';
 }
-
+} else
+{
+    $task_cloud_block.='<span class="you_you">информация скрыта</span>';
+}
 
 $task_cloud_block.='</div>';
 

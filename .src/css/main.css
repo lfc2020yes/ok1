@@ -14942,7 +14942,7 @@ font-size: 13px;
   right: 15px;
 }
 
-.name_stock_search_input {
+.name_stock_search_input, .name_stock_search_inputi {
   display: block;
   width: 100%;
   overflow: hidden;
@@ -14964,7 +14964,7 @@ font-size: 13px;
   background: none;
 }
 
-.dell_stock_search, .dell_stock_searcho, .dell_stock_search_tours, .dell_stock_search_preorders {
+.dell_stock_search, .dell_stock_searcho, .dell_stock_search_toursi, .dell_stock_search_tours, .dell_stock_search_preorders {
   color: #e0e0e0;
   display: none;
   font-family: "icon1";
@@ -14975,7 +14975,7 @@ font-size: 13px;
   top: 8px;
   right: 0px;
 }
-.dell_stock_search span, .dell_stock_searcho span, .dell_stock_search_tours span, .dell_stock_search_preorders span {
+.dell_stock_search span, .dell_stock_searcho span, .dell_stock_search_toursi span, .dell_stock_search_tours span, .dell_stock_search_preorders span {
   transition: all 0.5s ease 0s;
   float: left;
   line-height: 9px;
@@ -14984,7 +14984,7 @@ font-size: 13px;
   text-align: center;
   vertical-align: middle;
 }
-.dell_stock_search span:hover, .dell_stock_searcho span:hover, .dell_stock_search_tours span:hover, .dell_stock_search_preorders span:hover {
+.dell_stock_search span:hover, .dell_stock_searcho span:hover, .dell_stock_search_toursi span:hover, .dell_stock_search_tours span:hover, .dell_stock_search_preorders span:hover {
   color: #4bcaff;
 }
 
@@ -30111,6 +30111,17 @@ position: absolute;}  }
 }
 .liderbord_2023 .lider_more:nth-child(2n) {
   background-color: rgba(0, 0, 0, 0.025);
+}
+
+.you_you {
+  background-color: rgba(0, 0, 0, 0.05);
+  font-family: "GEInspiraBold";
+  color: rgba(0, 0, 0, 0.4);
+  font-size: 12px;
+  line-height: 16px;
+  position: relative;
+  text-transform: uppercase;
+  padding: 10px 20px;
 }
 
 .input-block-2020 .list-image {

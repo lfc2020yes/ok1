@@ -9,7 +9,7 @@ if($row_score["potential"]==1)
 }
     if($row_score["potential"]==2)
     {
-        $turis='display:none';
+    //    $turis='display:none';
     }
 
 	 
@@ -87,7 +87,7 @@ $phone_format='+7 ('.$row_score["phone"][0].$row_score["phone"][1].$row_score["p
     if($row_score["phone"]!='') {
         $phone_format = phone_format($row_score["phone"]);
     }
-  $query_string.='<div style="margin-top: 30px; '.$turis.'"  class="js-turist-hide"><div class="input_2018 input-phone-list"><i class="js-open-phone">уже есть в базе</i><label>Телефон<span>*</span></label><input name="offers[0][client_phone]" value="'.ipost_($row_score["phone"],"").'" old_value="'.$phone_format.'" id="date_124" class="input_new_2018 required  gloab gloab_potential phone_us1 js-true-phone" autocomplete="off" type="text">
+  $query_string.='<div style="margin-top: 30px; '.$turis.'"  class="js-turist-hidex "><div class="input_2018 input-phone-list"><i class="js-open-phone">уже есть в базе</i><label>Телефон<span class="hide-letit-nado">*</span></label><input name="offers[0][client_phone]" value="'.ipost_($row_score["phone"],"").'" old_value="'.$phone_format.'" id="date_124" class="input_new_2018 required  gloab gloab_potential phone_us1 js-true-phone" autocomplete="off" type="text">
   <input type="hidden" class="js-true-search-phone"  name="phone_true"  value="0">
   
   <div class="div_new_2018"><hr class="one"><hr class="two"><div class="oper_name"></div></div></div>
