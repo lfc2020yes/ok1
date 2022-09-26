@@ -337,8 +337,9 @@ $os4 = array(
                    "срок следующей оплаты от туриста",
                    "срок следующей оплаты туроператору",
                    "Стоимость тура",
-                   "размер комиссии");
-	   $os_id4 = array("0","1","2","3","4","5","6","7","8");
+                   "размер комиссии",
+    "Еще полетят");
+	   $os_id4 = array("0","1","2","3","4","5","6","7","8","9");
 	
 	 
 	 
@@ -950,7 +951,7 @@ if(isset($_GET["id"]))
         $sql_svyz_table1=''; //trips_payment_term - сроки
         $sql_svyz_table2=''; //trips_fly_history  - история вылетов
 
-
+            $sql_22='';
         ///поиск для расширенных фильтров
 
 
@@ -1179,7 +1180,6 @@ if(isset($_GET["id"]))
         if($su_4 == 5) {
             //срок следующей оплаты от туриста
 
-
             $sql_table1=',trips_payment_term as B';
             $sql_svyz_table1=' AND B.id_trips=A.id ';
             $sql_columb.=',(SELECT rr.date FROM trips_payment_term AS rr WHERE rr.visible=1 and rr.yes=0 and rr.type=0 and rr.id_trips=A.id ORDER BY rr.proc LIMIT 0,1) as srok_sled';
@@ -1203,6 +1203,16 @@ if(isset($_GET["id"]))
             //размер комиссии
             $sql_order = ' order by A.commission DESC';
         }
+            if($su_4 == 9) {
+
+                $sql_22='SELECT * FROM ( ';
+                $sql_table2=',trips_fly_history as xx';
+                $sql_svyz_table2=' AND xx.id_trips=A.id ';
+                $sql_columb.=',(SELECT yy.start_fly FROM trips_fly_history AS yy WHERE yy.id_trips=A.id ORDER BY yy.datetime DESC LIMIT 0,1) as fly_start';
+                //$sql_su4 = ' and (SELECT yy.start_fly FROM trips_fly_history AS yy WHERE yy.id_trips=A.id ORDER BY yy.datetime DESC LIMIT 0,1)>="'.date("Y-m-d").' 00:00:00" ';
+                $sql_order = ' ) as ZZ where ZZ.fly_start>="'.date('Y-m-d').' 00:00:00" order by ZZ.fly_start';
+                //$sql_order__ = ' ) as ZZ where ZZ.fly_start>="'.date('Y-m-d').' 00:00:00"';
+            }
         //X
         //|
         //Сортировка
@@ -1219,7 +1229,7 @@ if(isset($_GET["id"]))
         $sql_table=$sql_table1.$sql_table2.$sql_table3;
         $sql_svyz_table=$sql_svyz_table1.$sql_svyz_table2;
 
-        $sql_k = 'Select 
+        $sql_k = $sql_22.' Select 
   
   DISTINCT A.id'.$sql_columb.'
   
@@ -1229,14 +1239,40 @@ if(isset($_GET["id"]))
 
 //echo($sql_k);
 
-            $sql_count = 'Select 
+            if($su_4 == 9) {
+
+
+                $sql_k = 'SELECT   count(DISTINCT AA.id) as kol FROM ( '. $sql_22.' Select 
   
-  count(DISTINCT A.id) as kol'.$sql_columb.'
+  DISTINCT A.id'.$sql_columb.'
   
   from trips as A'.$sql_table.'
   
-  where A.visible=1 '.$sql_svyz_table.' ' . $sql_su2 . ' ' . $sql_su1 . ' ' . $sql_su3 . ' ' . $sql_su4 . ' ' . $sql_su5 . ' ' . $sql_su7;
+  where A.visible=1 '.$sql_svyz_table.' ' . $sql_su2 . ' ' . $sql_su1 . ' ' . $sql_su3 . ' ' . $sql_su4 . ' ' . $sql_su5 . ' ' . $sql_su7 . ' ' . $sql_order . ' ) as AA ';
 
+               // echo($sql_k);
+
+
+/*
+            $sql_count = 'Select 
+  
+  count(DISTINCT A.id) as kol' . $sql_columb . '
+  
+  from trips as A' . $sql_table . '
+  
+  where A.visible=1 ' . $sql_svyz_table . ' ' . $sql_su2 . ' ' . $sql_su1 . ' ' . $sql_su3 . ' ' . $sql_su4 . ' ' . $sql_su5 . ' ' . $sql_su7;
+  */
+
+            } else
+            {
+                $sql_count = 'Select 
+  
+  count(DISTINCT A.id) as kol' . $sql_columb . '
+  
+  from trips as A' . $sql_table . '
+  
+  where A.visible=1 ' . $sql_svyz_table . ' ' . $sql_su2 . ' ' . $sql_su1 . ' ' . $sql_su3 . ' ' . $sql_su4 . ' ' . $sql_su5 . ' ' . $sql_su7;
+            }
         }
 
         $result_t2 = mysql_time_query($link, $sql_k);
