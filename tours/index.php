@@ -1237,7 +1237,7 @@ if(isset($_GET["id"]))
   
   where A.visible=1 '.$sql_svyz_table.' ' . $sql_su2 . ' ' . $sql_su1 . ' ' . $sql_su3 . ' ' . $sql_su4 . ' ' . $sql_su5 . ' ' . $sql_su7 . ' ' . $sql_order . ' ' . limitPage('n_st', $count_write);
 
-echo($sql_k);
+//echo($sql_k);
 
             if($su_4 == 9) {
 
