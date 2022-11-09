@@ -138,6 +138,10 @@ include_once $url_system.'template/body_top.php';
 <div class="div_ook hop_ds"><div class="search_task">
 
     <?
+
+
+
+
 	   $zindex=110;
 
 
@@ -265,6 +269,11 @@ if($sign_level==2)
 			}
 
 		 echo'<div class="inline_reload js-reload-top"><a href="statistic_new/" class="show_reload">Применить</a></div>';
+
+
+    if(($sign_level==3)or($sign_leve==4)) {
+        echo '<div class="left_drop menu1_prime book_menu_sel gop_io js--sort '.$class_js_search.'" style="z-index:'.$zindex.'"><a href="CRON/task_new_1h_.php" class="search-count-csv reload-bonus-oo">Обновить бонусы</a></div>';
+    }
 
 		//echo'<a href="statistic/" class="show_sort_supply">Применить</a>';
 		?>

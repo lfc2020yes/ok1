@@ -2,12 +2,12 @@
 $local='C:/OpenServer/domains/'.$local_host.'';
 if($_SERVER['DOCUMENT_ROOT']!=$local)
 {
-echo'<link href="/public/main.min.css?cb=1667967216728" type="text/css" rel="stylesheet" />
-<script language="JavaScript" type="text/javascript" src="/public/index.map.min.js?cb=1667967216728"></script>'; 
+echo'<link href="/public/main.min.css?cb=1667990892324" type="text/css" rel="stylesheet" />
+<script language="JavaScript" type="text/javascript" src="/public/index.map.min.js?cb=1667990892324"></script>'; 
 } else
 {
-echo'<link href="/.src/css/main.css?cb=1667967216728" type="text/css" rel="stylesheet" />
-<script language="JavaScript" type="text/javascript" src="/public/index.map.js?cb=1667967216728"></script>';	
+echo'<link href="/.src/css/main.css?cb=1667990892324" type="text/css" rel="stylesheet" />
+<script language="JavaScript" type="text/javascript" src="/public/index.map.js?cb=1667990892324"></script>';	
 }
 
 

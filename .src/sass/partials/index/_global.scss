@@ -21909,3 +21909,14 @@ margin-top: 40px;
 	padding-bottom: 5px;
 	border-radius: 4px;
 }
+
+.reload-bonus-oo {margin-right: 0px !important; margin-left: 20px !important;
+
+	@include sw('tablet-small') {
+		margin-left: 0px !important;
+		float:left !important;
+		background-color: #ffec57 !important;
+
+	}
+
+}
