@@ -28,7 +28,10 @@ $result_8 = mysql_time_query($link,'SELECT A.id,A.fio,A.date_birthday,A.id_user,
 $num_8 = $result_8->num_rows;	
 if($result_8)
 {	
-  while($row_8 = mysqli_fetch_assoc($result_8)){ 
+  while($row_8 = mysqli_fetch_assoc($result_8)){
+
+     // echo($row_8["id_a_company"]);
+
 			   $text_task="Поздравить с днем рождения";
 	  
 	  

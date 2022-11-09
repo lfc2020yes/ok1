@@ -1909,6 +1909,7 @@ function AddHistoryTask($action,$id_user,$id_task,$comment,$text,$date,$komy,$te
 
 function GETGROUPCO($id_company)
 {
+    global $link;
     $id_group_u1 = 0;
 
     if (is_numeric(trim($id_company))) {
@@ -1917,7 +1918,7 @@ function GETGROUPCO($id_company)
         $mass_city = explode(",", ht($id_company));
     }
 
-        $result_gr = mysql_time_query($link, 'select id_group from a_company_group where id_a_company="' . ht($mass_city[0]) . '"');
+        $result_gr = mysql_time_query($link, 'select id_group from a_company_group where id_a_company="'.$mass_city[0].'"');
         $num_results_gr = $result_gr->num_rows;
 
         if ($num_results_gr != 0) {
