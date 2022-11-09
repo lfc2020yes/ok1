@@ -30124,6 +30124,15 @@ position: absolute;}  }
   padding: 10px 20px;
 }
 
+.fix-cost-price {
+  background-color: #ffec57;
+  padding-right: 16px;
+  margin-left: 16px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-radius: 4px;
+}
+
 .input-block-2020 .list-image {
   padding: 20px;
   display: none;

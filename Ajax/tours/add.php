@@ -636,12 +636,17 @@ if(($_POST["id_preorders"]!=0)and($_POST["id_preorders"]!=''))
 $id_company_new=ht($_POST["id_company"]);
 
 
+$fix_comm=0;
+if($_POST["kakay_com"]==1)
+{
+  $fix_comm=trimc($_POST["fix_tour_pay"]);
+}
 
 
 
 //добавление нового тура в базу
 mysql_time_query($link,'INSERT INTO trips (
-                          
+commission_fix,                          
 id_user,    
 id_a_company,                           
 datecreate,                                    
@@ -709,7 +714,7 @@ id_promo,
 id_affiliates
                                                                                 
 ) VALUES( 
-
+"'.ht($fix_comm).'",
 "'.ht($id_user).'",
 "'.ht($id_company_new).'",
 "'.ht($date_).'",

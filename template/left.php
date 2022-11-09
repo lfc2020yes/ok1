@@ -222,12 +222,15 @@ if(($active_menu!='statistic_new')and($row_uu["id_role"]!=7))
     //есть ли запись с такой коммиссией по этому пользователю за данный месяц
     if($sign_admin==1)
     {
+
         //управляющий организацией - вообще все коммиссии всех
-        $result_status22=mysql_time_query($link,'SELECT sum(a.sum) as sum from users_commission_trips as a,r_user as b where a.id_users=b.id and b.id_company IN ('.ht($id_company).') and  not(a.id_users=0) and a.date="'.$month_s.'"');
+        $result_status22=mysql_time_query($link,'SELECT sum(a.sum) as sum,sum(a.sum_fix) as sum_fix,sum(a.sum_com) as sum_com from users_commission_trips as a,r_user as b where a.id_users=b.id and b.id_company IN ('.ht($id_company).') and  not(a.id_users=0) and a.date="'.$month_s.'"');
     } else {
+
         if($sign_level==3)
         {
-            //директор и все комиссии подчиненных
+            //директор,Документовед и все комиссии подчиненных
+            //он сам не может делать туры
             $mass_ei=users_hierarchy($id_user,$link);
             rm_from_array($id_user,$mass_ei);
             $mass_ei= array_unique($mass_ei);
@@ -252,14 +255,15 @@ if(($active_menu!='statistic_new')and($row_uu["id_role"]!=7))
                 $sql_su5.=' )';
             }
 
-            $result_status22=mysql_time_query($link,'SELECT sum(a.sum) as sum from users_commission_trips as a where not(a.id_users=0) '.$sql_su5.' and  a.date="'.$month_s.'"');
+            $result_status22=mysql_time_query($link,'SELECT sum(a.sum) as sum,sum(a.sum_fix) as sum_fix,sum(a.sum_com) as sum_com from users_commission_trips as a where not(a.id_users=0) '.$sql_su5.' and  a.date="'.$month_s.'"');
 
-
+           // echo('SELECT sum(a.sum) as sum,sum(a.sum_fix) as sum_fix from users_commission_trips as a where not(a.id_users=0) '.$sql_su5.' and  a.date="'.$month_s.'"');
 
         } else {
 
+
             //для конкретного пользователя
-        $result_status22 = mysql_time_query($link, 'SELECT a.sum from users_commission_trips as a where a.id_users="' . $id_user . '" and a.date="' . $month_s . '"');
+        $result_status22 = mysql_time_query($link, 'SELECT a.sum,a.sum_fix,a.sum_com from users_commission_trips as a where a.id_users="' . $id_user . '" and a.date="' . $month_s . '"');
     }
     }
     if($result_status22->num_rows!=0)
@@ -269,6 +273,8 @@ if(($active_menu!='statistic_new')and($row_uu["id_role"]!=7))
     } else
     {
         $row_status22["sum"]=0;
+        $row_status22["sum_fix"]=0;
+        $row_status22["sum_com"]=0;
     }
 
 
@@ -417,8 +423,18 @@ if(($active_menu!='statistic_new')and($row_uu["id_role"]!=7))
                         $class_modey='money-small';
                     }
 
+                    if(($sign_level==3)or($sign_level==4)) {
+                        //генеральный директор + директор + Документовед
+                        //видят где все бонусы + комиссии туров которые они дали с фиксированной оплатой
+                        //чтобы видеть общую ситуацию
 
-                    echo'<span class="pay_summ_bill1 '.$class_modey.'">'.rtrim(rtrim(number_format($row_status22["sum"], 2, '.', ' '),'0'),'.').'</span>';
+
+                        echo '<span class="pay_summ_bill1 ' . $class_modey . '">' . rtrim(rtrim(number_format(($row_status22["sum"] + $row_status22["sum_com"]), 2, '.', ' '), '0'), '.') . '</span>';
+                    } else
+                    {
+                        echo '<span class="pay_summ_bill1 ' . $class_modey . '">' . rtrim(rtrim(number_format(($row_status22["sum"]), 2, '.', ' '), '0'), '.') . '</span>';
+                    }
+
                     ?>
 
                 </div>
@@ -433,7 +449,7 @@ if(($active_menu!='statistic_new')and($row_uu["id_role"]!=7))
 
                     }
 
-                    echo'<span class="pay_summ_bill1 '.$class_modey.'">'.rtrim(rtrim(number_format($bonus, 2, '.', ' '),'0'),'.').'</span>';
+                    echo'<span class="pay_summ_bill1 '.$class_modey.'">'.rtrim(rtrim(number_format(($bonus+$row_status22["sum_fix"]), 2, '.', ' '),'0'),'.').'</span>';
                     ?>
                 </div></div>
         </a>

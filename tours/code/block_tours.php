@@ -986,10 +986,16 @@ if($ppro!=0)
     $task_cloud_block.='<span data-tooltip="Из них партнеру '.number_format(((int)$ppro), 0, '.', ' ').' ₽ = '.$proc_ship.'%" class="cost_circle skoko_ship">→ '.number_format(((int)$ppro), 0, '.', ' ').'</span>';
 }
 
+    $task_cloud_block.='</div>';
 
+//echo($row_8["commission_fix"]);
+
+if(($row_8["commission_fix"]!='')and($row_8["commission_fix"]!=0)) {
+    $task_cloud_block .= '<div class="cost_all_trips"><div class="name-trips-opi">Фиксированная выплата</div>';
+    $task_cloud_block .= '<span class="fix-cost-price"><span class="cost_circle">'.number_format(((int)$row_8["commission_fix"]), 0, '.', ' ').'</span></span></div>';
+}
 
 $task_cloud_block.='</div>
-</div>
 <div class="commi-tips skidka-tips">
 <span class="name-trips-opi">Скидка</span>';
 

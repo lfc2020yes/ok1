@@ -56,7 +56,7 @@ if(!isset($_SESSION["user_id"]))
 
     if (is_numeric($_GET['id'])) {
         //нужна одна карточка по клиенту
-        $result_t=mysql_time_query($link,'Select DISTINCT A.id,A.discount,A.doc,A.id_a_company, A.id_user,A.shopper,A.id_shopper,A.id_contract,A.comment,A.number_to,A.hotel,A.id_country,A.place_name,A.date_start,A.date_end,A.number_to,A.id_contract,A.cost_client,A.id_exchange,A.cost_operator_exchange,A.cost_operator,A.cost_client_exchange,A.buy_clients,A.buy_operator,A.paid_operator,A.paid_operator_rates,A.exchange_rates,A.paid_client,A.paid_client_rates,A.comment,A.date_prepaid,A.status_admin from trips as A where A.visible=1 AND A.id="'.ht($_GET['id']).'" and A.id_a_company IN ('.$id_company.')');
+        $result_t=mysql_time_query($link,'Select DISTINCT A.id,A.discount,A.doc,A.id_a_company, A.id_user,A.shopper,A.id_shopper,A.id_contract,A.comment,A.number_to,A.hotel,A.id_country,A.place_name,A.date_start,A.date_end,A.number_to,A.id_contract,A.cost_client,A.id_exchange,A.cost_operator_exchange,A.cost_operator,A.cost_client_exchange,A.buy_clients,A.buy_operator,A.paid_operator,A.paid_operator_rates,A.exchange_rates,A.paid_client,A.paid_client_rates,A.comment,A.date_prepaid,A.status_admin,A.commission_fix from trips as A where A.visible=1 AND A.id="'.ht($_GET['id']).'" and A.id_a_company IN ('.$id_company.')');
 
 //echo('Select b.*,r.id_company from k_clients as b,r_user as r where b.id="'.ht($_GET['id']).'" and b.visible=1 and b.id_user=r.id');
         $num_results_t = $result_t->num_rows;
@@ -993,9 +993,16 @@ if($ppro!=0)
     $task_cloud_block.='<span data-tooltip="Из них партнеру '.number_format(((int)$ppro), 0, '.', ' ').' ₽ = '.$proc_ship.'%" class="cost_circle skoko_ship">→ '.number_format(((int)$ppro), 0, '.', ' ').'</span>';
 }
 
+$task_cloud_block.='</div>';
+
+if(($row_8["commission_fix"]!='')and($row_8["commission_fix"]!=0)) {
+    $task_cloud_block .= '<div class="cost_all_trips" ><div class="name-trips-opi">Фиксированная выплата</div>';
+    $task_cloud_block .= '<span data-tooltip="Определяется руководителем" class="fix-cost-price"><span class="cost_circle">'.number_format(((int)$row_8["commission_fix"]), 0, '.', ' ').'</span></span></div>';
+}
+
+
 
 $task_cloud_block.='</div>
-</div>
 <div class="commi-tips skidka-tips">
 <span class="name-trips-opi">Скидка</span>';
 

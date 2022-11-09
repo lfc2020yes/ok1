@@ -1,5 +1,9 @@
 $(document).ready(function(){
 
+	$('body').on("change keyup input click",'.js-option-fix-com',option_fix);
+
+
+
 	$('body').on("change keyup input click",'#office_oo',office_oo);
 	$('body').on("change keyup input click",'#city_oo',city_oo);
 	$('body').on("change keyup input click",'.js-list-country-c',clinkS);
@@ -231,6 +235,24 @@ function close_cash_day()
 
 	});
 }
+
+
+function option_fix()
+{
+	var cb_h=$(this).find('input').val();
+	if(cb_h==0)
+	{
+		$(this).find('input').val(1);
+		$(this).find('.choice-radio i').addClass('active_task_cb');
+		$('.jj-fix').slideDown("slow");
+	} else
+	{
+		$(this).find('input').val(0);
+		$(this).find('.choice-radio i').removeClass('active_task_cb');
+		$('.jj-fix').slideUp("slow");
+	}
+}
+
 
 
 function yes_cash_time()
@@ -2865,6 +2887,7 @@ function AddFormTender()
 	
 	var err = 0;
 	var err1 = 0;
+	var err2 = 0;
 //alert($('.js-form-register .gloab').length);
 	$('.js-form-tender-new .gloab').each(function(i,elem) {
 	if($(this).val() == '')  {$(this).parents('.input_2018').find('.error-message').empty().append('поле не заполнено');	 $(this).parents('.input_2018').addClass('required_in_2018');  
@@ -2888,8 +2911,27 @@ function AddFormTender()
 	
 	
 	//alert(err);
+
+	var fix_value=$('#kakay_com').val();
+	if(fix_value==1)
+	{
+
+		$('.js-form-tender-new .gloab_fix').each(function(i,elem) {
+			if($(this).val() == '')  {$(this).parents('.input_2018').find('.error-message').empty().append('поле не заполнено');	 $(this).parents('.input_2018').addClass('required_in_2018');
+				$(this).parents('.list_2018').addClass('required_in_2018');
+				err++;
+
+
+
+				//alert($(this).attr('name'));
+			} else {$(this).parents('.input_2018').removeClass('required_in_2018');$(this).parents('.list_2018').removeClass('required_in_2018');}
+		});
+
+	}
+
+
 	
-	if((err==0)&&(err1==0))
+	if((err==0)&&(err1==0)&&(err2==0))
 		{
 			$('.js-form-tender-new  .js-add-tender-form').hide().after('<div class="b_loading_small" style="position:relative; width: 40px;padding-top: 7px;top: auto;right: auto;left: calc(50% - 20px);"><div class="b_loading_circle_wrapper_small"><div class="b_loading_circle_one_small"></div><div class="b_loading_circle_one_small b_loading_circle_delayed_small"></div></div></div>');
 			

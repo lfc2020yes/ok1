@@ -1288,6 +1288,20 @@ $query_string.='<div class="left_drop menu1_prime"><label class="active_label">�
 </div>
 
     <div class="block-add-tours-plus">
+
+        <div class="input-choice-click js-option-fix-com">
+            <div class="choice-head">Фиксированная выплата менеджеру</div>
+            <div class="choice-radio"><div class="center_vert1"><i class=""></i><input name="kakay_com" id="kakay_com" value="0" type="hidden"></div></div>
+        </div>
+
+
+        <!--input start	-->
+        <div style="margin-top: 30px; display: none;" class="jj-fix"><div class="input_2018"><label>Фиксированная выплата<span>*</span></label><input name="fix_tour_pay" value="" id="date_124" class="input_new_2018 required gloab_fix money_mask" autocomplete="off" type="text"><div class="div_new_2018"><hr class="one"><hr class="two"><hr class="tree"><div class="oper_name" joi=""></div></div></div>
+        </div>
+        <!--input end	-->
+    </div>
+
+    <div class="block-add-tours-plus">
         <div class="block-h1-plus">↓ ПРОМОКОД</div>
 
 

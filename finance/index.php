@@ -1,4 +1,9 @@
 <?
+
+//бонусы выплачиваются за прошлый месяц в этом месяце
+//поэтому за текущий месяц считаем в расходы бонусы за прошлый месяц и так далее
+
+
 session_start();
 $url_system=$_SERVER['DOCUMENT_ROOT'].'/'; include_once $url_system.'module/config.php'; include_once $url_system.'module/function.php'; include_once $url_system.'login/function_users.php'; initiate($link); include_once $url_system.'module/access.php';
 
@@ -466,6 +471,7 @@ $raz_array=array();
 if($more_mon==0)
 {
     $bonus=0;
+    $fix=0;
     //$result_status223=mysql_time_query($link,'SELECT a.* from users_commission_trips as a,r_user as b where a.id_users=b.id and b.id_company="'.$id_company.'" and a.date="'.$date_start.'"');
 
 
@@ -499,7 +505,7 @@ if($more_mon==0)
 
     $result_status223=mysql_time_query($link,'SELECT a.* from users_commission_trips as a,r_user as b where a.id_users=b.id '.$LIKEX.' and a.date="'.$date_start_bonus_last.'"');
 
-
+//echo('SELECT a.* from users_commission_trips as a,r_user as b where a.id_users=b.id '.$LIKEX.' and a.date="'.$date_start_bonus_last.'"');
 
 
     $num223 = $result_status223->num_rows;
@@ -531,6 +537,15 @@ if($more_mon==0)
                     $bonus=$bonus+(($row223["sum"]*$row_status_b["proc"])/100);
                 }
             }
+
+            //echo($row223["sum_fix"]);
+
+            if($row223["sum_fix"]!=0)
+            {
+                $fix=$fix+$row223["sum_fix"];
+            }
+
+
         }
     }
 
@@ -539,6 +554,7 @@ if($more_mon==0)
 {
     //идем по месяцам и считаем сколько выплатили каждому с учетом уровней бонусов за месяц. (бонусные периоды могут быть разные в зависимости от месяца)
     $bonus=0;
+    $fix=0;
     $date_start_while=$date_start;
     while ($date_start_while!= $date_end) {
 
@@ -604,6 +620,12 @@ if($more_mon==0)
                         $bonus=$bonus+(($row223["sum"]*$row_status_b["proc"])/100);
                     }
                 }
+
+
+                if($row223["sum_fix"]!=0)
+                {
+                    $fix=$fix+$row223["sum_fix"];
+                }
             }
         }
 
@@ -615,13 +637,56 @@ if($more_mon==0)
 
 }
 //echo($bonus);
-  $rasx=$rasx+$bonus;
+  $rasx=$rasx+$bonus+$fix;
   if($bonus!=0)
   {
 
       $raz_array[]=['name'=>'Выплата Бонусов','val'=>round($bonus)];
   }
 
+  //echo($fix);
+
+  if($fix!=0)
+  {
+
+      $raz_array[]=['name'=>'Фиксированные выплаты','val'=>round($fix)];
+  }
+
+
+
+
+
+
+
+  //доходы
+  //доходы
+  //доходы
+  //доходы
+  //доходы
+  //доходы
+  //доходы
+  //доходы
+  //доходы
+  //доходы
+  //доходы
+  //доходы
+  //доходы
+  //доходы
+  //доходы
+  //доходы
+  //доходы
+  //доходы
+  //доходы
+  //доходы
+  //доходы
+  //доходы
+  //доходы
+  //доходы
+  //доходы
+  //доходы
+  //доходы
+  //доходы
+  //доходы
   //доходы
 
 
@@ -671,7 +736,8 @@ if($more_mon==0)
 
   //доходы с бонусов
   $dox_bonus =0;
-  $result_status22=mysql_time_query($link,'SELECT sum(a.sum) as summ from users_commission_trips as a,r_user as b where a.id_users=b.id '.$LIKEX.' and  not(a.id_users=0) and a.date>="' . ht($date_start) . '" and  a.date<"' . ht($date_end) . '"');
+  $dox_fix=0;
+  $result_status22=mysql_time_query($link,'SELECT sum(a.sum) as summ,sum(a.sum_com) as summ_fix from users_commission_trips as a,r_user as b where a.id_users=b.id '.$LIKEX.' and  not(a.id_users=0) and a.date>="' . ht($date_start) . '" and  a.date<"' . ht($date_end) . '"');
 
   $num_results_22 = $result_status22->num_rows;
 
@@ -680,12 +746,20 @@ if($more_mon==0)
       if($row_uu["summ"]!='') {
           $dox_bonus = $row_uu["summ"];
       }
+      if($row_uu["summ_fix"]!='') {
+          $dox_fix = $row_uu["summ_fix"];
+      }
+
   }
-  $dox=$dox+$dox_bonus;
+  $dox=$dox+$dox_bonus+$dox_fix;
   if($dox_bonus!=0)
   {
 
-      $doxod_array[]=['name'=>'Комиссии с продаж','val'=>round($dox_bonus)];
+      $doxod_array[]=['name'=>'Комиссии с продаж менеджеров','val'=>round(($dox_bonus))];
+  }
+  if($dox_fix!=0)
+  {
+      $doxod_array[]=['name'=>'Комиссии с продаж с фиксированной оплатой','val'=>round(($dox_fix))];
   }
 
   //echo($dox_bonus);
@@ -767,6 +841,8 @@ if($dox_format=='') {$dox_format=0;}
       $graf_title_one='';
   }
 
+
+  echo'<div class="help_div da_book1"><div class="not_boolingh"></div><span class="h5"><span>За текущий месяц добавляем в расходы бонусы и фиксированные выплаты за предыдущий месяц. Доходами же является комиссия за текущий месяц.</span></span></div>';
 
 echo'<div class="oka_fact finance-index"><div class="gr-50 js-fin-0"><div class="two-finance">
 
@@ -888,16 +964,21 @@ echo'</div>
 
 
 
-      $result_status22 = mysql_time_query($link, 'SELECT sum(a.sum) as summ from users_commission_trips as a,r_user as b where a.id_users=b.id '.$LIKEX.' and  not(a.id_users=0) and a.date>="' . ht($date_start_while) . '" and  a.date<"' . ht($date_start_while22) . '"');
+      $result_status22 = mysql_time_query($link, 'SELECT sum(a.sum) as summ,sum(a.sum_com) as summ_fix from users_commission_trips as a,r_user as b where a.id_users=b.id '.$LIKEX.' and  not(a.id_users=0) and a.date>="' . ht($date_start_while) . '" and  a.date<"' . ht($date_start_while22) . '"');
 
 
       $num_results_uu = $result_status22->num_rows;
 $hits=0;
+      $fixs=0;
       if ($num_results_uu != 0) {
          $row_uu = mysqli_fetch_assoc($result_status22);
-              if (($row_uu["summ"] != '') and ($row_uu["summ"] != 0)) {
+
+          if (($row_uu["summ"] != '') and ($row_uu["summ"] != 0)) {
                   $hits=round($row_uu["summ"]);
-              }
+          }
+          if (($row_uu["summ_fix"] != '') and ($row_uu["summ_fix"] != 0)) {
+              $fixs=round($row_uu["summ_fix"]);
+          }
 
       }
 
@@ -914,7 +995,7 @@ $views=0;
       //$xy[]['date']=$date_start_while;
 
 
-      $xy[] = ['views' => $views, 'hits' => $hits, 'date' => $date_start_while];
+      $xy[] = ['views' => $views, 'hits' => ($hits+$fixs), 'date' => $date_start_while];
       $date_start_while=date_step_sql_more($date_start_while,'+1m');
     }
   } else
@@ -954,15 +1035,19 @@ $views=0;
           }
 
 
-          $result_status22 = mysql_time_query($link, 'SELECT sum(a.sum) as summ from users_commission_trips as a,r_user as b where a.id_users=b.id '.$LIKEX.' and  not(a.id_users=0) and a.date>="' . ht($date_start_while) . '" and  a.date<"' . ht($date_start_while22) . '"');
+          $result_status22 = mysql_time_query($link, 'SELECT sum(a.sum) as summ,sum(a.sum_com) as summ_fix from users_commission_trips as a,r_user as b where a.id_users=b.id '.$LIKEX.' and  not(a.id_users=0) and a.date>="' . ht($date_start_while) . '" and  a.date<"' . ht($date_start_while22) . '"');
 
 
           $num_results_uu = $result_status22->num_rows;
           $hits=0;
+          $fixs=0;
           if ($num_results_uu != 0) {
               $row_uu = mysqli_fetch_assoc($result_status22);
               if (($row_uu["summ"] != '') and ($row_uu["summ"] != 0)) {
                   $hits=round($row_uu["summ"]);
+              }
+              if (($row_uu["summ_fix"] != '') and ($row_uu["summ_fix"] != 0)) {
+                  $fixs=round($row_uu["summ_fix"]);
               }
 
           }
@@ -980,7 +1065,7 @@ $views=0;
           //$xy[]['date']=$date_start_while;
 
 
-          $xy[] = ['views' => $views, 'hits' => $hits, 'date' => $date_start_while];
+          $xy[] = ['views' => $views, 'hits' => ($hits+$fixs), 'date' => $date_start_while];
           $date_start_while=date_step_sql_more($date_start_while,'+1m');
       }
 

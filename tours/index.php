@@ -1759,7 +1759,7 @@ $new_class_block='';
 
 					$row_88= mysqli_fetch_assoc($result_t2);
 
-                    $result_uuy = mysql_time_query($link, 'select A.id,A.discount,A.doc,A.id_a_company, A.id_user,A.shopper,A.id_shopper,A.id_contract,A.comment,A.number_to,A.hotel,A.id_country,A.place_name,A.date_start,A.date_end,A.number_to,A.id_contract,A.cost_client,A.id_exchange,A.cost_operator_exchange,A.cost_operator,A.cost_client_exchange,A.buy_clients,A.buy_operator,A.paid_operator,A.paid_operator_rates,A.exchange_rates,A.paid_client,A.paid_client_rates,A.date_prepaid,A.comment,A.status_admin from trips as A where A.id="' . ht($row_88['id']) . '"');
+                    $result_uuy = mysql_time_query($link, 'select A.id,A.discount,A.doc,A.id_a_company, A.id_user,A.shopper,A.id_shopper,A.id_contract,A.comment,A.number_to,A.hotel,A.id_country,A.place_name,A.date_start,A.date_end,A.number_to,A.id_contract,A.cost_client,A.id_exchange,A.cost_operator_exchange,A.cost_operator,A.cost_client_exchange,A.buy_clients,A.buy_operator,A.paid_operator,A.paid_operator_rates,A.exchange_rates,A.paid_client,A.paid_client_rates,A.date_prepaid,A.comment,A.status_admin,A.commission_fix from trips as A where A.id="' . ht($row_88['id']) . '"');
                     $num_results_uuy = $result_uuy->num_rows;
 
                     if ($num_results_uuy != 0) {
