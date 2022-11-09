@@ -38,7 +38,7 @@ if (count($_GET) != 1)
 }
 $status_admin=0;
 $mas_responsible=array();
-$result_t=mysql_time_query($link,'Select A.id,A.id_exchange,A.id_user,A.cost_client,A.cost_client_exchange,A.exchange_rates,A.cost_operator,A.cost_operator_exchange,A.discount,A.exchange_rates_operator,A.status_admin from trips as A where A.visible=1 AND A.id="'.ht($_GET["id"]).'" and A.id_a_company IN ('.$id_company.')');
+$result_t=mysql_time_query($link,'Select A.id,A.id_exchange,A.id_user,A.cost_client,A.cost_client_exchange,A.exchange_rates,A.cost_operator,A.cost_operator_exchange,A.discount,A.exchange_rates_operator,A.status_admin,A.commission_fix from trips as A where A.visible=1 AND A.id="'.ht($_GET["id"]).'" and A.id_a_company IN ('.$id_company.')');
 $num_results_t = $result_t->num_rows;
 if($num_results_t==0)
 {
@@ -230,6 +230,16 @@ if($style_kurs==1) {
 
 }
 
+if((($sign_level==3)or($sign_level==4))and($row_score["commission_fix"]!=0)) {
+
+    $query_string .= '<div class="strong_wh_2020" style="margin-top:30px;">↓ Фиксированная выплата</div>';
+
+    $query_string .= '<!--input start	-->		
+	<div style="margin-top: 30px; margin-bottom: 30px;"><div class="input_2018"><label>Выплата (рубли) менеджеру</label><input name="fix_com" value="' . $row_score["commission_fix"] . '" id="date_124" class="input_new_2018 required money_mask1 gloab" autocomplete="off" type="text"><div class="div_new_2018"><hr class="one"><hr class="two"><hr class="tree"><div class="oper_name" joi=""></div></div></div>
+</div>
+<!--input end	-->';
+
+}
 
 //форма задачи
 if($status_admin==0)

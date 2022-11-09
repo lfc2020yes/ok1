@@ -69,7 +69,7 @@ if(((!isset($_POST['tk1']))or(trim($_POST['tk1'])!='dsQ642dSadfd2re')))
 
 $status_admin=0;
 $mas_responsible=array();
-$result_uu11 = mysql_time_query($link, 'select A.id,A.id_exchange,A.id_user,A.cost_client,A.cost_client_exchange,A.exchange_rates,A.cost_operator,A.cost_operator_exchange,A.discount,A.exchange_rates_operator,A.paid_client,A.paid_client_rates,A.paid_operator,A.paid_operator_rates,A.buy_clients,A.buy_operator,A.status_admin  from trips as A where A.id="' . ht($_POST['id']) . '" and A.visible=1 and A.id_a_company IN ('.$id_company.')');
+$result_uu11 = mysql_time_query($link, 'select A.id,A.id_exchange,A.id_user,A.cost_client,A.cost_client_exchange,A.exchange_rates,A.cost_operator,A.cost_operator_exchange,A.discount,A.exchange_rates_operator,A.paid_client,A.paid_client_rates,A.paid_operator,A.paid_operator_rates,A.buy_clients,A.buy_operator,A.status_admin,A.commission_fix  from trips as A where A.id="' . ht($_POST['id']) . '" and A.visible=1 and A.id_a_company IN ('.$id_company.')');
 $num_results_uu11 = $result_uu11->num_rows;
 
 if ($num_results_uu11 != 0) {
@@ -317,12 +317,24 @@ $status_ee='ok';
     }
 
 
+$fix=0;
+if((($sign_level==3)or($sign_level==4))and($row_uu11["commission_fix"]!=0)) {
+
+
+    if(trim($_POST['fix_com'])!='')
+    {
+        $fix=ht(trimc($_POST["fix_com"]));
+    }
+
+}
+
 //изменить стоимости в туре
 mysql_time_query($link,'update trips set 
                                                                                                                                
 cost_client="'.ht($cost_client).'",                           
 cost_client_exchange="'.ht($cost_client_exchange).'",     
-exchange_rates="'.ht($exchange_rates).'",            
+exchange_rates="'.ht($exchange_rates).'", 
+commission_fix="'.ht($fix).'",           
 cost_operator="'.ht($cost_operator).'", 
 cost_operator_exchange="'.ht($cost_operator_exchange).'",                                                           
 exchange_rates_operator="'.ht($exchange_rates_operator).'",
