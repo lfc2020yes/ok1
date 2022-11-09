@@ -90,7 +90,7 @@ if($result_8) {
 
         $ball[$n]['id_users']=$row_8["id"];
 
-        $result_status21 = mysql_time_query($link, 'SELECT sum(a.commission) as comm FROM trips AS a WHERE a.id_a_company="'.$row_uu_cs["id"].'" and  a.status=1 and a.visible=1 and a.id_user="' . $row_8["id"] . '" and a.date_buy_all>="' . $date_start . '" and a.date_buy_all<="' . $date_end . '"');
+        $result_status21 = mysql_time_query($link, 'SELECT sum(a.commission) as comm FROM trips AS a WHERE a.id_a_company="'.$row_uu_cs["id"].'" and  a.status=1 and a.commission_fix=0 and a.visible=1 and a.id_user="' . $row_8["id"] . '" and a.date_buy_all>="' . $date_start . '" and a.date_buy_all<="' . $date_end . '"');
 
         if ($result_status21->num_rows != 0) {
             $row_status21 = mysqli_fetch_assoc($result_status21);
@@ -109,7 +109,7 @@ if($result_8) {
         $ball[$n]['id_company']=$row_uu_cs["id"];
 
         //узнаем сколько всего оформленных туров в этом месяце
-        $result_uu = mysql_time_query($link, 'select count(A.id) as kol from trips as A where  A.id_a_company="'.$row_uu_cs["id"].'" and A.visible=1 and A.id_user="' . $row_8["id"] . '" and A.datecreate like "' . $month_s . '%"');
+        $result_uu = mysql_time_query($link, 'select count(A.id) as kol from trips as A where  A.id_a_company="'.$row_uu_cs["id"].'" and A.visible=1 and A.commission_fix=0 and A.id_user="' . $row_8["id"] . '" and A.datecreate like "' . $month_s . '%"');
 
         $num_results_uu = $result_uu->num_rows;
         if ($num_results_uu != 0) {
@@ -356,7 +356,7 @@ if ($result_uu_cs) {
                 $ball[$n]['id_company']=$row_uu_cs["id"];
 
 
-                $result_status21 = mysql_time_query($link, 'SELECT MIN(A.commission*100/A.cost_client) AS mi FROM trips AS A WHERE A.id_a_company="'.$row_uu_cs["id"].'" and A.visible=1 AND A.id_user="' . $row_8["id"] . '" AND A.date_buy_all LIKE "'.$month_s.'%"');
+                $result_status21 = mysql_time_query($link, 'SELECT MIN(A.commission*100/A.cost_client) AS mi FROM trips AS A WHERE A.id_a_company="'.$row_uu_cs["id"].'" and A.commission_fix=0 and A.visible=1 AND A.id_user="' . $row_8["id"] . '" AND A.date_buy_all LIKE "'.$month_s.'%"');
 
                 if ($result_status21->num_rows != 0) {
                     $row_status21 = mysqli_fetch_assoc($result_status21);
@@ -755,4 +755,4 @@ VALUES
 
 
 $cron_message='Выполнено';
-mysql_time_query($link,'INSERT INTO cron_history (id,datetimes,script,message) VALUES ("","'.date("y.m.d").' '.date("H:i:s").'","rating_30day_1d.php","'.ht($cron_message).'")');
+mysql_time_query($link,'INSERT INTO cron_history (datetimes,script,message) VALUES ("'.date("y.m.d").' '.date("H:i:s").'","rating_30day_1d.php","'.ht($cron_message).'")');
