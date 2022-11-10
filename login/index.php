@@ -352,8 +352,9 @@ include $url_system.'template/head.php';
 <div class="formi_css_login">
 <br><br>
 
-<!--<h3>Вход</h3>-->
-    <div class="mask_ll"><div class="logo_login"></div></div>
+<h3 style="margin-bottom: 40px;
+margin-top: 0px; color:#000;">Вход</h3>
+    <!--<div class="mask_ll"><div class="logo_login"></div></div>-->
 
 
 <?
@@ -370,9 +371,9 @@ echo'<form id="pod_form" action="/login/?next='.$_SERVER['HTTP_REFERER'].'&n='.$
 if(isset($_POST["ref"]))
 {
 
-echo'<div class="input-width"><div class="width-setter"><input type="text" value="'.$_POST["email"].'" name="email" id="email_formi" placeholder="логин" class="input_f_1 error_formi" autocomplete="off"></div></div><br>';
+echo'<div class="input-width"><div class="width-setter" style="margin: 0 0px; height: 60px;"><input type="text" value="'.$_POST["email"].'" name="email" id="email_formi" placeholder="логин" class="input_f_1 error_formi_iio" autocomplete="off" style="margin-top: 0px;"></div></div><br>';
 
-echo'<div class="input-width"><div class="width-setter"><input type="password" name="password" id="password_formi" value="" placeholder="пароль" class="input_f_1 error_formi" autocomplete="off"></div></div><br>';
+echo'<div class="input-width"><div class="width-setter" style="margin: 0 0px; height: 60px;"><input type="password" name="password" id="password_formi" value="" placeholder="пароль" class="input_f_1 error_formi_iio" autocomplete="off" style="margin-top: 0px;"></div></div><br>';
 
 
 echo'<input type=hidden name="ref" value="00">';
@@ -382,15 +383,15 @@ echo'<input type=hidden name="ref" value="00">';
 if(!isset($_COOKIE["lis"]))
 {	
 ?>
-<div class="input-width"><div class="width-setter"><input type="text" name="email" id="email_formi" placeholder="логин" class="input_f_1" autocomplete="off"></div></div><br>
+<div class="input-width"><div class="width-setter" style="margin: 0 0px; height: 60px;"><input type="text" name="email" id="email_formi" placeholder="логин" class="input_f_1" autocomplete="off" style="margin-top: 0px;"></div></div><br>
 <?
 } else
 {
-echo'<div class="input-width"><div class="width-setter"><input type="text" value="'.$_COOKIE["lis"].'" name="email" id="email_formi" placeholder="логин" class="input_f_1" autocomplete="off"></div></div><br>';	
+echo'<div class="input-width"><div class="width-setter" style="margin: 0 0px; height: 60px;"><input type="text" value="'.$_COOKIE["lis"].'" name="email" id="email_formi" placeholder="логин" class="input_f_1" autocomplete="off" style="margin-top: 0px;"></div></div><br>';
 }
 	?>
 
-<div class="input-width"><div class="width-setter"><input type="password" name="password" id="password_formi" value="" placeholder="пароль" class="input_f_1" autocomplete="off"></div></div><br>
+<div class="input-width"><div class="width-setter" style="margin: 0 0px; height: 60px;"><input type="password" name="password" id="password_formi" value="" placeholder="пароль" class="input_f_1" autocomplete="off" style="margin-top: 0px;"></div></div><br>
 
 <?
 echo'<input type=hidden name="ref" value="00">';
@@ -402,10 +403,24 @@ if(isset($_POST["ref"]))
 	
 if($error11==3)
 {	
- echo'<div class="text_formi_error">Слишком много неуспешных попыток авторизации. Необходимо подождать '.$jdat.' '.PadejNumber($jdat,'минуту,минуты,минут').'</div>';
+ echo'<div class="text_formi_error" style="font-style: normal;
+color: #9e9f9f;
+font-family: GEInspiraRegular;
+font-size: 12px;
+display: block;
+width: 100%;
+line-height: 16px;
+padding-bottom: 20px;">Слишком много неуспешных попыток авторизации. Необходимо подождать<br><strong>'.$jdat.' '.PadejNumber($jdat,'минуту,минуты,минут').'</strong></div>';
 } else
 {
-  echo'<div class="text_formi_error">Логин и пароль не совпадают.</div>';
+  echo'<div class="text_formi_error" style="font-style: normal;
+color: #9e9f9f;
+font-family: GEInspiraRegular;
+font-size: 12px;
+display: block;
+width: 100%;
+line-height: 16px;
+padding-bottom: 20px;">Логин и пароль не совпадают.</div>';
 }
 }
 
@@ -419,17 +434,30 @@ echo'<div class="text_formi" style="margin-top:5px;">Быстрый вход в 
 */
 ?>
  <div style="height:70px; text-align: center;">  
-<div class="blue_blue" id="yes1"><span class="ghhj"></span></div>
+<div class="blue_blue" id="yes1"><span class="ghhj">Войти</span></div>
+ </div>
+
+     <a style="border:0px; margin: 30px 0px;
+display: block;" href="https://www.umatravel.club/partnership/" class="a-img-ling" marked="1"><img alt="Партнерская программа" src="image/partner.jpg"></a>
+
+<span style="font-style: normal;
+color: #9e9f9f;
+font-family: GEInspiraRegular;
+font-size: 12px;
+display: block;
+width: 100%;
+line-height: 16px;
+padding-top: 20px;">Если у вас возникли проблемы, пожалуйста, напишите нам на почту <a href="mailto:umatravelpro@mail.ru" class="mail-fit" marked="1">umatravelpro@mail.ru</a></span>
 
 <!--<a href="/account/password/recover/"><div class="gray_gray1" id="" style="float:left; margin-left:30px;"><span>Забыли пароль?</span></div></a>-->
-</div>
+
 <?
 
 
 
 ?>
 </form>
-<br><br><br><br>
+
 
 </div>
 

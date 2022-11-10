@@ -215,17 +215,24 @@ background-color: #fff;
 
 .formi_css_login {
     /*background-color: #fff;*/
-    padding-left: 40px;
-    padding-right:30px;
+    padding:50px;
+  padding-bottom: 20px;
+  padding-top: 40px;
 	display: inline-block;
 	text-align:left;
   text-align: center;
-
+max-width:400px ;
+  background-color: #fff;
+  border-radius: 6px;
+  @include box-shadow(#ef4084 0px 30px 70px 0px);
   @include sw('tablet-small') {
- width: 100%;
+ width: 90%;
+    max-width: 90%;
    // text-align: center;
   }
 
+
+  .error_formi { border:2px solid #ef4084 !important; }
 }
 
 
@@ -260,24 +267,25 @@ background-color: #fff;
     border-color:#01a5fe;
     border-image: none;
     border-style: solid;
-    border-width: 0 0 3px 0px;
-	background-color: transparent;
+    border-width: 0 0 0px 0px;
+	background-color: #fff;
     box-shadow: none;
-    color: #fff;
-    font-family: "LabGrotesque-Light";
-	font-style: italic;
-
+    //color: #fff;
+  font-family: "GEInspiraBold";
+	font-style: normal;
+  @include box-shadow(rgba(0, 0, 0, 0.1) 0px 7px 30px 2px);
+border-radius: 6px;
     font-size: 16px;
-    height: 44px;
+    height: 60px;
     margin-top: 20px;
     padding-left: 20px;
 	padding-right:20px;
     position: relative;
 	text-align: center;
-    width: 500px;
+    width: 100%;
     z-index: 2;
 	@extend .animate;
-	@include placeholder {color: rgba(255,255,255,1);}
+	@include placeholder {color: rgba(0,0,0,0.3);}
 
   @include sw('tablet-small') {
     left:0px !important;
@@ -346,7 +354,7 @@ font-size: 13px;
 }
 
 .error_formi { border:none !important; border-bottom: 3px solid #fd8080 !important;  box-shadow: 0px 0px 0 0 #b9b9b9 inset !important; }
-
+/*
 .blue_blue {
     -moz-border-bottom-colors: none;
     -moz-border-left-colors: none;
@@ -383,8 +391,7 @@ top: 15px;
     transition: all 0s ease 0s, all 0.3s ease 0s;
 	content: "y";
     font-family: $i;z-index: 3;
-	/*width:10px;
-	height:10px;*/
+
 	color: #fff;}
 	.ghhj {;left:0px;
 top: 0px;
@@ -396,6 +403,38 @@ top: 0px;
 		background-color: #000; z-index: 1;  border-radius: 50%;
     position: absolute; width: 66px; height: 66px; @include animation(span46 2s 1s infinite cubic-bezier(.2,.64,.81,.23) ); }
 	
+}
+*/
+.blue_blue {
+
+  border-radius: 2px;
+  width: 100%;
+  text-align: center;
+  background-color: #25ae88;
+  display: inline-block;
+  font-family: ProximaNova-Bold;
+  font-size: 13px;
+  cursor: pointer;
+  color: #fff;
+  padding: 23px 45px;
+  cursor: pointer;
+  text-transform: uppercase;
+  -webkit-transition: all .4s cubic-bezier(.42,.01,.23,1);
+  -o-transition: all .4s cubic-bezier(.42,.01,.23,1);
+  transition: all .4s cubic-bezier(.42,.01,.23,1);
+
+  border-radius: 6px;
+  background-color: #ef4084;
+  background-image: -o-linear-gradient(to right,#f29d15,#d44dc3);
+  background-image: -webkit-gradient(linear,left top,right top,from(#f29d15),to(#d44dc3));
+  background-image: -o-linear-gradient(left,#f29d15,#d44dc3);
+  background-image: linear-gradient(to right,#f29d15,#d44dc3);
+  width: auto;
+  display: inline-block;
+  -webkit-transition: all .4s cubic-bezier(.42,.01,.23,1);
+  -o-transition: all .4s cubic-bezier(.42,.01,.23,1);
+  transition: all .4s cubic-bezier(.42,.01,.23,1);
+  width: 100%;
 }
 
 
@@ -587,11 +626,12 @@ font-style:normal; display:block; height:70px;
 	}   
    .formi_css_login .input_f_1 {
 	 width:100%;
-		height:$height-input;
+		//height:$height-input;
 		padding-left:$left-padding-input;
 		padding-right:$right-padding-input;
 		position:absolute;
 		left:-$left-padding-input;
+     left:0px;
    }
 
 }
@@ -618,3 +658,5 @@ font-style:normal; display:block; height:70px;
 .mask_ll {/*background-color: #fff;*/
   display: inline-block;
   padding: 20px;}
+
+.error_formi_iio { border:2px solid #ef4084 !important; }
