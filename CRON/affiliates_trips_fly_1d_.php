@@ -23,7 +23,7 @@ include_once $url_system.'ilib/lib_interstroi.php';
                 $block = 1;
                 $result_tr = mysql_time_query($link, 'Select 
   
-  DISTINCT b.id_affiliates,
+  DISTINCT b.id_affiliates,b.date_end,
     (SELECT yy.start_fly FROM trips_fly_history AS yy WHERE yy.id_trips=b.id ORDER BY yy.datetime DESC LIMIT 0,1) AS fly_start,(SELECT yy.end_fly FROM trips_fly_history AS yy WHERE yy.id_trips=b.id ORDER BY yy.datetime DESC LIMIT 0,1) AS fly_end
   
   from trips as b where b.id="' . ht($row_uu["id_trips"]) . '" and not(b.id_affiliates=0)');
@@ -41,6 +41,15 @@ include_once $url_system.'ilib/lib_interstroi.php';
 
                             $block = 0;
                         }
+                    } else
+                    {
+                        //возможно он покупал какой то санаторий без вылетов на самолете
+                        //проверяем по датам в договоре
+                        if (date_end_today($row_tr["date_end"]. '00:00:00'))
+                        {
+                            $block = 0;
+                        }
+
                     }
 
                 }
