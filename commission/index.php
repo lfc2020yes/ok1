@@ -156,7 +156,7 @@ include_once $url_system.'template/body_top.php';
 
         <?
 
-        $result_te = mysql_time_query($link, 'select *,c.name,b.id_promo,a.id as id_tripss from affiliates_history_trips as a,trips as b,trips_country as c where a.id_trips=b.id and b.id_country=c.id and a.id_users="' . ht($id_user) . '" order by a.datetimes desc');
+        $result_te = mysql_time_query($link, 'select *,c.name,b.id_promo,b.id as id_tripss from affiliates_history_trips as a,trips as b,trips_country as c where a.id_trips=b.id and b.id_country=c.id and a.id_users="' . ht($id_user) . '" order by a.datetimes desc');
 
         if ($result_te) {
 
