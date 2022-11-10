@@ -45,6 +45,7 @@ include_once $url_system.'ilib/lib_interstroi.php';
                     {
                         //возможно он покупал какой то санаторий без вылетов на самолете
                         //проверяем по датам в договоре
+                        echo($row_tr["date_end"]. '00:00:00');
                         if (date_end_today($row_tr["date_end"]. '00:00:00'))
                         {
                             $block = 0;
