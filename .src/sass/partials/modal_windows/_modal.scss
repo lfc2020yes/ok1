@@ -224,7 +224,7 @@ background-color: #fff;
 max-width:400px ;
   background-color: #fff;
   border-radius: 6px;
-  @include box-shadow(#ef4084 0px 30px 70px 0px);
+ // @include box-shadow(#ef4084 0px 30px 70px 0px);
   @include sw('tablet-small') {
  width: 90%;
     max-width: 90%;

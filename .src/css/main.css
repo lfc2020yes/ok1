@@ -32395,9 +32395,6 @@ hr {
   max-width: 400px;
   background-color: #fff;
   border-radius: 6px;
-  -moz-box-shadow: #ef4084 0px 30px 70px 0px;
-  -webkit-box-shadow: #ef4084 0px 30px 70px 0px;
-  box-shadow: #ef4084 0px 30px 70px 0px;
 }
 @media only screen and (max-width: 639px) {
   .formi_css_login {
