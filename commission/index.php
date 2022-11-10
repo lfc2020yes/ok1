@@ -156,7 +156,7 @@ include_once $url_system.'template/body_top.php';
 
         <?
 
-        $result_te = mysql_time_query($link, 'select *,c.name,b.id_promo,a.id as id_trips from affiliates_history_trips as a,trips as b,trips_country as c where a.id_trips=b.id and b.id_country=c.id and a.id_users="' . ht($id_user) . '" order by a.datetimes desc');
+        $result_te = mysql_time_query($link, 'select *,c.name,b.id_promo,a.id as id_tripss from affiliates_history_trips as a,trips as b,trips_country as c where a.id_trips=b.id and b.id_country=c.id and a.id_users="' . ht($id_user) . '" order by a.datetimes desc');
 
         if ($result_te) {
 
@@ -185,7 +185,7 @@ if($row_te["id_promo"]!=0)
 
 echo'        <div class="lider-box lider_more">
             <div class="lider-date"><span class="aff_mo">Дата</span>'.time_stamp_mess($row_te["datetimes"]).'</div>
-            <div class="lider-country"><span class="aff_mo">Страна</span>'.$row_te["name"].' <i class="i-com-partnership">('.$row_te["id_trips"].')</i></div>
+            <div class="lider-country"><span class="aff_mo">Страна</span>'.$row_te["name"].' <i class="i-com-partnership">('.$row_te["id_tripss"].')</i></div>
             <div class="lider-comm"><span>+'.rtrim(rtrim(number_format(($row_te["comission"]), 2, '.', ' '),'0'),'.').' RUB</span><div>'.$row_te["proc"].'%</div></div>
             <div class="lider-promo">';
 if($promo!='—') {
