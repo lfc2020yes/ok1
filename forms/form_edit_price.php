@@ -230,7 +230,7 @@ if($style_kurs==1) {
 
 }
 
-if((($sign_level==3)or($sign_level==4))and($row_score["commission_fix"]!=0)) {
+if((($sign_level==3)or($sign_level==4))) {
 
     $query_string .= '<div class="strong_wh_2020" style="margin-top:30px;">↓ Фиксированная выплата</div>';
 

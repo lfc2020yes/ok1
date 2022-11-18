@@ -318,7 +318,7 @@ $status_ee='ok';
 
 
 $fix=0;
-if((($sign_level==3)or($sign_level==4))and($row_uu11["commission_fix"]!=0)) {
+if((($sign_level==3)or($sign_level==4))) {
 
 
     if(trim($_POST['fix_com'])!='')
