@@ -89,20 +89,9 @@ if($_GET["m"]=='last')
 {
 //ПЕРЕСЧЕТ КОМИССИИ У ПОЛЬЗОВАТЕЛЕЙ ЗА ПРОШЛЫЙ МЕСЯЦ
 
-    $date_start=date("Y-m-").'01 00:00:00';
+    $date_start=date_step_sql('Y-m','-1m').'-01 00:00:00';
     $date_end=date("Y-m-").'01 00:00:00';
-
-    $month_s=$date_start=date("Y-").date("m", mktime(date("G"), date("i"), date("s"), (date("n")-1),date("j"), date("Y"))).'-01';
-//echo($date_start.'/'.$date_end);
-
-
-//ПЕРЕСЧЕТ ФИКСИРОВАННЫХ ОПЛАТ У ПОЛЬЗОВАТЕЛЕЙ ЗА ТЕКУЩИЙ МЕСЯЦ НОВЫЕ ТУРЫ
-    /*
-    $date_start=date("Y-m-").'01 00:00:00';
-    $date_end=date_step_sql('Y-m','+1m').'-01 00:00:00';
-    $month_s=$date_start=date("Y-m-").'01';
-    */
-//echo($date_start.'/'.$date_end);
+    $month_s=date_step_sql('Y-m','-1m').'-01';
 
 
     $result_8 = mysql_time_query($link,'SELECT A.id FROM r_user AS A');
@@ -110,8 +99,8 @@ if($_GET["m"]=='last')
     if($result_8)
     {
         while($row_8 = mysqli_fetch_assoc($result_8)){
-            $commission=0;
 
+            $commission=0;
             $result_status21=mysql_time_query($link,'SELECT sum(a.commission_fix) as comm,sum(a.commission) as comm1 FROM trips AS a WHERE  a.status=1 and not(a.commission_fix=0) and a.visible=1 and a.id_user="'.$row_8["id"].'" and a.date_buy_all>="'.$date_start.'" and a.date_buy_all<"'.$date_end.'"');
 
             //echo 'SELECT sum(a.commission_fix) as comm,sum(a.commission) as comm1 FROM trips AS a WHERE  a.status=1 and not(a.commission_fix=0) and a.visible=1 and a.id_user="'.$row_8["id"].'" and a.date_buy_all>="'.$date_start.'" and a.date_buy_all<"'.$date_end.'"';
@@ -188,9 +177,7 @@ if($_GET["m"]=='now')
 //ПЕРЕСЧЕТ КОМИССИИ У ПОЛЬЗОВАТЕЛЕЙ ЗА ТЕКУЩИЙ МЕСЯЦ НОВЫЕ ТУРЫ
     $date_start=date("Y-m-").'01 00:00:00';
     $date_end=date_step_sql('Y-m','+1m').'-01 00:00:00';
-
-    $month_s=$date_start=date("Y-m-").'01';
-//echo($date_start.'/'.$date_end);
+    $month_s=date("Y-m-").'01';
 
 
     $result_8 = mysql_time_query($link,'SELECT A.id FROM r_user AS A');
@@ -198,9 +185,11 @@ if($_GET["m"]=='now')
     if($result_8)
     {
         while($row_8 = mysqli_fetch_assoc($result_8)){
-            $commission=0;
 
-            $result_status21=mysql_time_query($link,'SELECT sum(a.commission) as comm FROM trips AS a WHERE  a.status=1 and a.visible=1 and a.id_user="'.$row_8["id"].'" and a.date_buy_all>="'.$date_start.'" and a.date_buy_all<"'.$date_end.'"');
+            $commission=0;
+            $result_status21=mysql_time_query($link,'SELECT sum(a.commission_fix) as comm,sum(a.commission) as comm1 FROM trips AS a WHERE  a.status=1 and not(a.commission_fix=0) and a.visible=1 and a.id_user="'.$row_8["id"].'" and a.date_buy_all>="'.$date_start.'" and a.date_buy_all<"'.$date_end.'"');
+
+            //echo 'SELECT sum(a.commission_fix) as comm,sum(a.commission) as comm1 FROM trips AS a WHERE  a.status=1 and not(a.commission_fix=0) and a.visible=1 and a.id_user="'.$row_8["id"].'" and a.date_buy_all>="'.$date_start.'" and a.date_buy_all<"'.$date_end.'"';
 
             if($result_status21->num_rows!=0)
             {
@@ -212,14 +201,17 @@ if($_GET["m"]=='now')
                 {
                     $row_status21["comm"]=0;
                 }
-
+                if($row_status21["comm1"]=='')
+                {
+                    $row_status21["comm1"]=0;
+                }
                 if($result_status22->num_rows!=0)
                 {
-                    mysql_time_query($link,'update users_commission_trips set sum="'.$row_status21["comm"].'" where id_users="'.$row_8["id"].'" and date="'.$month_s.'"');
+                    mysql_time_query($link,'update users_commission_trips set sum_fix="'.$row_status21["comm"].'",sum_com="'.$row_status21["comm1"].'" where id_users="'.$row_8["id"].'" and date="'.$month_s.'"');
 
                 } else
                 {
-                    mysql_time_query($link,'INSERT INTO users_commission_trips (id_users,date,sum) VALUES ("'.$row_8["id"].'","'.$month_s.'","'.$row_status21["comm"].'")');
+                    mysql_time_query($link,'INSERT INTO users_commission_trips (id_users,date,sum,sum_fix,sum_com) VALUES ("'.$row_8["id"].'","'.$month_s.'","0","'.$row_status21["comm"].'","'.$row_status21["comm1"].'")');
                 }
 
 
