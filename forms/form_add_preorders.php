@@ -147,6 +147,57 @@ if(!isset($_GET["id"])) {
 
 
 
+
+//выводим и всех подчинненных, следовательно для простых менеджеров подчиненных нет
+
+$os5 = array( "Себе");
+$os_id5 = array("0");
+
+$mass_ei=users_hierarchy($id_user,$link);
+rm_from_array($id_user,$mass_ei);
+$mass_ei= array_unique($mass_ei);
+
+
+foreach ($mass_ei as $keys => $value)
+{
+    $result_work_zz=mysql_time_query($link,'Select a.name_small,a.id from r_user as a where a.id="'.$value.'" and a.enabled=1');
+    $num_results_work_zz = $result_work_zz->num_rows;
+    if($num_results_work_zz!=0)
+    {
+
+        for ($i=0; $i<$num_results_work_zz; $i++)
+        {
+            $row_work_zz = mysqli_fetch_assoc($result_work_zz);
+            array_push($os5, $row_work_zz["name_small"]);
+            array_push($os_id5, $row_work_zz["id"]);
+        }
+    }
+
+}
+
+
+
+
+if($num_results_work_zz!=0) {
+
+    $query_string .= '<div style="margin-top: 30px;
+    position: relative;" class="js-zindex js-vid-oper">';
+
+    $query_string .= '<div class="left_drop list_2018 menu1_prime"><label class="">Менеджер<span>*</span></label><div class="select eddd zin_2019"><a class="slct" list_number="t3" data_src=""></a><ul class="drop js-visible-mt">';
+
+    for ($i = 0; $i < count($os5); $i++) {
+        if ((string)$su_5 == $os_id5[$i]) {
+            $query_string .= '<li class="sel_active"><a href="javascript:void(0);"  rel="' . $os_id5[$i] . '">' . $os5[$i] . '</a></li>';
+        } else {
+            $query_string .= '<li><a href="javascript:void(0);"  rel="' . $os_id5[$i] . '">' . $os5[$i] . '</a></li>';
+        }
+
+    }
+
+    $query_string .= '</ul><input type="hidden" class="gloab " name="id_user_booking" id="vid_finance" value=""><div class="div_new_2018"><hr class="one"></div></div></div></div>';
+}
+
+
 $query_string.='    <!--input start	-->';
 
 

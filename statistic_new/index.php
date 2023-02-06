@@ -686,7 +686,7 @@ $month_rus1=date("m");
 
 	$bonus=0;
 
- if ((( !isset($_COOKIE["su_5s".$id_user]))or($_COOKIE["su_5s".$id_user]==0))and(($sign_admin==1)or($sign_level>1)))
+ if((( !isset($_COOKIE["su_5s".$id_user]))or($_COOKIE["su_5s".$id_user]==0))and(($sign_admin==1)or($sign_level>1)))
   {
       //общая статистика по всем подчиненным менеджерам для директоров и всех кто выже менеджеров
 				  $result_status223=mysql_time_query($link,'SELECT a.* from users_commission_trips as a,r_user as b where a.id_users=b.id '.$LIKE.' and a.date="'.$month_s.'"');
@@ -697,14 +697,12 @@ $month_rus1=date("m");
 		         {
 			    $row223 = mysqli_fetch_assoc($result_status223);
 
-
-
-
                      $result_status_b=mysql_time_query($link,'SELECT a.* from users_commission_level as a where a.id_users="'.$row223["id_users"].'" and a.sum_start<="'.$row223["sum"].'" and a.sum_end>"'.$row223["sum"].'" and a.dates="'.$date_level_bonus.'" and a.id_company IN ('.ht($id_company).')');
 
                      if($result_status_b->num_rows==0) {
 
                          $result_status_b = mysql_time_query($link, 'SELECT a.* from users_commission_level as a where a.id_users=0 and a.sum_start<="' . $row223["sum"] . '" and a.sum_end>"' . $row223["sum"] . '" and a.dates="' . $date_level_bonus . '" and a.id_company IN (' . ht($id_company) . ')');
+
                      }
 
            if($result_status_b->num_rows!=0)

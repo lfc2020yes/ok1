@@ -124,9 +124,18 @@ if(($_POST['preorders']["client_type"]==1)or($_POST['preorders']["client_type"]=
 }
 
 
+$who_kto=ht($id_user);
+if((isset($_POST["id_user_booking"]))and($_POST["id_user_booking"]!=0))
+{
+
+    $who_kto=ht($_POST["id_user_booking"]);
+
+}
+
+
 mysql_time_query($link, 'INSERT INTO preorders(id_company,id_user,id_type_clients,id_k_clients,id_booking_sourse,id_country,text,id_mark,date_create,visible,status,id_reasons) VALUES( 
 "' . ht($_POST['id_org']) . '",
-"' . ht($id_user) . '",
+"' . $who_kto . '",
 "'. $type_c.'",
 "' . ht($_POST['preorders']['id_client']) . '",
 "'.ht($_POST["type_booking"]).'",
@@ -140,6 +149,31 @@ mysql_time_query($link, 'INSERT INTO preorders(id_company,id_user,id_type_client
 )');
 $ID_N=mysqli_insert_id($link);
 //добавим в историю о добавление обращения
+
+
+
+if($who_kto!=$id_user)
+{
+    $text_not = 'Вам поступило новое обращение <a href="/preorders/.id-' . ht($ID_N) . '">Обращение №' . ht($ID_N) . '</a>';
+
+    $user_send_new= array();
+    $user_send_new=UserNotNumberUsers("13",$who_kto,$link);
+
+    rm_from_array(0,$user_send_new);
+    $user_send_new=array_unique($user_send_new);
+
+/*
+    $mass_ei = all_chief($id_user, $link);
+    rm_from_array($id_user, $mass_ei);
+    $mass_ei = array_unique($mass_ei);
+
+    $end_mass=exception_role($user_send_new,$mass_ei);
+*/
+    notification_send($text_not,$user_send_new,$id_user,$link);
+}
+
+
+
 
 $comment='Обращение создано';
 $comment_sys='';
@@ -181,10 +215,10 @@ if($sign_admin!=1)
 if(ht($_POST['preorders']["task"])==1)
 {
 
-    mysql_time_query($link,'INSERT INTO task_new (id_a_group,id_user,id_user_responsible,ring_datetime,comment,date_create,visible,status,click,action,id_object) VALUES ("'.ht($id_group_u).'","'.$id_user.'","'.$id_user.'","'.ht($_POST['date_sele_task_form2']).' '.ht($_POST['task_time_form2']).':00","'.ht($_POST['task_comment']).'","'.date("y.m.d").' '.date("H:i:s").'","1","0","1","20","'.$ID_N.'")');
+    mysql_time_query($link,'INSERT INTO task_new (id_a_group,id_user,id_user_responsible,ring_datetime,comment,date_create,visible,status,click,action,id_object) VALUES ("'.ht($id_group_u).'","'.$id_user.'","'.$who_kto.'","'.ht($_POST['date_sele_task_form2']).' '.ht($_POST['task_time_form2']).':00","'.ht($_POST['task_comment']).'","'.date("y.m.d").' '.date("H:i:s").'","1","0","1","20","'.$ID_N.'")');
 
 
-    $ID_N1=mysqli_insert_id($link);
+  $ID_N1=mysqli_insert_id($link);
 
 //добавление истории по задаче
     AddHistoryTask('7',$id_user,$ID_N1,'','','','','','','',$link,'');

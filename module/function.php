@@ -5348,6 +5348,7 @@ function UserNotNumberUsers($number,$id,$link)
 {
     $mass_a=array();
     $result_authority=mysql_time_query($link,'SELECT C.id FROM a_notification_user_option AS A,a_notification_type_role AS B,r_user AS C WHERE C.id="'.ht($id).'" and A.number_type="'.ht($number).'" AND A.val=1 AND C.id=A.id_user AND C.id_role=B.id_role AND B.number_type="'.ht($number).'" AND B.val=1');
+
     $num_results_authority = $result_authority->num_rows;
 
     if($num_results_authority<>0)

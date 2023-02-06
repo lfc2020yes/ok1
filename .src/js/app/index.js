@@ -875,18 +875,13 @@ function after_cancel_trips_x(data,update)
 		clearInterval(timerId); // îñòàíàâëèâàåì âûçîâ ôóíêöèè ÷åðåç êàæäóþ ñåêóíä
 		$.arcticmodal('close');
 		$('.trips_block_global[id_trips='+data.for_id+']').addClass('cancel_trips');
-
 	} else
 	{
 		$('.js-form-cancel-trips').find('.js-cancel-trips-x').show();
 		$('.js-form-cancel-trips').find('.b_loading_small').remove();
 
-
 		alert_message('error','Ошибка аннуляции');
 	}
-
-
-
 }
 
 function after_add_preorders_status_new(data,update)
