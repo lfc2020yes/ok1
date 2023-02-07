@@ -66,7 +66,7 @@ if ((!isset($_POST["id"])))
 }
 
 
-if ((isset($_POST['preorders']["client_type"]))and(is_numeric($_POST['preorders']["id_client"]))and(($_POST['preorders']["client_type"]=='1')or($_POST['preorders']["client_type"]=='2')or($_POST['preorders']["client_type"]=='3'))and($sign_admin!=1))
+if ((isset($_POST['preorders']["client_type"]))and(is_numeric($_POST['preorders']["id_client"]))and(($_POST['preorders']["client_type"]=='1')or($_POST['preorders']["client_type"]=='2')or($_POST['preorders']["client_type"]=='3')))
 {
   //проверяем мог ли он привязать эту задачу к данному клиенту
   //если относится к той же компани что и пользователь добавл. задачу

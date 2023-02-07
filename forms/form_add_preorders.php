@@ -157,7 +157,7 @@ $mass_ei=users_hierarchy($id_user,$link);
 rm_from_array($id_user,$mass_ei);
 $mass_ei= array_unique($mass_ei);
 
-
+$num_results_work_zz=0;
 foreach ($mass_ei as $keys => $value)
 {
     $result_work_zz=mysql_time_query($link,'Select a.name_small,a.id from r_user as a where a.id="'.$value.'" and a.enabled=1');
