@@ -169,7 +169,7 @@ echo'<h1 class="h1-filter js-h1-filter-doc ">Расширенные фильтр
 
 	 echo'<div class="choice-radio"><div class="center_vert1"><i class="active_task_cb"></i></div><input name="task[filter]" value="1" type="hidden"></div>'; 
 
-	 echo'<span class="search-count-task"></span>';
+	 echo'<span class="search-count-task"></span><a href="contracts/csv/csv.php" class="search-count-csv" marked="1">excel</a>';
 echo'</h1>';	
 	
 	
