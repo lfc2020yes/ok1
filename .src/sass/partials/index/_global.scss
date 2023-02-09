@@ -12279,7 +12279,7 @@ top: 0px; left:0px;  }
 				background-color: #fff;
 
 border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-				@include sw('tablet-small') { overflow-x: scroll; width: 310px; }
+				@include sw('tablet-small') { overflow-x: scroll; /*width: 310px;*/ width:100%; }
 
 
 
@@ -21955,7 +21955,20 @@ margin-top: 40px;
 	background-position: 50% 50%;
 	background-size: cover;
 	width: 50px;
+	@include sw('tablet-small') {
+		width:calc(50% - 20px);
+	}
+
+
 	object-fit: contain;
 	aspect-ratio: 9/16;}
 
 .js-shots { margin: 10px 0px; }
+
+.trips-b-comment-phone {@include sw('tablet-small') {padding:10px !important; } }
+.js-update-block-preorders {@include sw('tablet-small') {margin-bottom: 0px !important;}}
+
+.preorders_block_global .trips-b-user {
+  @include sw('tablet-small') {
+	  width: calc(100% - 50% - 15%) !important;
+  }}

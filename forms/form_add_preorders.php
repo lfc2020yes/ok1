@@ -407,6 +407,17 @@ if(($more_city==1)and($_COOKIE["cc_town".$id_user]==0)) {
     //echo $query_string;
 
 
+
+        $query_string.='
+        <script type="text/javascript">
+ $(document).ready(function(){
+     //автоматически выбрать первый элемент в этом списке
+     
+     
+     setTimeout ( function () { $(\'[name="id_org"]\').prev().find(\'li:first a\').trigger(\'click\');  }, 1000 );
+     
+     });
+ </script>';
     ?>
 
     <?

@@ -253,7 +253,7 @@ if(!empty($row_8["date_create"]))
 }
 
 
-$task_cloud_block.='</div><div class="trips-b-comment"><span class="label-task-gg ">Комментарий/последнее событие
+$task_cloud_block.='</div><div class="trips-b-comment trips-b-comment-phone"><span class="label-task-gg ">Комментарий/последнее событие
 </span><div><span class="spans ggh-e">'.$row_8["text"].'</span></div>';
 
 
@@ -369,7 +369,7 @@ if (($role->permission('Обращения','D'))or($sign_admin==1)) {
 
         $min=dateDiff_min(date('Y-m-d H:i:s'), $row_8['date_create']);
 
-        if(($min<60)and(($row_8['id_user']==$id_user)or($sign_admin==1))) {
+        if(($min<1440)and(($row_8['id_user']==$id_user)or($sign_admin==1))) {
 
             $task_cloud_block .= '<li class="tabs_005U annul-li-tr" id="0"><a  class="edit-preorders-all1 js-buy-del-pre" data-tooltip="Удалить" ></a></li>';
 

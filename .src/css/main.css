@@ -17614,7 +17614,8 @@ font-size: 13px;
 @media only screen and (max-width: 639px) {
   .client_window .menu_client_w .mm_w .tabs_hedi, .px_bg_trips .menu_client_w .mm_w .tabs_hedi {
     overflow-x: scroll;
-    width: 310px;
+    /*width: 310px;*/
+    width: 100%;
   }
 }
 .client_window .menu_client_w .mm_w .tabs_hedi li, .px_bg_trips .menu_client_w .mm_w .tabs_hedi li {
@@ -30193,9 +30194,32 @@ position: absolute;}  }
   object-fit: contain;
   aspect-ratio: 9/16;
 }
+@media only screen and (max-width: 639px) {
+  .img-preorder-z {
+    width: calc(50% - 20px);
+  }
+}
 
 .js-shots {
   margin: 10px 0px;
+}
+
+@media only screen and (max-width: 639px) {
+  .trips-b-comment-phone {
+    padding: 10px !important;
+  }
+}
+
+@media only screen and (max-width: 639px) {
+  .js-update-block-preorders {
+    margin-bottom: 0px !important;
+  }
+}
+
+@media only screen and (max-width: 639px) {
+  .preorders_block_global .trips-b-user {
+    width: calc(100% - 50% - 15%) !important;
+  }
 }
 
 .input-block-2020 .list-image {
@@ -32239,7 +32263,6 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 }
 @media only screen and (max-width: 1023px) {
   .center_modal {
-    min-height: calc(100vh - 74px - 104px );
     padding: 0px;
   }
 }
