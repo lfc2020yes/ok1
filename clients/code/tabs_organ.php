@@ -51,7 +51,7 @@ padej_woo();
   $query_string.='<div style="margin-top: 30px;"><div class="input_2018"><label>Юридический адрес</label><input name="offers[0][org_adress_ur]" value="" id="date_124" class="input_new_2018 required no_upperr" autocomplete="off" type="text"><div class="div_new_2018"><hr class="one"><hr class="two"><div class="oper_name"></div></div></div>
 </div>';	 
 	 
-  $query_string.='<div style="margin-top: 30px;"><div class="input_2018"><label>Телефон</label><input name="offers[0][org_phone]" value="" id="date_124" class="input_new_2018 required phone_us1" autocomplete="off" type="text"><div class="div_new_2018"><hr class="one"><hr class="two"><div class="oper_name"></div></div></div>
+  $query_string.='<div style="margin-top: 30px;"><div class="input_2018"><label>Телефон</label><input name="offers[0][org_phone]" value="" id="date_124" class="input_new_2018 required js-mask-input-tel" autocomplete="off" type="tel"><div class="div_new_2018"><hr class="one"><hr class="two"><div class="oper_name"></div></div></div>
 </div>';
 
 
@@ -268,7 +268,14 @@ $query_string.='</div>';
 $query_string.='<script type="text/javascript"> 
 	  $(function (){ 
 
-
+ const phoneEl = $(\'.js-mask-input-tel\')[0];
+     let phoneMask = IMask(phoneEl, {
+         mask: \'{+7} (#00) 000-00-00\',
+         definitions: {
+             \'#\': /[012345679]/
+         }
+     });
+ 
 if ($(\'.add-next-org\').length > 0) { $(\'[name=temp]\').val(1); }
 
 });

@@ -5257,6 +5257,7 @@ $('.sourse_b').on("change keyup input click",".add_sourse_booking", add_offers);
 $('.phone_us1').mask('+7 (000) 000-00-00');
 	
 
+
 	
 $('.form_2_booking').on("change keyup input click",".count_mask", validate11);	
 	

@@ -50,7 +50,7 @@ $query_string.='<div style="margin-top: 30px;"><div class="input_2018"><label>Ю
 </div>';
 
 	$query_string.='<div style="margin-top: 30px;"><div class="input_2018"><label>
-Телефон</label><input name="offers[0][org_phone]" value="'.ipost_($row_score["phone"],"").'" id="date_124" class="input_new_2018 required no_upperr phone_us1" autocomplete="off" type="text"><div class="div_new_2018"><hr class="one"><hr class="two"><div class="oper_name"></div></div></div>
+Телефон</label><input name="offers[0][org_phone]" value="'.ipost_($row_score["phone"],"").'" id="date_124" class="input_new_2018 required no_upperr js-mask-input-tel" autocomplete="off" type="tel"><div class="div_new_2018"><hr class="one"><hr class="two"><div class="oper_name"></div></div></div>
 </div>';
 	 
 	 $query_string.='<div style="margin-top: 30px;"><div class="input_2018"><label>Email<span>*</span></label><input name="offers[0][org_email]" value="'.ipost_($row_score["email"],"").'" id="date_124" class="input_new_2018 required no_upperr gloab" autocomplete="off" type="text"><div class="div_new_2018"><hr class="one"><hr class="two"><div class="oper_name"></div></div></div>
@@ -87,6 +87,15 @@ $query_string.='<div style="margin-top: 30px;">';
 	  $(function (){ 
 //$(\'#otziv_area_adaxx2\').autoResize({extraSpace : 10});
 //$(\'#otziv_area_adaxx2\').trigger(\'keyup\');
+
+ const phoneEl = $(\'.js-mask-input-tel\')[0];
+     let phoneMask = IMask(phoneEl, {
+         mask: \'{+7} (#00) 000-00-00\',
+         definitions: {
+             \'#\': /[012345679]/
+         }
+     });
+
 });
 
 	</script>

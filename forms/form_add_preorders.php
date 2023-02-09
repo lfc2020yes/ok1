@@ -139,12 +139,11 @@ if(!isset($_GET["id"])) {
 
 
 /*
-    $query_string .= '<div style="margin-top: 30px;" class="js-turist-hidex"><div class="input_2018 input-phone-list"><i class="js-open-phone">уже есть в базе</i><label>Телефон</label><input name="client_phone" value="" id="date_124" class="input_new_2018 required phone_us1 js-true-phone" autocomplete="off" type="text" maxlength="18">
+    $query_string .= '<div style="margin-top: 30px;" class="js-turist-hidex"><div class="input_2018 input-phone-list"><i class="js-open-phone">уже есть в базе</i><label>Телефон</label><input name="client_phone" value="" id="date_12466" class="input_new_2018 required js-mask-input-tel js-true-phone"  type="tel" maxlength="18">
   <input type="hidden" class="js-true-search-phone" name="phone_true" value="0">
   <div class="div_new_2018"><hr class="one"><hr class="two"><div class="oper_name"></div></div></div>
 </div>';
 */
-
 } else
 {
 
@@ -703,6 +702,17 @@ var id_tt=$('.js-tabs-menu').find('.active').attr('id');
     $(".slct").bind('click.sys', slctclick);
 	$(".drop").find("li").unbind('click');
 	$(".drop").find("li").bind('click', dropli);
+
+
+     const phoneEl = $('.js-mask-input-tel')[0];
+     let phoneMask = IMask(phoneEl, {
+         mask: '{+7} (#00) 000-00-00',
+         definitions: {
+             '#': /[012345679]/
+         }
+     });
+
+
 
  });
 
