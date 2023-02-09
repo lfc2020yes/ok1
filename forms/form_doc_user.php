@@ -63,8 +63,33 @@ echo'<div id="Modal-one" class="box-modal table-modal eddd1 history_window1 clie
 <div class="top_modal">
 	
   <div class="box-modal_close arcticmodal-close"></div>
-  <? echo'<h1 class="h111" mor="'.$token.'" for="'.htmlspecialchars(trim($_GET['id'])).'"><span>Информация о туристе</span></h1>'; ?>
-  
+  <? echo'<h1 class="h111" mor="'.$token.'" for="'.htmlspecialchars(trim($_GET['id'])).'"></h1>'; ?>
+
+
+    <?
+    $pol="<span class='pol-card' data-tooltip='мистер'>(MR)</span>";
+    if($row_score["pol"]==2)
+    {
+        $pol="<span class='pol-card' data-tooltip='миссис'>(MRS)</span>";
+    }
+
+    echo'<div class="name_docu" is_sha="'.ht($_GET['id']).'"><div class="name-doc1">'.$row_score["fio"].$pol.'</div>';
+
+
+    if (($role->permission('Обращения','A'))or($sign_admin==1))
+    {
+        echo'<div class="name-doc1x" data-tooltip="Добавить обращение клиента"><div class="clock_cbb js-add-search-preorders-kclient"><i></i></div></div>';
+    }
+
+    if (($role->permission('Задачи','A'))or($sign_admin==1))
+    {
+        echo'<div class="name-doc2" data-tooltip="Добавить задачу по клиенту"><div class="clock_cbb js-add-search-task-kclient"><i></i></div></div>';
+    }
+
+    echo'</div>';
+
+    ?>
+
   
   
 </div>
@@ -74,26 +99,7 @@ echo'<form id="vino_xd_cb" style=" padding:0; margin:0;" method="get" enctype="m
 echo'<input type="hidden" value="'.htmlspecialchars(trim($_GET['id'])).'" name="id">';
 echo'<input type="hidden" value="'.$token.'" name="tk">';		
 
-$pol="<span class='pol-card' data-tooltip='мистер'>(MR)</span>";	
-		if($row_score["pol"]==2)
-		{
-			$pol="<span class='pol-card' data-tooltip='миссис'>(MRS)</span>";	
-		}
-	
-echo'<div class="name_docu" is_sha="'.ht($_GET['id']).'"><div class="name-doc1">'.$row_score["fio"].$pol.'</div>';
 
-
-if (($role->permission('Обращения','A'))or($sign_admin==1))
-{
-    echo'<div class="name-doc1x" data-tooltip="Добавить обращение клиента"><div class="clock_cbb js-add-search-preorders-kclient"><i></i></div></div>';
-}
-
-if (($role->permission('Задачи','A'))or($sign_admin==1))
-{
-		echo'<div class="name-doc2" data-tooltip="Добавить задачу по клиенту"><div class="clock_cbb js-add-search-task-kclient"><i></i></div></div>';
-	}
-
-		echo'</div>';
 	
 echo'<div class="global_docu">
 <div class="left_gl">';

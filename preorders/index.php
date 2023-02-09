@@ -1392,6 +1392,7 @@ $new_class_block='';
       echo '<div class="ring_block js-global-preorders-link1">';
   }
                       $date_paid='';
+                      $gallery_id=1;
 	       for ($ksss=0; $ksss<$num_results_t2; $ksss++) {
                if (!isset($_GET["tabs"])) {
                    $row_88 = mysqli_fetch_assoc($result_t2);
@@ -1414,8 +1415,6 @@ $new_class_block='';
                    if ($num_results_uuy != 0) {
                        $row_8 = mysqli_fetch_assoc($result_uuy);
                    }
-
-
                    $new_pre = 1;
                    include $url_system . 'preorders/code/block_preorders.php';
                    echo($task_cloud_block);
@@ -1518,7 +1517,25 @@ include_once $url_system.'template/left.php';
 
 <script type="text/javascript">
  $(document).ready(function(){ 
-$('.circlestat').circliful();	
+$('.circlestat').circliful();
+
+         $( "#js-shots" ).lightGallery( {
+             selector: '.item_photo_yes',
+             download: false,
+             thumbnail:false,
+             showThumbByDefault:false
+             //zoom: true
+         } );
+
+
+     $('.js-shots').each(function (i, elem) {
+         $('#'+$(this).attr("id")).lightGallery({
+             selector: '.item_photo_yes',
+             download: false,
+             thumbnail:false,
+             showThumbByDefault:false
+         });
+     })
 
 count_task();
 classblockTrips();

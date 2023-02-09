@@ -5325,6 +5325,24 @@ function UserNotNumberCompany($number,$id_company,$link)
 }
 
 
+
+function FileBase($value,$link)
+{
+    $result=mysql_time_query($link,'select A.id from image_attach as A where A.visible=1 and A.id_object=0 and A.for_what IN ("13","14") and A.name="'.ht($value).'"');
+    $num_results = $result->num_rows;
+    if($num_results!=0)
+    {
+        return 1; //ok
+    } else
+    {
+
+        mysqli_query($link, 'insert into v_error (module,error,date_error)  values ("' . htmlspecialchars($_SERVER['REQUEST_URI']) . '","' . htmlspecialchars('select A.id from image_attach as A where A.visible=1 and A.id_object=0 and A.for_what IN ("8","11","3") and A.name="'.ht($value).'"') . '","' . date("y.m.d") . ' ' . date("H:i:s") . '")');
+
+
+        return 0;  //с файлом что-то не так
+    }
+}
+
 //получение пользователей управления которые должны получить уведомление по номеру уведомления
 function UserNotNumber($number,$link)
 {

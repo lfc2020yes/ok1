@@ -257,6 +257,35 @@ $task_cloud_block.='</div><div class="trips-b-comment"><span class="label-task-g
 </span><div><span class="spans ggh-e">'.$row_8["text"].'</span></div>';
 
 
+
+$result_6 = mysql_time_query($link,'select A.* from image_attach as A WHERE A.for_what="13" and A.visible=1 and A.id_object="'.ht($row_8["id"]).'"');
+
+$num_results_uu = $result_6->num_rows;
+if($num_results_uu!=0)
+{
+    $i=1;
+    $photo=1;
+    $task_cloud_block.='<div id-max="'.$gallery_id.'" id="shots-pr-'.$gallery_id.'"  class="js-shots">';
+    $gallery_id++;
+    while($row_6 = mysqli_fetch_assoc($result_6)){
+
+        $filename = '/upload/file/'.$row_6["id"].'_'.$row_6["name"].'.'.$row_6["type"];
+
+        if (file_exists($filename)) {
+
+            list($width, $height) = getimagesize('http://www.ok.umatravel.club/upload/file/' . $row_6["id"] . '_' . $row_6["name"] . '.' . $row_6["type"]);
+            $new_width = round((300 * $width) / $height, 3);
+        }
+
+            $task_cloud_block.='<a data-sub-html="" w="400" id="'.($i).'" class="item_photo_yes img-preorder-z" data-src="/upload/file/'.$row_6["id"].'_'.$row_6["name"].'.'.$row_6["type"].'" style="background-image: url(\'/upload/file/'.$row_6["id"].'_'.$row_6["name"].'.'.$row_6["type"].'\')"></a>';
+        $i++;
+    }
+    $task_cloud_block.='</div>';
+}
+
+
+
+
 //определим последнее действие по обращению
 $result_85 = mysql_time_query($link,'SELECT A.id,A.action_history,A.id_user, A.datetimes,A.edit,A.comment  FROM preorders_status_history_new AS A WHERE A.id_preorder="'.ht($row_8["id"]).'" and not(A.action_history=4) order by A.id desc,A.datetimes desc limit 1');
 

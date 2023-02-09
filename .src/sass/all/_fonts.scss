@@ -124,6 +124,8 @@ $fontFuR:'fugue_regular-webfont';
 @include font-face("PTSerif", $src-domain + "fonts/PTSerif-Italic/PTSerif-Italic", 400, "italic");
 @include font-face("PTSerif", $src-domain + "fonts/PTSerif-BoldItalic/PTSerif-BoldItalic", 700, "italic");
 
+@include font-face("lg", $src-domain + "fonts/lg/lg",  "normal", "normal");
+
 //@include font-include('opensans-regular-webfont','normal','normal'); 
 
 /*

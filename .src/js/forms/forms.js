@@ -977,7 +977,7 @@ function add_preorders_yes()
 	//проверка ссылки
 	$('.js-form-preorders .gloab').each(function (i, elem) {
 
-		if (($(this).val() == '') || ($(this).val() == 0)) {
+		if (($(this).val() == '')) {
 			$(this).parents('.input_2018').addClass('error_2018');
 			$(this).parents('.list_2018').addClass('required_in_2018');
 			$(this).parents('.js-prs').addClass('error_textarea_2018');
@@ -990,6 +990,20 @@ function add_preorders_yes()
 		}
 	});
 
+
+	var count_body=0;
+    $('.js-form-preorders .gloab_body').each(function (i, elem) {
+        if (($(this).val() != '')&&($(this).val() != 0)) {
+            count_body++;
+        }
+
+    });
+
+	if(count_body==0)
+    {
+        alert_message('error','Добавьте комментарий или фото');
+        err++;
+    }
 
 	if($('.js-form-preorders').find('.js-client-type-task').val()=='')
 	{

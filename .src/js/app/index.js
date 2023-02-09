@@ -329,6 +329,40 @@ function after_add_preorders(data,update)
 			$('.js-global-preorders-link').prepend(data.temp);
 			//скрыть запись ничего не найдено и все в этом духе
 
+
+			//найти максимальную галлерею id макс и увеличить и присвоить новой
+			//выполнить галлерею чтобы работала
+			if($('[id-max="IDMID"]').parents('.trips-b-comment').length) {
+				if (data.photo == 1) {
+					var id_gall_max = 1;
+					$('.js-shots').each(function (i, elem) {
+						if ($(this).attr("id-max") > id_gall_max) {
+							id_gall_max = $(this).attr("id-max");
+						}
+
+					});
+
+					id_gall_max=parseInt(id_gall_max)+1;
+
+var block_ff=$('[id-max="IDMID"]').parents('.trips-b-comment');
+					var html = $('[id-max="IDMID"]').parents('.trips-b-comment').html();
+
+					//alert(html);
+
+					html = html.replace(/IDMID/g, id_gall_max);
+					//alert(html);
+
+					block_ff.empty().append(html);
+
+					$('[id-max=' + id_gall_max + ']').lightGallery({
+						selector: '.item_photo_yes',
+						download: false,
+						thumbnail: false,
+						showThumbByDefault: false
+					});
+				}
+			}
+
 			$('.js-message-preorders-search').hide();
 			$('.preorders_block_global').first().addClass('new-say');
 			setTimeout ( function () { $('.new-say').removeClass('new-say');  }, 4000 );

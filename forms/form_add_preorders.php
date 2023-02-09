@@ -132,14 +132,32 @@ $query_string.='<div class="pad10" style="padding: 0; z-index:100;"><span class=
 $query_string.='<div class="mobile-white" style="width:100%;"><div class="form_right_say_one " style="padding:0px; width:100%;">';
 
 if(!isset($_GET["id"])) {
+
     $query_string .= '<div class="input-choice-click js-option-task-user js-task-user-sv">
 <div class="choice-head">Связать с клиентом<span class="sv-user-taskx js-sv-user-task"><i>→</i><span></span></span></div>
 <div class="choice-radio"><div class="center_vert1"><i></i><input name="" id="taskusersv" value="0" type="hidden"></div></div></div>';
+
+
+/*
+    $query_string .= '<div style="margin-top: 30px;" class="js-turist-hidex"><div class="input_2018 input-phone-list"><i class="js-open-phone">уже есть в базе</i><label>Телефон</label><input name="client_phone" value="" id="date_124" class="input_new_2018 required phone_us1 js-true-phone" autocomplete="off" type="text" maxlength="18">
+  <input type="hidden" class="js-true-search-phone" name="phone_true" value="0">
+  <div class="div_new_2018"><hr class="one"><hr class="two"><div class="oper_name"></div></div></div>
+</div>';
+*/
+
 } else
 {
+
     $query_string .= '<div class="input-choice-click js-option-task-user js-task-user-sv">
 <div class="choice-head">Связать с клиентом<span class="sv-user-taskx js-sv-user-task" style="display: inline;"><i>→</i><span>' . $row_work_zz55["fio"] . '</span></span></div>
 <div class="choice-radio"><div class="center_vert1"><i class="active_task_cb"></i><input name="" id="taskusersv" value="1" type="hidden"></div></div></div>';
+
+
+/*
+    $query_string .= '<div class="input-choice-click ">
+<div class="choice-head">Связать с клиентом<span class="sv-user-taskx" style="display: inline;"><i>→</i><span>' . $row_work_zz55["fio"] . '</span></span></div>
+<div class="choice-radio"><div class="center_vert1"><i class="active_task_cb"></i><input name="" id="taskusersv" value="1" type="hidden"></div></div></div>';
+*/
 }
 
 
@@ -179,14 +197,16 @@ foreach ($mass_ei as $keys => $value)
 
 
 if($num_results_work_zz!=0) {
+    $su_5="0";
 
     $query_string .= '<div style="margin-top: 30px;
     position: relative;" class="js-zindex js-vid-oper">';
 
-    $query_string .= '<div class="left_drop list_2018 menu1_prime"><label class="">Менеджер<span>*</span></label><div class="select eddd zin_2019"><a class="slct" list_number="t3" data_src=""></a><ul class="drop js-visible-mt">';
+    $query_string .= '<div class="left_drop list_2018 menu1_prime"><label class="active_label">Менеджер<span>*</span></label><div class="select eddd zin_2019"><a class="slct" list_number="t3" data_src="">Себе</a><ul class="drop js-visible-mt">';
 
     for ($i = 0; $i < count($os5); $i++) {
-        if ((string)$su_5 == $os_id5[$i]) {
+        //echo(parseInt($su_5).'='.$os_id5[$i].'<br>');
+        if ($su_5 == $os_id5[$i]) {
             $query_string .= '<li class="sel_active"><a href="javascript:void(0);"  rel="' . $os_id5[$i] . '">' . $os5[$i] . '</a></li>';
         } else {
             $query_string .= '<li><a href="javascript:void(0);"  rel="' . $os_id5[$i] . '">' . $os5[$i] . '</a></li>';
@@ -194,7 +214,7 @@ if($num_results_work_zz!=0) {
 
     }
 
-    $query_string .= '</ul><input type="hidden" class="gloab " name="id_user_booking" id="vid_finance" value=""><div class="div_new_2018"><hr class="one"></div></div></div></div>';
+    $query_string .= '</ul><input type="hidden" class="gloab " name="id_user_booking" id="vid_finance" value="0"><div class="div_new_2018"><hr class="one"></div></div></div></div>';
 }
 
 
@@ -249,11 +269,62 @@ if($result_8)
 
 
 
-$query_string.='<!--input start	--><div style="margin-top: 30px;" class="jj-l2"><div class="input_2018"><label>Комментарий<span>&nbsp;</span></label><div class="otziv_add">';
-$query_string.='<textarea cols="10" rows="1" placeholder="" id="quies" name="question" class="di text_area_otziv   input_new_2018  gloab  js-autoResize-form" ></textarea>';
+$query_string.='<!--input start	--><div style="margin-top: 30px;" class="jj-l2"><div class="input_2018"><label>Комментарий</label><div class="otziv_add">';
+$query_string.='<textarea cols="10" rows="1" placeholder="" id="quies" name="question" class="di text_area_otziv   input_new_2018 gloab_body  js-autoResize-form" ></textarea>';
 $query_string.='</div><div class="div_new_2018"><hr class="one"><hr class="two"><div class="oper_name" joi=""></div></div>';
 $query_string.='</div></div><!--input end	-->';
 
+
+
+
+
+//загрузить дополнительные прикреплленные файлы и документы по клиенту частное лицо
+$class_aa='';
+$style_aa='';
+
+$query_string.='<div class="input-block-2020">';
+
+$query_string.='<div class="margin-input"><div class="img_invoice_div js-image-gl"><div class="list-image" '.$style_aa.'></div><input type="hidden" class="js-files-docs-new gloab_body" name="files_13" value=""><div type_load="13" id_object="" class="invoice_upload js-upload-file js-helps '.$class_aa.'"><span>прикрепите <strong>дополнительные документы</strong>, для этого выберите или перетащите файлы сюда </span><i>чтобы прикрепить ещё <strong>необходимые документы</strong>,выберите или перетащите их сюда</i><div class="help-icon-x" data-tooltip="Принимаем только в форматах .pdf, .jpg, .jpeg, .png, .doc , .docx , .zip" >u</div></div></div></div>';
+
+
+/*
+//загрузить дополнительные прикреплленные файлы и документы по клиенту частное лицо
+
+$query_string.='<div class="input-block-2020">';
+
+
+
+
+$result_6 = mysql_time_query($link,'select A.* from image_attach as A WHERE A.for_what="13" and A.visible=1 and A.id_object="0"');
+
+$num_results_uu = $result_6->num_rows;
+
+$class_aa='';
+$style_aa='';
+if($num_results_uu!=0)
+{
+    $class_aa='eshe-load-file';
+    $style_aa='style="display: block;"';
+}
+
+
+
+$query_string.='<div class="margin-input"><div class="img_invoice_div js-image-gl"><div class="list-image" '.$style_aa.'>';
+
+if($num_results_uu!=0)
+{
+    $i=1;
+    while($row_6 = mysqli_fetch_assoc($result_6)){
+        $query_string.='	<div number_li="'.$i.'" class="li-image yes-load"><span class="name-img"><a href="/upload/file/'.$row_6["id"].'_'.$row_6["name"].'.'.$row_6["type"].'">'.$row_6["name_user"].'</a></span><span class="del-img js-dell-image" id="'.$row_6["name"].'"></span><div class="progress-img"><div class="p-img" style="width: 0px; display: none;"></div></div></div>';
+        $i++;
+    }
+}
+
+
+$query_string.='</div><input type="hidden" name="files_13" value=""><div type_load="13" id_object="" class="invoice_upload js-upload-file js-helps '.$class_aa.'"><span>прикрепите <strong>дополнительные документы</strong>, для этого выберите или перетащите файлы сюда </span><i>чтобы прикрепить ещё <strong>необходимые документы</strong>,выберите или перетащите их сюда</i><div class="help-icon-x" data-tooltip="Принимаем только в форматах .pdf, .jpg, .jpeg, .png, .doc , .docx , .zip" >u</div></div></div></div>';
+
+$query_string.='</div>';
+*/
 
 $query_string .= '<div style="margin-top: 30px;" class="input_doc_turs js-zindex">';
 
@@ -581,6 +652,8 @@ include_once $url_system.'template/form_js.php';
 
  $(document).ready(function(){
      Zindex();
+
+     NumberBlockFile();
 
 $('.money_mask1').inputmask("numeric", {
     radixPoint: ".",

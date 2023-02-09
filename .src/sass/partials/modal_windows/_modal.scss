@@ -52,7 +52,16 @@ padding: 30px 30px 30px 30px;
 	
 }
 
-.top_modal {background-color: #72b7f8; padding: 25px; }
+.top_modal {/*background-color: #72b7f8;*/ padding: 25px;  padding: 0 45px;
+  padding-top: 35px;
+  border-bottom: 1px solid rgba(0,0,0,.08);
+  padding-bottom: 35px;
+
+  @include sw('tablet-small') {
+    padding: 25px;
+  }
+
+}
 .center_modal {padding: 25px; background-color: #f5f5f6; min-height: 200px; @include sw('tablet3') 
 {
 	
@@ -78,7 +87,10 @@ hr {display: block;
 .arcticmodal-container { overflow: auto; margin: 0; padding: 0; border: 0; border-collapse: collapse; }
 *:first-child+html .arcticmodal-container { height: 100% }
 .arcticmodal-container_i { height: 100%; margin: 0 auto; }
-.arcticmodal-container_i2 { padding: 24px; margin: 0; border: 0; vertical-align: middle; }
+.arcticmodal-container_i2 { padding: 24px; margin: 0; border: 0; vertical-align: middle;  @include sw('tablet-small') {
+  @include flexbox(); @include justify-content(center); }
+
+}
 .arcticmodal-error { padding: 20px; border-radius: 10px; background: #000; color: #fff; }
 .arcticmodal-loading { position: fixed;
 left: 0;
@@ -86,6 +98,8 @@ top: 0;
 right: 0;
 bottom: 0;
 z-index: 10000; }
+
+@supports((-webkit-backdrop-filter:none) or (backdrop-filter:none)){.arcticmodal-overlay{-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}}
 
 /* стиль оформления */
 /*
@@ -118,6 +132,19 @@ z-index: 10000; }
     right: 0px;
     top: 30px;
     width: 47px;
+
+  background-image: url(../../image/svg/delete-cross.svg);
+  height: 10px;
+  width: 10px;
+  background-repeat: repeat;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  opacity: .5;
+  content: "";
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  cursor: pointer;
 }
 
 .box-modal_close:hover::before
@@ -162,12 +189,30 @@ font-weight: normal;
 font-size: 17px;
 line-height: 24px;
 color:#fff;	
-text-transform: uppercase;
+//text-transform: uppercase;
 	font-weight: normal;
 	adding-right: 30px;
 	/*margin-top: 15px;*/
 	/*border-bottom: 1px solid #e5e5ed;*/
 	//@include sw('tablet3') { padding-right: 30px;  }
+
+
+  color: rgba(0,0,0,.7);
+  font-size: 34px;
+  line-height: 45px;
+  font-family: GEInspiraRegular;
+  position: relative;
+  display: inline-block;
+  font-weight: 400;
+
+  @include sw('tablet-small') {
+
+    font-size: 21px;
+    line-height: 26px;
+    margin-bottom: 5px;
+    font-family: GEInspiraBold;
+    font-size: 17px;
+  }
 }
 
 
@@ -323,8 +368,9 @@ font-size: 13px;
 
 @include sw('tablet3') 
 {
-	width:100%;
-	min-height: 100vh;
+  width: 90%!important;
+  margin-top: 20px;
+  min-width: auto;
 	}
 
 }

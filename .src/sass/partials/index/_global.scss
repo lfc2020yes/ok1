@@ -19186,11 +19186,11 @@ padding: 0px;	}}
 		border-bottom: 1px dotted;
 	}
 }
-
+/*
 .h111{
 	@include sw('tablet-small') {
 	  span {padding-right: 50px; font-size:12px;}  } }
-
+*/
 .tours-eas {
 	@include sw('tablet-small') {
 display:none !important;	}}
@@ -21926,3 +21926,36 @@ margin-top: 40px;
 	text-transform: uppercase;
 	font-size: 12px;
 	font-style: normal;}
+
+
+
+.upload-mask {height: 22px;
+	width: 22px;
+	background-image: -o-linear-gradient(to right,#35deb8,#6dcaf3);
+	background-image: -webkit-gradient(linear,left top,right top,from(#35deb8),to(#6dcaf3));
+	background-image: -o-linear-gradient(left,#35deb8,#6dcaf3);
+	background-image: linear-gradient(to right,#35deb8,#6dcaf3);
+	padding: 0;
+	border-radius: 4px;
+	margin-bottom: 0;
+	margin-right: 10px;
+	display: inline-block!important; position: absolute; top:0px; left:0px; background-position: 50% 50%;
+	background-size: cover;}
+
+.name_img-kkol {padding-left: 32px !important;
+}
+
+.img-preorder-z {border-radius: 4px;
+	margin-bottom: 0;
+	margin-right: 10px;
+	display: inline-block !important;
+	//position: absolute;
+	top: 0px;
+	left: 0px;
+	background-position: 50% 50%;
+	background-size: cover;
+	width: 50px;
+	object-fit: contain;
+	aspect-ratio: 9/16;}
+
+.js-shots { margin: 10px 0px; }

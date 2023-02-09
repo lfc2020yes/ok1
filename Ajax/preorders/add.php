@@ -151,6 +151,21 @@ $ID_N=mysqli_insert_id($link);
 //добавим в историю о добавление обращения
 
 
+if($_POST['files_13']!='')
+{
+    $license=explode(",",$_POST['files_13']);
+    foreach ($license as $key => $value)
+    {
+        if(FileBase($value,$link))
+        {
+
+            mysql_time_query($link,'update image_attach set id_object="'.$ID_N.'" where name = "'.ht($value).'"');
+
+        }
+    }
+
+}
+
 
 if($who_kto!=$id_user)
 {
@@ -245,6 +260,9 @@ if($num_results_t!=0)
 {
     $row_8 = mysqli_fetch_assoc($result_t);
     $new_pre=1;
+
+    $photo=0;
+    $gallery_id='IDMID';
     include $url_system.'preorders/code/block_preorders.php';
     $temp.=$task_cloud_block;
 }
@@ -254,7 +272,7 @@ if($num_results_t!=0)
 
 end_code:
 
-$aRes = array("debug"=>$debug,"status"   => $status_ee,"status_echo"   => $status_echo,"new" => $new1,"for_id"=>$id,"id" => htmlspecialchars($ID_N),"temp"=>$temp);
+$aRes = array("debug"=>$debug,"status"   => $status_ee,"photo"=>$photo, "status_echo"   => $status_echo,"new" => $new1,"for_id"=>$id,"id" => htmlspecialchars($ID_N),"temp"=>$temp);
 /*require_once $url_system.'Ajax/lib/Services_JSON.php';
 $oJson = new Services_JSON();
 //функция работает только с кодировкой UTF-8

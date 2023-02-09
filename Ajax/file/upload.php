@@ -92,8 +92,15 @@ if ((isset($_POST["type"]))and((is_numeric($_POST["type"]))))
              $today[1] = date("H:i:s"); //присвоит 1 элементу массива 17:16:17
 
 	         $date_=$today[0].' '.$today[1];
-	
-	mysql_time_query($link,'INSERT INTO image_attach (name,name_user,type,for_what,id_object,displayOrder,visible,datetimes) VALUES ("","","","'.ht($_POST["type"]).'","'.ht($_POST["object"]).'","0","0","'.$date_.'")');
+
+
+    $id_object = 0;
+    if (ht($_POST["object"]) != '') {
+        $id_object = ht($_POST["object"]);
+    }
+
+
+	mysql_time_query($link,'INSERT INTO image_attach (name,name_user,type,for_what,id_object,displayOrder,visible,datetimes) VALUES ("","","","'.ht($_POST["type"]).'","'.$id_object.'","0","0","'.$date_.'")');
 	$ID_D=mysqli_insert_id($link);		   			 		
 
 $uploaddir = $_SERVER["DOCUMENT_ROOT"].'/upload/file/';
@@ -129,8 +136,11 @@ switch ($_POST["type"]) {
         break;
 	case 7:	
 		$allowedExts = array("pdf","jpg","jpeg","png","zip"); 
-        break;	
-	default:
+        break;
+    case 13:
+        $allowedExts = array("jpg","jpeg","png");
+        break;
+    default:
         $allowedExts = array("pdf", "jpg","jpeg","png"); 
 }
 
