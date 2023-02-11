@@ -1649,7 +1649,11 @@ $sql_line1=' and a.date_create>="'.$date_start.'" and a.date_create<"'.$date_end
 </div>
 </div>
      <?
+     /*
      if ((!isset($_COOKIE["su_5s".$id_user]))or(( isset($_COOKIE["su_5s".$id_user]))and(($_COOKIE["su_5s".$id_user]!=0))))
+*/
+     if ((!isset($_COOKIE["su_5s".$id_user]))or(( isset($_COOKIE["su_5s".$id_user]))))
+
      {
 
      ?>
@@ -1659,8 +1663,12 @@ $sql_line1=' and a.date_create>="'.$date_start.'" and a.date_create<"'.$date_end
 
          echo'<div class="h1-fin">Статистика продаж за год</div>
 
-         <div id="chartdiv2" style="min-height:300px;"></div>';
+         <div id="chartdiv2" style="min-height:300px;"></div></div>
+         <div class="statistic-2022-graf">
+         <div class="h1-fin">Сумма продаж за год</div>
+         <div id="chartdiv3" style="min-height:300px;"></div>';
          $xy=array();
+$xy1=array();
 $date_end=date('Y-m-'.'01');
 
          $date_start_while=date_step_sql_more($date_end,'-12m');
@@ -1727,9 +1735,10 @@ if ((!isset($_COOKIE["su_5s".$id_user]))or(( isset($_COOKIE["su_5s".$id_user]))a
 
 
 
-         $result_uu = mysql_time_query($link, 'select count(id) as ss from trips where visible=1 and id_a_company IN ('.ht($id_company).') and id_user="'.ht($id_user_2022).'" and datecreate>="'.$date_start_while.'" and datecreate<"'.$date_start_while22.'"');
+         $result_uu = mysql_time_query($link, 'select count(id) as ss from trips where visible=1 and id_a_company IN ('.ht($id_company).') and id_user="'.ht($id_user_2022).'" and datecreate>="'.$date_start_while.'" and datecreate<"'.$date_start_while22.'" and commission_fix=0');
          $num_results_uu = $result_uu->num_rows;
          $views=0;
+
          if ($num_results_uu != 0) {
          $row_uu = mysqli_fetch_assoc($result_uu);
          if (($row_uu["ss"] != '') and ($row_uu["ss"] != 0)) {
@@ -1740,13 +1749,39 @@ if ((!isset($_COOKIE["su_5s".$id_user]))or(( isset($_COOKIE["su_5s".$id_user]))a
          //$xy[]['date']=$date_start_while;
 
 
+/*
+             $result_uu = mysql_time_query($link, 'select sum(cost_client) as ss from trips where visible=1 and id_a_company IN ('.ht($id_company).') and id_user="'.ht($id_user_2022).'" and datecreate>="'.$date_start_while.'" and datecreate<"'.$date_start_while22.'"');
+*/
+
+             $date_mass_ee = explode(" ", ht($date_start_while));
+             $date_mass_nn = explode(" ", ht($date_start_while22));
+
+             $result_uu = mysql_time_query($link, 'select sum(a.cost_client) as ss from trips as a,trips_contract as b where a.id_contract=b.id and a.id_a_company IN (' . $id_company . ') and a.id_user="'.ht($id_user_2022).'" and a.status=1 and a.commission_fix=0 and b.date_doc>="' . $date_mass_ee[0] . '" and b.date_doc<"' . $date_mass_nn[0] . '" and a.visible=1 ');
+
+
+
+             $num_results_uu = $result_uu->num_rows;
+             $bab=0;
+
+             if ($num_results_uu != 0) {
+                 $row_uu = mysqli_fetch_assoc($result_uu);
+                 if (($row_uu["ss"] != '') and ($row_uu["ss"] != 0)) {
+                     $bab=$row_uu["ss"];
+                 }
+             }
+             $date_mass = explode("-", ht($date_start_while));
+
+
+
          $xy[] = ['views' => $views, 'hits' => $hits,'bonus'=>$bonus, 'date' => $date_start_while];
+         $xy1[] = ['hits' => $bab,'date' => $date_start_while];
          $date_start_while=date_step_sql_more($date_start_while,'+1m');
          }
 
 
 
          $json2 = json_encode($xy);
+         $json3 = json_encode($xy1);
          //print_r($json2);
          echo'<script src="public/no_public/core.js"></script>
          <script src="public/no_public/charts.js"></script>
@@ -1762,51 +1797,17 @@ if ((!isset($_COOKIE["su_5s".$id_user]))or(( isset($_COOKIE["su_5s".$id_user]))a
 // Create chart instance
                  window.chart2 = am4core.create("chartdiv2", am4charts.XYChart);
 
-//
-
 // Increase contrast by taking evey second color
                  chart2.colors.step = 3;
 
-// Add data
                  chart2.data = ' . $json2 . ';
 //chart2.dateFormatter.dateFormat = "yyyy-MM-dd";
                  chart2.dataDateFormat = "YYYY-MM-DD";
-                 /*
-                 dataxx = [{
-                   "val": 90,
-                   "name":12000
-                 }, {
-                   "val": 90,
-                   "name":12000
-                 }, {
-                   "val": 90,
-                   "name":12000
-                 }];
-                 */
-                 /*
-                 chart2.data = [{
-                   "date": "2018-05-01",
-                   "views": 90,
-                   "hits":12000
-                 }, {
-                   "date": "2018-06-01",
-                   "views": 51,
-                   "hits":124644
-                 }, {
-                   "date": "2018-07-01",
-                   "views": 65,
-                   "hits":174644
-                 }];
-                 */
-
-// Create axes
 
                  var dateAxis = chart2.xAxes.push(new am4charts.DateAxis());
                  dateAxis.renderer.minGridDistance = 20;
                  dateAxis.dateFormats.setKey("day", "MMMM");
                    dateAxis.cursorTooltipEnabled=false;
-//var valueAxis = chart2.yAxes.push(new am4charts.ValueAxis());
-
 // Create series
                  function createAxisAndSeries(field, name, opposite, bullet) {
                     
@@ -1941,20 +1942,178 @@ if ((!isset($_COOKIE["su_5s".$id_user]))or(( isset($_COOKIE["su_5s".$id_user]))a
 
 // Add cursor
                  chart2.cursor = new am4charts.XYCursor();
-                 //chart2.cursor.tooltip.disabled = true;
 
-                 // var axisTooltip = categoryAxis.tooltip;
-//axisTooltip.background.fill = am4core.color("#ffffff");
-                 /*
-                          chart2.legend.getFillFromObject = false;
-                          chart2.legend.background.fill = am4core.color("#fff");
-                          chart2.legend.label.fontSize = 12;
-                          chart2.legend.label.fill = am4core.color("#434443");
-                          chart2.legend.label.fontFamily = "GEInspiraBold";
-                 */
 
-// generate some random data, quite different range
-    
+
+
+
+
+
+                 //график номер 2
+                 //график номер 2
+                 //график номер 2
+
+                  window.chart3 = am4core.create("chartdiv3", am4charts.XYChart);
+
+// Increase contrast by taking evey second color
+                 chart3.colors.step = 3;
+
+                 chart3.data = ' . $json3 . ';
+
+                 chart3.dataDateFormat = "YYYY-MM-DD";
+
+                 var dateAxis = chart3.xAxes.push(new am4charts.DateAxis());
+                 dateAxis.renderer.minGridDistance = 20;
+                 dateAxis.dateFormats.setKey("day", "MMMM");
+                   dateAxis.cursorTooltipEnabled=false;
+// Create series
+                 function createAxisAndSeries1(field, name, opposite, bullet) {
+
+                     var valueAxis = chart3.yAxes.push(new am4charts.ValueAxis());
+             valueAxis.visible=false;
+              valueAxis.cursorTooltipEnabled=false;
+
+
+                     var series = chart3.series.push(new am4charts.LineSeries());
+                     series.dataFields.valueY = field;
+                     series.dataFields.dateX = "date";
+                     series.strokeWidth = 2;
+                     series.yAxis = valueAxis;
+                     series.name = name;
+                     series.dataFields.fill = am4core.color("#fff");
+
+
+                     //series.fill = am4core.color("#434443");
+                     series.tooltipText = "{name}: {valueY}[/]";
+
+                     series.tooltip.getFillFromObject = false;
+                     series.tooltip.background.fill = am4core.color("#fff");
+                     series.tooltip.label.fontSize = 12;
+                     series.tooltip.label.fill = am4core.color("#434443");
+                     series.tooltip.label.fontFamily = "GEInspiraBold";
+
+                     var segment = series.segments.template;
+                     segment.interactionsEnabled = true;
+
+                     var hs = segment.states.create("hover");
+                     hs.properties.strokeWidth = 4;
+
+
+                     //series.tensionX = 0;
+                     series.showOnInit = true;
+
+                     var interfaceColors = new am4core.InterfaceColorSet();
+
+                     switch(bullet) {
+                         case "triangle":
+                             var bullet = series.bullets.push(new am4charts.Bullet());
+                             bullet.width = 12;
+                             bullet.height = 12;
+                             bullet.horizontalCenter = "middle";
+                             bullet.verticalCenter = "middle";
+                             bullet.fill = am4core.color("#00b05a");
+
+                             var triangle = bullet.createChild(am4core.Triangle);
+                            triangle.stroke = interfaceColors.getFor("background");
+                            // triangle.stroke.fill= am4core.color("#00b05a");
+                             triangle.strokeWidth = 2;
+                             triangle.direction = "top";
+                             triangle.width = 12;
+                             triangle.height = 12;
+                             triangle.fill = am4core.color("#00b05a");
+
+                             break;
+
+                         case "rectangle":
+                             var bullet = series.bullets.push(new am4charts.Bullet());
+                             bullet.width = 10;
+                             bullet.height = 10;
+                             bullet.horizontalCenter = "middle";
+                             bullet.verticalCenter = "middle";
+
+                             var rectangle = bullet.createChild(am4core.Rectangle);
+                             rectangle.stroke = interfaceColors.getFor("background");
+                             rectangle.strokeWidth = 2;
+                             rectangle.width = 10;
+                             rectangle.height = 10;
+                             break;
+                         default:
+                             /*
+                           var bullet = series.bullets.push(new am4charts.CircleBullet());
+                           bullet.circle.stroke.fill = am4core.color("#434443");
+                           bullet.circle.strokeWidth = 2;
+                           */
+                             var circleBullet = series.bullets.push(new am4charts.CircleBullet());
+                             /*
+                             circleBullet.fill=am4core.color("#fff");
+                             circleBullet.circle.radius=10;
+                             circleBullet.circle.fillOpacity=1;
+                             circleBullet.circle.strokeWidth = 2;
+                             circleBullet.strokeOpacity=1;
+                             */
+
+                             var labelBullet = series.bullets.push(new am4charts.LabelBullet());
+                             labelBullet.label.text = "{valueY}";
+                             labelBullet.label.fontSize=14;
+                             labelBullet.label.fill = am4core.color("#383738");
+                             labelBullet.label.dy=-15;
+                             labelBullet.label.fontFamily = "GEInspiraBold";
+                             break;
+                     }
+
+                     valueAxis.renderer.line.strokeOpacity = 1;
+                     valueAxis.renderer.line.strokeWidth = 2;
+                     valueAxis.renderer.line.stroke = series.stroke;
+                     //valueAxis.renderer.labels.template.fill = series.stroke;
+
+                     //valueAxis.renderer.labels.fontSize = 12;
+                     //valueAxis.renderer.labels.fill = am4core.color("#434443");
+                     // valueAxis.renderer.labels.fontFamily = \"GEInspiraBold\";
+
+                     valueAxis.renderer.labels.template.fill = am4core.color("#797779");
+                     valueAxis.renderer.labels.template.fontSize = 12;
+                     valueAxis.renderer.labels.template.fontFamily = "GEInspiraRegular";
+                     valueAxis.renderer.opposite = opposite;
+
+                     valueAxis.renderer.grid.template.strokeOpacity = 1;
+                     valueAxis.renderer.grid.template.stroke = am4core.color("#eeefee");
+                     valueAxis.renderer.grid.template.strokeWidth = 1;
+
+
+//dateAxis.renderer.inside = true;
+
+                     dateAxis.renderer.labels.template.fill = am4core.color("#797779");
+                     dateAxis.renderer.labels.template.fontSize = 11;
+                     dateAxis.renderer.labels.template.fontFamily = "GEInspiraRegular";
+
+
+                 }
+
+                 createAxisAndSeries1("hits", "Общая сумма продаж", true, "rectangle");
+
+
+// Add legend
+                 chart3.legend = new am4charts.Legend();
+
+// Add cursor
+                 chart3.cursor = new am4charts.XYCursor();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
              }); // end am4core.ready()
 
