@@ -112,7 +112,7 @@ $task_cloud_block.='</div>
 
 if($row_8["id_type_clients"]==1) {
     //частное лицо
-    $result_uu = mysql_time_query($link, 'select fio from k_clients where id="'.ht($row_8["id_k_clients"]) . '"');
+    $result_uu = mysql_time_query($link, 'select fio,phone from k_clients where id="'.ht($row_8["id_k_clients"]) . '"');
 } else
 {
    //2 фирма
@@ -125,7 +125,24 @@ if($num_results_uu!=0)
     $row_uu = mysqli_fetch_assoc($result_uu);
     if($row_8["id_type_clients"]==1) {
         //частное лицо
-        $task_cloud_block.='<div class="pass_wh_trips" style="margin-bottom: 5px;"><a class="js-client" iod="'.$row_8["id_k_clients"].'"><span class="js-glu-f-'.$row_8["id_k_clients"].'">'.$row_uu["fio"].'</span></a></div>';
+        $name_jj='';
+        if(trim($row_uu["fio"])!='')
+        {
+            $name_jj=$row_uu["fio"];
+        } else
+        {
+
+            $phone_format='';
+            if($row_uu["phone"]!='') {
+                $phone_format = phone_format($row_uu["phone"]);
+            }
+
+            $name_jj=$phone_format;
+        }
+
+
+
+        $task_cloud_block.='<div class="pass_wh_trips" style="margin-bottom: 5px;"><a class="js-client" iod="'.$row_8["id_k_clients"].'"><span class="js-glu-f-'.$row_8["id_k_clients"].'">'.$name_jj.'</span></a></div>';
     } else
     {
 //      фирма

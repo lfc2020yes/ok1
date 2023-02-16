@@ -6248,6 +6248,9 @@ function add_preorders_plus()
 	var id_ccl= $(this).parents('.name_docu').attr('is_sha');
 
 
+	setTimeout(function () {
+
+
 
 	$.arcticmodal({
 		type: 'ajax',
@@ -6268,7 +6271,7 @@ function add_preorders_plus()
 
 	});
 
-
+	}, 500);
 }
 
 //согласовать промокод
@@ -6689,6 +6692,62 @@ $(document).bind("click.myEvent",function(f){if(!a&&$(f.target).closest(".fox_se
 $(document).unbind("click.myEvent")}a=false})}
 												   
 $(".fox_search_result1").empty().append(d.query);$(".fox_search_result1").show()}else{$(".fox_search_result1").hide()}}
+
+function AfterTruePhoneP(d,c){
+
+//$('.b_loading_small').remove();
+//$('.fox_dell1').show();
+
+	if(d.status=="ok")
+	{
+		if(d.echo=="1")
+
+		{
+			alert_message('ok','Отлично, мы уже знакомы');
+
+			var box = $('.box-modal:last');
+			box.find('.choice-head-preorder').remove();
+
+
+
+			$(".js-open-phone").before('<div class="choice-head choice-head-preorder">Связь<em class="hide-mobile"> с клиентом</em><span class="sv-user-taskx js-sv-user-task" style="display: inline;"><i>→</i><span>'+d.name+'</span></span></div>');
+
+			$('.js-id-client-task').val(d.id);
+			$('.js-client-type-task').val(d.type);
+			$('.js-client-new').val(0);
+
+
+
+
+
+
+
+		} else
+		{
+			alert_message('ok','Новый клиент, а имя знаете?');
+			$('.js-client-new').val(1);
+
+			var box = $('.box-modal:last');
+			box.find('.choice-head-preorder').remove();
+			box.find('.js-new-client-ii').slideDown("slow");
+		}
+
+
+	}else{  alert_message('error','Ошибка. Попробуйте еще раз.');
+
+		$('.js-id-client-task').val('');
+		$('.js-client-type-task').val('');
+		$('.js-client-new').val(1);
+
+
+		var box = $('.box-modal:last');
+		box.find('.choice-head-preorder').remove();
+
+
+		box.find('.js-new-client-ii').slideUp("slow");
+	}
+
+}
 
 //постфункция проверка телефона в базе данных клиентов
 function AfterTruePhone(d,c){

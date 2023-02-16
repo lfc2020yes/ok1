@@ -17598,7 +17598,7 @@ font-size: 13px;
   content: "l";
 }
 .client_window .menu_client_w, .px_bg_trips .menu_client_w {
-  margin-bottom: 20px;
+  margin-bottom: 0px;
 }
 .client_window .menu_client_w .mm_w .tabs_hedi, .px_bg_trips .menu_client_w .mm_w .tabs_hedi {
   background-color: #fff;
@@ -19922,14 +19922,15 @@ font-size: 13px;
 }
 
 .task_cb_exit {
-  background-color: transparent;
+  background-color: #fee1e4 !important;
   box-shadow: none;
-}
-.task_cb_exit .task_cb_head {
-  color: rgba(0, 0, 0, 0.1);
-}
-.task_cb_exit .task_cb_head:hover {
-  color: rgba(0, 0, 0, 0.4);
+  	/*.task_cb_head {color: rgba(0,0,0,0.1);
+  
+  
+  		&:hover {color: rgba(0,0,0,0.4);}
+  
+  	}
+  */
 }
 
 .error_textarea_2018 {
@@ -20344,7 +20345,7 @@ font-size: 13px;
   border: 1px solid #eef2f7;
   border-collapse: separate;
   border-radius: 6px;
-  height: 66px;
+  height: 50px;
   margin-bottom: 20px;
   -webkit-transition: all 0.4s cubic-bezier(0.42, 0.01, 0.23, 1);
   -moz-transition: all 0.4s cubic-bezier(0.42, 0.01, 0.23, 1);
@@ -26685,6 +26686,11 @@ position: absolute;}  }
   color: #fff !important;
   line-height: 15px;
   background-color: #72b7f8;
+  background-color: #5a34e7;
+  background-image: -o-linear-gradient(to right, #5a34e7, #c92dfb);
+  background-image: -o-linear-gradient(left, #5a34e7, #c92dfb);
+  background-image: -webkit-gradient(linear, left top, right top, from(#5a34e7), to(#c92dfb));
+  background-image: linear-gradient(to right, #5a34e7, #c92dfb);
   padding: 20px;
   text-align: center;
   -webkit-transition: all 0.4s cubic-bezier(0.42, 0.01, 0.23, 1);
@@ -30222,6 +30228,30 @@ position: absolute;}  }
   }
 }
 
+.choice-head-preorder {
+  text-align: center;
+  color: rgba(0, 0, 0, 0.5);
+  font-family: "GEInspiraBold";
+  text-transform: uppercase;
+  font-size: 10px;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+}
+.choice-head-preorder em {
+  font-style: normal;
+}
+@media only screen and (max-width: 639px) {
+  .choice-head-preorder {
+    top: -18px;
+  }
+}
+.choice-head-preorder i {
+  color: rgba(0, 0, 0, 0.5);
+  display: inline-block !important;
+  position: relative !important;
+}
+
 .input-block-2020 .list-image {
   padding: 20px;
   display: none;
@@ -32257,7 +32287,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 }
 
 .center_modal {
-  padding: 25px;
+  padding: 5px;
   background-color: #f5f5f6;
   min-height: 200px;
 }

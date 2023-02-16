@@ -64,50 +64,76 @@ if ((!isset($_POST["id"])))
    $debug=h4a(4,$echo_r,$debug);
    goto end_code;	
 }
-
-
-if ((isset($_POST['preorders']["client_type"]))and(is_numeric($_POST['preorders']["id_client"]))and(($_POST['preorders']["client_type"]=='1')or($_POST['preorders']["client_type"]=='2')or($_POST['preorders']["client_type"]=='3')))
+$new=0;
+if ((isset($_POST['preorders']["client_new"]))and($_POST['preorders']["client_new"]=='1')and(trim($_POST['client_phone'])!=''))
 {
-  //проверяем мог ли он привязать эту задачу к данному клиенту
-  //если относится к той же компани что и пользователь добавл. задачу
 
-		switch($_POST['preorders']["client_type"])
-              {
-		 case "1":{ 
-			 //частное лицо
-			 $sql_tt='Select b.id from k_clients as b where b.id="'.ht($_POST['preorders']['id_client']).'" and b.potential=0 and b.visible=1 and b.id_a_company IN ('.ht($id_company).')';
-			 break; 
-                  }	
-		case "2":{ 
-			 //организация
-			 $sql_tt='Select b.id from k_organization as b where b.id="'.ht($_POST['preorders']['id_client']).'" and  b.visible=1 and b.id_a_company IN ('.ht($id_company).')';
-			 break; 
-                  }		
-		 case "3":{ 
-			 //потенциальный
-			 $sql_tt='Select b.id from k_clients as b where b.id="'.ht($_POST['preorders']['id_client']).'" and b.potential=1 and b.visible=1 and b.id_a_company IN ('.ht($id_company).')';
-			 break; 
-                  }		
-		}
-	
-  $result_t=mysql_time_query($link,$sql_tt);
-	
-	
-	
-           $num_results_t = $result_t->num_rows;
-	       if($num_results_t==0)
-	       {	
-			      $debug=h4a(86,$echo_r,$debug);
-                  goto end_code;
-		   }
-	
-} else
-{
-    $debug=h4a(8699,$echo_r,$debug);
-    goto end_code;
+    //+7 (902) 129-68-34
+    $phone_end='';
+
+    if(trim($_POST['client_phone'])!='') {
+        $phone_base = explode(" ", htmlspecialchars(trim($_POST['client_phone'])));
+        $phone_base1 = explode("-", $phone_base[2]);
+        $phone_end = $phone_base[1][1] . $phone_base[1][2] . $phone_base[1][3] . $phone_base1[0] . $phone_base1[1] . $phone_base1[2];
+    }
+
+    if(strlen($phone_end)!=10)
+    {
+        $debug=h4a("199",$echo_r,$debug);
+        goto end_code;
+    } else
+    {
+        $new=1;
+    }
+} else {
+
+
+    if ((isset($_POST['preorders']["client_type"])) and (is_numeric($_POST['preorders']["id_client"])) and (($_POST['preorders']["client_type"] == '0') or ($_POST['preorders']["client_type"] == '1') or ($_POST['preorders']["client_type"] == '2'))) {
+        //проверяем мог ли он привязать эту задачу к данному клиенту
+        //если относится к той же компани что и пользователь добавл. задачу
+
+        switch ($_POST['preorders']["client_type"]) {
+            case "0":
+            {
+                //частное лицо
+                $sql_tt = 'Select b.id from k_clients as b where b.id="' . ht($_POST['preorders']['id_client']) . '" and b.potential=0 and b.visible=1 and b.id_a_company IN (' . ht($id_company) . ')';
+                break;
+            }
+            case "1":
+            {
+                //потенциальный турист
+                $sql_tt = 'Select b.id from k_clients as b where b.id="' . ht($_POST['preorders']['id_client']) . '" and b.potential=1 and b.visible=1 and b.id_a_company IN (' . ht($id_company) . ')';
+                break;
+            }
+            case "2":
+            {
+                //с кем то летел
+                $sql_tt = 'Select b.id from k_clients as b where b.id="' . ht($_POST['preorders']['id_client']) . '" and b.potential=2 and b.visible=1 and b.id_a_company IN (' . ht($id_company) . ')';
+                break;
+            }
+        }
+
+        $result_t = mysql_time_query($link, $sql_tt);
+
+
+        $num_results_t = $result_t->num_rows;
+        if ($num_results_t == 0) {
+            $debug = h4a(86, $echo_r, $debug);
+            goto end_code;
+        }  else
+        {
+            $row_uu_op = mysqli_fetch_assoc($result_t);
+        }
+
+    } else {
+
+        //заявка полностью без привязки с клиентом. ничего не знаем
+        $new=2;
+        //$debug = h4a(8699, $echo_r, $debug);
+        //goto end_code;
+    }
+
 }
-
-
 
 //**************************************************
 //**************************************************
@@ -117,8 +143,86 @@ if ((isset($_POST['preorders']["client_type"]))and(is_numeric($_POST['preorders'
 
 $status_ee='ok';
 
-$type_c=2;
-if(($_POST['preorders']["client_type"]==1)or($_POST['preorders']["client_type"]==3))
+
+
+
+
+
+if($new==1)
+{
+
+    $org=$id_company;
+    //echo($_POST['offers'][0]["id_company"]);
+    if(is_numeric($_POST['id_org']))
+    {
+        $org=ht($_POST['id_org']);
+    }
+
+    $code=1;
+    $result_tcc=mysql_time_query($link,'Select max(b.code) as cc from k_clients as b');
+    $num_results_tcc = $result_tcc->num_rows;
+    if($num_results_tcc!=0)
+    {
+
+        $row_tcc = mysqli_fetch_assoc($result_tcc);
+        $code= (int)$row_tcc["cc"]+1;
+    }
+
+
+    $today[0] = date("y.m.d"); //присвоено 03.12.01
+    $today[1] = date("H:i:s"); //присвоит 1 элементу массива 17:16:17
+
+    $date_=$today[0].' '.$today[1];
+
+
+
+    //потенциальный клиент
+    mysql_time_query($link,'INSERT INTO k_clients (id_a_company,code,potential,latin,adress,id_company,id_user,fio,phone,email,date_birthday,datetime,comment,inter_seria,inter_number,inter_kem,inter_kogda,inter_srok,inner_seria,inner_number,inner_kem,inner_kogda,visible,pol) VALUES( 
+"'.ht($org).'","'.ht($code).'","1","",
+"","0",
+"'.ht($id_user).'",
+"'.ht($_POST['client_fio']).' ",
+"'.$phone_end.'",
+"",
+"0000-00-00",
+"'.$date_.'",
+"",
+"",
+"",
+"",
+"0000-00-00",
+"0000-00-00",
+"",
+"",
+"",
+"0000-00-00",
+"1","1")');
+
+
+//добавить особенности клиента
+//$_POST['options_b']
+
+    $ID_UU=mysqli_insert_id($link);
+    $type_c=1;
+
+} else
+{
+    if($new==2)
+    {
+      //  echo("!3");
+        //нет связи с клиентом вообще
+        $ID_UU=0;
+        $type_c=1;
+
+    } else {
+        $ID_UU = ht($_POST['preorders']['id_client']);
+    }
+}
+
+
+
+//$type_c=2;
+if(($_POST['preorders']["client_type"]==0)or($_POST['preorders']["client_type"]==1)or($_POST['preorders']["client_type"]==2))
 {
     $type_c=1;
 }
@@ -132,21 +236,41 @@ if((isset($_POST["id_user_booking"]))and($_POST["id_user_booking"]!=0))
 
 }
 
+if($new!=2) {
 
-mysql_time_query($link, 'INSERT INTO preorders(id_company,id_user,id_type_clients,id_k_clients,id_booking_sourse,id_country,text,id_mark,date_create,visible,status,id_reasons) VALUES( 
+    mysql_time_query($link, 'INSERT INTO preorders(id_company,id_user,id_type_clients,id_k_clients,id_booking_sourse,id_country,text,id_mark,date_create,visible,status,id_reasons) VALUES( 
 "' . ht($_POST['id_org']) . '",
 "' . $who_kto . '",
-"'. $type_c.'",
-"' . ht($_POST['preorders']['id_client']) . '",
-"'.ht($_POST["type_booking"]).'",
-"'.ht($_POST["id_country"]).'",
-"'.ht($_POST["question"]).'",
+"' . $type_c . '",
+"' . ht($ID_UU) . '",
+"' . ht($_POST["type_booking"]) . '",
+"' . ht($_POST["id_country"]) . '",
+"' . ht($_POST["question"]) . '",
 "0",
-"'.date("y.m.d").' '.date("H:i:s").'",
+"' . date("y.m.d") . ' ' . date("H:i:s") . '",
 "1",
 "1",
 "0"
 )');
+
+} else
+{
+    mysql_time_query($link, 'INSERT INTO preorders(id_company,id_user,id_type_clients,id_k_clients,id_booking_sourse,id_country,text,id_mark,date_create,visible,status,id_reasons) VALUES( 
+"' . ht($_POST['id_org']) . '",
+"' . $who_kto . '",
+"' . $type_c . '",
+"' . ht($ID_UU) . '",
+"' . ht($_POST["type_booking"]) . '",
+"' . ht($_POST["id_country"]) . '",
+"' . ht($_POST["question"]) . '",
+"0",
+"' . date("y.m.d") . ' ' . date("H:i:s") . '",
+"1",
+"1",
+"0"
+)');
+}
+
 $ID_N=mysqli_insert_id($link);
 //добавим в историю о добавление обращения
 

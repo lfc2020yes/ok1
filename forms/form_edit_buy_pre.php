@@ -89,7 +89,7 @@ $status=1;
 	
   <div class="box-modal_close arcticmodal-close"></div>
   <?
-  echo'<h1 class="h111" mor="'.$token.'" for="'.htmlspecialchars(trim($_GET['id_buy'])).'"><span>Изменение Обращения №'.$_GET["id_buy"].'</span></h1>';
+  echo'<h1 class="h111" mor="'.$token.'" for="'.htmlspecialchars(trim($_GET['id_buy'])).'"><span>Изменение обращения №'.$_GET["id_buy"].'</span></h1>';
   ?>
   
   
@@ -102,22 +102,26 @@ echo'<input type="hidden" value="'.htmlspecialchars(trim($_GET['id_buy'])).'" na
 echo'<input type="hidden" value="'.$token.'" name="tk">';
 echo'<input name="tk1" value="dsQ23RStsd2re" type="hidden">';
 $poten=0;
-switch($row_uu["id_type_clients"])
-{
-    case "1":{
-        //частное лицо
-        $sql_tt='Select b.id,b.fio,b.potential from k_clients as b where b.id="'.ht($row_uu["id_k_clients"]).'" and b.potential=0 and b.visible=1 and b.id_a_company IN ('.ht($id_company).')';
-        $poten=1;
-        break;
-    }
-    case "2":{
-        //организация
-        $sql_tt='Select b.id,b.name as fio,5 as potential from k_organization as b where b.id="'.ht($row_uu["id_k_clients"]).'" and  b.visible=1 and b.id_a_company IN ('.ht($id_company).')';
-        $poten=2;
-        break;
-    }
-}
 $name_kl='';
+if($row_uu["id_k_clients"]!=0) {
+    switch ($row_uu["id_type_clients"]) {
+        case "1":
+        {
+            //частное лицо
+            $sql_tt = 'Select b.id,b.fio,b.potential,b.phone from k_clients as b where b.id="' . ht($row_uu["id_k_clients"]) . '" and b.visible=1 and b.id_a_company IN (' . ht($id_company) . ')';
+            $poten = 1;
+            break;
+        }
+        case "2":
+        {
+            //организация
+            $sql_tt = 'Select b.id,b.name as fio,5 as potential from k_organization as b where b.id="' . ht($row_uu["id_k_clients"]) . '" and  b.visible=1 and b.id_a_company IN (' . ht($id_company) . ')';
+            $poten = 2;
+            break;
+        }
+    }
+
+
 $result_t11=mysql_time_query($link,$sql_tt);
 $num_results_t11 = $result_t11->num_rows;
 if($num_results_t11!=0) {
@@ -127,15 +131,33 @@ if($num_results_t11!=0) {
     {
         $poten=3;
     }
+    /*
     echo '<input type="hidden" value="'.$row_uu["id_k_clients"].'" class="js-id-client-task" name="preorders[id_client]">';
 
     echo '<input type="hidden" value="'.$poten.'" class="js-client-type-task" name="preorders[client_type]">';
+*/
+
+    echo'<input type="hidden" value="'.$row_uu["id_k_clients"].'" class="js-id-client-task" name="preorders[id_client]">';
+
+    echo'<input type="hidden" value="'.$row_t11['potential'].'" class="js-client-type-task" name="preorders[client_type]">';
+
+    echo'<input type="hidden" value="0" class="js-client-new" name="preorders[client_new]">';
+
+
 
 } else {
     echo '<input type="hidden" value="" class="js-id-client-task" name="preorders[id_client]">';
     echo '<input type="hidden" value="" class="js-client-type-task" name="preorders[client_type]">';
+    echo '<input type="hidden" value="1" class="js-client-new" name="preorders[client_new]">';
 }
-	//форма добавления задачи
+} else
+{
+    echo '<input type="hidden" value="" class="js-id-client-task" name="preorders[id_client]">';
+    echo '<input type="hidden" value="" class="js-client-type-task" name="preorders[client_type]">';
+    echo '<input type="hidden" value="1" class="js-client-new" name="preorders[client_new]">';
+}
+
+//форма добавления задачи
 //форма добавления задачи
 
 
@@ -152,14 +174,25 @@ $query_string.='<div class="mobile-white" style="width:100%;"><div class="form_r
 
 
 if($name_kl=='') {
-    $query_string .= '<div class="input-choice-click js-option-task-user js-task-user-sv">
+  /*  $query_string .= '<div class="input-choice-click js-option-task-user js-task-user-sv">
 <div class="choice-head">Связать с клиентом<span class="sv-user-taskx js-sv-user-task"><i>→</i><span></span></span></div>
 <div class="choice-radio"><div class="center_vert1"><i></i><input name="" id="taskusersv" value="0" type="hidden"></div></div></div>';
+*/
+    $query_string .= '<div style="margin-top: 30px;" class="js-turist-hidex"><div class="input_2018 input-phone-list"><i class="js-open-phone"></i><label>Телефон</label><input name="client_phone" value="" id="date_12466" class="input_new_2018 required js-mask-input-tel js-true-phone"  type="tel" maxlength="18">
+  <input type="hidden" class="js-true-search-phone-preorder" name="phone_true" value="0">
+  <div class="div_new_2018"><hr class="one"><hr class="two"><div class="oper_name"></div></div></div>
+</div>';
+
+    $query_string.='<div style="margin-top: 30px; display:none;" class="js-new-client-ii"><div class="input_2018"><label>ФИО</label><input name="client_fio" value="" id="date_124" class="input_new_2018 required no_upperr" autocomplete="off" type="text"><div class="div_new_2018"><hr class="one"><hr class="two"><div class="oper_name"></div></div></div>
+</div>';
+
 } else
 {
-    $query_string .= '<div class="input-choice-click js-option-task-user js-task-user-sv">
-<div class="choice-head">Связать с клиентом<span class="sv-user-taskx js-sv-user-task" style="display: inline;"><i>→</i><span>'.$name_kl.'</span></span></div>
-<div class="choice-radio"><div class="center_vert1"><i class="active_task_cb"></i><input name="" id="taskusersv" value="1" type="hidden"></div></div></div>';
+    $phone_format = phone_format($row_t11['phone']);
+
+    $query_string .= '<div style="margin-top: 30px;" class="js-turist-hidex"><div class="input_2018 input-phone-list"><div class="choice-head choice-head-preorder">Связь<em class="hide-mobile"> с клиентом</em><span class="sv-user-taskx js-sv-user-task" style="display: inline;"><i>→</i><span>'.$row_t11['fio'].'</span></span></div><i class="js-open-phone"></i><label>Телефон</label><input name="client_phone" value="'.$phone_format.'" id="date_12466" class="input_new_2018 required js-mask-input-tel js-true-phone"  type="tel" maxlength="18"><input type="hidden" class="js-true-search-phone-preorder" name="phone_true" value="0"><div class="div_new_2018"><hr class="one"><hr class="two"><div class="oper_name"></div></div></div></div>';
+
+    $query_string.='<div style="margin-top: 30px; display:none;" class="js-new-client-ii"><div class="input_2018"><label>ФИО</label><input name="client_fio" value="" id="date_124" class="input_new_2018 required no_upperr" autocomplete="off" type="text"><div class="div_new_2018"><hr class="one"><hr class="two"><div class="oper_name"></div></div></div></div>';
 }
 
 
@@ -225,10 +258,59 @@ $query_string.='<!--input end	-->';
 
 
 
-$query_string.='<!--input start	--><div style="margin-top: 30px;" class="jj-l2"><div class="input_2018"><label>Комментарий<span>&nbsp;</span></label><div class="otziv_add">';
-$query_string.='<textarea cols="10" rows="1" placeholder="" id="quies" name="question" class="di text_area_otziv   input_new_2018  gloab  js-autoResize-form" >'.$row_uu["text"].'</textarea>';
+$query_string.='<!--input start	--><div style="margin-top: 30px;" class="jj-l2"><div class="input_2018"><label>Комментарий</label><div class="otziv_add">';
+$query_string.='<textarea cols="10" rows="1" placeholder="" id="quies" name="question" class="di text_area_otziv   input_new_2018 js-autoResize-form gloab_body">'.$row_uu["text"].'</textarea>';
 $query_string.='</div><div class="div_new_2018"><hr class="one"><hr class="two"><div class="oper_name" joi=""></div></div>';
 $query_string.='</div></div><!--input end	-->';
+
+
+
+//загрузить дополнительные прикреплленные файлы и документы по клиенту частное лицо
+
+$query_string.='<div class="input-block-2020">';
+
+
+
+
+$result_6 = mysql_time_query($link,'select A.* from image_attach as A WHERE A.for_what="13" and A.visible=1 and A.id_object="'.ht($_GET["id_buy"]).'"');
+
+$num_results_uu = $result_6->num_rows;
+
+$class_aa='';
+$style_aa='';
+if($num_results_uu!=0)
+{
+    $class_aa='eshe-load-file';
+    $style_aa='style="display: block;"';
+}
+
+
+
+$query_string.='<div class="margin-input"><div class="img_invoice_div js-image-gl"><div class="list-image" '.$style_aa.'>';
+$name_hi='';
+if($num_results_uu!=0)
+{
+    $i=1;
+    while($row_6 = mysqli_fetch_assoc($result_6)){
+        $query_string.='	<div number_li="'.$i.'" class="li-image yes-load"><span class="name-img name_img-kkol"><a href="/upload/file/'.$row_6["id"].'_'.$row_6["name"].'.'.$row_6["type"].'">'.$row_6["name_user"].'</a><div class="upload-mask" style="background-image: url(/upload/file/'.$row_6["id"].'_'.$row_6["name"].'.'.$row_6["type"].');"></div></span><span class="del-img js-dell-image" id="'.$row_6["name"].'"></span><div class="progress-img"><div class="p-img" style="width: 0px; display: none;"></div></div></div>';
+
+        if($name_hi=='') {
+            $name_hi = $row_6["name"];
+        } else
+        {
+            $name_hi .= ','.$row_6["name"];
+        }
+
+        $i++;
+    }
+}
+
+
+$query_string.='</div><input type="hidden" class="js-files-docs-new gloab_body" name="files_13" value="'.$name_hi.'"><div type_load="13" id_object="'.ht($_GET["id_buy"]).'" class="invoice_upload js-upload-file js-helps '.$class_aa.'"><span>прикрепите <strong>дополнительные документы</strong>, для этого выберите или перетащите файлы сюда </span><i>чтобы прикрепить ещё <strong>необходимые документы</strong>,выберите или перетащите их сюда</i><div class="help-icon-x" data-tooltip="Принимаем только в форматах .jpg, .jpeg, .png" >u</div></div></div></div>';
+
+$query_string.='</div>';
+
+
 
 $class_country = '';
 $name_country='';
@@ -375,10 +457,11 @@ if($status==0)
 include_once $url_system.'template/form_js.php';
 ?>
  <script type="text/javascript">
-	 
-	 
- $(document).ready(function(){
+
+
+     $(function (){
      Zindex();
+     NumberBlockFile();
 	 
 $('.money_mask1').inputmask("numeric", {
     radixPoint: ".",
@@ -417,5 +500,21 @@ var id_tt=$('.js-tabs-menu').find('.active').attr('id');
     $(".slct").bind('click.sys', slctclick);
 	$(".drop").find("li").unbind('click');
 	$(".drop").find("li").bind('click', dropli);
+
+
+	setTimeout(function () {
+
+
+             const phoneEl = $('.js-mask-input-tel')[0];
+             let phoneMask = IMask(phoneEl, {
+                 mask: '{+7} (#00) 000-00-00',
+                 definitions: {
+                     '#': /[012345679]/
+                 }
+             });
+
+    }, 1000);
+
+
  
  });

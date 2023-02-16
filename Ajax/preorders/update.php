@@ -67,34 +67,55 @@ if ((!isset($_POST["id"])))
 
 $class_js_script='';
 $class_js_scrip1='';
-if ((isset($_POST['preorders']["client_type"]))and(is_numeric($_POST['preorders']["id_client"]))and(($_POST['preorders']["client_type"]=='1')or($_POST['preorders']["client_type"]=='2')or($_POST['preorders']["client_type"]=='3'))and($sign_admin!=1))
+
+$new=0;
+if ((isset($_POST['preorders']["client_new"]))and($_POST['preorders']["client_new"]=='1')and(trim($_POST['client_phone'])!=''))
 {
+
+    //+7 (902) 129-68-34
+    $phone_end='';
+
+    if(trim($_POST['client_phone'])!='') {
+        $phone_base = explode(" ", htmlspecialchars(trim($_POST['client_phone'])));
+        $phone_base1 = explode("-", $phone_base[2]);
+        $phone_end = $phone_base[1][1] . $phone_base[1][2] . $phone_base[1][3] . $phone_base1[0] . $phone_base1[1] . $phone_base1[2];
+    }
+
+    if(strlen($phone_end)!=10)
+    {
+        $debug=h4a("199",$echo_r,$debug);
+        goto end_code;
+    } else
+    {
+        $new=1;
+    }
+} else {
+
+
+    if ((isset($_POST['preorders']["client_type"])) and (is_numeric($_POST['preorders']["id_client"])) and (($_POST['preorders']["client_type"] == '0') or ($_POST['preorders']["client_type"] == '1') or ($_POST['preorders']["client_type"] == '2'))) {
   //проверяем мог ли он привязать эту задачу к данному клиенту
   //если относится к той же компани что и пользователь добавл. задачу
 
 		switch($_POST['preorders']["client_type"])
               {
-		 case "1":{ 
-			 //частное лицо
-			 $sql_tt='Select b.id,b.fio from k_clients as b where b.id="'.ht($_POST['preorders']['id_client']).'" and b.potential=0 and b.visible=1 and b.id_a_company IN ('.ht($id_company).')';
-			 $class_js_script='js-client';
-             $class_js_scrip1='js-glu-f-';
-			 break; 
-                  }	
-		case "2":{ 
-			 //организация
-			 $sql_tt='Select b.id,b.name as fio from k_organization as b where b.id="'.ht($_POST['preorders']['id_client']).'" and  b.visible=1 and b.id_a_company IN ('.ht($id_company).')';
-            $class_js_script='js-org';
-            $class_js_scrip1='js-glo-n-';
-			 break; 
-                  }		
-		 case "3":{ 
-			 //потенциальный
-			 $sql_tt='Select b.id,b.fio from k_clients as b where b.id="'.ht($_POST['preorders']['id_client']).'" and b.potential=1 and b.visible=1 and b.id_a_company IN ('.ht($id_company).')';
-             $class_js_script='js-client';
-             $class_js_scrip1='js-glu-f-';
-			 break; 
-                  }		
+            case "0":
+            {
+                //частное лицо
+                $sql_tt = 'Select b.id,b.fio,b.phone from k_clients as b where b.id="' . ht($_POST['preorders']['id_client']) . '" and b.potential=0 and b.visible=1 and b.id_a_company IN (' . ht($id_company) . ')';
+                break;
+            }
+            case "1":
+            {
+                //потенциальный турист
+                $sql_tt = 'Select b.id,b.fio,b.phone from k_clients as b where b.id="' . ht($_POST['preorders']['id_client']) . '" and b.potential=1 and b.visible=1 and b.id_a_company IN (' . ht($id_company) . ')';
+                break;
+            }
+            case "2":
+            {
+                //с кем то летел
+                $sql_tt = 'Select b.id,b.fio,b.phone from k_clients as b where b.id="' . ht($_POST['preorders']['id_client']) . '" and b.potential=2 and b.visible=1 and b.id_a_company IN (' . ht($id_company) . ')';
+                break;
+            }
 		}
 	
   $result_t=mysql_time_query($link,$sql_tt);
@@ -113,8 +134,12 @@ if ((isset($_POST['preorders']["client_type"]))and(is_numeric($_POST['preorders'
 	
 } else
 {
+    $new=2;
+}
+    /*
     $debug=h4a(8699,$echo_r,$debug);
     goto end_code;
+    */
 }
 
 
@@ -154,8 +179,86 @@ if(($row_8["status"]==5)or($row_8["status"]==6)) {
 
 $status_ee='ok';
 
-$type_c=2;
-if(($_POST['preorders']["client_type"]==1)or($_POST['preorders']["client_type"]==3))
+
+
+if($new==1)
+{
+
+    $org=$id_company;
+    //echo($_POST['offers'][0]["id_company"]);
+    if(is_numeric($row_uu['id_company']))
+    {
+        $org=ht($row_uu['id_company']);
+    }
+
+    $code=1;
+    $result_tcc=mysql_time_query($link,'Select max(b.code) as cc from k_clients as b');
+    $num_results_tcc = $result_tcc->num_rows;
+    if($num_results_tcc!=0)
+    {
+
+        $row_tcc = mysqli_fetch_assoc($result_tcc);
+        $code= (int)$row_tcc["cc"]+1;
+    }
+
+
+    $today[0] = date("y.m.d"); //присвоено 03.12.01
+    $today[1] = date("H:i:s"); //присвоит 1 элементу массива 17:16:17
+
+    $date_=$today[0].' '.$today[1];
+
+
+
+    //потенциальный клиент
+    mysql_time_query($link,'INSERT INTO k_clients (id_a_company,code,potential,latin,adress,id_company,id_user,fio,phone,email,date_birthday,datetime,comment,inter_seria,inter_number,inter_kem,inter_kogda,inter_srok,inner_seria,inner_number,inner_kem,inner_kogda,visible,pol) VALUES( 
+"'.ht($org).'","'.ht($code).'","1","",
+"","0",
+"'.ht($id_user).'",
+"'.ht($_POST['client_fio']).' ",
+"'.$phone_end.'",
+"",
+"0000-00-00",
+"'.$date_.'",
+"",
+"",
+"",
+"",
+"0000-00-00",
+"0000-00-00",
+"",
+"",
+"",
+"0000-00-00",
+"1","1")');
+
+
+//добавить особенности клиента
+//$_POST['options_b']
+
+    $ID_UU=mysqli_insert_id($link);
+    $type_c=1;
+
+} else
+{
+    if($new==2)
+    {
+        //  echo("!3");
+        //нет связи с клиентом вообще
+        $ID_UU=0;
+        $type_c=1;
+
+    } else {
+        $ID_UU = ht($_POST['preorders']['id_client']);
+    }
+}
+
+
+
+
+
+
+$type_c=1;
+if(($_POST['preorders']["client_type"]==0)or($_POST['preorders']["client_type"]==1)or($_POST['preorders']["client_type"]==2))
 {
     $type_c=1;
 }
@@ -179,13 +282,49 @@ if ($num_results_uu226 != 0) {
 }
 
 
-$array_param_new=array(
-    '<a class=\"preorders-a '.$class_js_script.'\" iod=\"'.$row_uu_op["id"].'\"><strong class=\"'.$class_js_script1.''.$row_uu_op["id"].'\">'.$row_uu_op["fio"].'</strong></a>',
-    $_POST["question"],
-    $booking_new,
-    $country_new
-    );
+if($ID_UU!=0) {
+    $class_js_script='js-client';
+    $class_js_scrip1='js-glu-f-';
 
+
+
+    $sql_tt_x='Select b.id,b.fio,b.phone from k_clients as b where b.id="'.ht($ID_UU).'" and b.visible=1 and b.id_a_company IN ('.ht($id_company).')';
+
+
+
+    $name_hh='';
+
+
+    $result_xs = mysql_time_query($link, $sql_tt_x);
+    $num_results_xs = $result_xs->num_rows;
+
+    if ($num_results_xs != 0) {
+        $row_xs = mysqli_fetch_assoc($result_xs);
+
+
+        if (trim($row_xs["fio"]) == '') {
+            //$name_hh='';
+            $name_hh = phone_format($row_xs['phone']);
+        } else {
+            $name_hh = $row_xs['fio'];
+        }
+    }
+
+    $array_param_new = array(
+        '<a class=\"preorders-a ' . $class_js_script . '\" iod=\"' . $ID_UU . '\"><strong class=\"' . $class_js_script1 . '' . $ID_UU . '\">' . $name_hh . '</strong></a>',
+        $_POST["question"],
+        $booking_new,
+        $country_new
+    );
+} else
+{
+    $array_param_new = array(
+        'Не известен',
+        $_POST["question"],
+        $booking_new,
+        $country_new
+    );
+}
 //старые значения находим. то что было до этого
 
 
@@ -210,48 +349,61 @@ if ($num_results_uu226 != 0) {
     $country_new=$row_uu226["name"];
 }
 
-$class_js_script='';
-$class_js_scrip1='';
-switch($row_uu["id_type_clients"])
+$class_js_script='js-client';
+$class_js_scrip1='js-glu-f-';
+if($row_uu["id_k_clients"]!=0)
 {
-    case "1":{
-        //частное лицо
-        $sql_tt='Select b.id,b.fio from k_clients as b where b.id="'.ht($row_uu["id_k_clients"]).'" and b.potential=0 and b.visible=1 and b.id_a_company IN ('.ht($id_company).')';
-        $class_js_script='js-client';
-        $class_js_scrip1='js-glu-f-';
-        break;
+
+
+
+    $sql_tt_x='Select b.id,b.fio,b.phone from k_clients as b where b.id="'.ht($row_uu["id_k_clients"]).'" and b.visible=1 and b.id_a_company IN ('.ht($id_company).')';
+
+
+
+    $name_hh='';
+
+
+    $result_xs = mysql_time_query($link, $sql_tt_x);
+    $num_results_xs = $result_xs->num_rows;
+
+    if ($num_results_xs != 0) {
+        $row_xs = mysqli_fetch_assoc($result_xs);
+
+
+        if (trim($row_xs["fio"]) == '') {
+            //$name_hh='';
+            $name_hh = phone_format($row_xs['phone']);
+        } else {
+            $name_hh = $row_xs['fio'];
+        }
     }
-    case "2":{
-        //организация
-        $sql_tt='Select b.id,b.name as fio from k_organization as b where b.id="'.ht($row_uu["id_k_clients"]).'" and  b.visible=1 and b.id_a_company IN ('.ht($id_company).')';
-        $class_js_script='js-org';
-        $class_js_scrip1='js-glo-n-';
-        break;
-    }
+
+
+    $array_param_old=array(
+        '<a class=\"preorders-a '.$class_js_script.'\" iod=\"'.$row_uu["id_k_clients"].'\"><strong class=\"'.$class_js_script1.''.$row_uu["id_k_clients"].'\">'.$name_hh.'</strong></a>',
+        $row_uu["text"],
+        $booking_new,
+        $country_new
+
+    );
+
+
+} else
+{
+
+    $array_param_old=array(
+        'не известен',
+        $row_uu["text"],
+        $booking_new,
+        $country_new
+
+    );
+
 }
 
-$result_t=mysql_time_query($link,$sql_tt);
 
 
 
-$num_results_t = $result_t->num_rows;
-if($num_results_t!=0)
-{
-    $row_uu_op = mysqli_fetch_assoc($result_t);
-
-
-
-}
-
-
-
-$array_param_old=array(
-    '<a class=\"preorders-a '.$class_js_script.'\" iod=\"'.$row_uu_op["id"].'\"><strong class=\"'.$class_js_script1.''.$row_uu_op["id"].'\">'.$row_uu_op["fio"].'</strong></a>',
-    $row_uu["text"],
-    $booking_new,
-    $country_new
-
-);
 
 
 
@@ -274,7 +426,7 @@ if($history_edit!='0')
     mysql_time_query($link, 'update preorders set
     
 id_type_clients="'.$type_c.'",                                                         
-id_k_clients="'.ht($_POST['preorders']["id_client"]).'",
+id_k_clients="'.ht($ID_UU).'",
 id_booking_sourse="'.ht($_POST["type_booking"]).'",                                         
 id_country="'.ht($_POST["id_country"]).'",             
 text="'.ht($_POST["question"]).'"

@@ -1005,12 +1005,13 @@ function add_preorders_yes()
         err++;
     }
 
+	/*
 	if($('.js-form-preorders').find('.js-client-type-task').val()=='')
 	{
 		alert_message('error','Свяжите обращение с клиентом');
 		err++;
 	}
-
+*/
 
 	if(tip_fin==1) {
 
@@ -1041,12 +1042,9 @@ function add_preorders_yes()
 
 		AjaxClient('preorders','add','POST',0,'after_add_preorders',0,'vino_xd_preorders');
 
-
 	}else
 	{
-
 		alert_message('error','Ошибка. Не все поля заполнены!');
-
 	}
 }
 
@@ -1072,12 +1070,29 @@ function update_preorders_yes()
 		}
 	});
 
-
+/*
 	if($('.js-form-preorders').find('.js-client-type-task').val()=='')
 	{
 		alert_message('error','Свяжите обращение с клиентом');
 		err++;
 	}
+*/
+
+
+		var count_body=0;
+	$('.js-form-preorders .gloab_body').each(function (i, elem) {
+		if (($(this).val() != '')&&($(this).val() != 0)) {
+			count_body++;
+		}
+
+	});
+
+	if(count_body==0)
+	{
+		alert_message('error','Добавьте комментарий или фото');
+		err++;
+	}
+
 
 
 	if(err==0)
@@ -2681,7 +2696,10 @@ $(".cal_223").bind('click', function() { $(this).prev('.calendar_t').trigger('fo
 	
 var search_min2_phone = 18;  //мин количество символов для быстрого поиска
 var search_deley2_phone=100;	//задержка между вводами символов - начало поиска телефона в базе
-var search_input2_phone=$('.js-true-phone');			
+var search_input2_phone=$('.js-true-phone');
+
+
+
 search_input2_phone.keyup(function() {
 	//обнуляем выбор
 	search_input2_phone.parents('.input_2018').find('.js-true-search-phone').val(0);
@@ -2696,7 +2714,24 @@ search_input2_phone.keyup(function() {
                 var data ='url='+window.location.href+
 					'&search='+encodeURIComponent(search_input2_phone.val());	
 			//$('.fox_dell1').hide().after('<div class="b_loading_small"><div class="b_loading_circle_wrapper_small"><div class="b_loading_circle_one_small"></div><div class="b_loading_circle_one_small b_loading_circle_delayed_small"></div></div></div>');
-                AjaxClient('clients','true_phone','GET',data,'AfterTruePhone',1,0);		
+
+			if(search_input2_phone.parents('.js-form-preorders').length==0) {
+				AjaxClient('clients', 'true_phone', 'GET', data, 'AfterTruePhone', 1, 0);
+			} else
+			{
+				AjaxClient('clients', 'true_phone_preorders', 'GET', data, 'AfterTruePhoneP', 1, 0);
+			}
+		} else
+		{
+			if(search_input2_phone.parents('.js-form-preorders').length!=0) {
+				//определяем активное сейчас окно
+				var box = $('.box-modal:last');
+				box.find('.js-id-client-task').val('');
+				box.find('.js-client-type-task').val('');
+				box.find('.js-client-new').val(1);
+				box.find('.choice-head-preorder').remove();
+				box.find('.js-new-client-ii').slideUp("slow");
+			}
 		}
     }, search_deley2_phone);
 });	

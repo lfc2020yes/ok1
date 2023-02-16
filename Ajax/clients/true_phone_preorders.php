@@ -99,25 +99,36 @@ $phone_end=	$phone_base[1][1].$phone_base[1][2].$phone_base[1][3].$phone_base1[0
 
   $sql='
 
-select A.id FROM k_clients AS A where A.visible=1 AND A.id_a_company IN ('.$id_company.') and A.phone="'.$phone_end.'"   
+select A.id,A.
+potential,A.fio FROM k_clients AS A where A.visible=1 AND A.id_a_company IN ('.$id_company.') and A.phone="'.$phone_end.'"   
 ';  
 
 
 //echo($sql);
 
 $query_string='';
+$name='';
+$type=1;
+$id_c='';
 
 $result_work_zz=mysql_time_query($link,$sql);
 $num_results_work_zz = $result_work_zz->num_rows;
 	    if($num_results_work_zz!=0)
 	    {
+            $row_85 = mysqli_fetch_assoc($result_work_zz);
 	        $true=1;  //есть такой клиент с телефоном в базе
+            $name=$row_85["fio"];
+            $type=$row_85["potential"];
+            $id_c=$row_85["id"];
+
+
+
 		} 
 
 
 end_code:
 
-$aRes = array("debug"=>$debug,"status"   => $status_ee,"status_echo"   => $status_echo,"query" => $query_string,"echo"=>$true);
+$aRes = array("debug"=>$debug,"status"   => $status_ee,"status_echo"   => $status_echo,"query" => $query_string,"echo"=>$true,"name"=>$name,"type"=>$type,"id"=>$id_c);
 /*require_once $url_system.'Ajax/lib/Services_JSON.php';
 $oJson = new Services_JSON();
 //функция работает только с кодировкой UTF-8
