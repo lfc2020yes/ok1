@@ -95,26 +95,27 @@ function search_text_strong_2019($regime,$search,$beginText)
 //$regime    //Режим поиска (1 - точный поиск, 0 - вхождение)
 //$search    // Что ищем (в примере: $search = "про"; )
 //$beginText // Текст по которому необходимо провести поиск
- 
-/* Точный поиск. (Найдёт: "...не [B]про[/B] меня", 
-Не найдёт "Этот ком[U]про[/U]мат не..." - ) отдельное слово */
 
-if($regime == 1)                                       
-  { $patterns = "/(\b".$search."\b)+/i"; }// Регулярное выражение
- 
- 
-/* Отдельное слово и Вхождение в другие слова. 
-(Найдёт: "...не [B]про[/B] меня", 
-Найдёт: "Этот ком[B]про[/B]мат не...") */
-else                                                       
-  { $patterns = "/(".$search.")+/i"; }// Регулярное выражение
- 
-$replace = "<strong>$1</strong>";// На что заменить
+    /* Точный поиск. (Найдёт: "...не [B]про[/B] меня",
+    Не найдёт "Этот ком[U]про[/U]мат не..." - ) отдельное слово */
 
-setlocale(LC_ALL, 'ru_RU.CP1251'); 
-$endText = PREG_REPLACE($patterns,$replace,$beginText);// Замена
- 
-return $endText;
+    //echo(addcslashes($search,'/'));
+    if($regime == 1)
+    { $patterns = "/(\b".$search."\b)+/i"; }// Регулярное выражение
+
+
+    /* Отдельное слово и Вхождение в другие слова.
+    (Найдёт: "...не [B]про[/B] меня",
+    Найдёт: "Этот ком[B]про[/B]мат не...") */
+    else
+    { $patterns = "/(".addcslashes($search,'/').")+/i"; }// Регулярное выражение
+
+    $replace = "<strong>$1</strong>";// На что заменить
+
+    setlocale(LC_ALL, 'ru_RU.CP1251');
+    $endText = PREG_REPLACE($patterns,$replace,addcslashes($beginText,'/'));// Замена
+
+    return stripcslashes($endText);
 }
 
 if($query!='')
@@ -152,7 +153,7 @@ $num_results_work_zz = $result_work_zz->num_rows;
                    $row_uu78 = mysqli_fetch_assoc($result_uu78);
 
                    if ($query != '') {
-                       $query_string .= '<li><a href="javascript:void(0);" rel="' . $row_work_zz["id"] . '">' . search_text_strong(0, $query, $row_work_zz["name"]) . ' ('.$row_uu78["fio"].')</a></li>';
+                       $query_string .= '<li><a href="javascript:void(0);" rel="' . $row_work_zz["id"] . '">' . search_text_strong_2019(0, $query, $row_work_zz["name"]) . ' ('.$row_uu78["fio"].')</a></li>';
                    } else {
                        $query_string .= '<li><a href="javascript:void(0);" rel="' . $row_work_zz["id"] . '">' . $row_work_zz["name"] . ' ('.$row_uu78["fio"].')</a></li>';
                    }
