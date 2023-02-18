@@ -181,12 +181,12 @@ $num_results_work_zz = $result_work_zz->num_rows;
                    $result_uu78 = mysql_time_query($link, 'select name as fio from k_organization where id="'.ht($row_work_zz["id_k_clients"]) . '"');
                }
                $num_results_uu78 = $result_uu78->num_rows;
-
+               $date_mass2 = explode(" ", ht($row_work_zz['date_create']));
+               $date_mass = explode("-", ht($date_mass2[0]));
+               $date_start = $date_mass[2] . '.' . $date_mass[1] . '.' . $date_mass[0];
                if($num_results_uu78!=0) {
                    $row_uu78 = mysqli_fetch_assoc($result_uu78);
-                   $date_mass2 = explode(" ", ht($row_work_zz['date_create']));
-                   $date_mass = explode("-", ht($date_mass2[0]));
-                   $date_start = $date_mass[2] . '.' . $date_mass[1] . '.' . $date_mass[0];
+
 
                    if ($query != '') {
 
@@ -195,6 +195,16 @@ $num_results_work_zz = $result_work_zz->num_rows;
 
                    } else {
                        $query_string .= '<li><a href="javascript:void(0);" rel="' . $row_work_zz["id"] . '">№'.$row_work_zz["id"].' / '.$date_start.' / '.$row_uu78["fio"].' / '.$country.'</a></li>';
+                   }
+               } else
+               {
+                   if ($query != '') {
+
+                       $query_string .= '<li><a href="javascript:void(0);" rel="' . $row_work_zz["id"] . '">№'.search_text_strong(0, $query, $row_work_zz["id"]).' / '.$date_start.' / '.$country.'</a></li>';
+
+
+                   } else {
+                       $query_string .= '<li><a href="javascript:void(0);" rel="' . $row_work_zz["id"] . '">№'.$row_work_zz["id"].' / '.$date_start.' / '.$country.'</a></li>';
                    }
                }
 			   
