@@ -157,7 +157,7 @@ $query_string .= '<div style="margin-top: 30px;" class="input_doc_turs js-zindex
 
     $query_string .= '<div class="input_2018 input-search-list" list_number="s7">
         <i class="js-open-search"></i>
-        <label>Договор</label>
+        <label>Договор (ПРИМЕР - 13/08/2020 - 196)</label>
 
         <input name="trips" value="" id="date_124" sopen="search_doc" class="input_new_2018 required  js-keyup-search " autocomplete="off" type="text">
 

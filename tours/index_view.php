@@ -353,7 +353,7 @@ if($num_results_uu_dop!=0)
 
 		echo'<div class="input_2018 input-search-list" list_number="s2">
 			<i class="js-open-search"></i><span '.$preo_dop.' class="click-search-name">'.$name_preo.'</span>
-			<label>Обращение</label>';
+			<label>Обращение (№ или ФИО туриста)</label>';
 
 			echo'<input name="preorders" value="'.$name_preo.'" id="date_124" sopen="search_preorders" class="input_new_2018 required  js-keyup-search js-in3" autocomplete="off" type="text">';
 

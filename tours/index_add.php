@@ -281,7 +281,7 @@ echo($query_string);
         ?>
 		<div class="input_2018 input-search-list" list_number="s2">
 			<i class="js-open-search"></i><span class="click-search-name"></span>
-			<label>Обращение</label>
+			<label>Обращение (№ или ФИО туриста)</label>
 
 			<input name="preorders" value="" id="date_124" sopen="search_preorders" class="input_new_2018 required  js-keyup-search js-in3" autocomplete="off" type="text">
 
