@@ -23,10 +23,10 @@
 
                  if(count($mass_ei)>0) {
 
-                     $tabs_menu_x = array("Обращения клиентов", "История действий");
-                     $tabs_menu_x_id = array("0", "1");
-                     $tabs_menu_x_link = array("", ".tabs-1");
-                     $tabs_menu_x_class = array("", "click-history-pre");
+                     $tabs_menu_x = array("Обращения клиентов", "История действий", "Статистика");
+                     $tabs_menu_x_id = array("0", "1","3");
+                     $tabs_menu_x_link = array("", ".tabs-1", ".tabs-3");
+                     $tabs_menu_x_class = array("", "click-history-pre", "");
 
                  } else
                  {

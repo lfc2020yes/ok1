@@ -141,7 +141,13 @@ echo'<div class="content" iu="'.$id_user.'">';
 
 	?>
  <div class="section" id="section1">
-	 
+
+<?
+
+if(((isset($_GET["tabs"]))and($_GET["tabs"]!=3))or(!isset($_GET["tabs"])))
+{
+?>
+
 
 	<div class="oka_block_2019" style="min-height:auto !important;">
 
@@ -164,17 +170,16 @@ echo'<div class="content" iu="'.$id_user.'">';
 
                         if(count($mass_ei)>0) {
 
-                            $tabs_menu_x = array("Обращения клиентов", "История действий");
-                            $tabs_menu_x_id = array("0", "1");
-                            $tabs_menu_x_link = array("", ".tabs-1");
-                            $tabs_menu_x_class = array("", "click-history-pre");
+                            $tabs_menu_x = array("Обращения клиентов", "История действий", "Статистика");
+                            $tabs_menu_x_id = array("0", "1", "3");
+                            $tabs_menu_x_link = array("", ".tabs-1", ".tabs-3");
+                            $tabs_menu_x_class = array("", "click-history-pre", "");
 
                         } else
                         {
                             $tabs_menu_x = array("Обращения клиентов");
                             $tabs_menu_x_id = array("0");
                             $tabs_menu_x_link = array("");
-
                         }
 
 
@@ -702,12 +707,18 @@ if(!isset($_GET["tabs"])) {
     }
     echo '</div>';
 }
+
+
+
+}
 ?>	 
 	 
  <div class="oka_block_1">
-<div class="oka1_1 new-preorders-view" style="">
+<div class="oka1_1 new-preorders-view" style=" text-align:left;">
   <?
 
+  if(((isset($_GET["tabs"]))and($_GET["tabs"]!=3))or(!isset($_GET["tabs"])))
+  {
 
 //сообщения после добавление редактирования чего то	
 //сообщения после добавление редактирования чего то
@@ -1495,7 +1506,293 @@ $new_class_block='';
         
   <?       
 
-	
+  } else
+  {
+
+//вывод для руководителей
+
+$all=0;
+
+//собрать только тех кем руководит
+$mass_ei=users_hierarchy($id_user,$link);
+rm_from_array($id_user,$mass_ei);
+$mass_ei= array_unique($mass_ei);
+$sql_su5='';
+if(count($mass_ei)!=0)
+{
+    $io=0;
+    $sql_su5=' AND (';
+
+    foreach ($mass_ei as $key => $value)
+    {
+        if($io==0) {
+
+            $sql_su5.='((R.id_user="'.$value.'"))';
+
+        } else
+        {
+            $sql_su5.='or((R.id_user="'.$value.'"))';
+        }
+        $io++;
+
+    }
+    $sql_su5.=' )';
+}
+
+$all=0;
+$result_uu_all = mysql_time_query($link, 'select count(R.id) as cc from preorders as R where R.id_company IN ('.$id_company.') and R.visible="1" and not(R.status=5)and not(R.status=6) '.$sql_su5);
+$num_results_uu_all  = $result_uu_all ->num_rows;
+
+if ($num_results_uu_all  != 0) {
+    $row_uu_all  = mysqli_fetch_assoc($result_uu_all );
+    if($row_uu_all["cc"]!='')
+    {
+        $all=$row_uu_all["cc"];
+    }
+}
+$active_p=0;
+$result_uu_all = mysql_time_query($link, 'select count(R.id) as cc from preorders as R where R.id_company IN ('.$id_company.') and R.visible="1" and R.status=5 '.$sql_su5);
+$num_results_uu_all  = $result_uu_all ->num_rows;
+
+if ($num_results_uu_all  != 0) {
+    $row_uu_all  = mysqli_fetch_assoc($result_uu_all );
+    if($row_uu_all["cc"]!='')
+    {
+        $active_p=$row_uu_all["cc"];
+    }
+}
+
+$all_2=0;
+$result_uu_all = mysql_time_query($link, 'select count(R.id) as cc from preorders as R where R.id_company IN ('.$id_company.') and R.visible=1 '.$sql_su5);
+
+
+
+$num_results_uu_all  = $result_uu_all ->num_rows;
+
+if ($num_results_uu_all  != 0) {
+    $row_uu_all  = mysqli_fetch_assoc($result_uu_all );
+    if($row_uu_all["cc"]!='')
+    {
+        $all_2=$row_uu_all["cc"];
+    }
+}
+
+
+$dox=($active_p*100)/$all_2;
+
+
+
+
+
+echo'<div class="bord-promo" style="margin-top: -30px;">
+
+<div class="block-ppi"><div class="rating-ship"><span class="name-border">Открытых обращений</span><div><span class="cost_border ">'.$all.'</span></div></div></div>
+
+        <div class="block-ppi"><div class="rating-ship"><span class="name-border">Успешных обращений</span><div><span class="cost_border ">'.$active_p.'</span></div></div></div>
+
+        <div class="block-ppi"><div class="rating-ship rating-ship-proc"><span class="name-border">Общий коэффициент</span><div><span class="cost_border leaderborder-proc">'.rtrim(rtrim(number_format(($dox), 2, '.', ' '),'0'),'.').'</span></div></div></div>
+
+    </div>';
+?>
+
+
+      <div class="liderbord_2023">
+          <span class="title">Обращения по менеджерам</span>
+          <div class="lider-box lider_header">
+              <div class="lider-date">Менеджер</div>
+              <div class="lider-country">Активных/Успешных</div>
+              <div class="lider-comm">Новых (30 дней)</div>
+              <div class="lider-promo">Старых (>30 дней)</div>
+              <div class="lider-status">Коэффициент</div>
+          </div>
+
+
+          <?
+
+
+          $mass_ei=users_hierarchy($id_user,$link);
+          rm_from_array($id_user,$mass_ei);
+          $mass_ei= array_unique($mass_ei);
+          $sql_su5='';
+          if(count($mass_ei)!=0) {
+              foreach ($mass_ei as $key => $value) {
+
+                  $result_uu = mysql_time_query($link, 'select name_user from r_user where id="' . ht($value) . '"');
+                  $num_results_uu = $result_uu->num_rows;
+
+                  if ($num_results_uu != 0) {
+                      $row_uu = mysqli_fetch_assoc($result_uu);
+
+
+
+
+
+                      $all=0;
+                      $result_uu_all = mysql_time_query($link, 'select count(R.id) as cc from preorders as R where R.id_company IN ('.$id_company.') and R.visible="1" and not(R.status=5)and not(R.status=6) and R.id_user="'.$value.'"');
+                      $num_results_uu_all  = $result_uu_all ->num_rows;
+
+                      if ($num_results_uu_all  != 0) {
+                          $row_uu_all  = mysqli_fetch_assoc($result_uu_all );
+                          if($row_uu_all["cc"]!='')
+                          {
+                              $all=$row_uu_all["cc"];
+                          }
+                      }
+                      if($all==0)
+                      {
+                          $all='—';
+                      }
+
+                      //минус месяц
+                      $date_end=date('Y-m-d');
+
+                      $date_start_while=date_step_sql_more($date_end,'-1m');
+
+                      $active_p=0;
+                      $result_uu_all = mysql_time_query($link, 'select count(R.id) as cc from preorders as R where R.id_company IN ('.$id_company.') and R.visible="1" and not(R.status=5)and not(R.status=6) and R.date_create>="'.$date_start_while.' 00:00:00" and R.id_user="'.$value.'"');
+
+
+                      $num_results_uu_all  = $result_uu_all ->num_rows;
+
+                      if ($num_results_uu_all  != 0) {
+                          $row_uu_all  = mysqli_fetch_assoc($result_uu_all );
+                          if($row_uu_all["cc"]!='')
+                          {
+                              $active_p=$row_uu_all["cc"];
+                          }
+                      }
+
+
+                      $active_p1=0;
+                      $result_uu_all = mysql_time_query($link, 'select count(R.id) as cc from preorders as R where R.id_company IN ('.$id_company.') and R.visible="1" and not(R.status=5)and not(R.status=6) and R.date_create<"'.$date_start_while.' 00:00:00" and R.id_user="'.$value.'"');
+
+
+                      $num_results_uu_all  = $result_uu_all ->num_rows;
+
+                      if ($num_results_uu_all  != 0) {
+                          $row_uu_all  = mysqli_fetch_assoc($result_uu_all );
+                          if($row_uu_all["cc"]!='')
+                          {
+                              $active_p1=$row_uu_all["cc"];
+                          }
+                      }
+
+
+                      $all_2=0;
+                      $result_uu_all = mysql_time_query($link, 'select count(R.id) as cc from preorders as R where R.id_company IN ('.$id_company.') and R.visible=1 and R.id_user="'.$value.'"');
+
+
+
+                      $num_results_uu_all  = $result_uu_all ->num_rows;
+
+                      if ($num_results_uu_all  != 0) {
+                          $row_uu_all  = mysqli_fetch_assoc($result_uu_all );
+                          if($row_uu_all["cc"]!='')
+                          {
+                              $all_2=$row_uu_all["cc"];
+                          }
+                      }
+
+
+
+                      $active_p_x=0;
+                      $result_uu_all = mysql_time_query($link, 'select count(R.id) as cc from preorders as R where R.id_company IN ('.$id_company.') and R.visible="1" and R.status=5 and R.id_user="'.$value.'"');
+
+
+                      $num_results_uu_all  = $result_uu_all ->num_rows;
+
+                      if ($num_results_uu_all  != 0) {
+                          $row_uu_all  = mysqli_fetch_assoc($result_uu_all );
+                          if($row_uu_all["cc"]!='')
+                          {
+                              $active_p_x=$row_uu_all["cc"];
+                          }
+                      }
+
+                      $dox=0;
+                      if($all_2!=0) {
+
+                          $dox = ($active_p_x * 100) / $all_2;
+
+                      }
+
+
+
+
+
+                      $class_party='';
+                  if(($row_te["status"]==3))
+                  {
+                      $class_party='red-party';
+                  }
+
+
+                  $class_jj='';
+                  $d_day=dateDiff_1(date("y-m-d").' '.date("H:i:s"),$row_te['date_end']);
+                  if($d_day>0)
+                  {
+                      $class_jj='red-jj';
+                  }
+
+                  if($active_p_x==0)
+                  {
+                      $active_p_x='—';
+                  }
+
+
+                  echo'        <div class="lider-box js-promo-list lider_more '.$class_party.'" promo="'.$row_te["id"].'">
+            <div class="lider-date">'.$row_uu["name_user"].'</div>
+            <div class="lider-country"><span class="aff_mo">Активных/Успешных</span>'.$all.' / '.$active_p_x.'</div>
+            <div class="lider-comm"><span class="aff_mo">Новых (30 дней)</span>';
+
+                  if($active_p!=0) {
+                      echo($active_p);
+                  } else
+                  {
+                      echo('—');
+                  }
+
+                  echo'</div>
+            <div class="lider-promo" style="color: #ef4084;"><span class="aff_mo">Старых (>30 дней)</span>';
+
+                      if($active_p1!=0) {
+                          echo($active_p1);
+                      } else
+                      {
+                          echo('—');
+                      }
+
+                  echo'</div>
+            <div class="lider-status"><span class="aff_mo">Коэффицент</span>';
+
+                      echo(rtrim(rtrim(number_format(($dox), 2, '.', ' '),'0'),'.'));
+
+
+
+
+
+
+
+                  echo'</div>';
+                  echo'</div>';
+              }
+          }
+          }
+          ?>
+
+
+
+
+      </div>
+
+
+
+
+      <?
+
+
+
+  }
     ?>
     </div>
   </div>

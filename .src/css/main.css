@@ -30252,6 +30252,18 @@ position: absolute;}  }
   position: relative !important;
 }
 
+.stat_starix {
+  font-family: GEInspiraBold;
+  color: #fff;
+  text-transform: uppercase;
+  border-radius: 6px;
+  background-color: #ef4084;
+  background-image: -o-linear-gradient(to right, #f29d15, #d44dc3);
+  background-image: -webkit-gradient(linear, left top, right top, from(#f29d15), to(#d44dc3));
+  background-image: -o-linear-gradient(left, #f29d15, #d44dc3);
+  background-image: linear-gradient(to right, #f29d15, #d44dc3);
+}
+
 .input-block-2020 .list-image {
   padding: 20px;
   display: none;
