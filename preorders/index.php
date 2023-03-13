@@ -1586,7 +1586,73 @@ $dox=($active_p*100)/$all_2;
 
 echo'<div class="bord-promo" style="margin-top: -30px;">
 
-<div class="block-ppi"><div class="rating-ship"><span class="name-border">Открытых обращений</span><div><span class="cost_border ">'.$all.'</span></div></div></div>
+<div class="block-ppi ppi-new-23">
+
+<div class="rating-ship rating-ship-54"><span class="name-border">Открытых обращений</span><div><span class="cost_border ">'.$all.'</span></div></div>';
+
+
+
+$rangeStart = new DateTime('Monday last week');  //начало прошлой недели
+$rangeEnd = new DateTime('Sunday last week');   //конец прошлой недели
+
+$active_p=0;
+$result_uu_all = mysql_time_query($link, 'select count(R.id) as cc from preorders as R where R.id_company IN ('.$id_company.') and R.visible="1" and R.date_create>="'.$rangeStart->format('Y-m-d').' 00:00:00" and R.date_create<="'.$rangeEnd->format('Y-m-d').' 23:59:59"  '.$sql_su5);
+$num_results_uu_all  = $result_uu_all ->num_rows;
+
+if ($num_results_uu_all  != 0) {
+    $row_uu_all  = mysqli_fetch_assoc($result_uu_all );
+    if($row_uu_all["cc"]!='')
+    {
+        $active_p=$row_uu_all["cc"];
+    }
+}
+
+echo'<div class="rating-ship-55">
+   <div class="title-ppi" data-tooltip="новых на прошлой неделе">Новых неделя - <span class="cost_border ">'.$active_p.'</span></div>';
+
+
+$rangeStart = new DateTime('Monday last week');  //начало прошлой недели
+$rangeEnd = new DateTime('Sunday last week');   //конец прошлой недели
+
+$active_p=0;
+$result_uu_all = mysql_time_query($link, 'select count(R.id) as cc from preorders as R where R.id_company IN ('.$id_company.') and R.visible="1" and R.status=5  and R.date_create>="'.$rangeStart->format('Y-m-d').' 00:00:00" and R.date_create<="'.$rangeEnd->format('Y-m-d').' 23:59:59"  '.$sql_su5);
+$num_results_uu_all  = $result_uu_all ->num_rows;
+
+if ($num_results_uu_all  != 0) {
+    $row_uu_all  = mysqli_fetch_assoc($result_uu_all );
+    if($row_uu_all["cc"]!='')
+    {
+        $active_p=$row_uu_all["cc"];
+    }
+}
+
+
+echo'<div class="title-ppi" data-tooltip="успешных на прошлой неделе">Успешных неделя - <span class="cost_border ">'.$active_p.'</span></div>';
+
+
+
+$rangeStart = date('Y-m-01');  //начало месяца
+$rangeEnd = date('Y-m-t');   //конец месяца
+
+
+$active_p=0;
+$result_uu_all = mysql_time_query($link, 'select count(R.id) as cc from preorders as R where R.id_company IN ('.$id_company.') and R.visible="1"  and R.date_create>="'.$rangeStart.' 00:00:00" and R.date_create<="'.$rangeEnd.' 23:59:59"  '.$sql_su5);
+$num_results_uu_all  = $result_uu_all ->num_rows;
+
+if ($num_results_uu_all  != 0) {
+    $row_uu_all  = mysqli_fetch_assoc($result_uu_all );
+    if($row_uu_all["cc"]!='')
+    {
+        $active_p=$row_uu_all["cc"];
+    }
+}
+
+echo'<div class="title-ppi" data-tooltip="Всего обращений в этом месяце">Новых месяц - <span class="cost_border ">'.$active_p.'</span></div>';
+
+
+echo'</div>
+
+</div>
 
         <div class="block-ppi"><div class="rating-ship"><span class="name-border">Успешных обращений</span><div><span class="cost_border ">'.$active_p.'</span></div></div></div>
 

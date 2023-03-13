@@ -22017,3 +22017,46 @@ margin-top: 40px;
 	background-image: linear-gradient(to right, #f29d15, #d44dc3);
 
 }
+
+.ppi-new-23
+{
+@include flexbox();
+
+	background-color: #ef4084;
+	background-image: -o-linear-gradient(to right, #f29d15, #d44dc3);
+	background-image: -webkit-gradient(linear, left top, right top, from(#f29d15), to(#d44dc3));
+	background-image: -o-linear-gradient(left, #f29d15, #d44dc3);
+	background-image: linear-gradient(to right, #f29d15, #d44dc3);
+	color: #fff !important;
+	.name-border { color: #fff !important; }
+
+	.rating-ship-54 { width: 40%;  }
+  .rating-ship-55 {
+padding-top: 20px;
+	  width: 60%;
+	 /* background-color: rgba(0, 0, 0, 0.05);
+	  border-radius: 5px;
+*/
+    .title-ppi {
+		color: rgba(0, 0, 0, 0.4);
+		font-family: "GEInspiraBold";
+		text-transform: uppercase;
+		font-size: 10px;
+
+		background-color: #fff;
+		border-radius: 5px;
+		padding: 0px 15px;
+		margin-bottom: 5px;
+		display: inline-block;
+
+		span {
+
+			color: rgba(0, 0, 0, 0.7);
+
+		}
+	}
+
+
+  }
+
+}
