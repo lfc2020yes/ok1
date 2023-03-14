@@ -5,10 +5,10 @@
 $local='C:/OpenServer/domains/'.$local_host.'';
 if($_SERVER['DOCUMENT_ROOT']!=$local)
 {
-echo'<script language="JavaScript" type="text/javascript" src="/public/forms.map.min.js?cb=1678778957768"></script>'; 
+echo'<script language="JavaScript" type="text/javascript" src="/public/forms.map.min.js?cb=1678780293640"></script>'; 
 } else
 {
-echo'<script language="JavaScript" type="text/javascript" src="/public/forms.map.js?cb=1678778957768"></script>';	
+echo'<script language="JavaScript" type="text/javascript" src="/public/forms.map.js?cb=1678780293640"></script>';	
 }
 
 	

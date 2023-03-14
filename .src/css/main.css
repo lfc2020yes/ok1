@@ -8608,6 +8608,11 @@ var.highlight {
   transition: all 1s cubic-bezier(0.92, 0, 0.28, 1);
 }
 @media only screen and (max-width: 639px) {
+  .mobile-nav {
+    overflow: auto !important;
+  }
+}
+@media only screen and (max-width: 639px) {
   .mobile-nav.act {
     left: 0px;
   }
