@@ -1114,6 +1114,57 @@ function update_preorders_yes()
 	}
 }
 
+//нажатие на кнопку добавить оплату в форме добавление операций в финансах
+function transfer_preorders_yes()
+{
+
+    var err = 0;
+
+    //проверка ссылки
+    $('.js-form-preorders .gloab').each(function (i, elem) {
+
+        if (($(this).val() == '') || ($(this).val() == 0)) {
+            $(this).parents('.input_2018').addClass('error_2018');
+            $(this).parents('.list_2018').addClass('required_in_2018');
+            $(this).parents('.js-prs').addClass('error_textarea_2018');
+            err++;
+        } else {
+            $(this).parents('.input_2018').removeClass('error_2018');
+            $(this).parents('.list_2018').removeClass('required_in_2018');
+            $(this).parents('.js-prs').removeClass('error_textarea_2018');
+
+        }
+    });
+
+    /*
+        if($('.js-form-preorders').find('.js-client-type-task').val()=='')
+        {
+            alert_message('error','Свяжите обращение с клиентом');
+            err++;
+        }
+    */
+
+
+    if(err==0)
+    {
+
+        //изменить кнопку на загрузчик
+        $('.js-transfer-preorder-x').hide();
+
+        $('.js-transfer-preorder-x').hide().after('<div class="b_loading_small" style="position:relative; width: 40px;padding-top: 7px;top: auto;right: auto;left: auto; margin: 0 auto;"><div class="b_loading_circle_wrapper_small"><div class="b_loading_circle_one_small"></div><div class="b_loading_circle_one_small b_loading_circle_delayed_small"></div></div></div>');
+
+        AjaxClient('preorders','transfer','POST',0,'after_transfer_preorders',0,'vino_xd_preorders');
+
+
+    }else
+    {
+
+        alert_message('error','Ошибка. Не все поля заполнены!');
+
+    }
+}
+
+
 //нажатие на кнопку добавить оплату по туру в форме оплата тура - проверка формы
 function add_buy_trips_yes()
 {
@@ -2557,6 +2608,8 @@ $('.box-modal').on("change keyup input click",'.js-add-task-but-x',add_task_yes)
 
 		$('.box-modal').on("change keyup input click",'.js-add-preorder-x',add_preorders_yes); //добавление оплаты по туру с проверкой
 	$('.box-modal').on("change keyup input click",'.js-update-preorder-x',update_preorders_yes); //добавление оплаты по туру с проверкой
+
+    $('.box-modal').on("change keyup input click",'.js-transfer-preorder-x',transfer_preorders_yes); //добавление оплаты по туру с проверкой
 
 
 	$('.box-modal').on("change keyup input click",'.js-edit-buy-finance-but-x',edit_buy_finance_yes); //добавление оплаты по туру с проверкой
@@ -7460,6 +7513,50 @@ function after_edit_buy_finance_yes(data,update)
 		});
 	}
 }
+
+//постфункция добавление нового обращения
+function after_transfer_preorders(data,update)
+{
+    if (data.status=='ok')
+    {
+        // $('.js-form-tender-new').remove();
+
+        alert_message('ok','Обращение передано');
+
+        //UpdateFinance('1,0,1,1');
+        //$('.js-next-step').submit();
+
+        //UpdateTripsA(data.for_id,'buy');
+        //перезагрузить страницу с возможностью потом вывести сообщение что оплата добавлена
+
+        //$('#js-form-add-fin').attr('action','finance/?a=add');
+        //$('#js-form-add-fin').submit();
+
+        //добавить эту операцию в нужный раздел с пометкой другого цвета
+
+        UpdatePreBiAdd(data.id);
+
+
+        ToolTip();
+
+
+        clearInterval(timerId);
+        $.arcticmodal('close');
+
+        //setTimeout ( function () { $('#js-form-add-fin').submit();  }, 1000 );
+
+    } else
+    {
+        $('.js-transfer-preorder-x').show();
+        $('.js-form-preorders .right_task_ccb').find('.b_loading_small').remove();
+
+        //alert_message('error','Ошибка! Заполните все поля');
+
+        //$('.js-form-tender-new .message-form').empty().append('Заполните все поля').show();
+
+    }
+}
+
 
 //постфункция добавление нового обращения
 function after_update_preorders(data,update)

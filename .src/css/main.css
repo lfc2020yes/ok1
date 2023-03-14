@@ -24981,7 +24981,7 @@ position: absolute;}  }
   padding: 20px 0px !important;
 }
 
-.edit-trips-all, .edit-trips-all2, .edit-trips-all1, .edit-preorders-all1 {
+.edit-trips-all, .edit-trips-all2, .edit-trips-all1, .edit-preorders-all1, .transfer-trips-all {
   padding: 20px;
   position: relative;
   cursor: pointer;
@@ -24994,7 +24994,7 @@ position: absolute;}  }
   text-align: right;
   border-radius: 50%;
 }
-.edit-trips-all::before, .edit-trips-all2::before, .edit-trips-all1::before, .edit-preorders-all1::before {
+.edit-trips-all::before, .edit-trips-all2::before, .edit-trips-all1::before, .edit-preorders-all1::before, .transfer-trips-all::before {
   color: rgba(0, 0, 0, 0.2);
   position: absolute;
   top: 20px;
@@ -25006,8 +25006,12 @@ position: absolute;}  }
   font-size: 14px;
   text-align: center;
 }
-.edit-trips-all:hover::before, .edit-trips-all2:hover::before, .edit-trips-all1:hover::before, .edit-preorders-all1:hover::before {
+.edit-trips-all:hover::before, .edit-trips-all2:hover::before, .edit-trips-all1:hover::before, .edit-preorders-all1:hover::before, .transfer-trips-all:hover::before {
   color: rgba(0, 0, 0, 0.7);
+}
+
+.transfer-trips-all::before {
+  content: "7";
 }
 
 .edit-trips-all2::before, .edit-trips-all1::before, .edit-preorders-all1::before {

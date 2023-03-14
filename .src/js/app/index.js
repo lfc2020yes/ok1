@@ -1875,6 +1875,32 @@ function js_buy_edit()
 
 
 /**
+ * передать обращение на другого менеджера
+ */
+function js_buy_transfer_pre()
+{
+    //alert("!");
+    var id_buy= $(this).parents('.preorders_block_global').attr('id_pre');
+
+
+    $.arcticmodal({
+        type: 'ajax',
+        url: 'forms/form_transfer_buy_pre.php?id_buy='+id_buy,
+        afterLoading: function(data, el) {
+            //alert('afterLoading');
+        },
+        afterLoadingOnShow: function(data, el) {
+            //alert('afterLoadingOnShow');
+        },
+        afterClose: function(data, el) { // после закрытия окна ArcticModal
+            clearInterval(timerId);
+        }
+
+    });
+
+}
+
+/**
  * изменить обращения
  */
 function js_buy_edit_pre()
@@ -9099,7 +9125,7 @@ $('body').on("change keyup input click",'.radio_checkbox_no_yes',radio_checkbox_
 $('.js-finance-operation').on("change keyup input click",'.js-buy-edit-fin',js_buy_edit_fin);
 
 	$('body').on("change keyup input click",'.js-buy-edit-preorders',js_buy_edit_pre);
-
+    $('body').on("change keyup input click",'.js-buy-transfer-preorders',js_buy_transfer_pre);
 
 $('body').on("change keyup input click",'.js-place-finance',plane_edit);
 

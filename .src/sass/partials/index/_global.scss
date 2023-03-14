@@ -17724,7 +17724,7 @@ display: block;
 
 
 .edit-li-tr {padding: 20px 0px !important;}
-.edit-trips-all,.edit-trips-all2, .edit-trips-all1, .edit-preorders-all1{
+.edit-trips-all,.edit-trips-all2, .edit-trips-all1, .edit-preorders-all1, .transfer-trips-all{
 
 	padding: 20px;
 	position: relative;
@@ -17752,6 +17752,12 @@ display: block;
 	}
 &:hover {&::before {
 	color: rgba(0,0,0,0.7);}}
+}
+
+.transfer-trips-all{ &::before {
+
+	content: "7";
+}
 }
 
 .edit-trips-all2,.edit-trips-all1,.edit-preorders-all1{ &::before {content: "_";

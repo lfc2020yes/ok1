@@ -368,9 +368,21 @@ $task_cloud_block.='<div class="mm_w-preorders form005U '.$class_menu_pr.'">
 
     }
 
+
+    //редактировать может если это только им же созданное обращение
+
+$result_uu_hi = mysql_time_query($link, 'select id_user from preorders_status_history_new where action_history="4" and id_preorder="' . ht($row_8["id"]) . '"');
+$num_results_uu_hi = $result_uu_hi->num_rows;
+
+if ($num_results_uu_hi != 0) {
+    $row_uu_hi = mysqli_fetch_assoc($result_uu_hi);
+}
+
+
+
 if (($role->permission('Обращения','U'))or($sign_admin==1)) {
 
-    if(($row_8["id_user"]==$id_user)or($sign_admin==1)) {
+    if(($sign_admin==1)or($row_uu_hi["id_user"]==$id_user)) {
 if(($row_8["status"]!=5)and($row_8["status"]!=6)) {
     $task_cloud_block .= '<li class="tabs_005U edit-li-tr" id="0"><a class="js-buy-edit-preorders edit-trips-all" data-tooltip="Изменить" ></a></li>';
 }
@@ -379,16 +391,23 @@ if(($row_8["status"]!=5)and($row_8["status"]!=6)) {
    }
 
 
+if ((($role->permission('Обращения','U'))and($sign_level>1))and($row_8["status"]==1)) {
+
+            $task_cloud_block .= '<li class="tabs_005U edit-li-tr" id="0"><a class="js-buy-transfer-preorders transfer-trips-all" data-tooltip="Передать другому" ></a></li>';
+
+}
+
+
 
 if (($role->permission('Обращения','D'))or($sign_admin==1)) {
 
-    if(($row_8["id_user"]==$id_user)or($sign_admin==1)) {
+    if(($row_uu_hi["id_user"]==$id_user)or($sign_admin==1)) {
 
         $min=dateDiff_min(date('Y-m-d H:i:s'), $row_8['date_create']);
 
-        if(($min<1440)and(($row_8['id_user']==$id_user)or($sign_admin==1))) {
+        if(($min<1440)) {
 
-            $task_cloud_block .= '<li class="tabs_005U annul-li-tr" id="0"><a  class="edit-preorders-all1 js-buy-del-pre" data-tooltip="Удалить" ></a></li>';
+            $task_cloud_block .= '<li class="tabs_005U annul-li-tr" id="0" style="padding-left:0px; padding-right:0px;"><a  class="edit-preorders-all1 js-buy-del-pre" data-tooltip="Удалить" ></a></li>';
 
         }
     }

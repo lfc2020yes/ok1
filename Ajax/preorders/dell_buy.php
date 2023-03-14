@@ -108,7 +108,8 @@ mysql_time_query($link, 'update task_new set
       
       visible="0"
       
-      where action="20" and id_object="'.ht($id).'" and id_a_company IN ('.$id_company.')');
+      where action="20" and id_object="'.ht($id).'" and id_a_group IN ('.$id_group_u.')');
+
 
 end_code:
 

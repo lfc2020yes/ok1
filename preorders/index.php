@@ -394,7 +394,7 @@ if(isset($_GET["tabs"]))
 
 
 		
-     $os5 = array( "Мной");
+     $os5 = array( "Себе");
 	 $os_id5 = array("0");	
 	
 	
@@ -424,7 +424,7 @@ if(isset($_GET["tabs"]))
 	 
 	if(($sign_level==2)or($sign_level==3)or($sign_level==4))
 		{
-		   array_push($os5, 'Всеми подчиненными менеджерами');
+		   array_push($os5, 'Всех подчиненных менеджерах');
 	       array_push($os_id5, 'all_subor');		
 		}
 	 
@@ -435,7 +435,7 @@ if(isset($_GET["tabs"]))
 		}
 		
 		
-		   echo'<div class="left_drop menu1_prime book_menu_sel js--sort gop_io '.$class_js_search.'" style="z-index:'.$zindex.'"><label>Обращение создано</label><div class="select eddd"><a class="slct" list_number="t6" data_src="'.$os_id5[array_search($_COOKIE["su_5pr".$id_user], $os_id5)].'">'.$os5[array_search($_COOKIE["su_5pr".$id_user], $os_id5)].'</a><ul class="drop">';
+		   echo'<div class="left_drop menu1_prime book_menu_sel js--sort gop_io '.$class_js_search.'" style="z-index:'.$zindex.'"><label>На ком</label><div class="select eddd"><a class="slct" list_number="t6" data_src="'.$os_id5[array_search($_COOKIE["su_5pr".$id_user], $os_id5)].'">'.$os5[array_search($_COOKIE["su_5pr".$id_user], $os_id5)].'</a><ul class="drop">';
 	//$os_id2[array_search($su_2, $os_id2)]
 			$zindex--;
 
