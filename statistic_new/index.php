@@ -798,7 +798,7 @@ date_buy_all,R.commission from trips as R where R.id_a_company IN ('.$id_company
           }
       }
       echo'<td>'.$active_p.'</td>';
-      echo'<td>'.rtrim(rtrim(number_format($all_uie, 2, '.', ' '),'0'),'.').'</td>';
+      echo'<td class="noww">'.rtrim(rtrim(number_format($all_uie, 2, '.', ' '),'0'),'.').'</td>';
 
       //Не новых договоров - но полность оплаченных и учтенные комиссией в этот период
       $active_p=0;
@@ -849,7 +849,7 @@ date_buy_all,R.commission from trips as R where R.id_a_company IN ('.$id_company
 
           }
       }
-      echo'<td>'.$active_p.'</td>';
+      echo'<td >'.$active_p.'</td>';
 
       echo'</tr>';
 
