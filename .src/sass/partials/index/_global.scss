@@ -22078,7 +22078,7 @@ padding-top: 20px;
   /* style the HTML table */
 
 	border-radius: 5px;
-	overflow: hidden;
+	overflow:auto;
 	background-color: #fff;
 	font-weight: normal;
 
@@ -22110,7 +22110,7 @@ padding-top: 20px;
   }
 
   #fixed-headers thead {
-    transform: translateZ(0);
+    //transform: translateZ(0);
   }
 
   #fixed-headers thead th {
@@ -22125,6 +22125,9 @@ padding-top: 20px;
 	  font-weight: normal;
 	  line-height: 14px;
 	  vertical-align: middle;
+	  position: sticky;
+	  top: 0px;
+	  z-index: 2;
 
   }
 
@@ -22144,4 +22147,6 @@ padding-top: 20px;
 	  color: rgba(0, 0, 0, 0.7);
 	  font-size: 14px;
   }
+
+	.noww {white-space: nowrap;}
 }

@@ -30317,7 +30317,7 @@ position: absolute;}  }
 .freeze_22 {
   /* style the HTML table */
   border-radius: 5px;
-  overflow: hidden;
+  overflow: auto;
   background-color: #fff;
   font-weight: normal;
   /* this will active the scrollbar */
@@ -30342,8 +30342,8 @@ position: absolute;}  }
   font-family: "GEInspiraBold";
   font-weight: normal;
 }
-.freeze_22 #fixed-headers thead {
-  transform: translateZ(0);
+.freeze_22 #fixed-headers td a {
+  font-family: "GEInspiraRegular";
 }
 .freeze_22 #fixed-headers thead th {
   border: 1px solid #eee !important;
@@ -30356,6 +30356,9 @@ position: absolute;}  }
   font-weight: normal;
   line-height: 14px;
   vertical-align: middle;
+  position: sticky;
+  top: 0px;
+  z-index: 2;
 }
 .freeze_22 #fixed-headers tbody th {
   text-align: left;
@@ -30371,6 +30374,9 @@ position: absolute;}  }
   font-family: "GEInspiraBold";
   color: rgba(0, 0, 0, 0.7);
   font-size: 14px;
+}
+.freeze_22 .noww {
+  white-space: nowrap;
 }
 
 .input-block-2020 .list-image {

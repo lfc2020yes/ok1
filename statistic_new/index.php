@@ -679,7 +679,7 @@ echo'<div class="oka1_1" style="padding-top: 30px;">';
       <tr>
         <th rowspan="2" style="vertical-align: middle">Менеджер</th>
         
-        <th colspan="6" style="font-family: \'GEInspiraBold\';
+        <th colspan="7" style="font-family: \'GEInspiraBold\';
 color: rgba(0, 0, 0, 0.7);
 font-size: 14px;">С '.time_fly_xxd($start_date_o.' 00:00:00').' - '.time_fly_xxd($end_date_o.' 00:00:00').'</th>
       </tr>
@@ -690,6 +690,7 @@ font-size: 14px;">С '.time_fly_xxd($start_date_o.' 00:00:00').' - '.time_fly_xx
         <th >Успешных заявок</th>
         <th >Новых договоров</th>
         <th >id новых договоров<br>комиссия с них</th>
+        <th >Общая комиссия с новых</th>
         <th >Закрыли договоров не новых</th>
         <th >id закрытых договоров не новых<br>комиссия с них</th>
       </tr>
@@ -762,6 +763,7 @@ font-size: 14px;">С '.time_fly_xxd($start_date_o.' 00:00:00').' - '.time_fly_xx
 
       //id Новых договор + комиссия
       $active_p='—';
+      $all_uie=0;
 
       $result_uu_all = mysql_time_query($link, 'select R.id,R.
 date_buy_all,R.commission from trips as R where R.id_a_company IN ('.$id_company.') and R.visible="1" and R.commission_fix=0 and R.datecreate>="'.$start_date_o.' 00:00:00" and R.datecreate<="'.$end_date_o.' 23:59:59"  '.$sql_su5xxx);
@@ -779,23 +781,24 @@ date_buy_all,R.commission from trips as R where R.id_a_company IN ('.$id_company
                       $comm_dd = '(+' . $row_uu_all["commission"] . ')';
                   } else
                   {
-                      $comm_dd = '(-' . $row_uu_all["commission"] . ')';
+                      $comm_dd = '(' . $row_uu_all["commission"] . ')';
                   }
+                  $all_uie=$all_uie+$row_uu_all["commission"];
               }
 
 
               if($active_p=='—')
               {
-                  $active_p='<a target="_blank" href="/tours/.id-'.$row_uu_all["id"].'">'.$row_uu_all["id"].' '.$comm_dd.'</a>';
+                  $active_p='<a class="noww" target="_blank" href="/tours/.id-'.$row_uu_all["id"].'">'.$row_uu_all["id"].' '.$comm_dd.'</a>';
               } else
               {
-                  $active_p.='<br><a target="_blank" href="/tours/.id-'.$row_uu_all["id"].'">'.$row_uu_all["id"].' '.$comm_dd.'</a>';
+                  $active_p.='<br><a class="noww" target="_blank" href="/tours/.id-'.$row_uu_all["id"].'">'.$row_uu_all["id"].' '.$comm_dd.'</a>';
               }
 
           }
       }
       echo'<td>'.$active_p.'</td>';
-
+      echo'<td>'.rtrim(rtrim(number_format($all_uie, 2, '.', ' '),'0'),'.').'</td>';
 
       //Не новых договоров - но полность оплаченных и учтенные комиссией в этот период
       $active_p=0;
@@ -829,17 +832,17 @@ date_buy_all,R.commission from trips as R where R.id_a_company IN ('.$id_company
                       $comm_dd = '(+' . $row_uu_all["commission"] . ')';
                   } else
                   {
-                      $comm_dd = '(-' . $row_uu_all["commission"] . ')';
+                      $comm_dd = '(' . $row_uu_all["commission"] . ')';
                   }
 
 
 
               if($active_p=='—')
               {
-                  $active_p='<a target="_blank" href="/tours/.id-'.$row_uu_all["id"].'">'.$row_uu_all["id"].' '.$comm_dd.'</a>';
+                  $active_p='<a class="noww" target="_blank" href="/tours/.id-'.$row_uu_all["id"].'">'.$row_uu_all["id"].' '.$comm_dd.'</a>';
               } else
               {
-                  $active_p.='<br><a target="_blank" href="/tours/.id-'.$row_uu_all["id"].'">'.$row_uu_all["id"].' '.$comm_dd.'</a>';
+                  $active_p.='<br><a class="noww" target="_blank" href="/tours/.id-'.$row_uu_all["id"].'">'.$row_uu_all["id"].' '.$comm_dd.'</a>';
               }
 
           }
@@ -855,19 +858,7 @@ date_buy_all,R.commission from trips as R where R.id_a_company IN ('.$id_company
 
 echo'</div>';
 
-?>
-      <script type="text/javascript">
-      $(function() {
-          $('#fixed-headers').scroll(function(ev) {
-              /**
-               * where the table scroll, change the position of header and first column
-               */
-              $('thead th').css('transform', 'translateY(' + this.scrollTop + 'px)');
-              $('tbody th').css('transform', 'translateX(' + this.scrollLeft + 'px)');
-          });
-      });
-      </script>
-<?
+
 
   } else
   {
