@@ -669,7 +669,7 @@ var st2=\''.ipost_($_COOKIE["suddtu_mor_nn".$id_user],'').'\';';
   <?
   if((isset($_GET['tabs'])))
   {
-echo'<div class="oka1_1" style="padding-top: 30px;">';
+//echo'<div class="oka1_1" style="padding-top: 30px;">';
 
       $mass_ei = $mass_ei ?? array();
 
@@ -677,9 +677,9 @@ echo'<div class="oka1_1" style="padding-top: 30px;">';
       echo'<div class="freeze_22"><div id="fixed-headers"><table>
     <thead>
       <tr>
-        <th rowspan="2" style="vertical-align: middle">Менеджер</th>
+        <th rowspan="2" class="stichy-hh" style="vertical-align: middle">Менеджер</th>
         
-        <th colspan="7" style="font-family: \'GEInspiraBold\';
+        <th colspan="9" style="font-family: \'GEInspiraBold\';
 color: rgba(0, 0, 0, 0.7);
 font-size: 14px;">С '.time_fly_xxd($start_date_o.' 00:00:00').' - '.time_fly_xxd($end_date_o.' 00:00:00').'</th>
       </tr>
@@ -693,6 +693,8 @@ font-size: 14px;">С '.time_fly_xxd($start_date_o.' 00:00:00').' - '.time_fly_xx
         <th >Общая комиссия с новых</th>
         <th >Закрыли договоров не новых</th>
         <th >id закрытых договоров не новых<br>комиссия с них</th>
+        <th >Общая комиссия с закрытых старых</th>
+        <th >Общая комиссия всех договоров за период</th>
       </tr>
     </thead>
     <tbody>';
@@ -766,7 +768,7 @@ font-size: 14px;">С '.time_fly_xxd($start_date_o.' 00:00:00').' - '.time_fly_xx
       $all_uie=0;
 
       $result_uu_all = mysql_time_query($link, 'select R.id,R.
-date_buy_all,R.commission from trips as R where R.id_a_company IN ('.$id_company.') and R.visible="1" and R.commission_fix=0 and R.datecreate>="'.$start_date_o.' 00:00:00" and R.datecreate<="'.$end_date_o.' 23:59:59"  '.$sql_su5xxx);
+date_buy_all,R.commission,R.status from trips as R where R.id_a_company IN ('.$id_company.') and R.visible="1" and R.commission_fix=0 and R.datecreate>="'.$start_date_o.' 00:00:00" and R.datecreate<="'.$end_date_o.' 23:59:59"  '.$sql_su5xxx);
       $num_results_uu_all  = $result_uu_all ->num_rows;
 
       if ($num_results_uu_all  != 0) {
@@ -783,16 +785,24 @@ date_buy_all,R.commission from trips as R where R.id_a_company IN ('.$id_company
                   {
                       $comm_dd = '(' . $row_uu_all["commission"] . ')';
                   }
-                  $all_uie=$all_uie+$row_uu_all["commission"];
+
+
+                  if($row_uu_all["commission"]!=2) {
+                      $all_uie = $all_uie + $row_uu_all["commission"];
+                  }
               }
+              $status_jhcc='';
+               if($row_uu_all["commission"]==2) {
+                   $status_jhcc='red_ccf';
+               }
 
 
               if($active_p=='—')
               {
-                  $active_p='<a class="noww" target="_blank" href="/tours/.id-'.$row_uu_all["id"].'">'.$row_uu_all["id"].' '.$comm_dd.'</a>';
+                  $active_p='<a class="noww '.$status_jhcc.'" target="_blank" href="/tours/.id-'.$row_uu_all["id"].'">'.$row_uu_all["id"].' '.$comm_dd.'</a>';
               } else
               {
-                  $active_p.='<br><a class="noww" target="_blank" href="/tours/.id-'.$row_uu_all["id"].'">'.$row_uu_all["id"].' '.$comm_dd.'</a>';
+                  $active_p.='<br><a class="noww '.$status_jhcc.'" target="_blank" href="/tours/.id-'.$row_uu_all["id"].'">'.$row_uu_all["id"].' '.$comm_dd.'</a>';
               }
 
           }
@@ -819,7 +829,7 @@ date_buy_all,R.commission from trips as R where R.id_a_company IN ('.$id_company
 
       //id Не новых договор но закрытых в этот период
       $active_p='—';
-
+      $all_uie1=0;
       $result_uu_all = mysql_time_query($link, 'select R.id,R.commission from trips as R where R.id_a_company IN ('.$id_company.') and R.visible="1" and R.commission_fix=0 and ((R.datecreate<"'.$start_date_o.' 00:00:00") or (R.datecreate>"'.$end_date_o.' 23:59:59")) and R.date_buy_all>="'.$start_date_o.' 00:00:00" and R.date_buy_all<="'.$end_date_o.' 23:59:59"  '.$sql_su5xxx);
       $num_results_uu_all  = $result_uu_all ->num_rows;
 
@@ -837,20 +847,28 @@ date_buy_all,R.commission from trips as R where R.id_a_company IN ('.$id_company
                       $comm_dd = '(' . $row_uu_all["commission"] . ')';
                   }
 
+if($row_uu_all["commission"]!=2) {
+                      $all_uie1 = $all_uie1 + $row_uu_all["commission"];
+                  }
 
+              $status_jhcc='';
+               if($row_uu_all["commission"]==2) {
+                   $status_jhcc='red_ccf';
+               }
 
               if($active_p=='—')
               {
-                  $active_p='<a class="noww" target="_blank" href="/tours/.id-'.$row_uu_all["id"].'">'.$row_uu_all["id"].' '.$comm_dd.'</a>';
+                  $active_p='<a class="noww '.$status_jhcc.'" target="_blank" href="/tours/.id-'.$row_uu_all["id"].'">'.$row_uu_all["id"].' '.$comm_dd.'</a>';
               } else
               {
-                  $active_p.='<br><a class="noww" target="_blank" href="/tours/.id-'.$row_uu_all["id"].'">'.$row_uu_all["id"].' '.$comm_dd.'</a>';
+                  $active_p.='<br><a class="noww '.$status_jhcc.'" target="_blank" href="/tours/.id-'.$row_uu_all["id"].'">'.$row_uu_all["id"].' '.$comm_dd.'</a>';
               }
 
           }
       }
       echo'<td >'.$active_p.'</td>';
-
+        echo'<td class="noww">'.rtrim(rtrim(number_format($all_uie1, 2, '.', ' '),'0'),'.').'</td>';
+        echo'<td class="noww">'.rtrim(rtrim(number_format(($all_uie1+$all_uie), 2, '.', ' '),'0'),'.').'</td>';
       echo'</tr>';
 
   }
@@ -858,7 +876,7 @@ date_buy_all,R.commission from trips as R where R.id_a_company IN ('.$id_company
       echo'</tbody>
 </table></div></div>';
 
-echo'</div>';
+//echo'</div>';
 
 
 
