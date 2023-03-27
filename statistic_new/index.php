@@ -820,7 +820,7 @@ date_buy_all,R.commission from trips as R where R.id_a_company IN ('.$id_company
       //id Не новых договор но закрытых в этот период
       $active_p='—';
 
-      $result_uu_all = mysql_time_query($link, 'select R.id,R.commission from trips as R where R.id_a_company IN ('.$id_company.') and R.visible="1" and R.commission_fix=0 and R.datecreate<"'.$start_date_o.' 00:00:00" and R.datecreate>"'.$end_date_o.' 23:59:59" and R.date_buy_all>="'.$start_date_o.' 00:00:00" and R.date_buy_all<="'.$end_date_o.' 23:59:59"  '.$sql_su5xxx);
+      $result_uu_all = mysql_time_query($link, 'select R.id,R.commission from trips as R where R.id_a_company IN ('.$id_company.') and R.visible="1" and R.commission_fix=0 and ((R.datecreate<"'.$start_date_o.' 00:00:00") or (R.datecreate>"'.$end_date_o.' 23:59:59")) and R.date_buy_all>="'.$start_date_o.' 00:00:00" and R.date_buy_all<="'.$end_date_o.' 23:59:59"  '.$sql_su5xxx);
       $num_results_uu_all  = $result_uu_all ->num_rows;
 
       if ($num_results_uu_all  != 0) {
