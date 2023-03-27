@@ -96,7 +96,9 @@ if ($num_results_uust != 0) {
         mysql_time_query($link, 'update preorders set
     
     status="'.$status_new_id.'",
-    id_reasons="0"
+    id_reasons="0",
+    doc_yes="0",
+    datetime_yes="0000-00-00 00:00:00"
     
     where id = "' . ht($id) . '"');
 

@@ -121,6 +121,11 @@ include_once $url_system.'template/body_top.php';
  <div class="section" id="section1">
 
 
+     <?
+     if((!isset($_GET['tabs'])))
+     {
+     ?>
+
 	<div class="oka_block_2019" style="min-height:auto !important;">
 
  <div class="line_mobile_blue">
@@ -402,10 +407,470 @@ $('#date_table').val(date_all);
  </script>
 
 </div></div></div>
+     <?
+     } else
+     {
+     //по неделям поиск
+     ?>
+
+
+         	<div class="oka_block_2019" style="min-height:auto !important;">
+
+ <div class="line_mobile_blue">
+	 <?
+
+         echo'Статистика по неделям';
+
+?>
+     <span class="menu-09-count1"></span> </div>
+
+    <div class="div_ook hop_ds"><div class="search_task">
+
+            <?
+/*
+            $rangeStart = new DateTime('Monday last week');  //начало прошлой недели
+            $rangeEnd = new DateTime('Sunday last week');   //конец прошлой недели
+
+            echo($rangeStart->format('Y-m-d'));
+            echo($rangeEnd->format('Y-m-d'));
+
+
+            $rangeStart = new DateTime('Monday this week');  //начало прошлой недели
+            $rangeEnd = new DateTime('Sunday this week');   //конец прошлой недели
+            echo($rangeStart->format('Y-m-d'));
+            echo($rangeEnd->format('Y-m-d'));
+*/
+
+            $start_date_o='';
+            $end_date_o='';
+
+            $zindex=110;
+
+
+            $os2 = array( "Текущая неделя","Прошлая неделя","Выбрать период");
+            $os_id2 = array("0","6","2");
+
+            $su_2=0;
+            $date_su='';
+            if (( isset($_COOKIE["su_2tu_nn".$id_user]))and(is_numeric($_COOKIE["su_2tu_nn".$id_user]))and(array_search($_COOKIE["su_2tu_nn".$id_user],$os_id2)!==false))
+            {
+                $su_2=$_COOKIE["su_2tu_nn".$id_user];
+            }
+            $val_su2=$os2[array_search($su_2, $os_id2)];
+
+            if($su_2==0)
+            {
+                //текущая неделя
+                $rangeStart = new DateTime('Monday this week');  //начало прошлой недели
+                $rangeEnd = new DateTime('Sunday this week');   //конец прошлой недели
+                $start_date_o=$rangeStart->format('Y-m-d');
+                $end_date_o=$rangeEnd->format('Y-m-d');
+            }
+            if($su_2==6)
+            {
+                //текущая неделя
+                $rangeStart = new DateTime('Monday last week');  //начало прошлой недели
+                $rangeEnd = new DateTime('Sunday last week');   //конец прошлой недели
+                $start_date_o=$rangeStart->format('Y-m-d');
+                $end_date_o=$rangeEnd->format('Y-m-d');
+            }
+
+
+            if ( isset($_COOKIE["suddtu_nn".$id_user]))
+            {
+                //$date_base__=explode(".",$_COOKIE["sudds"]);
+                if (( isset($_COOKIE["su_2tu_nn".$id_user]))and(is_numeric($_COOKIE["su_2tu_nn".$id_user]))and($_COOKIE["su_2tu_nn".$id_user]==2))
+                {
+                    $date_su=$_COOKIE["suddtu_mor_nn".$id_user];
+                    $val_su2=$_COOKIE["suddtu_mor_nn".$id_user];
+                    $valdd=$_COOKIE["suddtu_nn".$id_user];
+                    $date_massdd = explode("/", $valdd);
+                    $start_date_o=$date_massdd[0];
+                    $end_date_o=$date_massdd[1];
+                }
+            }
+            $class_js_readonly ??= '';
+            $class_js_search ??= '';
+
+            $_COOKIE["su_2tu_nn".$id_user] ??= '';
+
+
+            $class_js_search='';
+            $class_js_readonly='';
+            /*
+            if((( isset($_COOKIE["su_7cu_nn".$id_user]))and($_COOKIE["su_7cu_nn".$id_user]!=''))or(( isset($_COOKIE["su_7xcu_nn".$id_user]))and($_COOKIE["su_7xcu_nn".$id_user]!='')))
+            {
+                $class_js_search='greei_input';
+                $class_js_readonly='readonly=""';
+            }
+*/
+
+            echo'<input id="date_hidden_table" '.$class_js_readonly.' name="date" value="'.$date_su.'" type="hidden"><input id="date_hidden_start" name="start_date" type="hidden"><input id="date_hidden_end" name="end_date" type="hidden">';
+
+            echo'<div class="left_drop menu1_prime book_menu_sel gop_io js--sort js-call-no-v '.$class_js_search.'" style="z-index:'.$zindex.'"><label>Период</label><div class="select eddd"><a class="slct " list_number="t2" data_src="'.$os_id2[array_search($_COOKIE["su_2tu_nn".$id_user], $os_id2)].'">'.$val_su2.'</a><ul class="drop">';
+
+            $zindex--;
+
+            for ($i=0; $i<count($os2); $i++)
+            {
+                if($su_2==$os_id2[$i])
+                {
+                    echo'<li class="sel_active"><a href="javascript:void(0);"  rel="'.$os_id2[$i].'">'.$os2[$i].'</a></li>';
+                } else
+                {
+                    echo'<li><a href="javascript:void(0);"  rel="'.$os_id2[$i].'">'.$os2[$i].'</a></li>';
+                }
+
+            }
+            echo'</ul><input type="hidden" '.$class_js_readonly.' name="sort2tu_nn" id="sort2tu_nn" value="'.$os2[$su_2].'"></div></div>';
+
+
+            echo'<div class="inline_reload js-reload-top"><a href="statistic_new/.tabs-1" class="show_reload">Применить</a></div>';
+
+
+
+
+            //echo'<a href="statistic/" class="show_sort_supply">Применить</a>';
+            ?>
+            <!--<div id="date_table" class="table_suply_x"></div>-->
+            <!--<input readonly="true" id="date_table" class="table_suply_x">-->
+
+            <div class="pad10" style="padding: 0;"><span class="bookingBox_range"><div id="date_table" class="table_suply_x_st"></div></span></div>
+            <script type="text/javascript" src="Js/jquery-ui-1.9.2.custom.min.js"></script>
+            <script type="text/javascript" src="Js/jquery.datepicker.extension.range.min.js"></script>
+            <script type="text/javascript">
+                (function ($) {
+                    $.extend($.datepicker, {
+
+                        // Reference the orignal function so we can override it and call it later
+                        _inlineDatepicker2: $.datepicker._inlineDatepicker,
+
+                        // Override the _inlineDatepicker method
+                        _inlineDatepicker: function (target, inst) {
+
+                            // Call the original
+                            this._inlineDatepicker2(target, inst);
+
+                            var beforeShow = $.datepicker._get(inst, 'beforeShow');
+
+                            if (beforeShow) {
+                                beforeShow.apply(target, [target, inst]);
+                            }
+                        }
+                    });
+                }(jQuery));
+
+                var disabledDays = [];
+                $(document).ready(function(){
+
+                    window.date_picker_step=0;
+
+
+                    $("#date_table").datepicker({
+                        range: 'period', // режим - выбор периода
+                        numberOfMonths: 2,
+                        autoclose: true,
+                        firstDay: 1,
+                        minDate: "-2Y", maxDate: "+0D",
+                        onSelect: function(dateText, inst, extensionRange) {
+
+                            $('#date_table').val(jQuery.datepicker.formatDate('d MM yy'+' г.',extensionRange.startDate) + ' - ' + jQuery.datepicker.formatDate('d MM yy'+' г.',extensionRange.endDate));
+
+                            var iu=$('.content').attr('iu');
+                            $.cookie("suddtu_mor_nn"+iu, null, {path:'/',domain: window.is_session,secure: false});
+                            CookieList("suddtu_mor_nn"+iu,jQuery.datepicker.formatDate('d MM yy'+' г.',extensionRange.startDate) + ' - ' + jQuery.datepicker.formatDate('d MM yy'+' г.',extensionRange.endDate),'add');
+
+
+                            $('#date_hidden_start').val(jQuery.datepicker.formatDate('yy-mm-dd',extensionRange.startDate));
+                            $('#date_hidden_end').val(jQuery.datepicker.formatDate('yy-mm-dd',extensionRange.endDate));
+
+                            $('[list_number=t2]').empty().append(jQuery.datepicker.formatDate('d MM yy'+' г.',extensionRange.startDate) + ' - ' + jQuery.datepicker.formatDate('d MM yy'+' г.',extensionRange.endDate));
+                            $.cookie("suddtu_nn"+iu, null, {path:'/',domain: window.is_session,secure: false});
+                            CookieList("suddtu_nn"+iu,$('#date_hidden_start').val()+'/'+$('#date_hidden_end').val(),'add');
+                            $('.js-reload-top').removeClass('active-r');
+                            $('.js-reload-top').addClass('active-r');
+
+                            window.date_picker_step++;
+                            if(window.date_picker_step==2)
+                            {
+                                //$('#date_table').сlose();
+                                //$('.datepicker').hide();
+                                window.date_picker_step=0;
+                                setTimeout ( function () { $('.bookingBox_range').hide(); }, 1000 );
+
+                            }
+                        },
+
+
+                        beforeShow: function(textbox, instance){
+                            setTimeout(function() {
+                                instance.dpDiv.css({
+                                    width:'100%'
+                                });
+                                $('.bookingBox_range').css({
+                                    display:'none'
+                                });
+
+                            }, 10);
+
+
+                            <?
+                            if((isset($_COOKIE["su_2tu_nn".$id_user]))and(is_numeric($_COOKIE["su_2tu_nn".$id_user]))and($_COOKIE["su_2tu_nn".$id_user]==2))
+                            {
+                                $date_range=explode("/",$_COOKIE["suddtu_nn".$id_user]);
+                                echo'var st=\''.ipost_($date_range[0],'').'\';
+var st1=\''.ipost_($date_range[1],'').'\';
+var st2=\''.ipost_($_COOKIE["suddtu_mor_nn".$id_user],'').'\';';
+                                echo'jopacalendar(st,st1,st2);';
+                            }
+                            ?>
+
+
+                        }
+
+                    });
+
+
+
+
+                });
+                function resizeDatepicker() {
+                    //$('.ui-datepicker').width('100%');
+                }
+
+                function jopacalendar(queryDate,queryDate1,date_all)
+                {
+
+                    if(date_all!='')
+                    {
+                        var dateParts = queryDate.match(/(\d+)/g), realDate = new Date(dateParts[0], dateParts[1] -1, dateParts[2]);
+                        var dateParts1 = queryDate1.match(/(\d+)/g), realDate1 = new Date(dateParts1[0], dateParts1[1] -1, dateParts1[2]);
+                        //alert(realDate);
+                        $('#date_table').datepicker('setDate', [realDate,realDate1]);
+                        $('#date_table').val(date_all);
+                        //alert($('#date_table').val());
+                    }
+                }
+
+
+
+
+            </script>
+
+        </div></div></div>
+
+
+      <?
+     }
+     ?>
 
  <div class="oka_block_1">
 <div class="oka1_1" style="padding-top: 30px;">
   <?
+  if((isset($_GET['tabs'])))
+  {
+echo'<div class="oka1_1" style="padding-top: 30px;">';
+
+      $mass_ei = $mass_ei ?? array();
+
+
+      echo'<div class="freeze_22"><div id="fixed-headers"><table>
+    <thead>
+      <tr>
+        <th rowspan="2" style="vertical-align: middle">Менеджер</th>
+        
+        <th colspan="6" style="font-family: \'GEInspiraBold\';
+color: rgba(0, 0, 0, 0.7);
+font-size: 14px;">С '.time_fly_xxd($start_date_o.' 00:00:00').' - '.time_fly_xxd($end_date_o.' 00:00:00').'</th>
+      </tr>
+          <tr>';
+
+
+        echo'<th >Новых заявок</th>
+        <th >Успешных заявок</th>
+        <th >Новых договоров</th>
+        <th >id новых договоров<br>комиссия с них</th>
+        <th >Закрыли договоров не новых</th>
+        <th >id закрытых договоров не новых<br>комиссия с них</th>
+      </tr>
+    </thead>
+    <tbody>';
+
+
+         foreach ($mass_ei as $keys => $value)
+        {
+
+  $result_work_zz=mysql_time_query($link,'Select a.name_user,a.id from r_user as a,r_role as b where a.id_role =b.id and ((b.role="works")or(b.role="gworks")) and a.id="'.$value.'" and a.enabled=1');
+  $num_results_work_zz = $result_work_zz->num_rows;
+  if($num_results_work_zz!=0) {
+
+      $row_38 = mysqli_fetch_assoc($result_work_zz);
+
+
+      echo'<tr><th>'.$row_38["name_user"].'</th>';
+
+
+      //$start_date_o
+      //$end_date_o
+      $sql_su5xxx=' AND ((R.id_user="'.$value.'"))';
+
+      //Новых заявок
+      $active_p=0;
+      $result_uu_all = mysql_time_query($link, 'select count(R.id) as cc from preorders as R where R.id_company IN ('.$id_company.') and R.visible="1" and R.date_create>="'.$start_date_o.' 00:00:00" and R.date_create<="'.$end_date_o.' 23:59:59"  '.$sql_su5xxx);
+      $num_results_uu_all  = $result_uu_all ->num_rows;
+
+      if ($num_results_uu_all  != 0) {
+          $row_uu_all  = mysqli_fetch_assoc($result_uu_all );
+          if($row_uu_all["cc"]!='')
+          {
+              $active_p=$row_uu_all["cc"];
+          }
+      }
+      echo'<td>'.$active_p.'</td>';
+
+
+      //Удачных заявок - не важно как давно они были заведены
+      $active_p=0;
+      $result_uu_all = mysql_time_query($link, 'select count(R.id) as cc from preorders as R where R.id_company IN ('.$id_company.') and R.visible="1" and R.status=5 and R.doc_yes=1 and R.datetime_yes>="'.$start_date_o.' 00:00:00" and R.datetime_yes<="'.$end_date_o.' 23:59:59"  '.$sql_su5xxx);
+      $num_results_uu_all  = $result_uu_all ->num_rows;
+
+      if ($num_results_uu_all  != 0) {
+          $row_uu_all  = mysqli_fetch_assoc($result_uu_all );
+          if($row_uu_all["cc"]!='')
+          {
+              $active_p=$row_uu_all["cc"];
+          }
+      }
+      echo'<td>'.$active_p.'</td>';
+
+
+
+      //Новых договор - не важно оплачены или нет
+      $active_p=0;
+      $result_uu_all = mysql_time_query($link, 'select count(R.id) as cc from trips as R where R.id_a_company IN ('.$id_company.') and R.visible="1" and R.commission_fix=0 and R.datecreate>="'.$start_date_o.' 00:00:00" and R.datecreate<="'.$end_date_o.' 23:59:59"  '.$sql_su5xxx);
+      $num_results_uu_all  = $result_uu_all ->num_rows;
+
+      if ($num_results_uu_all  != 0) {
+          $row_uu_all  = mysqli_fetch_assoc($result_uu_all );
+          if($row_uu_all["cc"]!='')
+          {
+              $active_p=$row_uu_all["cc"];
+          }
+      }
+      echo'<td>'.$active_p.'</td>';
+
+
+      //id Новых договор + комиссия
+      $active_p='—';
+
+      $result_uu_all = mysql_time_query($link, 'select R.id,R.
+date_buy_all,R.commission from trips as R where R.id_a_company IN ('.$id_company.') and R.visible="1" and R.commission_fix=0 and R.datecreate>="'.$start_date_o.' 00:00:00" and R.datecreate<="'.$end_date_o.' 23:59:59"  '.$sql_su5xxx);
+      $num_results_uu_all  = $result_uu_all ->num_rows;
+
+      if ($num_results_uu_all  != 0) {
+
+          while ($row_uu_all = mysqli_fetch_assoc($result_uu_all)) {
+
+
+              $comm_dd='(~)';
+              if($row_uu_all["date_buy_all"]!='0000-00-00 00:00:00')
+              {
+                  if($row_uu_all["commission"]>=0) {
+                      $comm_dd = '(+' . $row_uu_all["commission"] . ')';
+                  } else
+                  {
+                      $comm_dd = '(-' . $row_uu_all["commission"] . ')';
+                  }
+              }
+
+
+              if($active_p=='—')
+              {
+                  $active_p='<a target="_blank" href="/tours/.id-'.$row_uu_all["id"].'">'.$row_uu_all["id"].' '.$comm_dd.'</a>';
+              } else
+              {
+                  $active_p.='<br><a target="_blank" href="/tours/.id-'.$row_uu_all["id"].'">'.$row_uu_all["id"].' '.$comm_dd.'</a>';
+              }
+
+          }
+      }
+      echo'<td>'.$active_p.'</td>';
+
+
+      //Не новых договоров - но полность оплаченных и учтенные комиссией в этот период
+      $active_p=0;
+      $result_uu_all = mysql_time_query($link, 'select count(R.id) as cc from trips as R where R.id_a_company IN ('.$id_company.') and R.visible="1" and R.commission_fix=0 and R.datecreate<"'.$start_date_o.' 00:00:00" and R.datecreate>"'.$end_date_o.' 23:59:59" and R.date_buy_all>="'.$start_date_o.' 00:00:00" and R.date_buy_all<="'.$end_date_o.' 23:59:59"  '.$sql_su5xxx);
+      $num_results_uu_all  = $result_uu_all ->num_rows;
+
+      if ($num_results_uu_all  != 0) {
+          $row_uu_all  = mysqli_fetch_assoc($result_uu_all );
+          if($row_uu_all["cc"]!='')
+          {
+              $active_p=$row_uu_all["cc"];
+          }
+      }
+      echo'<td>'.$active_p.'</td>';
+
+
+      //id Не новых договор но закрытых в этот период
+      $active_p='—';
+
+      $result_uu_all = mysql_time_query($link, 'select R.id,R.commission from trips as R where R.id_a_company IN ('.$id_company.') and R.visible="1" and R.commission_fix=0 and R.datecreate<"'.$start_date_o.' 00:00:00" and R.datecreate>"'.$end_date_o.' 23:59:59" and R.date_buy_all>="'.$start_date_o.' 00:00:00" and R.date_buy_all<="'.$end_date_o.' 23:59:59"  '.$sql_su5xxx);
+      $num_results_uu_all  = $result_uu_all ->num_rows;
+
+      if ($num_results_uu_all  != 0) {
+
+          while ($row_uu_all = mysqli_fetch_assoc($result_uu_all)) {
+
+
+              $comm_dd='(~)';
+
+                  if($row_uu_all["commission"]>=0) {
+                      $comm_dd = '(+' . $row_uu_all["commission"] . ')';
+                  } else
+                  {
+                      $comm_dd = '(-' . $row_uu_all["commission"] . ')';
+                  }
+
+
+
+              if($active_p=='—')
+              {
+                  $active_p='<a target="_blank" href="/tours/.id-'.$row_uu_all["id"].'">'.$row_uu_all["id"].' '.$comm_dd.'</a>';
+              } else
+              {
+                  $active_p.='<br><a target="_blank" href="/tours/.id-'.$row_uu_all["id"].'">'.$row_uu_all["id"].' '.$comm_dd.'</a>';
+              }
+
+          }
+      }
+      echo'<td>'.$active_p.'</td>';
+
+      echo'</tr>';
+
+  }
+        }
+      echo'</tbody>
+</table></div></div>';
+
+echo'</div>';
+
+?>
+      <script type="text/javascript">
+      $(function() {
+          $('#fixed-headers').scroll(function(ev) {
+              /**
+               * where the table scroll, change the position of header and first column
+               */
+              $('thead th').css('transform', 'translateY(' + this.scrollTop + 'px)');
+              $('tbody th').css('transform', 'translateX(' + this.scrollLeft + 'px)');
+          });
+      });
+      </script>
+<?
+
+  } else
+  {
 
 
   $LIKE='';
@@ -943,6 +1408,10 @@ $month_rus1=date("m");
                 } else
                 {
                     $result_uu = mysql_time_query($link, 'select sum(a.cost_client) as summ from trips as a,trips_contract as b where a.id_contract=b.id and a.id_a_company IN (' . $id_company . ') and a.commission_fix=0 and a.status=1 and b.date_doc>="' . $date_start_obo . '" and a.buy_clients=0 and b.date_doc<"' . $date_end_obo . '" and a.visible=1 ' . $sql_kogo);
+
+
+                    echo('select sum(a.cost_client) as summ from trips as a,trips_contract as b where a.id_contract=b.id and a.id_a_company IN (' . $id_company . ') and a.commission_fix=0 and a.status=1 and b.date_doc>="' . $date_start_obo . '" and a.buy_clients=0 and b.date_doc<"' . $date_end_obo . '" and a.visible=1 ' . $sql_kogo);
+
                 }
 
 
@@ -2418,6 +2887,10 @@ echo'<div class="message_search_b"><span>История продаж за выб
 
     </div>
   </div>
+    <?
+    }
+    ?>
+
 
 </div>
 

@@ -22070,3 +22070,78 @@ padding-top: 20px;
   }
 
 }
+
+
+
+
+.freeze_22 {
+  /* style the HTML table */
+
+	border-radius: 5px;
+	overflow: hidden;
+	background-color: #fff;
+	font-weight: normal;
+
+  table {
+    display: block;
+    //width: 50em;
+    max-width: 100%;
+    position: relative;
+  }
+
+  /* this will active the scrollbar */
+  #fixed-headers {
+    border-collapse: collapse;
+   // height: 300px;
+    display: block;
+    overflow: auto;
+  }
+
+  /* force the cells to have the same width */
+  #fixed-headers td {
+    padding: 15px !important;
+    border: 1px solid #eee !important;
+	  color: rgba(0, 0, 0, 0.7);
+	  text-align: left;
+	  font-size: 14px;
+	  font-family: "GEInspiraBold";
+	  font-weight: normal;
+	  a {font-family: "GEInspiraRegular";}
+  }
+
+  #fixed-headers thead {
+    transform: translateZ(0);
+  }
+
+  #fixed-headers thead th {
+	  border: 1px solid #eee !important;
+	  color: rgba(0, 0, 0, 0.7);
+    text-align: left;
+	  padding: 15px;
+	  font-family: "GEInspiraRegular";
+	  font-size: 9px;
+	  text-transform: uppercase;
+	  //color:#fff;
+	  font-weight: normal;
+	  line-height: 14px;
+	  vertical-align: middle;
+
+  }
+
+  #fixed-headers tbody th {
+    text-align: left;
+	  border: 1px solid #eee !important;
+	  color: rgba(0, 0, 0, 0.7);
+    transform: translateZ(0);
+	  white-space: nowrap;
+	  padding: 15px;
+	  font-size: 14px;
+	  text-transform: uppercase;
+	  //color:#fff;
+	  font-family: "GEInspiraRegular";
+	  font-weight: normal;
+	  font-family: "GEInspiraBold";
+	  color: rgba(0, 0, 0, 0.7);
+	  font-size: 14px;
+  }
+}

@@ -30314,6 +30314,65 @@ position: absolute;}  }
   color: rgba(0, 0, 0, 0.7);
 }
 
+.freeze_22 {
+  /* style the HTML table */
+  border-radius: 5px;
+  overflow: hidden;
+  background-color: #fff;
+  font-weight: normal;
+  /* this will active the scrollbar */
+  /* force the cells to have the same width */
+}
+.freeze_22 table {
+  display: block;
+  max-width: 100%;
+  position: relative;
+}
+.freeze_22 #fixed-headers {
+  border-collapse: collapse;
+  display: block;
+  overflow: auto;
+}
+.freeze_22 #fixed-headers td {
+  padding: 15px !important;
+  border: 1px solid #eee !important;
+  color: rgba(0, 0, 0, 0.7);
+  text-align: left;
+  font-size: 14px;
+  font-family: "GEInspiraBold";
+  font-weight: normal;
+}
+.freeze_22 #fixed-headers thead {
+  transform: translateZ(0);
+}
+.freeze_22 #fixed-headers thead th {
+  border: 1px solid #eee !important;
+  color: rgba(0, 0, 0, 0.7);
+  text-align: left;
+  padding: 15px;
+  font-family: "GEInspiraRegular";
+  font-size: 9px;
+  text-transform: uppercase;
+  font-weight: normal;
+  line-height: 14px;
+  vertical-align: middle;
+}
+.freeze_22 #fixed-headers tbody th {
+  text-align: left;
+  border: 1px solid #eee !important;
+  color: rgba(0, 0, 0, 0.7);
+  transform: translateZ(0);
+  white-space: nowrap;
+  padding: 15px;
+  font-size: 14px;
+  text-transform: uppercase;
+  font-family: "GEInspiraRegular";
+  font-weight: normal;
+  font-family: "GEInspiraBold";
+  color: rgba(0, 0, 0, 0.7);
+  font-size: 14px;
+}
+
 .input-block-2020 .list-image {
   padding: 20px;
   display: none;

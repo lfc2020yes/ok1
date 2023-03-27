@@ -4821,7 +4821,44 @@ $date_elements2  = explode("-",$date_elements[0]);
 	  return $vremy;	
 
 
-} 
+}
+
+
+//вывод времени и даты вылета
+function time_fly_xxd($date_time)
+{
+
+//2011-01-19 15:07:31
+//->>
+
+    $date_elements  = explode(" ",$date_time);
+    $date_elements1  = explode(":",$date_elements[1]);
+    $date_elements2  = explode("-",$date_elements[0]);
+
+
+
+    $montw1='';
+    switch($date_elements2[1])
+    {
+        case "01": { $montw1="января";  break; }
+        case "02": { $montw1="февраля"; break; }
+        case "03": { $montw1="марта"; break; }
+        case "04": {  $montw1="апреля"; break; }
+        case "05": {  $montw1="мая"; break; }
+        case "06": {  $montw1="июня"; break; }
+        case "07": {   $montw1="июля"; break; }
+        case "08": {  $montw1="августа"; break; }
+        case "09": { $montw1="сентября"; break; }
+        case "10": {  $montw1="октября"; break; }
+        case "11": {  $montw1="ноября"; break; }
+        case "12": {   $montw1="декабря"; break; }
+    }
+
+    $vremy=$date_elements2[2]." ".$montw1." ".$date_elements2[0].' г.';
+    return $vremy;
+
+
+}
 
 
 /*комментарии*/

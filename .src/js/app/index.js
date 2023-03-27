@@ -10784,6 +10784,18 @@ $('#name_stock_searcho').bind('change keyup input click', changesort7co);
 	};
 	$('#sort2tu').bind('change', changesort2tu);
 	//***************************************************************************************
+	var changesort2tu_nn = function() {
+		var iu=$('.content').attr('iu');
+
+		$.cookie("su_2tu_nn"+iu, null, {path:'/',domain: window.is_session,secure: false});
+		CookieList("su_2tu_nn"+iu,$(this).val(),'add');
+
+		$('.js-reload-top').removeClass('active-r');
+		$('.js-reload-top').addClass('active-r');
+	};
+	$('#sort2tu_nn').bind('change', changesort2tu_nn);
+	//***************************************************************************************
+
 	var changesort2pr = function() {
 		var iu=$('.content').attr('iu');
 

@@ -124,7 +124,9 @@ if($_POST["id_status"]==6) {
         mysql_time_query($link, 'update preorders set
     
     status="'.ht($_POST["id_status"]).'",
-    id_reasons="'.ht($reason).'"
+    id_reasons="'.ht($reason).'",
+    doc_yes="0",
+    datetime_yes="0000-00-00 00:00:00"
     
     where id = "' . ht($id) . '"');
 
@@ -143,6 +145,14 @@ if($_POST["id_status"]==5) {
       id_booking="'.ht($id).'"
       
       where id="'.ht($_POST["id_trips"]).'" and id_a_company IN ('.$id_company.')');
+
+    mysql_time_query($link, 'update preorders set      
+    doc_yes="1",
+    datetime_yes="'.date("y.m.d").' '.date("H:i:s").'"
+    
+    where id = "' . ht($id) . '"');
+
+
 
 }
 
