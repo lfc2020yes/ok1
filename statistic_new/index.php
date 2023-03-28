@@ -277,7 +277,7 @@ if($sign_level==2)
 
 
     if(($sign_level==3)or($sign_leve==4)) {
-        echo '<div class="left_drop menu1_prime book_menu_sel gop_io js--sort '.$class_js_search.'" style="z-index:'.$zindex.'"><a href="CRON/task_new_1h_.php" class="search-count-csv reload-bonus-oo">Обновить бонусы</a></div>';
+        echo '<div class="left_drop menu1_prime book_menu_sel gop_io js--sort '.$class_js_search.'" style="z-index:'.$zindex.'"><a href="CRON/bonus_reload_statistic.php" class="search-count-csv reload-bonus-oo">Обновить бонусы</a></div>';
     }
 
 		//echo'<a href="statistic/" class="show_sort_supply">Применить</a>';
