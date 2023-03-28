@@ -679,7 +679,7 @@ var st2=\''.ipost_($_COOKIE["suddtu_mor_nn".$id_user],'').'\';';
       <tr>
         <th rowspan="2" class="stichy-hh" style="vertical-align: middle">Менеджер</th>
         
-        <th colspan="9" style="font-family: \'GEInspiraBold\';
+        <th colspan="10" style="font-family: \'GEInspiraBold\';
 color: rgba(0, 0, 0, 0.7);
 font-size: 14px;">С '.time_fly_xxd($start_date_o.' 00:00:00').' - '.time_fly_xxd($end_date_o.' 00:00:00').'</th>
       </tr>
@@ -695,11 +695,12 @@ font-size: 14px;">С '.time_fly_xxd($start_date_o.' 00:00:00').' - '.time_fly_xx
         <th >id закрытых договоров не новых<br>комиссия с них</th>
         <th >Общая комиссия с закрытых старых</th>
         <th >Общая комиссия всех договоров за период</th>
+        <th >Коэффициент</th>
       </tr>
     </thead>
     <tbody>';
 
-
+      $all_pp=0;
          foreach ($mass_ei as $keys => $value)
         {
 
@@ -766,9 +767,11 @@ font-size: 14px;">С '.time_fly_xxd($start_date_o.' 00:00:00').' - '.time_fly_xx
       //id Новых договор + комиссия
       $active_p='—';
       $all_uie=0;
+      $all_cost_trips=0;
+
 
       $result_uu_all = mysql_time_query($link, 'select R.id,R.
-date_buy_all,R.commission,R.status from trips as R where R.id_a_company IN ('.$id_company.') and R.visible="1" and R.commission_fix=0 and R.datecreate>="'.$start_date_o.' 00:00:00" and R.datecreate<="'.$end_date_o.' 23:59:59"  '.$sql_su5xxx);
+date_buy_all,R.commission,R.status,R.paid_client from trips as R where R.id_a_company IN ('.$id_company.') and R.visible="1" and R.commission_fix=0 and R.datecreate>="'.$start_date_o.' 00:00:00" and R.datecreate<="'.$end_date_o.' 23:59:59"  '.$sql_su5xxx);
       $num_results_uu_all  = $result_uu_all ->num_rows;
 
       if ($num_results_uu_all  != 0) {
@@ -787,12 +790,13 @@ date_buy_all,R.commission,R.status from trips as R where R.id_a_company IN ('.$i
                   }
 
 
-                  if($row_uu_all["commission"]!=2) {
+                  if($row_uu_all["status"]!=2) {
                       $all_uie = $all_uie + $row_uu_all["commission"];
+                      $all_cost_trips=$all_cost_trips + $row_uu_all["paid_client"];
                   }
               }
               $status_jhcc='';
-               if($row_uu_all["commission"]==2) {
+               if($row_uu_all["status"]==2) {
                    $status_jhcc='red_ccf';
                }
 
@@ -830,7 +834,7 @@ date_buy_all,R.commission,R.status from trips as R where R.id_a_company IN ('.$i
       //id Не новых договор но закрытых в этот период
       $active_p='—';
       $all_uie1=0;
-      $result_uu_all = mysql_time_query($link, 'select R.id,R.commission from trips as R where R.id_a_company IN ('.$id_company.') and R.visible="1" and R.commission_fix=0 and ((R.datecreate<"'.$start_date_o.' 00:00:00") or (R.datecreate>"'.$end_date_o.' 23:59:59")) and R.date_buy_all>="'.$start_date_o.' 00:00:00" and R.date_buy_all<="'.$end_date_o.' 23:59:59"  '.$sql_su5xxx);
+      $result_uu_all = mysql_time_query($link, 'select R.id,R.commission,R.status,R.paid_client from trips as R where R.id_a_company IN ('.$id_company.') and R.visible="1" and R.commission_fix=0 and ((R.datecreate<"'.$start_date_o.' 00:00:00") or (R.datecreate>"'.$end_date_o.' 23:59:59")) and R.date_buy_all>="'.$start_date_o.' 00:00:00" and R.date_buy_all<="'.$end_date_o.' 23:59:59"  '.$sql_su5xxx);
       $num_results_uu_all  = $result_uu_all ->num_rows;
 
       if ($num_results_uu_all  != 0) {
@@ -847,12 +851,13 @@ date_buy_all,R.commission,R.status from trips as R where R.id_a_company IN ('.$i
                       $comm_dd = '(' . $row_uu_all["commission"] . ')';
                   }
 
-if($row_uu_all["commission"]!=2) {
+if($row_uu_all["status"]!=2) {
                       $all_uie1 = $all_uie1 + $row_uu_all["commission"];
+    $all_cost_trips=$all_cost_trips + $row_uu_all["paid_client"];
                   }
 
               $status_jhcc='';
-               if($row_uu_all["commission"]==2) {
+               if($row_uu_all["status"]==2) {
                    $status_jhcc='red_ccf';
                }
 
@@ -869,10 +874,26 @@ if($row_uu_all["commission"]!=2) {
       echo'<td >'.$active_p.'</td>';
         echo'<td class="noww">'.rtrim(rtrim(number_format($all_uie1, 2, '.', ' '),'0'),'.').'</td>';
         echo'<td class="noww">'.rtrim(rtrim(number_format(($all_uie1+$all_uie), 2, '.', ' '),'0'),'.').'</td>';
+        $vsy_cc=($all_uie1+$all_uie);
+      $all_pp=$all_pp+$vsy_cc;
+        $koof=0;
+        if($vsy_cc!=0) {
+            $koof = ($vsy_cc/$all_cost_trips)*100;
+
+        }
+      echo'<td class="noww">'.rtrim(rtrim(number_format($koof, 2, '.', ' '),'0'),'.').'%</td>';
+
       echo'</tr>';
 
   }
         }
+
+         //итоги вывод
+
+
+      echo'<tr><th>Итоги</th><td colspan="8"></td><td>'.rtrim(rtrim(number_format($all_pp, 2, '.', ' '),'0'),'.').'</td><td></td></tr>';
+
+
       echo'</tbody>
 </table></div></div>';
 
