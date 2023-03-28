@@ -1546,7 +1546,7 @@ $month_rus1=date("m");
 
       foreach ($mass_ei as $keys => $value)
       {
-          $result_work_zz=mysql_time_query($link,'Select a.name_user,a.id from r_user as a,r_role as b where a.id_role =b.id and ((b.role="works")or(b.role="gworks")) and a.id="'.$value.'" and a.enabled=1');
+          $result_work_zz=mysql_time_query($link,'Select a.name_user,a.id,a.id_company from r_user as a,r_role as b where a.id_role =b.id and ((b.role="works")or(b.role="gworks")) and a.id="'.$value.'" and a.enabled=1');
           $num_results_work_zz = $result_work_zz->num_rows;
           if($num_results_work_zz!=0)
           {
@@ -1619,10 +1619,10 @@ $month_rus1=date("m");
 */
                   if($result_uu_xo->num_rows==0) {
 //общее если нет конкретики по уровням
-                      $result_uu_xo = mysql_time_query($link, 'SELECT a.* from users_commission_level as a where a.id_users=0 and a.dates="' . $date_level_bonus . '" and a.id_company IN (' . ht($id_company) . ') order by a.level');
+                      $result_uu_xo = mysql_time_query($link, 'SELECT a.* from users_commission_level as a where a.id_users=0 and a.dates="' . $date_level_bonus . '" and a.id_company IN (' . ht($row_8["id_company"]) . ') order by a.level');
 
-                    /*  echo('SELECT a.* from users_commission_level as a where a.id_users=0 and a.dates="' . $date_level_bonus . '" and a.id_company IN (' . ht($id_company) . ') order by a.level');
-*/
+
+
                   }
 
 
@@ -1714,8 +1714,18 @@ echo'</div>';
 
           if($result_uu_xo->num_rows==0) {
 //общее если нет конкретики по уровням
-              $result_uu_xo = mysql_time_query($link, 'SELECT a.* from users_commission_level as a where a.id_users=0 and a.dates="' . $date_level_bonus . '" and a.id_company IN (' . ht($id_company) . ') order by a.level');
 
+              $result_uu__p = mysql_time_query($link, 'select id_company from r_user where id="' . ht($id_users_moss) . '"');
+              $num_results_uu__p = $result_uu__p->num_rows;
+
+              if ($num_results_uu__p != 0) {
+                  $row_uu__p = mysqli_fetch_assoc($result_uu__p);
+              }
+
+
+              $result_uu_xo = mysql_time_query($link, 'SELECT a.* from users_commission_level as a where a.id_users=0 and a.dates="' . $date_level_bonus . '" and a.id_company IN (' . ht($row_uu__p["id_company"]) . ') order by a.level');
+
+              //echo('SELECT a.* from users_commission_level as a where a.id_users=0 and a.dates="' . $date_level_bonus . '" and a.id_company IN (' . ht($id_company) . ') order by a.level');
 
           }
 
