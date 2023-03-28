@@ -891,7 +891,7 @@ if($row_uu_all["status"]!=2) {
          //итоги вывод
 
 
-      echo'<tr><th>Итоги</th><td colspan="8"></td><td>'.rtrim(rtrim(number_format($all_pp, 2, '.', ' '),'0'),'.').'</td><td></td></tr>';
+      echo'<tr><th>Итоги</th><td colspan="8"></td><td class="noww">'.rtrim(rtrim(number_format($all_pp, 2, '.', ' '),'0'),'.').'</td><td></td></tr>';
 
 
       echo'</tbody>
