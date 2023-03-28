@@ -673,6 +673,9 @@ var st2=\''.ipost_($_COOKIE["suddtu_mor_nn".$id_user],'').'\';';
 
       $mass_ei = $mass_ei ?? array();
 
+      //добавляем еще себя к статистике
+      array_push($mass_ei, $id_user);
+
 
       echo'<div class="freeze_22"><div id="fixed-headers"><table>
     <thead>
@@ -704,7 +707,7 @@ font-size: 14px;">С '.time_fly_xxd($start_date_o.' 00:00:00').' - '.time_fly_xx
          foreach ($mass_ei as $keys => $value)
         {
 
-  $result_work_zz=mysql_time_query($link,'Select a.name_user,a.id from r_user as a,r_role as b where a.id_role =b.id and ((b.role="works")or(b.role="gworks")) and a.id="'.$value.'" and a.enabled=1');
+  $result_work_zz=mysql_time_query($link,'Select a.name_user,a.id from r_user as a,r_role as b where a.id_role =b.id and ((b.role="works")or(b.role="gworks")or(a.id="'.$id_user.'")) and a.id="'.$value.'" and a.enabled=1');
   $num_results_work_zz = $result_work_zz->num_rows;
   if($num_results_work_zz!=0) {
 
