@@ -682,15 +682,17 @@ var st2=\''.ipost_($_COOKIE["suddtu_mor_nn".$id_user],'').'\';';
       <tr>
         <th rowspan="2" class="stichy-hh" style="vertical-align: middle">Менеджер</th>
         
-        <th colspan="10" style="font-family: \'GEInspiraBold\';
+        <th colspan="13" style="font-family: \'GEInspiraBold\';
 color: rgba(0, 0, 0, 0.7);
 font-size: 14px;">С '.time_fly_xxd($start_date_o.' 00:00:00').' - '.time_fly_xxd($end_date_o.' 00:00:00').'</th>
       </tr>
           <tr>';
 
 
-        echo'<th >Новых заявок</th>
-        <th >Успешных заявок</th>
+        echo'<th >Новых обращений</th>
+        <th >Успешных обращений <br> (c 27.03.2023)</th>
+        <th >отказы по обращениям <br> (c 27.03.2023)</th>
+        <th >Коэффициент эффективности обработки обращений <br> КО </th>
         <th >Новых договоров</th>
         <th >id новых договоров<br>комиссия с них</th>
         <th >Общая комиссия с новых</th>
@@ -705,6 +707,7 @@ font-size: 14px;">С '.time_fly_xxd($start_date_o.' 00:00:00').' - '.time_fly_xx
     <tbody>';
 
       $all_pp=0;
+      $all_virushka_meneger=0;
          foreach ($mass_ei as $keys => $value)
         {
 
@@ -751,6 +754,8 @@ font-size: 14px;">С '.time_fly_xxd($start_date_o.' 00:00:00').' - '.time_fly_xx
       }
       echo'<td>'.$active_p.'</td>';
 
+      echo'<td></td>';
+      echo'<td></td>';
 
 
       //Новых договор - не важно оплачены или нет
@@ -880,6 +885,10 @@ if($row_uu_all["status"]!=2) {
         echo'<td class="noww">'.rtrim(rtrim(number_format(($all_uie1+$all_uie), 2, '.', ' '),'0'),'.').'</td>';
         $vsy_cc=($all_uie1+$all_uie);
       $all_pp=$all_pp+$vsy_cc;
+
+      $all_virushka_meneger=$all_virushka_meneger+$all_cost_trips;
+
+
         $koof=0;
         if($vsy_cc!=0) {
             $koof = ($vsy_cc/$all_cost_trips)*100;
@@ -896,9 +905,11 @@ if($row_uu_all["status"]!=2) {
         }
 
          //итоги вывод
-
-
-      echo'<tr><th>Итоги</th><td colspan="8"></td><td class="noww">'.rtrim(rtrim(number_format($all_pp, 2, '.', ' '),'0'),'.').'</td><td></td></tr>';
+      $all_koof=0;
+if($all_virushka_meneger!=0) {
+    $all_koof = ($all_pp / $all_virushka_meneger) * 100;
+}
+      echo'<tr><th>Итоги по менеджерам</th><td colspan="10"></td><td class="noww">'.rtrim(rtrim(number_format($all_pp, 2, '.', ' '),'0'),'.').'</td><td class="noww">'.rtrim(rtrim(number_format($all_virushka_meneger, 2, '.', ' '),'0'),'.').'</td><td>'.rtrim(rtrim(number_format($all_koof, 2, '.', ' '),'0'),'.').'%</td></tr>';
 
 
       echo'</tbody>
