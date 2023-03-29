@@ -697,8 +697,9 @@ font-size: 14px;">С '.time_fly_xxd($start_date_o.' 00:00:00').' - '.time_fly_xx
         <th >Закрыли договоров не новых</th>
         <th >id закрытых договоров не новых<br>комиссия с них</th>
         <th >Общая комиссия с закрытых старых</th>
-        <th >Общая комиссия всех договоров за период</th>
-        <th >Коэффициент</th>
+        <th >Общая комиссия всех закрытых договоров за период</th>
+        <th >Общая выручка всех закрытых договоров за период</th>
+        <th >Средний процент комиссии</th>
       </tr>
     </thead>
     <tbody>';
@@ -884,6 +885,9 @@ if($row_uu_all["status"]!=2) {
             $koof = ($vsy_cc/$all_cost_trips)*100;
 
         }
+
+      echo'<td class="noww">'.rtrim(rtrim(number_format($all_cost_trips, 2, '.', ' '),'0'),'.').'</td>';
+
       echo'<td class="noww">'.rtrim(rtrim(number_format($koof, 2, '.', ' '),'0'),'.').'%</td>';
 
       echo'</tr>';
