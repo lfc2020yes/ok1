@@ -691,7 +691,7 @@ font-size: 14px;">С '.time_fly_xxd($start_date_o.' 00:00:00').' - '.time_fly_xx
 
         echo'<th >Новых обращений</th>
         <th >Успешных обращений <br> (c 27.03.2023)</th>
-        <th >отказы по обращениям <br> (c 27.03.2023)</th>
+        <th >отказы по обращениям <br> (c 30.03.2023)</th>
         <th >Коэффициент эффективности обработки обращений <br> КО </th>
         <th >Новых договоров</th>
         <th >id новых договоров<br>комиссия с них</th>
@@ -708,6 +708,9 @@ font-size: 14px;">С '.time_fly_xxd($start_date_o.' 00:00:00').' - '.time_fly_xx
 
       $all_pp=0;
       $all_virushka_meneger=0;
+      $all_preoprders_time=0;
+      $all_preoprders_time_yes=0;
+      $all_preoprders_time_no=0;
          foreach ($mass_ei as $keys => $value)
         {
 
@@ -738,8 +741,9 @@ font-size: 14px;">С '.time_fly_xxd($start_date_o.' 00:00:00').' - '.time_fly_xx
           }
       }
       echo'<td>'.$active_p.'</td>';
+      $all_preoprders_time=$all_preoprders_time+$active_p;
 
-
+$KO=0;
       //Удачных заявок - не важно как давно они были заведены
       $active_p=0;
       $result_uu_all = mysql_time_query($link, 'select count(R.id) as cc from preorders as R where R.id_company IN ('.$id_company.') and R.visible="1" and R.status=5 and R.doc_yes=1 and R.datetime_yes>="'.$start_date_o.' 00:00:00" and R.datetime_yes<="'.$end_date_o.' 23:59:59"  '.$sql_su5xxx);
@@ -753,9 +757,29 @@ font-size: 14px;">С '.time_fly_xxd($start_date_o.' 00:00:00').' - '.time_fly_xx
           }
       }
       echo'<td>'.$active_p.'</td>';
+      $all_preoprders_time_yes=$all_preoprders_time_yes+$active_p;
+$kko=$active_p;
 
-      echo'<td></td>';
-      echo'<td></td>';
+
+      //Отказы по обращениям
+      $active_p=0;
+      $result_uu_all = mysql_time_query($link, 'select count(R.id) as cc from preorders as R where R.id_company IN ('.$id_company.') and R.visible="1" and R.status=6 and R.doc_yes=0 and R.datetime_yes>="'.$start_date_o.' 00:00:00" and R.datetime_yes<="'.$end_date_o.' 23:59:59"  '.$sql_su5xxx);
+      $num_results_uu_all  = $result_uu_all ->num_rows;
+
+      if ($num_results_uu_all  != 0) {
+          $row_uu_all  = mysqli_fetch_assoc($result_uu_all );
+          if($row_uu_all["cc"]!='')
+          {
+              $active_p=$row_uu_all["cc"];
+          }
+      }
+      echo'<td>'.$active_p.'</td>';
+      $all_preoprders_time_no=$all_preoprders_time_no+$active_p;
+
+      if(($kko+$active_p)!=0) {
+          $KO = ($kko / ($kko + $active_p)) * 100;
+      }
+      echo'<td>'.rtrim(rtrim(number_format($KO, 2, '.', ' '),'0'),'.').'%</td>';
 
 
       //Новых договор - не важно оплачены или нет
@@ -954,7 +978,7 @@ if($row_uu_all["status"]!=2) {
 if($all_virushka_meneger!=0) {
     $all_koof = ($all_pp / $all_virushka_meneger) * 100;
 }
-      echo'<tr><th>Итоги по менеджерам</th><td colspan="10"></td><td class="noww">'.rtrim(rtrim(number_format($all_pp, 2, '.', ' '),'0'),'.').'</td><td class="noww">'.rtrim(rtrim(number_format($all_virushka_meneger, 2, '.', ' '),'0'),'.').'</td><td>'.rtrim(rtrim(number_format($all_koof, 2, '.', ' '),'0'),'.').'%</td></tr>';
+      echo'<tr><th>Итоги по менеджерам</th><td>'.$all_preoprders_time.'</td><td>'.$all_preoprders_time_yes.'</td><td>'.$all_preoprders_time_no.'</td><td colspan="7"></td><td class="noww">'.rtrim(rtrim(number_format($all_pp, 2, '.', ' '),'0'),'.').'</td><td class="noww">'.rtrim(rtrim(number_format($all_virushka_meneger, 2, '.', ' '),'0'),'.').'</td><td>'.rtrim(rtrim(number_format($all_koof, 2, '.', ' '),'0'),'.').'%</td></tr>';
 
 
       echo'</tbody>

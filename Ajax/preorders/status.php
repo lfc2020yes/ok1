@@ -98,7 +98,7 @@ if ($num_results_uust != 0) {
     status="'.$status_new_id.'",
     id_reasons="0",
     doc_yes="0",
-    datetime_yes="0000-00-00 00:00:00"
+    datetime_yes="'.date("y.m.d").' '.date("H:i:s").'"
     
     where id = "' . ht($id) . '"');
 

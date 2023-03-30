@@ -126,7 +126,7 @@ if($_POST["id_status"]==6) {
     status="'.ht($_POST["id_status"]).'",
     id_reasons="'.ht($reason).'",
     doc_yes="0",
-    datetime_yes="0000-00-00 00:00:00"
+    datetime_yes="'.date("y.m.d").' '.date("H:i:s").'"
     
     where id = "' . ht($id) . '"');
 
