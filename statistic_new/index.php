@@ -700,8 +700,8 @@ font-size: 14px;">С '.time_fly_xxd($start_date_o.' 00:00:00').' - '.time_fly_xx
         <th >id закрытых договоров не новых<br>комиссия с них</th>
         <th >Общая комиссия с закрытых старых</th>
         <th >Общая комиссия всех закрытых договоров за период</th>
-        <th >Общая выручка всех закрытых договоров за период</th>
-        <th >Средний процент комиссии</th>
+        <th >Общая сумма всех закрытых договоров за период</th>
+        <th >Средний процент комиссии<br>КПД</th>
       </tr>
     </thead>
     <tbody>';
@@ -787,6 +787,51 @@ date_buy_all,R.commission,R.status,R.paid_client from trips as R where R.id_a_co
 
           while ($row_uu_all = mysqli_fetch_assoc($result_uu_all)) {
 
+$beznal='';
+              $beznal_tool='';
+
+$pay_b=0;
+
+
+              $result_uu_bez1 = mysql_time_query($link, 'select count(A.id) as cc from trips_payment as A where A.id_trips="' . ht($row_uu_all['id']) . '" and A.who=0 and A.id_operation=1 and not(A.id_payment_method=2) and not(A.id_payment_method=5) and A.visible=1');
+              $num_results_uu_bez1 = $result_uu_bez1->num_rows;
+
+              if ($num_results_uu_bez1 != 0) {
+                  $row_uu_bez1 = mysqli_fetch_assoc($result_uu_bez1);
+                  if($row_uu_bez1["cc"]!=0) {
+                      //странный случай когда от клиента есть и нал и безнал
+                      $beznal='Б';
+                      $pay_b=1;
+                      $beznal_tool='Безнал';
+                  }
+              }
+
+
+
+              $result_uu_bez = mysql_time_query($link, 'select count(A.id) as cc from trips_payment as A where A.id_trips="' . ht($row_uu_all['id']) . '" and A.who=0 and A.id_operation=1 and (A.id_payment_method=2 or A.id_payment_method=5) and A.visible=1');
+              $num_results_uu_bez = $result_uu_bez->num_rows;
+
+
+
+
+
+              if ($num_results_uu_bez != 0) {
+                  $row_uu_bez = mysqli_fetch_assoc($result_uu_bez);
+                  if($row_uu_bez["cc"]!=0)
+                  {
+                      if($pay_b==1)
+                      {
+                          $beznal = 'НБ';
+                          $beznal_tool='оплаты смешаны';
+                      } else {
+                          $beznal = 'Н';
+                          $beznal_tool='Наличные';
+                      }
+                      $pay_b=1;
+                  }
+
+              }
+
 
               $comm_dd='(~)';
               if($row_uu_all["date_buy_all"]!='0000-00-00 00:00:00')
@@ -812,10 +857,10 @@ date_buy_all,R.commission,R.status,R.paid_client from trips as R where R.id_a_co
 
               if($active_p=='—')
               {
-                  $active_p='<a class="noww '.$status_jhcc.'" target="_blank" href="/tours/.id-'.$row_uu_all["id"].'">'.$row_uu_all["id"].' '.$comm_dd.'</a>';
+                  $active_p='<span class="noww"><a class="noww '.$status_jhcc.'" target="_blank" href="/tours/.id-'.$row_uu_all["id"].'">'.$row_uu_all["id"].' '.$comm_dd.'</a><span data-tooltip="'.$beznal_tool.'" style="color: rgba(0, 0, 0, 0.2); padding-left:5px;">'.$beznal.'</span></span>';
               } else
               {
-                  $active_p.='<br><a class="noww '.$status_jhcc.'" target="_blank" href="/tours/.id-'.$row_uu_all["id"].'">'.$row_uu_all["id"].' '.$comm_dd.'</a>';
+                  $active_p.='<br><span class="noww"><a class="noww '.$status_jhcc.'" target="_blank" href="/tours/.id-'.$row_uu_all["id"].'">'.$row_uu_all["id"].' '.$comm_dd.'</a><span data-tooltip="'.$beznal_tool.'" style="color: rgba(0, 0, 0, 0.2); padding-left:5px;">'.$beznal.'</span></span>';
               }
 
           }
