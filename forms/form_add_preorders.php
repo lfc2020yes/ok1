@@ -217,7 +217,7 @@ if($num_results_work_zz!=0) {
         $sko='';
         $sko1 = '';
         if($os_id5[$i]!=0) {
-            $sko = 'Активных нет';
+            $sko = ' Активных нет';
 
             $result_uu_sko = mysql_time_query($link, 'select count(A.id) as sko from preorders as A where A.id_user="' . ht($os_id5[$i]) . '" and A.visible=1 and not(A.status=5) and not(A.status=6)');
 
@@ -225,7 +225,7 @@ if($num_results_work_zz!=0) {
 
             if ($num_results_uu_sko != 0) {
                 $row_uu_sko = mysqli_fetch_assoc($result_uu_sko);
-                $sko = 'Активных ' . $row_uu_sko["sko"];
+                $sko = ' Активных ' . $row_uu_sko["sko"];
             }
 
 
@@ -247,9 +247,9 @@ date_create from preorders as A where A.id_user="' . ht($os_id5[$i]) . '" and A.
         }
 
         if ($su_5 == $os_id5[$i]) {
-            $query_string .= '<li class="sel_active"><a href="javascript:void(0);"  rel="' . $os_id5[$i] . '">' . $os5[$i] . '<span class="skoo">'.$sko.''.$sko1.'</span></a></li>';
+            $query_string .= '<li class="sel_active"><a href="javascript:void(0);"  rel="' . $os_id5[$i] . '">' . $os5[$i] . '</a><span class="skoo">'.$sko.''.$sko1.'</span></li>';
         } else {
-            $query_string .= '<li><a href="javascript:void(0);"  rel="' . $os_id5[$i] . '">' . $os5[$i] . '<span class="skoo">'.$sko.''.$sko1.'</span></a></li>';
+            $query_string .= '<li><a href="javascript:void(0);"  rel="' . $os_id5[$i] . '">' . $os5[$i] . '</a><span class="skoo">'.$sko.''.$sko1.'</span></li>';
         }
 
     }
