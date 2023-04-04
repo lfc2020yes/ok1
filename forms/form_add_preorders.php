@@ -214,10 +214,42 @@ if($num_results_work_zz!=0) {
 
     for ($i = 0; $i < count($os5); $i++) {
         //echo(parseInt($su_5).'='.$os_id5[$i].'<br>');
+        $sko='';
+        $sko1 = '';
+        if($os_id5[$i]!=0) {
+            $sko = 'Активных нет';
+
+            $result_uu_sko = mysql_time_query($link, 'select count(A.id) as sko from preorders as A where A.id_user="' . ht($os_id5[$i]) . '" and A.visible=1 and not(A.status=5) and not(A.status=6)');
+
+            $num_results_uu_sko = $result_uu_sko->num_rows;
+
+            if ($num_results_uu_sko != 0) {
+                $row_uu_sko = mysqli_fetch_assoc($result_uu_sko);
+                $sko = 'Активных ' . $row_uu_sko["sko"];
+            }
+
+
+            if (($num_results_uu_sko != 0) and ($row_uu_sko["sko"] != 0)) {
+
+                $result_uu_sko1 = mysql_time_query($link, 'select A.
+date_create from preorders as A where A.id_user="' . ht($os_id5[$i]) . '" and A.visible=1 and not(A.status=5) and not(A.status=6) order by A.date_create desc limit 1');
+
+                $num_results_uu_sko1 = $result_uu_sko1->num_rows;
+
+                if ($num_results_uu_sko1 != 0) {
+                    $row_uu_sko1 = mysqli_fetch_assoc($result_uu_sko1);
+
+                    //echo($row_uu_sko1["date_create"]);
+
+                    $sko1 = ' (Последняя → ' . preorders_times($row_uu_sko1["date_create"]) . ')';
+                }
+            }
+        }
+
         if ($su_5 == $os_id5[$i]) {
-            $query_string .= '<li class="sel_active"><a href="javascript:void(0);"  rel="' . $os_id5[$i] . '">' . $os5[$i] . '</a></li>';
+            $query_string .= '<li class="sel_active"><a href="javascript:void(0);"  rel="' . $os_id5[$i] . '">' . $os5[$i] . '<span class="skoo">'.$sko.''.$sko1.'</span></a></li>';
         } else {
-            $query_string .= '<li><a href="javascript:void(0);"  rel="' . $os_id5[$i] . '">' . $os5[$i] . '</a></li>';
+            $query_string .= '<li><a href="javascript:void(0);"  rel="' . $os_id5[$i] . '">' . $os5[$i] . '<span class="skoo">'.$sko.''.$sko1.'</span></a></li>';
         }
 
     }

@@ -30393,6 +30393,20 @@ position: absolute;}  }
   color: #fd8080 !important;
 }
 
+.skoo {
+  float: right;
+  color: rgba(0, 0, 0, 0.4) !important;
+  font-family: "GEInspiraRegular";
+  text-transform: uppercase;
+  font-size: 10px;
+}
+@media only screen and (max-width: 639px) {
+  .skoo {
+    float: none;
+    display: block;
+  }
+}
+
 .input-block-2020 .list-image {
   padding: 20px;
   display: none;

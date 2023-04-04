@@ -5461,4 +5461,54 @@ function new_key_admin($link,$len, $chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghi
 }
 
 
+
+function preorders_times($date_start,$ex = 0)
+{
+
+    $echo_j='';
+    if($ex==0) {
+        $d_day = dateDiff_1(date("Y-m-d") . ' ' . date("H:i:s"), $date_start);
+        $endx=$date_start;
+    } else
+    {
+        $date_end=explode(" ",htmlspecialchars(trim($date_start)));
+        $date_end1=explode(".",htmlspecialchars(trim($date_end[0])));
+        $endx=$date_end1[2].'-'.$date_end1[1].'-'.$date_end1[0].' '.$date_end[1].':00';
+
+
+        $d_day = dateDiff_1(date("Y-m-d") . ' ' . date("H:i").':00', $endx);
+    }
+
+
+    if(($d_day>0))
+    {
+        if($d_day==1)
+        {
+            $echo_j='<div class="help-jj">Вчера</div>';
+        } else
+        {
+            if(($d_day==2))
+            {
+                $echo_j='<div class="help-jj">Позавчера</div>';
+            } else
+            {
+                $echo_j='<div class="help-jj red-jj">'.$d_day.' '.PadejNumber($d_day, 'день,дня,дней').' назад</div>';
+            }
+        }
+    } else
+    {
+
+        if(abs($d_day)==0)
+        {
+            $echo_j='<div class="help-jj">Сегодня</div>';
+        }
+    }
+
+
+    return 	$echo_j;
+
+}
+
+
+
 ?>

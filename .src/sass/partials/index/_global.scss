@@ -22166,3 +22166,16 @@ padding-top: 20px;
 	.noww {white-space: nowrap; }
 	.red_ccf {color: #fd8080 !important;}
 }
+
+.skoo {float: right;
+	color: rgba(0, 0, 0, 0.4) !important;
+	font-family: "GEInspiraRegular";
+	text-transform: uppercase;
+	font-size: 10px;
+
+	@include sw('tablet-small') {
+		float:none;
+		display:block;
+	}
+
+}
