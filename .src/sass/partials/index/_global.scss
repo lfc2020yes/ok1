@@ -18816,7 +18816,7 @@ padding-top: 20px;
 
 }
 
-.finance-index {
+.finance-index,.statistic-promo {
 	color: rgba(0, 0, 0, 0.7);
 	@include sw('tablet-small') { @include flex-wrap(wrap);
 	}
@@ -22177,5 +22177,82 @@ padding-top: 20px;
 		float:none;
 		display:block;
 	}
+
+}
+
+
+.statistic-promo {
+	margin-bottom: 20px;
+
+	@include sw('tablet-small') {margin-top: 20px;
+	}
+
+	.block-ppi {width: calc((100% / 2) - (20px / 2)) !important; border-radius:5px; text-align: left;padding: 20px;
+		@include sw('tablet-small') {
+width:100% !important;
+
+		}
+
+	}
+
+	.gr-50 {padding-left: 0px;
+		background-color: rgba(0,0,0,0.04);
+
+	strong {color: rgba(0, 0, 0, 0.7);
+		font-family: "GEInspiraBold";
+		text-transform: uppercase;
+		font-size: 13px;
+		font-weight: normal;
+	b {
+		font-weight: normal;
+		font-family: "GEInspiraRegular";
+		font-size: 14px;
+		color: rgba(0,0,0,0.5);
+	}
+
+	}
+
+
+
+	}
+
+	.txt-dd {margin-top:20px;}
+
+	.fin-na-100 { @include align-items(flex-start);}
+
+	.list-country-c {
+
+		background-color: rgba(0, 0, 0, 0.04);
+
+	}
+	.list-country-c-more {
+
+		background-color: #35deb8;
+		color:#fff;
+		i {color: rgba(255, 255, 255, 0.7);}
+
+	}
+
+	.fin-50-jkk {
+		@include sw('tablet-small') { width: 50% !important;
+		}}
+
+
+	.xx-22x {padding: 2px 0px;
+		line-height: 14px; display: inline;}
+}
+
+.pass_wh_y {
+
+	color: rgba(0, 0, 0, 0.2);
+	font-family: "GEInspiraBold";
+	text-transform: uppercase;
+	font-size: 13px;
+	margin-bottom: 10px; position: relative; padding-top: 13px;
+	font-weight: normal;
+	label {  font-family: "GEInspiraRegular"; position: absolute; top:0px; left:0px; font-size: 10px; text-transform: uppercase;font-weight: normal; color: rgba(0, 0, 0, 0.3);
+		margin-left: 0px !important;
+	}
+	span { color: rgba(0, 0, 0, 0.7); line-height: 20px; }
 
 }

@@ -1028,6 +1028,8 @@ $month_rus=date("m");
 $month_rus1=date("m");
   $date_level_bonus=date("Y-m-").'01';
 
+  $day_montch= cal_days_in_month(CAL_GREGORIAN, date("j"), date("Y")); // 31
+
 
   $date_start_obo=date("Y-m-").'01 00:00:00';
   $date_end_obo=date_step_sql('Y-m', '+1m').'-01 00:00:00';
@@ -1441,6 +1443,301 @@ $month_rus1=date("m");
 
 				  }
 ?>
+
+
+<?
+
+$echo_max_min=1; //выводить по умолчания
+
+//выше обычного менеджера и у него по умолчанию все подпиченный или насильно выбрано
+if(($sign_admin==1)or($sign_level>1))
+{
+
+    if(!isset($_COOKIE["su_5s".$id_user])) {$echo_max_min=0;}
+    if((isset($_COOKIE["su_5s".$id_user]))and($_COOKIE["su_5s".$id_user]==0)) {$echo_max_min=0;}
+
+}
+
+if ($echo_max_min==1) {
+
+    $id_uuu=$id_user;
+    if((isset($_COOKIE["su_5s".$id_user]))and($_COOKIE["su_5s".$id_user]!=0))
+    {
+        //может ли им управлять
+
+        if (array_search($_COOKIE["su_5s".$id_user], $mass_ei) !== false) {
+            $id_uuu=$_COOKIE["su_5s".$id_user];
+        }
+
+
+    }
+
+    $result_max=mysql_time_query($link,'SELECT a.* from users_commission_plane as a where a.id_users="'.$id_uuu.'" and a.dates="'.$date_level_bonus.'"');
+
+   // echo 'SELECT a.* from users_commission_plane as a where a.id_users="'.$id_uuu.'" and a.dates="'.$date_level_bonus.'"';
+
+    $num_results_max = $result_max->num_rows;
+    $min='—';
+    $max='—';
+    if ($num_results_max != 0) {
+        $row_max = mysqli_fetch_assoc($result_max);
+        if($row_max["min"]!=0)
+        {
+            $min=rtrim(rtrim(number_format($row_max["min"], 2, '.', ' '),'0'),'.');
+            $min_x=$row_max["min"];
+        }
+        if($row_max["max"]!=0)
+        {
+            $max=rtrim(rtrim(number_format($row_max["max"], 2, '.', ' '),'0'),'.');
+            $max_x=$row_max["max"];
+        }
+
+    }
+
+
+
+
+
+    echo '<div class="bord-promo statistic-promo">
+
+        <div class="block-ppi">
+        
+        
+        <div class="two-finance">
+
+<div class="h1-fin">Ваш план продаж</div>
+
+<div class="fin-na-100">
+<div class="fin-50 fin-50-jkk">
+<label>MIN план</label>
+<span class="cost_circle"><i></i>'.$min.'</span>
+</div>
+<div class="fin-50 fin-50-jkk">
+<label>MAX план</label>
+<span class="cost_circle">'.$max.'</span>
+</div>
+</div>';
+
+    $procc=0;
+    $eshe_nado=6;
+    /*
+    max - 100
+    факт - x
+    */
+    //$row_status22["sum"]=240000;
+if(($max_x!='—')and($max_x!=0)) {
+    $procc = round($row_status22["sum"] * 100 / $max_x);
+    if($procc>100)
+    {
+        $procc=100;
+    }
+}
+
+
+    $ost_ot_plane=0;
+$do_plane='Осталось до MIN плана';
+    if(($min_x!='—')and($min_x!=0))
+    {
+        $ost_ot_plane=$min_x-$row_status22["sum"];
+        if($ost_ot_plane<0)
+        {
+            $ost_ot_plane=0;
+
+            //план выполнен
+            $do_plane='Осталось до MAX плана';
+            //смотрим сколько до мах плана
+            if(($max_x!='—')and($max_x!=0)) {
+                $ost_ot_plane = $max_x - $row_status22["sum"];
+                if ($ost_ot_plane < 0) {
+                    $ost_ot_plane = 0;
+
+                }
+            }
+        }
+    }
+
+
+    echo'<div class="gr-50">
+    <div class="circle-container"  style="margin-top: -15px;">
+        <div class="circlestat" data-dimension="80" data-text="'.$procc.'" data-text-pr="%" data-width="1" data-fontsize="27" data-percent="'.$procc.'" data-fgcolor="#24c32d" data-bgcolor="rgba(0,0,0,0.2)" data-fill="#f5f5f6"></div>
+    </div>';
+    echo '<strong ><b>'.rtrim(rtrim(number_format($row_status22["sum"], 2, '.', ' '),'0'),'.').'  РУБ. → Факт</b>  <br> '.rtrim(rtrim(number_format($ost_ot_plane, 2, '.', ' '),'0'),'.').'  РУБ. → '.$do_plane.'  </strong ></div>';
+
+
+        
+        
+        
+        echo'</div>';
+
+    if ((( isset($_COOKIE["su_2s".$id_user]))and(is_numeric($_COOKIE["su_2s".$id_user]))and(array_search($_COOKIE["su_2s".$id_user],$os_id2)!==false)and($_COOKIE["su_2s".$id_user]==0))or( !isset($_COOKIE["su_2s".$id_user]))) {
+     if($day_montch!=0) {
+       $v_den = $max_x / $day_montch;
+       $doljen_yje=(date('j')-1)*$v_den;
+       //echo($doljen_yje);
+       if($row_status22["sum"]<$doljen_yje)
+       {
+
+           echo'<div class="txt-dd" >
+<div  class="status_admin s_pr_4 xx-22x">Вы отстаете от запланированного MIN плана по дням на '.rtrim(rtrim(number_format(($doljen_yje-$row_status22["sum"]), 2, '.', ' '),'0'),'.').'  РУБ.</div>
+</div>';
+
+       } else
+       {
+           if($doljen_yje>0)
+           {
+               echo'<div class="txt-dd" >
+<div  class="status_admin s_pr_3 xx-22x">На текущий день у вас один из лучших показателей по продажам. Так держать. </div>
+</div>';
+           }
+       }
+
+     }
+    }
+
+echo'</div>
+
+        <div class="block-ppi">
+        
+        <div class="fin-na-100" style="margin-top:0px;">
+<div class="fin-50" style="margin-top:0px;">
+ <div class="h1-fin" style="margin-bottom:10px;">Ваши показатели</div>
+ 
+ 
+<div class="pass_wh_y"><label>КПД</label><span>—%</span></div>
+<div class="pass_wh_y"><label>КО</label><span>—%</span></div>';
+
+$doc_count=0;
+    $sql_user_buy = ' and A.datecreate>="'.$date_start_obo.'" and A.datecreate<"'.$date_end_obo.'"';
+
+    $result_uuh = mysql_time_query($link, 'select DISTINCT count(A.id) as ccf from trips as A where A.commission_fix=0 and A.id_user='.ht($id_uuu).'  '.$sql_user_buy.'');
+    $num_results_uuh = $result_uuh->num_rows;
+if($num_results_uuh!=0) {
+    $row_uuh = mysqli_fetch_assoc($result_uuh);
+    $doc_count=$row_uuh["ccf"];
+}
+
+
+
+echo'<div class="pass_wh_y"><label>Договоров</label><span>'.$doc_count.'</span></div>';
+
+//Новых заявок
+    $active_p=0;
+    $result_uu_all = mysql_time_query($link, 'select count(R.id) as cc from preorders as R where R.id_company IN ('.$id_company.') and R.visible="1" and R.date_create>="'.$date_start_obo.' 00:00:00" and R.date_create<="'.$date_end_obo.' 23:59:59" and R.id_user='.ht($id_uuu).' ');
+    $num_results_uu_all  = $result_uu_all ->num_rows;
+
+    if ($num_results_uu_all  != 0) {
+        $row_uu_all  = mysqli_fetch_assoc($result_uu_all );
+        if($row_uu_all["cc"]!='')
+        {
+            $active_p=$row_uu_all["cc"];
+        }
+    }
+
+
+echo'<div class="pass_wh_y"><label>Обращений</label><span>'.$active_p.'</span></div>
+ 
+        
+ </div>
+<div class="fin-50">
+<div class="h1-fin" style="margin-bottom:10px;">Направления продаж</div>
+
+<div class="js-count-trips-c trips-cc-22" style="display: block;">';
+
+    $sql_user_buy = ' and A.datecreate>="'.$date_start_obo.'" and A.datecreate<"'.$date_end_obo.'"';
+
+    $result_uuh = mysql_time_query($link, 'select Z.* from (select DISTINCT A.id,A.comment,A.flight_there_route,A.id_user,A.place_name,A.hotel,A.datecreate,A.id_country,A.count_day from trips as A where A.commission_fix=0 and A.id_user='.ht($id_uuu).'  '.$sql_user_buy.') Z order by Z.id_country,Z.datecreate desc');
+
+
+
+
+    $num_results_uuh = $result_uuh->num_rows;
+
+    $mass_country = array();
+    $mass_country_count_trips= array();
+    if ($result_uuh) {
+
+
+
+        $i = 0;
+        $count_trips=0;
+        while ($row_uuh = mysqli_fetch_assoc($result_uuh)) {
+
+            $id_link='';
+            if($i==0)
+            {
+                array_push($mass_country, $row_uuh['id_country']);
+                $id_link='id="'.$row_uuh['id_country'].'-bb"';
+            }
+            $i++;
+
+            if( end($mass_country)!=$row_uuh['id_country']) {
+                $id_link='id="'.$row_uuh['id_country'].'-bb"';
+                array_push($mass_country, $row_uuh['id_country']);
+                array_push($mass_country_count_trips, $count_trips);
+                $count_trips=1;
+
+            } else
+            {
+                $count_trips++;
+            }
+
+            $kuda_trips='';
+
+
+            $result_uu = mysql_time_query($link, 'select name from trips_country where id="' . ht($row_uuh ["id_country"]) . '"');
+            $num_results_uu = $result_uu->num_rows;
+
+            if ($num_results_uu != 0) {
+                $row_uu = mysqli_fetch_assoc($result_uu);
+                $kuda_trips.=$row_uu["name"];
+            }
+        }
+
+        array_push($mass_country_count_trips, $count_trips);
+
+    }
+
+
+
+    for ($i = 0; $i < count($mass_country); $i++) {
+
+
+        $result_uu = mysql_time_query($link, 'select name from trips_country where id="' . ht($mass_country[$i]) . '"');
+        $num_results_uu = $result_uu->num_rows;
+
+        if ($num_results_uu != 0) {
+            $row_uu = mysqli_fetch_assoc($result_uu);
+            echo'<div link="'.$mass_country[$i].'" class="list-country-c js-list-country-c">'.$row_uu["name"].'<i>'.$mass_country_count_trips[$i].'</i></div>';
+
+
+        }
+
+
+    }
+/*
+<div link="1" class="list-country-c ">Турция<i>1</i></div>
+<div link="2" class="list-country-c ">Россия<i>1</i></div>
+<div link="2" class="list-country-c list-country-c-more ">ОАЭ<i>11</i></div>
+*/
+
+echo'</div>
+
+</div></div>
+        
+
+        
+        
+        
+        </div>
+
+    </div>';
+}
+
+
+  ?>
+
+
+
 
 	<div class=" bill_wallet">
 
