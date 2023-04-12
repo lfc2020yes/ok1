@@ -1272,12 +1272,66 @@ $query_string.='<div class="left_drop menu1_prime"><label class="active_label">�
 			
 <!--input start	-->		
 		
-	<div style="margin-top: 30px;" class="jj-l"><div class="input_2018"><label>Аванс (рубли)<span>*</span></label><input name="avans_client" value="" id="date_124" class="input_new_2018 required  gloab money_mask xcost_to_1 to_2 js-xx_end_date" autocomplete="off" type="text"><div class="div_new_2018"><hr class="one"><hr class="two"><hr class="tree"><div class="oper_name" joi=""></div></div></div>
+	<div style="margin-top: 30px;" class="jj-l"><div class="input_2018"><label>Аванс (рубли)<span>*</span></label><input name="avans_client" value="" id="date_124" class="input_new_2018 required  gloab money_mask xcost_to_1 to_2 js-to_2_x js-xx_end_date" autocomplete="off" type="text"><div class="div_new_2018"><hr class="one"><hr class="two"><hr class="tree"><div class="oper_name" joi=""></div></div></div>
 </div>
 
-<!--input end	-->			
-					
-<!--input start	-->		
+<!--input end	-->
+<?
+        $query_string='    <!--input start	-->';
+
+
+
+        $query_string.='<div style="margin-top: 30px; display:none;
+    position: relative;" class="js-zindex js-ava-vivi">	';
+
+            $query_string.='<div class="left_drop list_2018 menu1_prime"><label class="">Способ оплаты<span>*</span></label><div class="select eddd zin_2019"><a class="slct" list_number="t1" data_src=""></a><ul class="drop js-visible-mt">';
+
+                        //если оплачивает клиент
+                        //если начальный аванс был наличкой - то остальные платежи только наличкой
+                        //если начальный аванс был не наличкой - то все методы оплаты
+
+
+
+
+                        $result_8 = mysql_time_query($link,'select A.* from  booking_payment_method as A where A.visible=1 order by A.displayOrder');
+
+                        $num_8 = $result_8->num_rows;
+                        //$row_1 = mysqli_fetch_assoc($result2);
+                        if($result_8)
+                        {
+
+                        /*
+                        $query_string.='<li class="sel_active"><a href="javascript:void(0);"  rel="'.$os_id_say55[array_search(1, $os_id_say55)].'">'.$os_say55[array_search(0, $os_id_say55)].'</a></li>';
+                        */
+
+                        while($row_8 = mysqli_fetch_assoc($result_8)){
+
+
+                        if($su_say55==$row_8["id"])
+                        {
+                        $query_string.='<li class="sel_active"><a href="javascript:void(0);" nall="'.$row_8["nall"].'"  rel="'.$row_8["id"].'">'.$row_8["name"].'</a></li>';
+                        } else
+                        {
+                        $query_string.='<li><a href="javascript:void(0);" nall="'.$row_8["nall"].'" rel="'.$row_8["id"].'">'.$row_8["name"].'</a></li>';
+                        }
+
+                        }
+                        }
+
+
+
+                        $query_string.='</ul><input type="hidden" class="gloab_aaa"   name="method_aaa" id="pol_clients" value=""><div class="div_new_2018"><hr class="one"></div></div></div></div>';
+
+
+
+
+        $query_string.='<!--input end	-->';
+
+
+echo $query_string;
+?>
+
+        <!--input start	-->
 	<div style="margin-top: 30px; display:none;" class="js-date_polnay"><div class="input_2018"><label>Полная оплата до</label><input name="avans_end_date" value="" id="date_124" class="input_new_2018 required  date_picker_xe " autocomplete="off" type="text"><div class="div_new_2018"><hr class="one"><hr class="two"><div class="oper_name"></div></div></div>
 </div>
 <!--input end	-->				

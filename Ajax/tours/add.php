@@ -944,12 +944,18 @@ if (( $_POST[ "avans_client" ] != 0 )and( $_POST[ "avans_client" ] != '' )) {
 
 
 	$medhod=2;
+
+    if ((is_numeric($_POST['method_aaa']))and( $_POST[ "method_aaa" ] != '' )and( $_POST[ "method_aaa" ] != 0 )) {
+        $medhod=$_POST['method_aaa'];
+    }
+
+/*
     if(($_POST["buy_type"]==2)and($_POST["buy_id"]!='')) {
 
         $medhod=1;
 
     }
-	
+	*/
 	    mysql_time_query( $link, 'INSERT INTO trips_payment(
                           
 id_trips,                                            
@@ -971,7 +977,7 @@ visible) VALUES(
 "' . ht( $id_user ) . '",
 "0",
 "1",
-"'.$medhod.'",
+"'.ht($medhod).'",
 "'.ht(trimc($_POST["avans_client"])).'",
 "'.ht($avans_rates).'",
 "'.ht($exchange_rates).'",

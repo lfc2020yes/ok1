@@ -2937,6 +2937,51 @@ function exc_cost()
 }
 
 
+function AddFormPlane()
+{
+
+	var err = 0;
+	var err1 = 0;
+	var err2 = 0;
+//alert($('.js-form-register .gloab').length);
+	$('.js-finance-operation .gloab').each(function(i,elem) {
+		if($(this).val() == '')  {$(this).parents('.input_2018').find('.error-message').empty().append('поле не заполнено');	 $(this).parents('.input_2018').addClass('required_in_2018');
+			$(this).parents('.list_2018').addClass('required_in_2018');
+			err++;
+
+
+
+			//alert($(this).attr('name'));
+		} else {$(this).parents('.input_2018').removeClass('required_in_2018');$(this).parents('.list_2018').removeClass('required_in_2018');}
+	});
+
+
+	//alert(err);
+	//AfterAddFormTender
+
+	if((err==0))
+	{
+		$('.js-finance-operation  .js-add-plane-form').hide().after('<div class="b_loading_small" style="position:relative; width: 40px;padding-top: 7px;top: auto;right: auto;left: calc(50% - 20px);"><div class="b_loading_circle_wrapper_small"><div class="b_loading_circle_one_small"></div><div class="b_loading_circle_one_small b_loading_circle_delayed_small"></div></div></div>');
+
+		$('.js-finance-operation .message-form').hide();
+		//AjaxClient('notification','even','GET',data,'AfterNofi',1,0,1);
+		AjaxClient('finance','plane_users','POST',0,'AfterAddFormPlane',0,'js-form-plane-new',1);
+
+	} else
+	{
+		if(err!=0)
+		{
+			//найдем самый верхнюю ошибку и пролестнем к ней
+			jQuery.scrollTo('.required_in_2018:first', 1000, {offset:-70});
+			//ErrorBut('.js-form-tender-new .js-add-tender-form','Ошибка заполнения!');
+			alert_message('error','Не все поля заполнены');
+		}
+
+	}
+
+}
+
+
 function AddFormTender()
 {
 	
@@ -2983,6 +3028,26 @@ function AddFormTender()
 		});
 
 	}
+
+
+
+	var method_value=$('.js-to_2_x').val();
+	if((method_value!='')&&(method_value!=0))
+	{
+
+		$('.js-form-tender-new .gloab_aaa').each(function(i,elem) {
+			if($(this).val() == '')  {$(this).parents('.input_2018').find('.error-message').empty().append('поле не заполнено');	 $(this).parents('.input_2018').addClass('required_in_2018');
+				$(this).parents('.list_2018').addClass('required_in_2018');
+				err++;
+
+
+
+				//alert($(this).attr('name'));
+			} else {$(this).parents('.input_2018').removeClass('required_in_2018');$(this).parents('.list_2018').removeClass('required_in_2018');}
+		});
+
+	}
+
 
 
 	
@@ -3240,6 +3305,71 @@ function Afterjs_new_doc(data,update)
 			{
 				alert_message('error','Ошибка!');
 			}
+		});
+	}
+}
+
+
+function AfterAddFormPlane(data,update)
+{
+	if (data.status=='ok')
+	{
+		// $('.js-form-tender-new').remove();
+
+		alert_message('ok','Планы менеджеров сохранены');
+		//$('.js-next-step').submit();
+		$('.js-form-plane-new .js-add-plane-form').show();
+		$('.js-form-plane-new .b_loading_small').remove();
+		//$('.js-form-tender-new .js-alert-doc').empty().append(data.download);
+		//$('.js-form-tender-new .js-doc-create').slideDown( "slow" );
+		//$('.js-form-tender-new  .js-doc-yes-hide').slideUp( "slow" );
+
+	} else
+	{
+		$('.js-form-plane-new .js-add-plane-form').show();
+		$('.js-form-plane-new .b_loading_small').remove();
+
+		//alert_message('error','Ошибка! Заполните все поля');
+
+		//$('.js-form-tender-new .message-form').empty().append('Заполните все поля').show();
+
+		//проходимя по массиву ошибок
+		$.each(data.error, function(index, value){
+
+
+			var err = ['number_contract','id_operator','id_exchange','date_sele_doc','buy_id','count_clients','id_country','date_start','date_end','count_day','hotel','flight_there_route','flight_there_class','flight_there_number','flight_back_route','flight_back_class','flight_back_number','transfer_route','transfer_type','cost_client','no_all_password_buy','no_all_password_fly','no_phone_tell_buy','no_all_password_x','no_all_info_org','no_all_info_rf_org','number_contract_busy','exchange_rates','number_contract_format','no_new_klient_promo','no_promo','promo_out'];
+
+			var err_name = ['Номер договора','Туроператор','Валюта','Дата договора','Покупатель тура','Кол-во человек','Страна','Дата начала тура','Дата окончания тура','Кол-во дней','Отель','Маршрут туда','Класс туда','Номер рейса туда','Маршрут обратно','Класс обратно','Номер рейса обратно','Маршрут трансфера','Тип трансфера','Стоимость тура','Паспортные данные покупателя','Паспортные данные туристов','Телефон, адрес покупателя','паспорт РФ покупателя','данные по организации','паспортные данные руководителя','','Курс валюты (ТО)','Номер договора','Покупатель тура не новый клиент, промокод нельзя применить','Покупатель с пометкой партнер, промокод нельзя применить','указан недействительный промокод'];
+
+			//var number = [2,1,4,5,3,6,7,8,11,12,13,22,14,15,18,19,16,17,20,21];
+
+
+			numbers=$.inArray(value, err);
+			//alert(numbers);
+			if(numbers!=-1)
+			{
+				/*
+                var ins=number[numbers];
+                $('.js-form-tender-new .js-in'+ins).parents('.input_2018').addClass('required_in_2018');
+    $('.js-form-tender-new .js-in'+ins).parents('.input_2018').find('.div_new_2018').append('<div class="error-message">некорректно заполнено поле</div>');
+    */
+				if(value=='number_contract_busy')
+				{
+					alert_message('error', 'Номер договора занят. Следующий свободный - ' + data.number);
+					jQuery.scrollTo('[name=number_contract]', 1000, {offset:-180});
+
+
+					$('[name=number_contract]').parents('.input_2018').find('.error-message').empty().append('поле не заполнено');	 $('[name=number_contract]').parents('.input_2018').addClass('required_in_2018');
+					$('[name=number_contract]').parents('.list_2018').addClass('required_in_2018');
+				} else {
+					alert_message('error', 'некорректно заполнено - ' + err_name[numbers]);
+				}
+			} else
+			{
+				//$('.js-form-register .message-form').empty().append('Ошибка! ');
+				alert_message('error','Ошибка!');
+			}
+			//jQuery.scrollTo('.required_in_2018:first', 1000, {offset:-70});
 		});
 	}
 }
@@ -3584,6 +3714,16 @@ function xx_end_date()
 			$('.js-date_polnay').slideUp("slow");
 		}
 	}
+	if(($('.js-to_2_x').val()!=0)&&($('.js-to_2_x').val()!=''))
+	{
+		$('.js-ava-vivi').slideDown("slow");
+
+	} else
+	{
+		$('.js-ava-vivi').slideUp("slow");
+	}
+
+
 }
 
 
@@ -8981,6 +9121,8 @@ $('body').on("change keyup input click",'.js-date-nait2,.js-date-nait1',date_nai
 //добавить новый тур
 $('body').on("change keyup input click",'.js-add-tender-form',AddFormTender);
 
+	$('body').on("change keyup input click",'.js-add-plane-form',AddFormPlane);
+
 //редактировать тур
 	$('body').on("change keyup input click",'.js-edit-tender-form',EditFormTender);
 
@@ -10971,6 +11113,18 @@ $('.js-reload-top').addClass('active-r');
 };
 $('#sort2s').bind('change', changesort2s);
 
+
+
+    var changesort2f_x = function() {
+        var iu=$('.content').attr('iu');
+
+        $.cookie("su_2f_x"+iu, null, {path:'/',domain: window.is_session,secure: false});
+        CookieList("su_2f_x"+iu,$(this).val(),'add');
+
+        $('.js-reload-top').removeClass('active-r');
+        $('.js-reload-top').addClass('active-r');
+    };
+    $('#sort2f_x').bind('change', changesort2f_x);
 
 
 	var changesort2f = function() {

@@ -4,6 +4,7 @@ RewriteBase /
 RewriteRule ^.htaccess$ - [F]
 DirectoryIndex index.php
 
+RewriteRule ^.tabs-([0-9]*)$ finance/index.php?tabs=$1 [L]
 
 php_flag session.use_trans_sid off
 php_flag session.use_only_cookies on

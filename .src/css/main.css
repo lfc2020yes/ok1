@@ -30499,6 +30499,97 @@ position: absolute;}  }
   line-height: 20px;
 }
 
+.plane_people {
+  background-color: #fff;
+  border-radius: 3px;
+  padding: 10px;
+}
+.plane_people .h1-fin {
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: normal;
+  font-size: 16px;
+  font-family: GEInspiraBold;
+  line-height: 20px;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.people_list {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -moz-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.people_list .people_l1, .people_list .people_l2, .people_list .people_l3 {
+  padding: 10px;
+}
+.people_list .people_l1 {
+  width: 50%;
+  position: relative;
+}
+.people_list .people_l1 .label-task-gg {
+  top: 2px;
+  left: 20px;
+}
+.people_list .people_l1 div {
+  font-family: "GEInspiraBold";
+  color: rgba(0, 0, 0, 0.7);
+  font-size: 14px;
+  line-height: 14px;
+  position: relative;
+  text-transform: uppercase;
+  padding: 10px;
+}
+.people_list .people_l2 {
+  width: 25%;
+}
+.people_list .people_l3 {
+  width: 25%;
+}
+.people_list:hover .label-task-gg {
+  display: inline-block;
+}
+
+.people_list:nth-child(2n) {
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+}
+
+.new_style_but_23 {
+  background-color: #5a34e7;
+  background-image: -o-linear-gradient(to right, #5a34e7, #c92dfb);
+  background-image: -o-linear-gradient(left, #5a34e7, #c92dfb);
+  background-image: -webkit-gradient(linear, left top, right top, from(#5a34e7), to(#c92dfb));
+  background-image: linear-gradient(to right, #5a34e7, #c92dfb);
+}
+
+.avatar_green {
+  position: relative;
+  padding-right: 20px;
+}
+.avatar_green::before {
+  position: absolute;
+  content: "S";
+  text-transform: none;
+  left: 2px;
+  color: #25ae88;
+  top: -2px;
+  font-family: "icon1";
+  font-size: 15px;
+  /* height: 80px; */
+  width: 20px;
+  text-align: center;
+  /* line-height: 65px; */
+  /* right: 0px; */
+  margin: 0 auto;
+}
+
 .input-block-2020 .list-image {
   padding: 20px;
   display: none;

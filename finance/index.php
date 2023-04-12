@@ -190,20 +190,28 @@ if($echo_help!=0)
 					$act_1='on="show"';
 	            }
 
-	  include_once $url_system.'template/top_finance.php';
+	  include_once $url_system.'template/top_finance_new.php';
 
 
      echo'<div id="fullpage" class="margin_60" id_content="'.$id_user.'">';
 
 	?>
  <div class="section" id="section1">
-	 
+<?
+
+
+    ?>
 
 	<div class="oka_block_2019" style="min-height:auto !important;">
  
  <div class="line_mobile_blue">
 	 <?
-         echo'Ваш финансовый учет';
+     if((isset($_GET['tabs']))) {
+         echo 'План менеджеров';
+     } else
+     {
+         echo 'Ваш финансовый учет';
+     }
 ?>
  <span class="menu-09-count1"></span> </div>
 
@@ -212,58 +220,91 @@ if($echo_help!=0)
     <? 
 	   $zindex=110;
 
-
-       $os2 = array( "Текущий месяц","Прошлый месяц","-2 месяца","Выбрать период");
-	   $os_id2 = array("0","1","3","2");
-
-    $os2 = array( "Текущий месяц","Прошлый месяц","За ".month_rus1(date_step_sql('m', '-2m')),"За ".month_rus1(date_step_sql('m', '-3m')),"Выбрать период");
-    $os_id2 = array("0","1","3","4","2");
-
-		$su_2=0;
-		$date_su='';
-		if (( isset($_COOKIE["su_2f".$id_user]))and(is_numeric($_COOKIE["su_2f".$id_user]))and(array_search($_COOKIE["su_2f".$id_user],$os_id2)!==false))
-		{
-			$su_2=$_COOKIE["su_2f".$id_user];
-		}
-		$val_su2=$os2[array_search($su_2, $os_id2)];
-		
-		
-		if ( isset($_COOKIE["suddf".$id_user]))
-		{
-			//$date_base__=explode(".",$_COOKIE["sudds"]);
-		if (( isset($_COOKIE["su_2f".$id_user]))and(is_numeric($_COOKIE["su_2f".$id_user]))and($_COOKIE["su_2f".$id_user]==2))
-		{
-			$date_su=$_COOKIE["suddf_mor".$id_user];
-			$val_su2=$_COOKIE["suddf_mor".$id_user];
-		}
-		}
-	
-		$class_js_readonly ??= '';
-	    $class_js_search ??='';
-		
-		echo'<input id="date_hidden_table" '.$class_js_readonly.' name="date" value="'.$date_su.'" type="hidden"><input id="date_hidden_start" name="start_date" type="hidden"><input id="date_hidden_end" name="end_date" type="hidden">';
-	
-		   echo'<div class="left_drop menu1_prime book_menu_sel gop_io js--sort js-call-no-v'.$class_js_search.'" style="z-index:'.$zindex.'; max-width: 500px !important;"><label>Период</label><div class="select eddd"><a class="slct" list_number="t2" data_src="'.$os_id2[array_search(($_COOKIE["su_2f".$id_user] ?? ''), $os_id2)].'">'.$val_su2.'</a><ul class="drop">';
-	
-			$zindex--;
-
-		   for ($i=0; $i<count($os2); $i++)
-             {   
-			   if($su_2==$os_id2[$i])
-			   {
-				   echo'<li class="sel_active"><a href="javascript:void(0);"  rel="'.$os_id2[$i].'">'.$os2[$i].'</a></li>';
-			   } else
-			   {
-				  echo'<li><a href="javascript:void(0);"  rel="'.$os_id2[$i].'">'.$os2[$i].'</a></li>'; 
-			   }
-			 
-			 }
-		   echo'</ul><input type="hidden" '.$class_js_readonly.' name="sort2f" id="sort2f" value="'.$os_id2[$su_2].'"></div></div>';
+    if((isset($_GET['tabs']))) {
 
 
-	
-		 echo'<div class="inline_reload js-reload-top"><a href="finance/" class="show_reload">Применить</a></div>';
-		
+
+        $os2 = array("Текущий месяц", "Следующий месяц");
+        $os_id2 = array("0", "1");
+
+        $su_2 = 0;
+        $date_su = '';
+        if ((isset($_COOKIE["su_2f_x" . $id_user])) and (is_numeric($_COOKIE["su_2f_x" . $id_user])) and (array_search($_COOKIE["su_2f" . $id_user], $os_id2) !== false)) {
+            $su_2 = $_COOKIE["su_2f_x" . $id_user];
+        }
+        $val_su2 = $os2[array_search($su_2, $os_id2)];
+
+        $class_js_readonly ??= '';
+        $class_js_search ??= '';
+
+        echo '<input id="date_hidden_table" ' . $class_js_readonly . ' name="date" value="' . $date_su . '" type="hidden"><input id="date_hidden_start" name="start_date" type="hidden"><input id="date_hidden_end" name="end_date" type="hidden">';
+
+        echo '<div class="left_drop menu1_prime book_menu_sel gop_io js--sort js-call-no-v' . $class_js_search . '" style="z-index:' . $zindex . '; max-width: 500px !important;"><label>Период</label><div class="select eddd"><a class="slct" list_number="t2" data_src="' . $os_id2[array_search(($_COOKIE["su_2f_x" . $id_user] ?? ''), $os_id2)] . '">' . $val_su2 . '</a><ul class="drop">';
+
+        $zindex--;
+
+        for ($i = 0; $i < count($os2); $i++) {
+            if ($su_2 == $os_id2[$i]) {
+                echo '<li class="sel_active"><a href="javascript:void(0);"  rel="' . $os_id2[$i] . '">' . $os2[$i] . '</a></li>';
+            } else {
+                echo '<li><a href="javascript:void(0);"  rel="' . $os_id2[$i] . '">' . $os2[$i] . '</a></li>';
+            }
+
+        }
+        echo '</ul><input type="hidden" ' . $class_js_readonly . ' name="sort2f_x" id="sort2f_x" value="' . $os_id2[$su_2] . '"></div></div>';
+
+
+        echo '<div class="inline_reload js-reload-top"><a href="finance/.tabs-1" class="show_reload">Применить</a></div>';
+
+
+    } else {
+
+        $os2 = array("Текущий месяц", "Прошлый месяц", "-2 месяца", "Выбрать период");
+        $os_id2 = array("0", "1", "3", "2");
+
+        $os2 = array("Текущий месяц", "Прошлый месяц", "За " . month_rus1(date_step_sql('m', '-2m')), "За " . month_rus1(date_step_sql('m', '-3m')), "Выбрать период");
+        $os_id2 = array("0", "1", "3", "4", "2");
+
+        $su_2 = 0;
+        $date_su = '';
+        if ((isset($_COOKIE["su_2f" . $id_user])) and (is_numeric($_COOKIE["su_2f" . $id_user])) and (array_search($_COOKIE["su_2f" . $id_user], $os_id2) !== false)) {
+            $su_2 = $_COOKIE["su_2f" . $id_user];
+        }
+        $val_su2 = $os2[array_search($su_2, $os_id2)];
+
+
+        if (isset($_COOKIE["suddf" . $id_user])) {
+            //$date_base__=explode(".",$_COOKIE["sudds"]);
+            if ((isset($_COOKIE["su_2f" . $id_user])) and (is_numeric($_COOKIE["su_2f" . $id_user])) and ($_COOKIE["su_2f" . $id_user] == 2)) {
+                $date_su = $_COOKIE["suddf_mor" . $id_user];
+                $val_su2 = $_COOKIE["suddf_mor" . $id_user];
+            }
+        }
+
+        $class_js_readonly ??= '';
+        $class_js_search ??= '';
+
+        echo '<input id="date_hidden_table" ' . $class_js_readonly . ' name="date" value="' . $date_su . '" type="hidden"><input id="date_hidden_start" name="start_date" type="hidden"><input id="date_hidden_end" name="end_date" type="hidden">';
+
+        echo '<div class="left_drop menu1_prime book_menu_sel gop_io js--sort js-call-no-v' . $class_js_search . '" style="z-index:' . $zindex . '; max-width: 500px !important;"><label>Период</label><div class="select eddd"><a class="slct" list_number="t2" data_src="' . $os_id2[array_search(($_COOKIE["su_2f" . $id_user] ?? ''), $os_id2)] . '">' . $val_su2 . '</a><ul class="drop">';
+
+        $zindex--;
+
+        for ($i = 0; $i < count($os2); $i++) {
+            if ($su_2 == $os_id2[$i]) {
+                echo '<li class="sel_active"><a href="javascript:void(0);"  rel="' . $os_id2[$i] . '">' . $os2[$i] . '</a></li>';
+            } else {
+                echo '<li><a href="javascript:void(0);"  rel="' . $os_id2[$i] . '">' . $os2[$i] . '</a></li>';
+            }
+
+        }
+        echo '</ul><input type="hidden" ' . $class_js_readonly . ' name="sort2f" id="sort2f" value="' . $os_id2[$su_2] . '"></div></div>';
+
+
+        echo '<div class="inline_reload js-reload-top"><a href="finance/" class="show_reload">Применить</a></div>';
+
+    }
+
 		//echo'<a href="statistic/" class="show_sort_supply">Применить</a>';
 		?>
 		<!--<div id="date_table" class="table_suply_x"></div>-->
@@ -840,6 +881,83 @@ if($dox_format=='') {$dox_format=0;}
       $graf_title_two=$graf_title_one;
       $graf_title_one='';
   }
+
+
+  if((isset($_GET['tabs']))) {
+      echo'<form id="js-form-plane-new" class="my_n js-form-plane-new" style=" padding:0; margin:0;" method="post" enctype="multipart/form-data"><input name="save_plane" value="1" type="hidden">';
+
+      //по умолчанию текущий месяц
+      $date_start=date("Y-m-").'01';
+
+
+      $date_start_bonus_last=date_step_sql('Y-m-', '-1m').'01';
+
+
+      if (( isset($_COOKIE["su_2f_x".$id_user]))and(is_numeric($_COOKIE["su_2f_x".$id_user]))and($_COOKIE["su_2f_x".$id_user]==1))
+      {
+          //находим текущий месяц
+          $date_start=date_step_sql('Y-m-', '+1m').'01';
+      }
+
+
+      echo'<div class="text-h-22" style="margin-top: 20px;">План продаж менеджеров</div>';
+      echo'<div class="plane_people">';
+
+        $mass_ei=users_hierarchy($id_user,$link);
+        rm_from_array($id_user,$mass_ei);
+        $mass_ei= array_unique($mass_ei);
+
+        foreach ($mass_ei as $keys => $value)
+        {
+            $result_work_zz=mysql_time_query($link,'Select a.name_small,a.id from r_user as a,r_role as b where a.id_role =b.id and ((b.role="works")or(b.role="gworks")) and a.id="'.$value.'" and a.enabled=1');
+            $num_results_work_zz = $result_work_zz->num_rows;
+            if($num_results_work_zz!=0)
+            {
+
+                for ($i=0; $i<$num_results_work_zz; $i++)
+                {
+                    $row_work_zz = mysqli_fetch_assoc($result_work_zz);
+
+$min_u=0;
+                    $max_u=0;
+                    $result_uu_pi = mysql_time_query($link, 'select * from users_commission_plane where id_users="' . ht($row_work_zz["id"]) . '" and dates="'.$date_start.'"');
+                    
+                    //echo('select * from users_commission_plane where id_users="' . ht($row_work_zz["id"]) . '" and dates="'.$date_start.'"');
+                    $num_results_uu_pi = $result_uu_pi->num_rows;
+
+                    if ($num_results_uu_pi != 0) {
+                        $row_uu_pi = mysqli_fetch_assoc($result_uu_pi);
+                        if(($row_uu_pi["min"]!='')and($row_uu_pi["min"]!=0)) {
+                            $min_u = $row_uu_pi["min"];
+                        }
+                        if(($row_uu_pi["max"]!='')and($row_uu_pi["max"]!=0)) {
+                            $max_u = $row_uu_pi["max"];
+                        }
+                    }
+
+
+                    echo'<div class="people_list"><div class="people_l1"><span class="label-task-gg ">Менеджер
+</span><div>'.$row_work_zz["name_small"].'</div><input name="plane[id][]" value="'.$row_work_zz["id"].'"  type="hidden"></div>
+         <div class="people_l2"><div  class="jj-l2"><div class="input_2018 active_in_2018"><label>MIN План<span>*</span></label><input name="plane[min][]" value="'.$min_u.'" id="date_124" class="input_new_2018 required gloab gloab1 money_mask1 " autocomplete="off" type="text"><div class="div_new_2018"><hr class="one"><hr class="two"><hr class="tree"><div class="oper_name" joi=""></div></div></div>
+</div></div>
+         <div class="people_l3">
+<div class="jj-l2"><div class="input_2018 active_in_2018"><label>MAX План<span>*</span></label><input name="plane[max][]" value="'.$max_u.'" id="date_124" class="input_new_2018 required gloab gloab1 money_mask1 " autocomplete="off" type="text"><div class="div_new_2018"><hr class="one"><hr class="two"><hr class="tree"><div class="oper_name" joi=""></div></div></div>
+</div></div></div>';
+
+
+                }
+            }
+
+        }
+
+
+      echo'<div class="margin-input"><div class="js-add-plane-form button-window new_style_but_23">Сохранить план</div></div>';
+
+         echo'</div></form>';
+  } else
+  {
+
+
 
 
   echo'<div class="help_div da_book1"><div class="not_boolingh"></div><span class="h5"><span>За текущий месяц добавляем в расходы бонусы и фиксированные выплаты за предыдущий месяц. Доходами же является комиссия за текущий месяц.</span></span></div>';
@@ -1649,6 +1767,9 @@ if($num_results_uu!=0) {
 {
     echo '<div class="px_bg_fin js-oper-2" style="display: none; margin-top:20px;"><div class="h1-finx">Вывод денег <span class="menu-09-count-fin">0</span></div></div>';
 }
+
+
+}
 ?>
 
     </div>
@@ -1671,6 +1792,16 @@ include_once $url_system.'template/left.php';
 <script type="text/javascript">
  $(document).ready(function(){ 
 //$('.circlestat').circliful();
+     $('.money_mask1').inputmask("numeric", {
+         radixPoint: ".",
+         groupSeparator: " ",
+         digits: 2,
+         autoGroup: true,
+         prefix: '', //No Space, this will truncate the first character
+         rightAlign: false,
+         oncleared: function () { self.Value(''); }
+     });
+
  });
 </script>
 

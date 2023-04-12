@@ -804,7 +804,7 @@ $kko=$active_p;
 
 
       $result_uu_all = mysql_time_query($link, 'select R.id,R.
-date_buy_all,R.commission,R.status,R.paid_client from trips as R where R.id_a_company IN ('.$id_company.') and R.visible="1" and R.commission_fix=0 and R.datecreate>="'.$start_date_o.' 00:00:00" and R.datecreate<="'.$end_date_o.' 23:59:59"  '.$sql_su5xxx);
+date_buy_all,R.commission,R.status,R.paid_client,R.status_admin from trips as R where R.id_a_company IN ('.$id_company.') and R.visible="1" and R.commission_fix=0 and R.datecreate>="'.$start_date_o.' 00:00:00" and R.datecreate<="'.$end_date_o.' 23:59:59"  '.$sql_su5xxx);
       $num_results_uu_all  = $result_uu_all ->num_rows;
 
       if ($num_results_uu_all  != 0) {
@@ -857,6 +857,13 @@ $pay_b=0;
               }
 
 
+              $avatar='';
+              if($row_uu_all["status_admin"]==2)
+              {
+                  $avatar='<span class="avatar_green"></span>';
+              }
+
+
               $comm_dd='(~)';
               if($row_uu_all["date_buy_all"]!='0000-00-00 00:00:00')
               {
@@ -881,10 +888,10 @@ $pay_b=0;
 
               if($active_p=='—')
               {
-                  $active_p='<span class="noww"><a class="noww '.$status_jhcc.'" target="_blank" href="/tours/.id-'.$row_uu_all["id"].'">'.$row_uu_all["id"].' '.$comm_dd.'</a><span data-tooltip="'.$beznal_tool.'" style="color: rgba(0, 0, 0, 0.2); padding-left:5px;">'.$beznal.'</span></span>';
+                  $active_p='<span class="noww"><a class="noww '.$status_jhcc.'" target="_blank" href="/tours/.id-'.$row_uu_all["id"].'">'.$row_uu_all["id"].' '.$comm_dd.'</a><span data-tooltip="'.$beznal_tool.'" style="color: rgba(0, 0, 0, 0.2); padding-left:5px;">'.$beznal.'</span>'.$avatar.'</span>';
               } else
               {
-                  $active_p.='<br><span class="noww"><a class="noww '.$status_jhcc.'" target="_blank" href="/tours/.id-'.$row_uu_all["id"].'">'.$row_uu_all["id"].' '.$comm_dd.'</a><span data-tooltip="'.$beznal_tool.'" style="color: rgba(0, 0, 0, 0.2); padding-left:5px;">'.$beznal.'</span></span>';
+                  $active_p.='<br><span class="noww"><a class="noww '.$status_jhcc.'" target="_blank" href="/tours/.id-'.$row_uu_all["id"].'">'.$row_uu_all["id"].' '.$comm_dd.'</a><span data-tooltip="'.$beznal_tool.'" style="color: rgba(0, 0, 0, 0.2); padding-left:5px;">'.$beznal.'</span>'.$avatar.'</span>';
               }
 
           }
@@ -912,7 +919,7 @@ $pay_b=0;
       //id Не новых договор но закрытых в этот период
       $active_p='—';
       $all_uie1=0;
-      $result_uu_all = mysql_time_query($link, 'select R.id,R.commission,R.status,R.paid_client from trips as R where R.id_a_company IN ('.$id_company.') and R.visible="1" and R.commission_fix=0 and ((R.datecreate<"'.$start_date_o.' 00:00:00") or (R.datecreate>"'.$end_date_o.' 23:59:59")) and R.date_buy_all>="'.$start_date_o.' 00:00:00" and R.date_buy_all<="'.$end_date_o.' 23:59:59"  '.$sql_su5xxx);
+      $result_uu_all = mysql_time_query($link, 'select R.id,R.commission,R.status,R.paid_client,R.status_admin from trips as R where R.id_a_company IN ('.$id_company.') and R.visible="1" and R.commission_fix=0 and ((R.datecreate<"'.$start_date_o.' 00:00:00") or (R.datecreate>"'.$end_date_o.' 23:59:59")) and R.date_buy_all>="'.$start_date_o.' 00:00:00" and R.date_buy_all<="'.$end_date_o.' 23:59:59"  '.$sql_su5xxx);
       $num_results_uu_all  = $result_uu_all ->num_rows;
 
       if ($num_results_uu_all  != 0) {
@@ -939,12 +946,19 @@ if($row_uu_all["status"]!=2) {
                    $status_jhcc='red_ccf';
                }
 
+
+              $avatar='';
+              if($row_uu_all["status_admin"]==2)
+              {
+                  $avatar='<span class="avatar_green"></span>';
+              }
+
               if($active_p=='—')
               {
-                  $active_p='<a class="noww '.$status_jhcc.'" target="_blank" href="/tours/.id-'.$row_uu_all["id"].'">'.$row_uu_all["id"].' '.$comm_dd.'</a>';
+                  $active_p='<span class="noww"><a class="noww " target="_blank" href="/tours/.id-123" marked="1">123 (+2000.00)</a><span data-tooltip="Наличные" style="color: rgba(0, 0, 0, 0.2); padding-left:5px;">Н</span><span class="avatar_green"></span></span><a class="noww '.$status_jhcc.'" target="_blank" href="/tours/.id-'.$row_uu_all["id"].'">'.$row_uu_all["id"].' '.$comm_dd.'</a>'.$avatar.'</span>';
               } else
               {
-                  $active_p.='<br><a class="noww '.$status_jhcc.'" target="_blank" href="/tours/.id-'.$row_uu_all["id"].'">'.$row_uu_all["id"].' '.$comm_dd.'</a>';
+                  $active_p.='<br><span class="noww"><a class="noww " target="_blank" href="/tours/.id-123" marked="1">123 (+2000.00)</a><span data-tooltip="Наличные" style="color: rgba(0, 0, 0, 0.2); padding-left:5px;">Н</span><span class="avatar_green"></span></span><a class="noww '.$status_jhcc.'" target="_blank" href="/tours/.id-'.$row_uu_all["id"].'">'.$row_uu_all["id"].' '.$comm_dd.'</a>'.$avatar.'</span>';
               }
 
           }
