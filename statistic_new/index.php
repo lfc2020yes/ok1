@@ -1042,8 +1042,10 @@ $month_rus=date("m");
 $month_rus1=date("m");
   $date_level_bonus=date("Y-m-").'01';
 
-  $day_montch= cal_days_in_month(CAL_GREGORIAN, date("j"), date("Y")); // 31
+  //$day_montch= cal_days_in_month(CAL_GREGORIAN, date("j"), date("Y")); // 31
+  $day_montch=days_in_month(date("j"), date("Y"));
 
+  //echo('!'.$day_montch.date("j").' '.date("Y"));
 
   $date_start_obo=date("Y-m-").'01 00:00:00';
   $date_end_obo=date_step_sql('Y-m', '+1m').'-01 00:00:00';

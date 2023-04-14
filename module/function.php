@@ -33,7 +33,11 @@ function notif_role_list($id_user,$id_user_send,$text,$number_notif)
     notification_send( $text,$end_mass,$id_user_send,$link);
 
 }
-
+function days_in_month($month, $year)
+{
+// calculate number of days in a month
+    return $month == 2 ? ($year % 4 ? 28 : ($year % 100 ? 29 : ($year % 400 ? 28 : 29))) : (($month - 1) % 7 % 2 ? 30 : 31);
+}
 
 function exception_role($user_send_new,$mass_ei)
 {
