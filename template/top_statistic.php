@@ -32,10 +32,12 @@
          <div class="mm_w">
              <ul class="tabs_hedi js-tabs-menuxx">
                  <?
-
+                 $mass_ei = array();
                  $mass_ei=users_hierarchy($id_user,$link);
                  rm_from_array($id_user,$mass_ei);
                  $mass_ei= array_unique($mass_ei);
+
+                 print_r($mass_ei);
 
                  if(count($mass_ei)>0) {
 
