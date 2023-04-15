@@ -944,10 +944,35 @@ if (( $_POST[ "avans_client" ] != 0 )and( $_POST[ "avans_client" ] != '' )) {
 
 
 	$medhod=2;
+	$proc_vip=0;
+	$commi_vip=0;
 
     if ((is_numeric($_POST['method_aaa']))and( $_POST[ "method_aaa" ] != '' )and( $_POST[ "method_aaa" ] != 0 )) {
         $medhod=$_POST['method_aaa'];
+
+
+        $result_uu_mo = mysql_time_query($link, 'select proc from booking_payment_method where id="' . ht($medhod) . '" and visible=1');
+        $num_results_uu_mo = $result_uu_mo->num_rows;
+
+        if ($num_results_uu != 0) {
+            $row_uu_mo = mysqli_fetch_assoc($result_uu_mo);
+            if(($row_uu_mo["proc"]!=0)and($row_uu_mo["proc"]!='')and(is_numeric($row_uu_mo["proc"])))
+            {
+                // считаем комиссию
+                $proc_vip=$row_uu_mo["proc"];
+                /*
+                avans - 100
+                x     - proc
+                */
+                $commi_vip=round(((float)trimc($_POST[ "avans_client" ])*(float)$proc_vip)/100);
+               // echo('!'.$commi_vip);
+            }
+
+        }
+
+
     }
+
 
 /*
     if(($_POST["buy_type"]==2)and($_POST["buy_id"]!='')) {
@@ -981,8 +1006,8 @@ visible) VALUES(
 "'.ht(trimc($_POST["avans_client"])).'",
 "'.ht($avans_rates).'",
 "'.ht($exchange_rates).'",
-"0",
-"0",
+"'.ht($proc_vip).'",
+"'.ht($commi_vip).'",
 "Аванс",
 "'.date("y.m.d").'",
 "'.ht($date_).'",

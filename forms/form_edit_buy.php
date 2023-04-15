@@ -295,38 +295,19 @@ if($style_kurs==1) {
 
 }
 
-$query_string.='<div class="flexx">
-<div class="tolko_50">';
-
-$query_string.='<!--input start	-->		
-<div style="margin-top: 30px;" class="rates_visible"><div class="input_2018"><label>Комиссия за операцию</label><input name="com_proc" value="0" id="date_124" class="input_new_2018 required   money_mask1 js-active-label js-comm-proc" autocomplete="off" type="text"><div class="div_new_2018"><hr class="one"><hr class="two"><hr class="four"><hr class="strelka"><div class="oper_name"></div></div></div>
-</div>
-<!--input end	-->';
-
-$query_string.='</div>
-<div class="tolko_50">';
-$query_string.='<!--input start	-->		
-<div style="margin-top: 30px;" class="rates_visible"><div class="input_2018 active-commi-buy1"><label>Итого комиссия</label><input name="com_rub" value="'.$row_uu["commission"].'" id="date_124" class="input_new_2018 required   money_mask1 js-active-label js-comm-rub" autocomplete="off" type="text"><div class="div_new_2018"><hr class="one"><hr class="two"><hr class="tree"><div class="oper_name"></div></div></div>
-</div>
-<!--input end	-->';
-$query_string.='</div>
-</div>';
-
-$query_string.='<div class="add_say_two">';
-
 
 
 $query_string.='    <!--input start	-->';
 
 
- $os_say55 = array();
- $os_id_say55 = array();
-	$su_say55=$row_uu["id_payment_method"];
+$os_say55 = array();
+$os_id_say55 = array();
+$su_say55=$row_uu["id_payment_method"];
 
 $query_string.='<div style="margin-top: 30px; z-index: 12;
     position: relative;" class="js-zindex">	';
 
-$query_string.='<div class="left_drop list_2018 menu1_prime"><label class="active_label">Способ оплаты<span>*</span></label><div class="select eddd zin_2019"><a class="slct" list_number="t1" data_src="'.$su_say55.'">'.$row_uu["name"].'</a><ul class="drop js-visible-mt">';
+$query_string.='<div class="left_drop list_2018 menu1_prime js_proc_no_no"><label class="active_label">Способ оплаты<span>*</span></label><div class="select eddd zin_2019"><a class="slct" list_number="t1" data_src="'.$su_say55.'">'.$row_uu["name"].'</a><ul class="drop js-visible-mt">';
 
 //если оплачивает клиент
 //если начальный аванс был наличкой - то остальные платежи только наличкой
@@ -354,32 +335,62 @@ $num_8 = $result_8->num_rows;
 if($result_8)
 {
 
-	/*
-				   $query_string.='<li class="sel_active"><a href="javascript:void(0);"  rel="'.$os_id_say55[array_search(1, $os_id_say55)].'">'.$os_say55[array_search(0, $os_id_say55)].'</a></li>';
-	*/
+    /*
+                   $query_string.='<li class="sel_active"><a href="javascript:void(0);"  rel="'.$os_id_say55[array_search(1, $os_id_say55)].'">'.$os_say55[array_search(0, $os_id_say55)].'</a></li>';
+    */
 
-  			  while($row_8 = mysqli_fetch_assoc($result_8)){
+    while($row_8 = mysqli_fetch_assoc($result_8)){
+
+        $proc_vip=0;
+        if(($row_8["proc"]!=0)and($row_8["proc"]!='')and(is_numeric($row_8["proc"])))
+        {
+            $proc_vip=$row_8["proc"];
+        }
 
 
-  			      if($su_say55==$row_8["id"])
-			   {
-				   $query_string.='<li class="sel_active"><a href="javascript:void(0);" nall="'.$row_8["nall"].'"  rel="'.$row_8["id"].'">'.$row_8["name"].'</a></li>';
-			   } else
-			   {
-				   $query_string.='<li><a href="javascript:void(0);" nall="'.$row_8["nall"].'" rel="'.$row_8["id"].'">'.$row_8["name"].'</a></li>';
-			   }
+        if($su_say55==$row_8["id"])
+        {
+            $query_string.='<li class="sel_active"><a href="javascript:void(0);" proc="'.$proc_vip.'" nall="'.$row_8["nall"].'"  rel="'.$row_8["id"].'">'.$row_8["name"].'</a></li>';
+        } else
+        {
+            $query_string.='<li><a href="javascript:void(0);" proc="'.$proc_vip.'" nall="'.$row_8["nall"].'" rel="'.$row_8["id"].'">'.$row_8["name"].'</a></li>';
+        }
 
-			 }
+    }
 }
 
 
 
-		   $query_string.='</ul><input type="hidden" class="gloab js_trips_payment_method" nall="'.$nall.'"  name="method" id="pol_clients" value="'.$su_say55.'"><div class="div_new_2018"><hr class="one"></div></div></div></div>';
+$query_string.='</ul><input type="hidden" class="gloab js_trips_payment_method" nall="'.$nall.'"  name="method" id="pol_clients" value="'.$su_say55.'"><div class="div_new_2018"><hr class="one"></div></div></div></div>';
 
 
 
 
-		$query_string.='<!--input end	-->';
+$query_string.='<!--input end	-->';
+
+
+
+
+$query_string.='<div class="flexx">
+<div class="tolko_50">';
+
+$query_string.='<!--input start	-->		
+<div style="margin-top: 30px;" class="rates_visible"><div class="input_2018"><label>Комиссия за операцию</label><input name="com_proc" value="0" id="date_124" class="input_new_2018 required   money_mask1 js-active-label js-comm-proc" autocomplete="off" type="text"><div class="div_new_2018"><hr class="one"><hr class="two"><hr class="four"><hr class="strelka"><div class="oper_name"></div></div></div>
+</div>
+<!--input end	-->';
+
+$query_string.='</div>
+<div class="tolko_50">';
+$query_string.='<!--input start	-->		
+<div style="margin-top: 30px;" class="rates_visible"><div class="input_2018 active-commi-buy1"><label>Итого комиссия</label><input name="com_rub" value="'.$row_uu["commission"].'" id="date_124" class="input_new_2018 required   money_mask1 js-active-label js-comm-rub" autocomplete="off" type="text"><div class="div_new_2018"><hr class="one"><hr class="two"><hr class="tree"><div class="oper_name"></div></div></div>
+</div>
+<!--input end	-->';
+$query_string.='</div>
+</div>';
+
+$query_string.='<div class="add_say_two">';
+
+
 
 
 

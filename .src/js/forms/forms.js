@@ -2708,11 +2708,11 @@ $('.box-modal').on("change keyup input click",'.js-padej_woo',padej_woo);
 
 	
 	
-$('.box-modal').on("change",'[name=client_new_search]',radio_client);	
-	
+$('.box-modal').on("change",'[name=client_new_search]',radio_client);
 
 
-	
+
+$('.js_proc_no_no').find('.drop').on("change keyup input click","li",list_number_proc);
 	
 	
 $('.box-modal').on("change",'[name=radio_doc]',radio_doc);

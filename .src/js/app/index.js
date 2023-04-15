@@ -43,6 +43,9 @@ $(document).ready(function(){
 
 	$('.js-call-no-v').find('.drop').on("change keyup input click","li",list_number);
 
+
+
+
 	//показать скрыть какой то рейтинг
 	$('.winner_2020').on("change keyup input click",".js-all-rating div",rating_list);
 
@@ -3971,6 +3974,27 @@ function filter_active_pr(e)
 	$.cookie("su_7fpr"+iu, null, {path:'/',domain: window.is_session,secure: false});
 	CookieList("su_7fpr"+iu, id_f,'add');
 	location.href=$(this).attr('href');
+}
+
+
+function list_number_proc() {
+	var box_active = $(this).closest('.box-modal');
+
+	//alert("!");
+//.next().find('li')
+	var active_new=$(this).find('a').attr("proc");
+	//alert(active_new);
+	if(active_new!=0)
+	{
+
+		box_active.find('.js-comm-proc').val(active_new);
+		box_active.find('.js-comm-proc').trigger('click');
+
+	} else
+	{
+		box_active.find('.js-comm-proc').val('0');
+		box_active.find('.js-comm-proc').trigger('click');
+	}
 }
 
 function list_number() {
