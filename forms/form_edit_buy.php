@@ -631,7 +631,7 @@ include_once $url_system.'template/form_js.php';
 	 
  $(document).ready(function(){ 
 	 
-nall_buy_tips(1);
+//nall_buy_tips(1);
 
 $('.js-form-pay-trips').find('.js-upload-kurs2,.js-comm-rub').trigger('click');
 

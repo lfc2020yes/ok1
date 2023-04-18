@@ -613,7 +613,7 @@ include_once $url_system.'template/form_js.php';
 	 
  $(document).ready(function(){ 
 	 
-nall_buy_tips(1);
+//nall_buy_tips(1);
 	 
 $('.money_mask1').inputmask("numeric", {
     radixPoint: ".",
