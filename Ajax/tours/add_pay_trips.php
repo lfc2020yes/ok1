@@ -169,6 +169,7 @@ if(($_POST["kto_komy"]==1)and($_POST["operation"]==1)) {
 
 }
 //вдруг клиент не может использовать такой метод оплаты
+/*
 if(($_POST["kto_komy"]==1)and($_POST["operation"]==1)) {
     $nall = 0;
     $result_uu3 = mysql_time_query($link, 'select C.nall,C.id from trips_payment as A,booking_payment_method as C where C.id=A.id_payment_method and A.who=0 and A.id_trips="' . ht($_POST['id']) . '" and A.id_operation=1 and A.visible=1 order by A.date_payment limit 1');
@@ -185,7 +186,7 @@ if(($_POST["kto_komy"]==1)and($_POST["operation"]==1)) {
         }
     }
 }
-
+*/
 //вдруг клиенту нечего возвращать
 if(($_POST["kto_komy"]==1)and($_POST["operation"]==2)) {
 
